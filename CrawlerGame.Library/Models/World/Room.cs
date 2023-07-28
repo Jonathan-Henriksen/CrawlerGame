@@ -1,4 +1,4 @@
-﻿namespace CrawlerGame.Library.Models
+﻿namespace CrawlerGame.Library.Models.World
 {
     internal class Room
     {

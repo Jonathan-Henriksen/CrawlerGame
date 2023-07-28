@@ -1,6 +1,7 @@
 ﻿using CrawlerGame.Library.Enums;
+using CrawlerGame.Library.Models.World;
 
-namespace CrawlerGame.Library.Models
+namespace CrawlerGame.Library.Models.Player
 {
     public class Character
     {
@@ -16,8 +17,8 @@ namespace CrawlerGame.Library.Models
 
         public string Name { get; set; }
 
-        internal Coordinates Location { get; set; }
+        private Coordinates Location { get; set; }
 
-        public Directions Direction { get; set; }
+        private Directions Direction { get; set; }
     }
 }

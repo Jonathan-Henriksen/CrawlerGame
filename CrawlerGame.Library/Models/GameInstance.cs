@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using CrawlerGame.Library.Models.Player;
+using CrawlerGame.Library.Models.World;
+using Newtonsoft.Json;
 
 namespace CrawlerGame.Library.Models
 {
@@ -6,7 +8,7 @@ namespace CrawlerGame.Library.Models
     {
         public GameInstance(Character character)
         {
-            var roomsJson = File.ReadAllText("rooms.json") ?? string.Empty;
+            string roomsJson = File.ReadAllText("rooms.json") ?? string.Empty;
 
             Rooms = JsonConvert.DeserializeObject<Room[,]>(roomsJson) ?? new Room[1, 1];
             GameMasterName = "Gamemaster";
@@ -44,7 +46,7 @@ namespace CrawlerGame.Library.Models
             Console.WriteLine($"\n{GameMasterName} -> {text}");
         }
 
-        public string GetUserInput()
+        public string GetPlayerInput()
         {
             Console.Write($"\n{Character.Name} -> ");
             return Console.ReadLine() ?? string.Empty;
@@ -64,22 +66,22 @@ namespace CrawlerGame.Library.Models
                     if (currentRoom == null)
                         continue;
 
-                    if (currentRoom.DoorNorth != null && currentRoom.Coordinates.Y > 0)
+                    if (currentRoom.DoorNorth is not null && currentRoom.Coordinates.Y > 0)
                     {
                         currentRoom.DoorNorth.Destination = Rooms[x, y - 1];
                     }
 
-                    if (currentRoom.DoorSouth != null && currentRoom.Coordinates.Y < height - 1)
+                    if (currentRoom.DoorSouth is not null && currentRoom.Coordinates.Y < height - 1)
                     {
-                        currentRoom.DoorSouth.Destination = Rooms[x + 1, y];
+                        currentRoom.DoorSouth.Destination = Rooms[x, y + 1];
                     }
 
-                    if (currentRoom.DoorWest != null && currentRoom.Coordinates.X > 0)
+                    if (currentRoom.DoorWest is not null && currentRoom.Coordinates.X > 0)
                     {
                         currentRoom.DoorWest.Destination = Rooms[x - 1, y];
                     }
 
-                    if (currentRoom.DoorEast != null && currentRoom.Coordinates.X < width - 1)
+                    if (currentRoom.DoorEast is not null && currentRoom.Coordinates.X < width - 1)
                     {
                         currentRoom.DoorEast.Destination = Rooms[x + 1, y];
                     }

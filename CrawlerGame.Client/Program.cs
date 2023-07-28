@@ -1,4 +1,5 @@
 ﻿using CrawlerGame.Library.Models;
+using CrawlerGame.Library.Models.Player;
 
 namespace CrawlerGame.Client
 {
@@ -7,13 +8,13 @@ namespace CrawlerGame.Client
         private static GameInstance? Game;
         public static void Main()
         {
-            Console.Write($"Enter you name -> ");
+            Console.Write("Please enter you name -> ");
             var name = Console.ReadLine();
 
             Game = new GameInstance(new Character(name));
 
             Game.Write($"Hello {Game.Character.Name}! How are you today?");
-            var answer = Game.GetUserInput();
+            var answer = Game.GetPlayerInput();
 
             // Get response from ChatGPT based on the users answer.
             Game.Write($"ChatGPT response based on answer: {answer}");
@@ -21,7 +22,7 @@ namespace CrawlerGame.Client
 
             while (Game.IsRunning())
             {
-                var input = Game.GetUserInput();
+                var input = Game.GetPlayerInput();
 
                 // Map the input to a command using ChatGPT
 
@@ -31,7 +32,7 @@ namespace CrawlerGame.Client
                     continue;
                 }
 
-                Game.Write($"Sorry I don't understand what \"{input}\" means");
+                Game.Write($"Sorry, \"{input}\" have not been implemented yet");
             }
         }
     }
