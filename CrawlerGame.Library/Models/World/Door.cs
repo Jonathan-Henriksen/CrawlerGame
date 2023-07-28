@@ -8,6 +8,8 @@ namespace CrawlerGame.Library.Models.World
         {
             Destination = destination;
             Direction = direction;
+            Locked = false;
+            Closed = true;
         }
 
         private bool Locked { get; set; }
@@ -33,6 +35,11 @@ namespace CrawlerGame.Library.Models.World
             }
         }
 
+        internal bool IsClosed()
+        {
+            return Closed;
+        }
+
         internal void Open()
         {
             if (Locked || !Closed)
@@ -49,6 +56,11 @@ namespace CrawlerGame.Library.Models.World
 
             Closed = true;
             OppositeDoor.Closed = true;
+        }
+
+        internal bool IsLocked()
+        {
+            return this.Locked;
         }
 
         internal void Lock()

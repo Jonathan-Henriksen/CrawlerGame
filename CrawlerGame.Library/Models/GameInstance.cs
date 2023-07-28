@@ -6,15 +6,12 @@ namespace CrawlerGame.Library.Models
 {
     public class GameInstance
     {
-        public GameInstance(Character character)
+        public GameInstance(Character character, string gamemasterName)
         {
-            string roomsJson = File.ReadAllText("rooms.json") ?? string.Empty;
-
-            Rooms = JsonConvert.DeserializeObject<Room[,]>(roomsJson) ?? new Room[1, 1];
-            GameMasterName = "Gamemaster";
+            GameMasterName = gamemasterName;
             Character = character;
 
-            LinkRooms();
+            Rooms = BuildRooms();
             Start();
         }
 
@@ -31,7 +28,7 @@ namespace CrawlerGame.Library.Models
             return GameIsRunning;
         }
 
-        public void Start()
+        private void Start()
         {
             GameIsRunning = true;
         }
@@ -52,41 +49,46 @@ namespace CrawlerGame.Library.Models
             return Console.ReadLine() ?? string.Empty;
         }
 
-        private void LinkRooms()
+        private static Room[,] BuildRooms()
         {
-            int width = Rooms.GetLength(0);
-            int height = Rooms.GetLength(1);
+            var roomsJson = File.ReadAllText("rooms.json") ?? string.Empty;
+            var rooms = JsonConvert.DeserializeObject<Room[,]>(roomsJson) ?? new Room[1, 1];
+
+            int width = rooms.GetLength(0);
+            int height = rooms.GetLength(1);
 
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
                 {
-                    var currentRoom = Rooms[x, y];
+                    var currentRoom = rooms[x, y];
 
                     if (currentRoom == null)
                         continue;
 
-                    if (currentRoom.DoorNorth is not null && currentRoom.Coordinates.Y > 0)
+                    if (x > 0)
                     {
-                        currentRoom.DoorNorth.Destination = Rooms[x, y - 1];
+                        currentRoom.DoorWest = new Door(rooms[x - 1, y], Enums.Directions.West);
                     }
 
-                    if (currentRoom.DoorSouth is not null && currentRoom.Coordinates.Y < height - 1)
+                    if (x < width - 1)
                     {
-                        currentRoom.DoorSouth.Destination = Rooms[x, y + 1];
+                        currentRoom.DoorEast = new Door(rooms[x + 1, y], Enums.Directions.East);
                     }
 
-                    if (currentRoom.DoorWest is not null && currentRoom.Coordinates.X > 0)
+                    if (y > 0)
                     {
-                        currentRoom.DoorWest.Destination = Rooms[x - 1, y];
+                        currentRoom.DoorSouth = new Door(rooms[x, y - 1], Enums.Directions.South);
                     }
 
-                    if (currentRoom.DoorEast is not null && currentRoom.Coordinates.X < width - 1)
+                    if (y < height - 1)
                     {
-                        currentRoom.DoorEast.Destination = Rooms[x + 1, y];
+                        currentRoom.DoorNorth = new Door(rooms[x, y + 1], Enums.Directions.North);
                     }
                 }
             }
+
+            return rooms;
         }
     }
 }

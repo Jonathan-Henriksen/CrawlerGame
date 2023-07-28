@@ -11,7 +11,7 @@
             };
 
             IsDiscovered = false;
-            LightIsOn = true;
+            IsLightOn = true;
         }
 
         internal Door? DoorEast { get; set; }
@@ -26,6 +26,6 @@
 
         internal bool IsDiscovered { get; set; }
 
-        internal bool LightIsOn { get; set; }
+        internal bool IsLightOn { get; set; }
     }
 }
