@@ -1,45 +1,46 @@
-﻿using CrawlerGame.Library.Models.Player;
-using CrawlerGame.Library.Models;
+﻿using CrawlerGame.Library.Models;
+using CrawlerGame.Logic.Services.Interfaces;
 
 namespace CrawlerGame.Client
 {
     internal class App
     {
-        private static GameInstance? Game;
+        private readonly IChatGPTService _chatGPTService;
 
-        internal static void Run(string[] args)
+        private GameInstance? Game;
+
+        internal App(IChatGPTService chatGPTService)
+        {
+            _chatGPTService = chatGPTService;
+        }
+
+        internal async Task Run(string[] args)
         {
             Console.Write("Please enter you name -> ");
-            var name = Console.ReadLine();
+            var name = Console.ReadLine() ?? "Player";
 
-            Game = new GameInstance(new Character(name), "Gamemaster");
+            Game = new GameInstance(name, "Gamemaster");
 
-            Game.Write($"Hello {Game.Character.Name}! How are you today?");
-            var answer = Game.GetPlayerInput();
-
-            // Get response from ChatGPT based on the users answer.
-            Game.Write($"ChatGPT response based on answer: {answer}");
-            Game.Write("Lets get started!");
+            Game.Say($"Hello {Game.GetPlayerName()}!");
+            Game.Say("Lets get started!");
 
             while (Game.IsRunning())
             {
                 var input = Game.GetPlayerInput();
 
-                Update(input);
+                var command = await _chatGPTService.GetCommandFromPlayerInput(input);
 
-                Game.Write($"Sorry, \"{input}\" have not been implemented yet");
+                Update(command);
             }
         }
 
-        private static void Update(string userInput)
+        private void Update(string command)
         {
-            if (userInput == "exit")
+            if (command.Equals("exit", StringComparison.InvariantCultureIgnoreCase))
             {
                 Game?.Stop();
                 return;
             }
-
-            // Do stuff
         }
     }
 }

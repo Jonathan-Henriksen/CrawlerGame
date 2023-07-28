@@ -6,12 +6,14 @@ namespace CrawlerGame.Library.Models
 {
     public class GameInstance
     {
-        public GameInstance(Character character, string gamemasterName)
+        public GameInstance(string characterName, string gamemasterName)
         {
             GameMasterName = gamemasterName;
-            Character = character;
 
             Rooms = BuildRooms();
+
+            Character = new Character(characterName, Rooms[0, 0]);
+
             Start();
         }
 
@@ -21,7 +23,7 @@ namespace CrawlerGame.Library.Models
 
         private Room[,] Rooms { get; set; }
 
-        public Character Character { get; set; }
+        internal Character Character { get; set; }
 
         public bool IsRunning()
         {
@@ -38,7 +40,7 @@ namespace CrawlerGame.Library.Models
             GameIsRunning = false;
         }
 
-        public void Write(string text)
+        public void Say(string text)
         {
             Console.WriteLine($"\n{GameMasterName} -> {text}");
         }
@@ -47,6 +49,11 @@ namespace CrawlerGame.Library.Models
         {
             Console.Write($"\n{Character.Name} -> ");
             return Console.ReadLine() ?? string.Empty;
+        }
+
+        public string GetPlayerName()
+        {
+            return Character.Name;
         }
 
         private static Room[,] BuildRooms()

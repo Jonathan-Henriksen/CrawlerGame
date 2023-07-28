@@ -1,24 +1,34 @@
 ﻿using CrawlerGame.Library.Enums;
+using CrawlerGame.Library.Interfaces;
 using CrawlerGame.Library.Models.World;
 
 namespace CrawlerGame.Library.Models.Player
 {
-    public class Character
+    internal class Character : IUpdateable
     {
-        public Character(string? name)
+        internal Character(string? name, Room location)
         {
             if (string.IsNullOrEmpty(name))
                 name = "Unknown";
 
             Name = name;
-            Location = new Coordinates() { X = 0, Y = 0 };
+            Location = location;
             Direction = Directions.North;
         }
 
-        public string Name { get; set; }
+        internal string Name { get; set; }
 
-        private Coordinates Location { get; set; }
+        internal Room Location { get; set; }
 
-        private Directions Direction { get; set; }
+        internal Directions Direction { get; set; }
+
+        public void Update(string command)
+        {
+            switch (command)
+            {
+                default:
+                    break;
+            }
+        }
     }
 }

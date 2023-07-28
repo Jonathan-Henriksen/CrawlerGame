@@ -2,6 +2,6 @@
 {
     public interface IChatGPTService
     {
-        public Task<string> GetCommandFromUserinput(string userinput);
+        public Task<string> GetCommandFromPlayerInput(string userinput);
     }
 }

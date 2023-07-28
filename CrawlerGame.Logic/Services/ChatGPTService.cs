@@ -19,7 +19,7 @@ namespace CrawlerGame.Logic.Services
             InitConversations();
         }
 
-        public async Task<string> GetCommandFromUserinput(string userinput)
+        public async Task<string> GetCommandFromPlayerInput(string userinput)
         {
             CommandMapperConversation.AppendUserInput(userinput);
 
