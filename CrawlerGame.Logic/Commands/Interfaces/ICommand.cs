@@ -1,6 +1,6 @@
 ﻿namespace CrawlerGame.Logic.Commands.Interfaces
 {
-    internal interface ICommand
+    public interface ICommand
     {
         internal void Execute();
     }

@@ -1,5 +1,6 @@
 ﻿using CrawlerGame.Client;
 using CrawlerGame.Logic;
+using CrawlerGame.Logic.Factories;
 using CrawlerGame.Logic.Factories.Interfaces;
 using CrawlerGame.Logic.Options;
 using CrawlerGame.Logic.Services;
@@ -32,7 +33,7 @@ IHostBuilder CreateHostBuilder(string[] strings)
         .ConfigureServices((_, services) =>
         {
             services.AddSingleton<IChatGPTService, ChatGPTService>();
-            services.AddSingleton<ICommandFactory, ICommandFactory>();
+            services.AddSingleton<ICommandFactory, CommandFactory>();
             services.AddSingleton<IGameEngine, GameEngine>();
             services.AddSingleton<App>();
 

@@ -2,16 +2,18 @@
 {
     public interface IGameEngine
     {
+        public IGameEngine Init();
+
         public void Start();
 
         public void Stop();
 
         public bool IsRunning();
 
-        public void Update(string userInput);
+        public void Update();
 
         public void SetPlayerName(string playerName);
 
-        public string GetPlayerInput();
+        public Task ProcessPlayerInput();
     }
 }

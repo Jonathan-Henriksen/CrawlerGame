@@ -16,4 +16,10 @@
     <ProjectReference Include="..\CrawlerGame.Logic\CrawlerGame.Logic.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

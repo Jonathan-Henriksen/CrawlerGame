@@ -2,7 +2,7 @@
 using CrawlerGame.Library.Models.Player;
 using CrawlerGame.Logic.Commands.Interfaces;
 
-namespace CrawlerGame.Logic.Commands
+namespace CrawlerGame.Logic.Commands.PlayerCommands
 {
     internal class MovePlayerCommand : ICommand
     {

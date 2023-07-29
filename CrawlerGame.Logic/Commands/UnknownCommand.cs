@@ -1,12 +1,12 @@
 ﻿using CrawlerGame.Logic.Commands.Interfaces;
 
-namespace CrawlerGame.Logic.Commands
+namespace CrawlerGame.Logic.Commands.PlayerCommands
 {
     internal class UnknownCommand : ICommand
     {
         void ICommand.Execute()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Unknown command");
         }
     }
 }

@@ -2,29 +2,24 @@
 
 namespace CrawlerGame.Client
 {
-    internal class App
+    public class App
     {
         private readonly IGameEngine _gameEngine;
 
-        internal App(IGameEngine gameEngine)
+        public App(IGameEngine gameEngine)
         {
             _gameEngine = gameEngine;
         }
 
-        internal void Run(string[] args)
+        public void Run(string[] args)
         {
-            Console.Write("Please enter you name -> ");
-            var name = Console.ReadLine() ?? "Player";
-
-            _gameEngine.SetPlayerName(name);
-
-            _gameEngine.Start();
+            _gameEngine.Init().Start();
 
             while (_gameEngine.IsRunning())
             {
-                var input = _gameEngine.GetPlayerInput();
+                _gameEngine.ProcessPlayerInput();
 
-                _gameEngine.Update(input);
+                _gameEngine.Update();
             }
         }
     }
