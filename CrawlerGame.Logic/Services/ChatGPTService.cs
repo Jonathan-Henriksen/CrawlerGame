@@ -14,12 +14,8 @@ namespace CrawlerGame.Logic.Services
         private readonly Conversation CommandMapperConversation;
         private readonly Conversation RoomGeneratorConversation;
 
-        private readonly string Theme;
-
         public ChatGPTService(IOptions<OpenAIOptions> options)
         {
-            Theme = options.Value.Theme;
-
             var api = new OpenAIAPI(new APIAuthentication(options.Value.ApiKey));
 
             CommandMapperConversation = api.Chat.CreateConversation(new ChatRequest() { Model = Model.DavinciText });
@@ -169,7 +165,7 @@ namespace CrawlerGame.Logic.Services
         private void InitFoodItemGeneratorConversation()
         {
             RoomGeneratorConversation.AppendSystemMessage("Your job will be to return a list of 5 to 15 json objects, based on a scheme that I will provide, that represents various food items you can find in a dungean crawler game.");
-            RoomGeneratorConversation.AppendSystemMessage($"The items should be related to the theme {Theme} and have varying property values, such as how much health they regenerate, that are as realistic as possible in context of the item.");
+            RoomGeneratorConversation.AppendSystemMessage($"The items should be related to the theme and have varying property values, such as how much health they regenerate, that are as realistic as possible in context of the item.");
             RoomGeneratorConversation.AppendSystemMessage("The players health spans between 0 and 100, and decreases by 2 every turn in the game.");
             RoomGeneratorConversation.AppendSystemMessage("You should only create as many items as you can accurately create from the theme, so if there are only 6 food items that are related to the theme, then only create 6. In short, quality over quantity.");
         }

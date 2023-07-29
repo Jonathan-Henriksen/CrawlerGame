@@ -25,41 +25,33 @@ namespace CrawlerGame.Logic
             _time = new TimeOnly(12, 0);
         }
 
-        private bool GameIsRunning { get; set; }
+        private bool IsRunning { get; set; }
 
         public IGameEngine Init()
         {
-            Console.Write($"{TimeStamp()}Please enter you name -> ");
+            Console.Write("Please enter you name -> ");
             var name = Console.ReadLine() ?? "Player";
 
             _player.SetName(name);
 
-            Console.Write($"\n{TimeStamp()}: {_player.Name} -> ");
+            Console.Write($"\n{_player.Name} -> ");
 
             return this;
         }
 
-        public void Start()
+        public async void Start()
         {
-            GameIsRunning = true;
+            IsRunning = true;
+
+            while (IsRunning)
+            {
+                await ProcessPlayerInput();
+
+                Update();
+            }
         }
 
-        public void Stop()
-        {
-            GameIsRunning = false;
-        }
-
-        public bool IsRunning()
-        {
-            return GameIsRunning;
-        }
-
-        public void SetPlayerName(string playerName)
-        {
-            _player.SetName(playerName);
-        }
-
-        public async Task ProcessPlayerInput()
+        private async Task ProcessPlayerInput()
         {
             if (_playerInputTask is null)
             {
@@ -75,21 +67,19 @@ namespace CrawlerGame.Logic
             if (playerInput is null)
                 return;
 
-            _playerCommand = _commandFactory.GetPlayerCommand(_player, null);
-
-            //var response = await _chatGPTService.GetCommandFromPlayerInput(playerInput, GetAvailableCommands());
-            //_playerCommand = _commandFactory.GetPlayerCommand(_player, response?.Command);
+            var response = await _chatGPTService.GetCommandFromPlayerInput(playerInput, GetAvailableCommands());
+            _playerCommand = _commandFactory.GetPlayerCommand(_player, response?.Command);
         }
 
-        public void Update()
+        private void Update()
         {
             if (_playerCommand is not null)
             {
                 _playerCommand.Execute();
-                _playerCommand = null;
+                _playerCommand = default;
 
                 Console.Beep();
-                Console.Write($"\n{TimeStamp()}{_player.Name} -> ");
+                Console.Write($"\n{_player.Name} -> ");
             }
 
             _time = _time.AddMinutes(1);
@@ -98,11 +88,6 @@ namespace CrawlerGame.Logic
         private static IEnumerable<string> GetAvailableCommands()
         {
             return Enum.GetNames(typeof(CommandEnum)).Select(d => d);
-        }
-
-        private string TimeStamp()
-        {
-            return $"{_time:hh:mm}: ";
         }
     }
 }

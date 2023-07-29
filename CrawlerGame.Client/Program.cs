@@ -1,5 +1,4 @@
-﻿using CrawlerGame.Client;
-using CrawlerGame.Logic;
+﻿using CrawlerGame.Logic;
 using CrawlerGame.Logic.Factories;
 using CrawlerGame.Logic.Factories.Interfaces;
 using CrawlerGame.Logic.Options;
@@ -16,7 +15,7 @@ var services = scope.ServiceProvider;
 
 try
 {
-    services.GetRequiredService<App>().Run(args);
+    services.GetRequiredService<IGameEngine>().Init().Start();
 }
 catch (Exception e)
 {
@@ -35,7 +34,6 @@ IHostBuilder CreateHostBuilder(string[] strings)
             services.AddSingleton<IChatGPTService, ChatGPTService>();
             services.AddSingleton<ICommandFactory, CommandFactory>();
             services.AddSingleton<IGameEngine, GameEngine>();
-            services.AddSingleton<App>();
 
             services.Configure<OpenAIOptions>(_.Configuration.GetSection(nameof(OpenAIOptions)));
         });
