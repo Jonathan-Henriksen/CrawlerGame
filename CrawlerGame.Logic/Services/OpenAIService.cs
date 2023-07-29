@@ -9,17 +9,19 @@ using OpenAI_API.Models;
 
 namespace CrawlerGame.Logic.Services
 {
-    public class ChatGPTService : IChatGPTService
+    public class OpenAIService : IOpenAIService
     {
         private readonly Conversation CommandMapperConversation;
         private readonly Conversation RoomGeneratorConversation;
 
-        public ChatGPTService(IOptions<OpenAIOptions> options)
+        public OpenAIService(IOptions<OpenAIOptions> options)
         {
             var api = new OpenAIAPI(new APIAuthentication(options.Value.ApiKey));
 
-            CommandMapperConversation = api.Chat.CreateConversation(new ChatRequest() { Model = Model.DavinciText });
-            RoomGeneratorConversation = api.Chat.CreateConversation(new ChatRequest() { Model = Model.DavinciText });
+            var model = !string.IsNullOrEmpty(options.Value.Model) ? new Model(options.Value.Model) : Model.DavinciText;
+
+            CommandMapperConversation = api.Chat.CreateConversation(new ChatRequest() { Model = model });
+            RoomGeneratorConversation = api.Chat.CreateConversation(new ChatRequest() { Model = model });
 
             InitConversations();
         }
@@ -27,6 +29,7 @@ namespace CrawlerGame.Logic.Services
         public async Task<CommandMapperResponse?> GetCommandFromPlayerInput(string userinput, IEnumerable<string> availableCommands)
         {
             CommandMapperConversation.AppendUserInput($"{string.Join(',', availableCommands)}\n\n{userinput}");
+
             var response = await CommandMapperConversation.GetResponseFromChatbotAsync();
 
             return JsonConvert.DeserializeObject<CommandMapperResponse>(response);

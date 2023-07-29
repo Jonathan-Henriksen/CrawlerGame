@@ -31,7 +31,7 @@ IHostBuilder CreateHostBuilder(string[] strings)
         })
         .ConfigureServices((_, services) =>
         {
-            services.AddSingleton<IChatGPTService, ChatGPTService>();
+            services.AddSingleton<IOpenAIService, OpenAIService>();
             services.AddSingleton<ICommandFactory, CommandFactory>();
             services.AddSingleton<IGameEngine, GameEngine>();
 

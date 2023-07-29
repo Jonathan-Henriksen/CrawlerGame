@@ -9,7 +9,7 @@ namespace CrawlerGame.Logic
     public class GameEngine : IGameEngine
     {
         private readonly ICommandFactory _commandFactory;
-        private readonly IChatGPTService _chatGPTService;
+        private readonly IOpenAIService _chatGPTService;
 
         private readonly Player _player;
 
@@ -17,7 +17,7 @@ namespace CrawlerGame.Logic
         private TimeOnly _time;
         private Task<string?>? _playerInputTask;
 
-        public GameEngine(ICommandFactory commandFactory, IChatGPTService chatGPTService)
+        public GameEngine(ICommandFactory commandFactory, IOpenAIService chatGPTService)
         {
             _commandFactory = commandFactory;
             _chatGPTService = chatGPTService;
