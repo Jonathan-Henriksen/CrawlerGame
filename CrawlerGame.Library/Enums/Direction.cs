@@ -1,6 +1,6 @@
 ﻿namespace CrawlerGame.Library.Enums
 {
-    public enum Directions
+    public enum Direction
     {
         East,
         North,

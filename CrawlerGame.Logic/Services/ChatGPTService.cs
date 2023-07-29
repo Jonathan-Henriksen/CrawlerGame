@@ -1,6 +1,11 @@
-﻿using CrawlerGame.Logic.Services.Interfaces;
+﻿using CrawlerGame.Library.Models.ChatGPT;
+using CrawlerGame.Logic.Options;
+using CrawlerGame.Logic.Services.Interfaces;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using OpenAI_API;
 using OpenAI_API.Chat;
+using OpenAI_API.Models;
 
 namespace CrawlerGame.Logic.Services
 {
@@ -9,20 +14,26 @@ namespace CrawlerGame.Logic.Services
         private readonly Conversation CommandMapperConversation;
         private readonly Conversation RoomGeneratorConversation;
 
-        public ChatGPTService()
-        {
-            OpenAIAPI api = new OpenAIAPI(new APIAuthentication("YOUR_API_KEY", "org-yourOrgHere"));
+        private readonly string Theme;
 
-            CommandMapperConversation = api.Chat.CreateConversation();
-            RoomGeneratorConversation = api.Chat.CreateConversation();
+        public ChatGPTService(IOptions<OpenAIOptions> options)
+        {
+            Theme = options.Value.Theme;
+
+            var api = new OpenAIAPI(new APIAuthentication(options.Value.ApiKey));
+
+            CommandMapperConversation = api.Chat.CreateConversation(new ChatRequest() { Model = Model.DavinciText });
+            RoomGeneratorConversation = api.Chat.CreateConversation(new ChatRequest() { Model = Model.DavinciText });
 
             InitConversations();
         }
 
-        public async Task<string> GetCommandFromPlayerInput(string userinput, IEnumerable<string> commands)
+        public async Task<CommandMapperResponse?> GetCommandFromPlayerInput(string userinput, IEnumerable<string> availableCommands)
         {
-            CommandMapperConversation.AppendUserInput($"{string.Join(',', commands)}\n\n{userinput}");
-            return await CommandMapperConversation.GetResponseFromChatbotAsync();
+            CommandMapperConversation.AppendUserInput($"{string.Join(',', availableCommands)}\n\n{userinput}");
+            var response = await CommandMapperConversation.GetResponseFromChatbotAsync();
+
+            return JsonConvert.DeserializeObject<CommandMapperResponse>(response);
         }
 
         private void InitConversations()
@@ -155,10 +166,10 @@ namespace CrawlerGame.Logic.Services
             CommandMapperConversation.AppendExampleChatbotOutput(unknownCommandResponse);
         }
 
-        private void InitFoodItemGeneratorConversation(string theme)
+        private void InitFoodItemGeneratorConversation()
         {
             RoomGeneratorConversation.AppendSystemMessage("Your job will be to return a list of 5 to 15 json objects, based on a scheme that I will provide, that represents various food items you can find in a dungean crawler game.");
-            RoomGeneratorConversation.AppendSystemMessage($"The items should be related to the theme {theme} and have varying property values, such as how much health they regenerate, that are as realistic as possible in context of the item.");
+            RoomGeneratorConversation.AppendSystemMessage($"The items should be related to the theme {Theme} and have varying property values, such as how much health they regenerate, that are as realistic as possible in context of the item.");
             RoomGeneratorConversation.AppendSystemMessage("The players health spans between 0 and 100, and decreases by 2 every turn in the game.");
             RoomGeneratorConversation.AppendSystemMessage("You should only create as many items as you can accurately create from the theme, so if there are only 6 food items that are related to the theme, then only create 6. In short, quality over quantity.");
         }

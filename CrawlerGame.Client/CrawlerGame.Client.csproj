@@ -13,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CrawlerGame.Library\CrawlerGame.Library.csproj" />
     <ProjectReference Include="..\CrawlerGame.Logic\CrawlerGame.Logic.csproj" />
   </ItemGroup>
 

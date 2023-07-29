@@ -1,45 +1,30 @@
-﻿using CrawlerGame.Library.Models;
-using CrawlerGame.Logic.Services.Interfaces;
+﻿using CrawlerGame.Logic;
 
 namespace CrawlerGame.Client
 {
     internal class App
     {
-        private readonly IChatGPTService _chatGPTService;
+        private readonly IGameEngine _gameEngine;
 
-        private GameInstance? Game;
-
-        internal App(IChatGPTService chatGPTService)
+        internal App(IGameEngine gameEngine)
         {
-            _chatGPTService = chatGPTService;
+            _gameEngine = gameEngine;
         }
 
-        internal async Task Run(string[] args)
+        internal void Run(string[] args)
         {
             Console.Write("Please enter you name -> ");
             var name = Console.ReadLine() ?? "Player";
 
-            Game = new GameInstance(name, "Gamemaster");
+            _gameEngine.SetPlayerName(name);
 
-            Game.Say($"Hello {Game.GetPlayerName()}!");
-            Game.Say("Lets get started!");
+            _gameEngine.Start();
 
-            while (Game.IsRunning())
+            while (_gameEngine.IsRunning())
             {
-                var input = Game.GetPlayerInput();
+                var input = _gameEngine.GetPlayerInput();
 
-                var command = await _chatGPTService.GetCommandFromPlayerInput(input);
-
-                Update(command);
-            }
-        }
-
-        private void Update(string command)
-        {
-            if (command.Equals("exit", StringComparison.InvariantCultureIgnoreCase))
-            {
-                Game?.Stop();
-                return;
+                _gameEngine.Update(input);
             }
         }
     }

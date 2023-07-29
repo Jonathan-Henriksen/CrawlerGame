@@ -1,6 +1,6 @@
 ﻿namespace CrawlerGame.Library.Models.Items.Base
 {
-    internal class ItemBase
+    public class ItemBase
     {
         public ItemBase(string name, string? activationPhrase, string? activationMessage, int? initialUses)
         {

@@ -1,10 +1,9 @@
 ﻿namespace CrawlerGame.Library.Models.World
 {
-    internal class Coordinates
+    public class Coordinates
     {
+        public int X { get; set; }
 
-        internal int X { get; set; }
-
-        internal int Y { get; set; }
+        public int Y { get; set; }
     }
 }
