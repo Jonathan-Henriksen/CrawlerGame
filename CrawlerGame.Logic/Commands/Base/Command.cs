@@ -1,6 +1,6 @@
 ﻿namespace CrawlerGame.Logic.Commands.Base
 {
-    internal abstract class Command
+    public abstract class Command
     {
         internal Command(string successMessage, string failureMesasge)
         {

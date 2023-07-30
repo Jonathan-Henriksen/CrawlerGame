@@ -2,7 +2,10 @@
 using CrawlerGame.Library.Models.Player;
 using CrawlerGame.Logic.Commands.Base;
 using CrawlerGame.Logic.Factories.Interfaces;
+using CrawlerGame.Logic.Options;
 using CrawlerGame.Logic.Services.Interfaces;
+using System.Net;
+using System.Net.Sockets;
 
 namespace CrawlerGame.Logic
 {
@@ -11,18 +14,22 @@ namespace CrawlerGame.Logic
         private readonly IClockService _clock;
         private readonly ICommandFactory _commandFactory;
         private readonly IOpenAIService _chatGPTService;
+        private readonly TcpListener _server;
 
-        private readonly Player _player;
+        private readonly List<Player> _players;
 
-        private Command? _playerCommand;
-        private Task<string?>? _playerInputTask;
+        private readonly List<Command?> _playerCommands;
 
-        public GameEngine(IClockService clockService, ICommandFactory commandFactory, IOpenAIService chatGPTService)
+
+        public GameEngine(IClockService clockService, ICommandFactory commandFactory, IOpenAIService chatGPTService, ServerOptions serverOptions)
         {
             _clock = clockService;
             _commandFactory = commandFactory;
             _chatGPTService = chatGPTService;
-            _player = new Player();
+
+            _server = new TcpListener(IPAddress.Any, serverOptions.Port);
+            _players = new List<Player>();
+            _playerCommands = new List<Command?>();
         }
 
         private bool IsRunning { get; set; }
@@ -31,26 +38,21 @@ namespace CrawlerGame.Logic
 
         public IGameEngine Init()
         {
-            Console.Write("Please enter you name -> ");
-            var name = Console.ReadLine() ?? "Player";
-
-            _player.SetName(name);
-            _clock.Start();
-
-            Console.Write($"\n{_player.Name} -> ");
+            _ = StartServer();
 
             return this;
         }
 
-        public async void Start()
+        public void Start()
         {
             IsRunning = true;
             IsPaused = false;
 
+            _clock.Start();
+
             while (IsRunning)
             {
-                await ProcessPlayerInput();
-
+                ExecutePlayerCommands();
                 Update();
             }
         }
@@ -65,42 +67,95 @@ namespace CrawlerGame.Logic
             IsPaused = !IsPaused;
         }
 
-        private async Task ProcessPlayerInput()
-        {
-            _playerInputTask ??= Task.Run(Console.In.ReadLineAsync);
-
-            if (!_playerInputTask.IsCompleted)
-                return;
-
-            var playerInput = await _playerInputTask;
-
-            if (playerInput is null)
-                return;
-
-            var response = await _chatGPTService.GetCommandFromPlayerInput(playerInput, GetAvailableCommands());
-            _playerCommand = _commandFactory.GetPlayerCommand(_player, response?.Command);
-        }
-
         private void Update()
         {
-            ExecutePlayerCommand();
+            ExecutePlayerCommands();
+        }
+
+        private void ExecutePlayerCommands()
+        {
+            foreach (var command in _playerCommands)
+            {
+                command?.Execute();
+                Console.Beep();
+            }
+        }
+
+        private Task StartServer()
+        {
+            _server.Start();
+
+            return Task.Run(async () =>
+            {
+                try
+                {
+                    Console.WriteLine("Starting server and waiting for clients");
+                    while (IsRunning)
+                    {
+                        var client = await _server.AcceptTcpClientAsync();
+                        var ip = (IPEndPoint?) client.Client.RemoteEndPoint;
+
+                        var player = new Player(ip?.Address.ToString() ?? string.Empty);
+
+                        _players.Add(player);
+                        _ = HandleClientAsync(client, player);
+                    }
+                }
+                finally
+                {
+                    _server.Stop();
+                }
+            });
+        }
+
+        private async Task HandleClientAsync(TcpClient client, Player player)
+        {
+            try
+            {
+                Console.WriteLine($"Client connected: {client.Client.RemoteEndPoint}");
+
+                Task<string?>? playerInputTask = default;
+
+                while (client.Connected)
+                {
+                    using var stream = client.GetStream();
+                    using var reader = new StreamReader(stream);
+
+                    playerInputTask ??= Task.Run(reader.ReadLineAsync);
+
+                    if (!playerInputTask.IsCompleted)
+                        continue;
+
+                    var playerInput = await playerInputTask;
+
+                    if (playerInput is null)
+                        continue;
+
+                    //var response = await _chatGPTService.GetCommandFromPlayerInput(playerInput, GetAvailableCommands());
+
+                    //_playerCommands.Add(_commandFactory.GetPlayerCommand(player, response?.Command));
+
+                    Console.WriteLine($"{player.Name} - {playerInput}");
+
+                    using var writer = new StreamWriter(stream) { AutoFlush = true };
+
+                    _ = writer.WriteAsync($"Echo: {playerInput}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error handling client: {ex.Message}");
+            }
+            finally
+            {
+                client.Close();
+                Console.WriteLine($"Client disconnected: {client.Client.RemoteEndPoint}");
+            }
         }
 
         private static IEnumerable<string> GetAvailableCommands()
         {
             return Enum.GetNames(typeof(CommandEnum)).Select(d => d);
-        }
-
-        private void ExecutePlayerCommand()
-        {
-            if (_playerCommand is null)
-                return;
-
-            _playerCommand.Execute();
-            _playerCommand = default;
-
-            Console.Beep();
-            Console.Write($"\n{_player.Name} -> ");
         }
     }
 }

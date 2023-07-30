@@ -1,13 +1,9 @@
-﻿using CrawlerGame.Logic;
-using CrawlerGame.Logic.Factories;
-using CrawlerGame.Logic.Factories.Interfaces;
-using CrawlerGame.Logic.Options;
-using CrawlerGame.Logic.Services;
-using CrawlerGame.Logic.Services.Interfaces;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using CrawlerGame.Logic.Options;
 using Microsoft.Extensions.Options;
+using CrawlerGame.Client;
 
 using var host = CreateHostBuilder(args).Build();
 using var scope = host.Services.CreateScope();
@@ -16,7 +12,7 @@ var services = scope.ServiceProvider;
 
 try
 {
-    services.GetRequiredService<IGameEngine>().Init().Start();
+    await services.GetRequiredService<IClient>().Start();
 }
 catch (Exception e)
 {
@@ -32,15 +28,12 @@ IHostBuilder CreateHostBuilder(string[] strings)
         })
         .ConfigureServices((_, services) =>
         {
-            services.AddSingleton<IClockService, ClockService>();
-            services.AddSingleton<IOpenAIService, OpenAIService>();
-            services.AddSingleton<ICommandFactory, CommandFactory>();
-            services.AddSingleton<IGameEngine, GameEngine>();
+            services.AddSingleton<IClient, PlayerClient>();
 
-            services.AddOptions<OpenAIOptions>()
-            .BindConfiguration("OpenAI");
+            services.AddOptions<ClientOptions>()
+            .BindConfiguration("Client");
 
             services.AddSingleton(resolver =>
-                resolver.GetRequiredService<IOptions<OpenAIOptions>>().Value);
+                resolver.GetRequiredService<IOptions<ClientOptions>>().Value);
         });
 }

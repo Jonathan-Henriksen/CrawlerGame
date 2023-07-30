@@ -5,9 +5,13 @@ namespace CrawlerGame.Library.Models.Player
 {
     public class Player
     {
-        public Player()
+        private readonly string _ip;
+
+        public Player(string ip)
         {
-            Name = "Player";
+            _ip = ip;
+
+            Name = $"Player({_ip})";
             Location = new Coordinates() { X = 0, Y = 0 };
             Health = 100;
             Thirst = 100;
@@ -22,6 +26,8 @@ namespace CrawlerGame.Library.Models.Player
         private int Hunger { get; set; }
 
         private int Thirst { get; set; }
+
+
 
         public bool IsHungry()
         {
