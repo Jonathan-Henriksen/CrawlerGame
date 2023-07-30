@@ -1,7 +1,6 @@
 ﻿using CrawlerGame.Library.Models.ChatGPT;
 using CrawlerGame.Logic.Options;
 using CrawlerGame.Logic.Services.Interfaces;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using OpenAI_API;
 using OpenAI_API.Chat;

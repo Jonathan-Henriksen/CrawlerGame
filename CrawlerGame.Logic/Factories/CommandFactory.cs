@@ -1,8 +1,9 @@
 ﻿using CrawlerGame.Library.Enums;
 using CrawlerGame.Library.Models.Player;
-using CrawlerGame.Logic.Commands.PlayerCommands;
-using CrawlerGame.Logic.Factories.Interfaces;
 using CrawlerGame.Logic.Commands.Base;
+using CrawlerGame.Logic.Commands.PlayerCommands;
+using CrawlerGame.Logic.Commands.System;
+using CrawlerGame.Logic.Factories.Interfaces;
 
 namespace CrawlerGame.Logic.Factories
 {

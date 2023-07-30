@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-namespace CrawlerGame.Library.Enums
+﻿namespace CrawlerGame.Library.Enums
 {
     public enum TimeOfDay
     {
