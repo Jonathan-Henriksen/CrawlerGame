@@ -14,11 +14,11 @@ namespace CrawlerGame.Logic.Services
         private readonly Conversation CommandMapperConversation;
         private readonly Conversation RoomGeneratorConversation;
 
-        public OpenAIService(IOptions<OpenAIOptions> options)
+        public OpenAIService(OpenAIOptions options)
         {
-            var api = new OpenAIAPI(new APIAuthentication(options.Value.ApiKey));
+            var api = new OpenAIAPI(new APIAuthentication(options.ApiKey));
 
-            var model = !string.IsNullOrEmpty(options.Value.Model) ? new Model(options.Value.Model) : Model.DavinciText;
+            var model = !string.IsNullOrEmpty(options.Model) ? new Model(options.Model) : Model.DavinciText;
 
             CommandMapperConversation = api.Chat.CreateConversation(new ChatRequest() { Model = model });
             RoomGeneratorConversation = api.Chat.CreateConversation(new ChatRequest() { Model = model });

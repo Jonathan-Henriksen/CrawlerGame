@@ -7,6 +7,7 @@ using CrawlerGame.Logic.Services.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 
 using var host = CreateHostBuilder(args).Build();
 using var scope = host.Services.CreateScope();
@@ -35,6 +36,10 @@ IHostBuilder CreateHostBuilder(string[] strings)
             services.AddSingleton<ICommandFactory, CommandFactory>();
             services.AddSingleton<IGameEngine, GameEngine>();
 
-            services.Configure<OpenAIOptions>(_.Configuration.GetSection(nameof(OpenAIOptions)));
+            services.AddOptions<OpenAIOptions>()
+            .BindConfiguration("OpenAI");
+
+            services.AddSingleton(resolver =>
+                resolver.GetRequiredService<IOptions<OpenAIOptions>>().Value);
         });
 }
