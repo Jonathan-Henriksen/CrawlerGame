@@ -1,6 +1,6 @@
 ﻿using CrawlerGame.Library.Enums;
 using CrawlerGame.Library.Models.Player;
-using CrawlerGame.Logic.Commands.Interfaces;
+using CrawlerGame.Logic.Commands.Base;
 using CrawlerGame.Logic.Factories.Interfaces;
 using CrawlerGame.Logic.Services.Interfaces;
 
@@ -11,10 +11,11 @@ namespace CrawlerGame.Logic
         private readonly ICommandFactory _commandFactory;
         private readonly IOpenAIService _chatGPTService;
 
+        private TimeOnly _time;
+
         private readonly Player _player;
 
-        private ICommand? _playerCommand;
-        private TimeOnly _time;
+        private Command? _playerCommand;
         private Task<string?>? _playerInputTask;
 
         public GameEngine(ICommandFactory commandFactory, IOpenAIService chatGPTService)

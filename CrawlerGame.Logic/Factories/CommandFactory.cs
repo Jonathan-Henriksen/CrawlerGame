@@ -1,14 +1,14 @@
 ﻿using CrawlerGame.Library.Enums;
 using CrawlerGame.Library.Models.Player;
 using CrawlerGame.Logic.Commands.PlayerCommands;
-using CrawlerGame.Logic.Commands.Interfaces;
 using CrawlerGame.Logic.Factories.Interfaces;
+using CrawlerGame.Logic.Commands.Base;
 
 namespace CrawlerGame.Logic.Factories
 {
-    public class CommandFactory : ICommandFactory
+    internal class CommandFactory : ICommandFactory
     {
-        public ICommand GetPlayerCommand(Player player, CommandEnum? command)
+        public Command GetPlayerCommand(Player player, CommandEnum? command)
         {
             return command switch
             {
