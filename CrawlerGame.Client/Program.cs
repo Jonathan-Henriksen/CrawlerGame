@@ -1,4 +1,5 @@
 ﻿using CrawlerGame.Logic;
+using CrawlerGame.Logic.Factories;
 using CrawlerGame.Logic.Factories.Interfaces;
 using CrawlerGame.Logic.Options;
 using CrawlerGame.Logic.Services;
@@ -31,6 +32,7 @@ IHostBuilder CreateHostBuilder(string[] strings)
         })
         .ConfigureServices((_, services) =>
         {
+            services.AddSingleton<IClockService, ClockService>();
             services.AddSingleton<IOpenAIService, OpenAIService>();
             services.AddSingleton<ICommandFactory, CommandFactory>();
             services.AddSingleton<IGameEngine, GameEngine>();

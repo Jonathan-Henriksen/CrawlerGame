@@ -8,25 +8,26 @@ namespace CrawlerGame.Logic
 {
     public class GameEngine : IGameEngine
     {
+        private readonly IClockService _clock;
         private readonly ICommandFactory _commandFactory;
         private readonly IOpenAIService _chatGPTService;
-
-        private TimeOnly _time;
 
         private readonly Player _player;
 
         private Command? _playerCommand;
         private Task<string?>? _playerInputTask;
 
-        public GameEngine(ICommandFactory commandFactory, IOpenAIService chatGPTService)
+        public GameEngine(IClockService clockService, ICommandFactory commandFactory, IOpenAIService chatGPTService)
         {
+            _clock = clockService;
             _commandFactory = commandFactory;
             _chatGPTService = chatGPTService;
             _player = new Player();
-            _time = new TimeOnly(12, 0);
         }
 
         private bool IsRunning { get; set; }
+
+        private bool IsPaused { get; set; }
 
         public IGameEngine Init()
         {
@@ -34,6 +35,7 @@ namespace CrawlerGame.Logic
             var name = Console.ReadLine() ?? "Player";
 
             _player.SetName(name);
+            _clock.Start();
 
             Console.Write($"\n{_player.Name} -> ");
 
@@ -43,6 +45,7 @@ namespace CrawlerGame.Logic
         public async void Start()
         {
             IsRunning = true;
+            IsPaused = false;
 
             while (IsRunning)
             {
@@ -52,18 +55,24 @@ namespace CrawlerGame.Logic
             }
         }
 
+        public void TogglePause()
+        {
+            if (IsPaused)
+                _clock.Resume();
+            else
+                _clock.Pause();
+
+            IsPaused = !IsPaused;
+        }
+
         private async Task ProcessPlayerInput()
         {
-            if (_playerInputTask is null)
-            {
-                _playerInputTask = Task.Run(Console.In.ReadLineAsync);
-            }
+            _playerInputTask ??= Task.Run(Console.In.ReadLineAsync);
 
             if (!_playerInputTask.IsCompleted)
                 return;
 
             var playerInput = await _playerInputTask;
-            _playerInputTask = null;
 
             if (playerInput is null)
                 return;
@@ -74,21 +83,24 @@ namespace CrawlerGame.Logic
 
         private void Update()
         {
-            if (_playerCommand is not null)
-            {
-                _playerCommand.Execute();
-                _playerCommand = default;
-
-                Console.Beep();
-                Console.Write($"\n{_player.Name} -> ");
-            }
-
-            _time = _time.AddMinutes(1);
+            ExecutePlayerCommand();
         }
 
         private static IEnumerable<string> GetAvailableCommands()
         {
             return Enum.GetNames(typeof(CommandEnum)).Select(d => d);
+        }
+
+        private void ExecutePlayerCommand()
+        {
+            if (_playerCommand is null)
+                return;
+
+            _playerCommand.Execute();
+            _playerCommand = default;
+
+            Console.Beep();
+            Console.Write($"\n{_player.Name} -> ");
         }
     }
 }

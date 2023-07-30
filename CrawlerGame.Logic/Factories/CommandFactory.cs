@@ -7,7 +7,7 @@ using CrawlerGame.Logic.Factories.Interfaces;
 
 namespace CrawlerGame.Logic.Factories
 {
-    internal class CommandFactory : ICommandFactory
+    public class CommandFactory : ICommandFactory
     {
         public Command GetPlayerCommand(Player player, CommandEnum? command)
         {
