@@ -1,12 +1,10 @@
-﻿using CrawlerGame.Library.Enums;
-using CrawlerGame.Library.Models.Player;
-using CrawlerGame.Logic.Commands.Base;
+﻿using CrawlerGame.Library.Models.Player;
+using CrawlerGame.Logic.Commands.Interfaces;
 using CrawlerGame.Logic.Factories.Interfaces;
 using CrawlerGame.Logic.Services.Interfaces;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System;
 
 namespace CrawlerGame.Logic
 {
@@ -14,25 +12,62 @@ namespace CrawlerGame.Logic
     {
         private readonly IClockService _clock;
         private readonly ICommandFactory _commandFactory;
-        private readonly IOpenAIService _chatGPTService;
+        private readonly IOpenAIService _openAIService;
 
         private readonly List<Player> _players;
-        private readonly List<Command?> _playerCommands;
+        private readonly List<ICommand?> _playerCommands;
 
-        private readonly List<TcpClient> _playerConnections;
-
-        public GameEngine(IClockService clockService, ICommandFactory commandFactory, IOpenAIService chatGPTService)
+        public GameEngine(IClockService clockService, ICommandFactory commandFactory, IOpenAIService openAIService)
         {
             _clock = clockService;
             _commandFactory = commandFactory;
-            _chatGPTService = chatGPTService;
+            _openAIService = openAIService;
 
             _players = new List<Player>();
-            _playerCommands = new List<Command?>();
-            _playerConnections = new List<TcpClient>();
+            _playerCommands = new List<ICommand?>();
         }
 
         private bool IsRunning { get; set; }
+
+        public IGameEngine Init()
+        {
+            return this;
+        }
+
+        public Task StartAsync()
+        {
+            if (IsRunning || !_players.Any())
+                return Task.CompletedTask;
+
+            IsRunning = true;
+            _clock.Start();
+
+            return Task.Run(() =>
+            {
+                while (IsRunning)
+                {
+                    ExecutePlayerCommands();
+                }
+            });
+        }
+
+        private void Stop()
+        {
+            IsRunning = false;
+
+            _players.Clear();
+            _playerCommands.Clear();
+            _clock.Reset();
+        }
+
+        public Task HandleAdminCommandAsync(string adminInput)
+        {
+            return Task.Run(() =>
+            {
+                var command = _commandFactory.GetAdminCommand(this, adminInput);
+                command.Execute();
+            });
+        }
 
         public void AddPlayer(TcpClient playerClient)
         {
@@ -45,61 +80,21 @@ namespace CrawlerGame.Logic
             var player = new Player(ipAddress);
 
             _players.Add(player);
-            _playerConnections.Add(playerClient);
 
             _ = StartAsync();
-
-            _ = HandlePlayerInputAsync(playerClient, player);
-        }
-
-        public IGameEngine Init()
-        {
-            return this;
-        }
-
-        public Task StartAsync()
-        {
-            return Task.Run(() =>
-            {
-                if (IsRunning || !_players.Any())
-                    return;
-
-                IsRunning = true;
-                _clock.Start();
-
-                while (IsRunning)
-                {
-                    ExecutePlayerCommands();
-                }
-
-                _clock.Stop();
-                IsRunning = false;
-            });
-        }
-
-        public void Stop()
-        {
-            IsRunning = false;
-
-            foreach (var client in _playerConnections)
-            {
-                client.Close();
-                _playerConnections.Remove(client);
-            }
-
-            _players.Clear();
-            _playerCommands.Clear();
+            _ = HandlePlayerAsync(playerClient, player);
         }
 
         private void ExecutePlayerCommands()
         {
-            foreach (var command in _playerCommands)
+            Parallel.ForEach(_playerCommands, command =>
             {
                 command?.Execute();
-            }
+                _playerCommands.Remove(command);
+            });
         }
 
-        private async Task HandlePlayerInputAsync(TcpClient client, Player player)
+        private async Task HandlePlayerAsync(TcpClient client, Player player)
         {
             try
             {
@@ -139,6 +134,9 @@ namespace CrawlerGame.Logic
 
                 _players.Remove(player);
 
+                if (!_players.Any())
+                    Stop();
+
                 Console.WriteLine($"Client disconnected: {player.Name}");
             }
         }
@@ -164,11 +162,6 @@ namespace CrawlerGame.Logic
 
                 return inputData;
             });
-        }
-
-        private static IEnumerable<string> GetAvailableCommands()
-        {
-            return Enum.GetNames(typeof(CommandEnum)).Select(d => d);
         }
     }
 }

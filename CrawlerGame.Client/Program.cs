@@ -1,9 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using CrawlerGame.Client;
+using CrawlerGame.Logic.Options;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using CrawlerGame.Logic.Options;
 using Microsoft.Extensions.Options;
-using CrawlerGame.Client;
 
 using var host = CreateHostBuilder(args).Build();
 using var scope = host.Services.CreateScope();
@@ -15,7 +15,7 @@ try
 
     var gameClient = await services.GetRequiredService<GameClient>().Init();
 
-    await gameClient.Start();
+    await gameClient.Run();
 }
 catch (Exception e)
 {

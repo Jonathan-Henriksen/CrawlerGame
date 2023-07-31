@@ -20,14 +20,18 @@ namespace CrawlerGame.Logic.Services
 
         public void Start()
         {
-            Console.WriteLine("Starting clock");
             _timer.Start();
         }
 
         public void Stop()
         {
-            Console.WriteLine("Stopping clock");
             _timer.Stop();
+        }
+
+        public void Reset()
+        {
+            _timer.Stop();
+            Time = new TimeOnly(12, 0);
         }
 
         public TimeOnly GetTime()

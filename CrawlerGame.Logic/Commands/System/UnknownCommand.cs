@@ -1,16 +1,13 @@
-﻿using CrawlerGame.Logic.Commands.Base;
+﻿using CrawlerGame.Logic.Commands.Interfaces;
 
 namespace CrawlerGame.Logic.Commands.System
 {
-    internal class UnknownCommand : Command
+    internal class UnknownCommand : ICommand
     {
-        public UnknownCommand(string successMessage = "", string failureMesasge = "") : base(successMessage, failureMesasge)
-        {
-        }
-
-        public override void Execute()
+        public bool Execute()
         {
             Console.WriteLine("Unknown command");
+            return true;
         }
     }
 }

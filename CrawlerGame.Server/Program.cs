@@ -17,7 +17,8 @@ var services = scope.ServiceProvider;
 
 try
 {
-    await services.GetRequiredService<GameServer>().Init().Start();
+    var gameServer = await services.GetRequiredService<GameServer>().Init();
+    await gameServer.Run();
 }
 catch (Exception e)
 {

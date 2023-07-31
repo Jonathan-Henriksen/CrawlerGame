@@ -31,7 +31,7 @@ namespace CrawlerGame.Client
             return this;
         }
 
-        public async Task Start()
+        public async Task Run()
         {
             IsRunning = true;
             Console.Write(InputPrefix);
@@ -42,12 +42,6 @@ namespace CrawlerGame.Client
                 while (IsRunning)
                 {
                     PlayerInputTask ??= Task.Run(Console.In.ReadLineAsync);
-
-                    if (Console.KeyAvailable && Console.ReadKey().Key == ConsoleKey.Escape)
-                    {
-                        IsRunning = false;
-                        continue;
-                    }
 
                     if (!PlayerInputTask.IsCompleted)
                         continue;

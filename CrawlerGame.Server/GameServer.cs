@@ -11,6 +11,7 @@ namespace CrawlerGame.Server
         private readonly TcpListener _tcpListener;
 
         private bool IsRunning;
+        private bool Initialized;
 
         public GameServer(IGameEngine gameEngine, ServerOptions serverOptions)
         {
@@ -18,44 +19,26 @@ namespace CrawlerGame.Server
             _tcpListener = new TcpListener(IPAddress.Any, serverOptions.Port);
         }
 
-        public GameServer Init()
+        public async Task<GameServer> Init()
         {
-            IsRunning = true;
+            await _gameEngine.Init().StartAsync();
 
-            _ = _gameEngine.Init().StartAsync();
-            _ = HandleAdminInputAsync();
+            Initialized = true;
 
             return this;
         }
 
-        public async Task Start()
+        public async Task Run()
         {
-            if (!IsRunning)
-                Console.WriteLine("The GameServer have not been initialized yet. A call to Init() must be made before starting.");
+            if (!Initialized)
+                Console.WriteLine("The GameServer have not been initialized yet. A call to Init() must be made before running.");
 
-            _tcpListener.Start();
+            IsRunning = true;
 
-            try
-            {
-                Console.WriteLine("Starting server and waiting for clients");
-                while (IsRunning)
-                {
-                    var client = await _tcpListener.AcceptTcpClientAsync();
+            var adminTask = HandleAdminInputAsync();
+            var clientTask = HandleClientsAsync();
 
-                    Console.WriteLine($"Client connected: {client.Client.RemoteEndPoint}");
-
-                    _gameEngine.AddPlayer(client);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.Error.WriteLine(ex.Message);
-            }
-            finally
-            {
-                _gameEngine.Stop();
-                _tcpListener.Stop();
-            }
+            await Task.WhenAll(adminTask, clientTask);
         }
 
         private Task HandleAdminInputAsync()
@@ -63,6 +46,7 @@ namespace CrawlerGame.Server
             return Task.Run(async () =>
             {
                 Task<string?>? adminInputTask = default;
+
                 while (IsRunning)
                 {
                     adminInputTask ??= Task.Run(Console.In.ReadLineAsync);
@@ -76,7 +60,42 @@ namespace CrawlerGame.Server
                     if (string.IsNullOrEmpty(adminInput))
                         continue;
 
-                    IsRunning = !adminInput.Equals("exit", StringComparison.InvariantCultureIgnoreCase);
+                    if (adminInput == "exit")
+                    {
+                        IsRunning = false;
+                        continue;
+                    }
+
+                    _ = _gameEngine.HandleAdminCommandAsync(adminInput);
+                }
+            });
+        }
+
+        private Task HandleClientsAsync()
+        {
+            return Task.Run(async () =>
+            {
+                _tcpListener.Start();
+
+                try
+                {
+                    Console.WriteLine("Starting server and waiting for clients");
+                    while (IsRunning)
+                    {
+                        var client = await _tcpListener.AcceptTcpClientAsync();
+
+                        Console.WriteLine($"Client connected: {client.Client.RemoteEndPoint}");
+
+                        _gameEngine.AddPlayer(client);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.Error.WriteLine(ex.Message);
+                }
+                finally
+                {
+                    _tcpListener.Stop();
                 }
             });
         }

@@ -6,6 +6,8 @@
 
         public void Stop();
 
+        public void Reset();
+
         public TimeOnly GetTime();
     }
 }
