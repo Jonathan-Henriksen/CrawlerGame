@@ -141,27 +141,24 @@ namespace CrawlerGame.Logic
             }
         }
 
-        private Task<string> GetPlayerInputAsync(NetworkStream? stream)
+        private async Task<string> GetPlayerInputAsync(NetworkStream? stream)
         {
-            return Task.Run(async () =>
+            if (stream is null)
+                return string.Empty;
+
+            string? inputData = default;
+            while (inputData is null)
             {
-                if (stream is null)
-                    return string.Empty;
+                if (!stream.DataAvailable)
+                    continue;
 
-                string? inputData = default;
-                while (inputData is null)
-                {
-                    if (!stream.DataAvailable)
-                        continue;
+                var buffer = new byte[4096];
 
-                    var buffer = new byte[4096];
+                var bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
+                inputData = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+            }
 
-                    var bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
-                    inputData = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-                }
-
-                return inputData;
-            });
+            return inputData;
         }
     }
 }
