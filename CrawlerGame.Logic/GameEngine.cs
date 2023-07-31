@@ -4,8 +4,10 @@ using CrawlerGame.Logic.Commands.Base;
 using CrawlerGame.Logic.Factories.Interfaces;
 using CrawlerGame.Logic.Options;
 using CrawlerGame.Logic.Services.Interfaces;
+using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 
 namespace CrawlerGame.Logic
 {
@@ -114,32 +116,47 @@ namespace CrawlerGame.Logic
             {
                 Console.WriteLine($"Client connected: {client.Client.RemoteEndPoint}");
 
-                Task<string?>? playerInputTask = default;
+                Task<string>? playerInputTask = default;
 
-                while (client.Connected)
+                using var stream = client.GetStream();
+                while (client is not null && client.Connected)
                 {
-                    using var stream = client.GetStream();
-                    using var reader = new StreamReader(stream);
+                    playerInputTask ??= Task.Run(async () =>
+                    {
+                        string? inputData = default;
+                        while (inputData is null)
+                        {
+                            if (!stream.DataAvailable)
+                                continue;
 
-                    playerInputTask ??= Task.Run(reader.ReadLineAsync);
+                            byte[] buffer = new byte[4096];
+
+                            var bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
+                            inputData = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+                            await stream.FlushAsync();
+
+                            Console.WriteLine($"{player.Name} - {inputData}");
+
+                        }
+
+                        return inputData;
+                    });
 
                     if (!playerInputTask.IsCompleted)
                         continue;
 
                     var playerInput = await playerInputTask;
+                    playerInputTask = default;
 
                     if (playerInput is null)
                         continue;
 
+                    var data = Encoding.UTF8.GetBytes($"Echo -> {playerInput}");
+                    await stream.WriteAsync(data, 0, data.Length);
+
                     //var response = await _chatGPTService.GetCommandFromPlayerInput(playerInput, GetAvailableCommands());
 
                     //_playerCommands.Add(_commandFactory.GetPlayerCommand(player, response?.Command));
-
-                    Console.WriteLine($"{player.Name} - {playerInput}");
-
-                    using var writer = new StreamWriter(stream) { AutoFlush = true };
-
-                    _ = writer.WriteAsync($"Echo: {playerInput}");
                 }
             }
             catch (Exception ex)
