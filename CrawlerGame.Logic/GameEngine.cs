@@ -2,9 +2,7 @@
 using CrawlerGame.Library.Models.Player;
 using CrawlerGame.Logic.Commands.Base;
 using CrawlerGame.Logic.Factories.Interfaces;
-using CrawlerGame.Logic.Options;
 using CrawlerGame.Logic.Services.Interfaces;
-using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -16,62 +14,63 @@ namespace CrawlerGame.Logic
         private readonly IClockService _clock;
         private readonly ICommandFactory _commandFactory;
         private readonly IOpenAIService _chatGPTService;
-        private readonly TcpListener _server;
 
         private readonly List<Player> _players;
-
         private readonly List<Command?> _playerCommands;
 
+        private readonly List<TcpClient> _playerConnections;
 
-        public GameEngine(IClockService clockService, ICommandFactory commandFactory, IOpenAIService chatGPTService, ServerOptions serverOptions)
+        public GameEngine(IClockService clockService, ICommandFactory commandFactory, IOpenAIService chatGPTService)
         {
             _clock = clockService;
             _commandFactory = commandFactory;
             _chatGPTService = chatGPTService;
 
-            _server = new TcpListener(IPAddress.Any, serverOptions.Port);
             _players = new List<Player>();
             _playerCommands = new List<Command?>();
+            _playerConnections = new List<TcpClient>();
         }
 
         private bool IsRunning { get; set; }
 
-        private bool IsPaused { get; set; }
+        public void AddPlayer(TcpClient playerClient)
+        {
+            var ipEndpoint = (IPEndPoint?) playerClient.Client.RemoteEndPoint;
+            var ipAddress = ipEndpoint?.Address.ToString();
+
+            if (string.IsNullOrEmpty(ipAddress))
+                return;
+
+            var player = new Player(ipAddress);
+
+            _players.Add(player);
+            _playerConnections.Add(playerClient);
+
+            _ = HandlePlayerInputAsync(playerClient, player);
+
+            Start();
+        }
 
         public IGameEngine Init()
         {
-            _ = StartServer();
-
             return this;
         }
 
         public void Start()
         {
-            IsRunning = true;
-            IsPaused = false;
+            if (IsRunning)
+                return;
 
+            IsRunning = true;
             _clock.Start();
 
-            while (IsRunning)
+            while (_players.Any())
             {
                 ExecutePlayerCommands();
-                Update();
             }
-        }
 
-        public void TogglePause()
-        {
-            if (IsPaused)
-                _clock.Resume();
-            else
-                _clock.Pause();
-
-            IsPaused = !IsPaused;
-        }
-
-        private void Update()
-        {
-            ExecutePlayerCommands();
+            _clock.Stop();
+            IsRunning = false;
         }
 
         private void ExecutePlayerCommands()
@@ -79,43 +78,13 @@ namespace CrawlerGame.Logic
             foreach (var command in _playerCommands)
             {
                 command?.Execute();
-                Console.Beep();
             }
         }
 
-        private Task StartServer()
-        {
-            _server.Start();
-
-            return Task.Run(async () =>
-            {
-                try
-                {
-                    Console.WriteLine("Starting server and waiting for clients");
-                    while (IsRunning)
-                    {
-                        var client = await _server.AcceptTcpClientAsync();
-                        var ip = (IPEndPoint?) client.Client.RemoteEndPoint;
-
-                        var player = new Player(ip?.Address.ToString() ?? string.Empty);
-
-                        _players.Add(player);
-                        _ = HandleClientAsync(client, player);
-                    }
-                }
-                finally
-                {
-                    _server.Stop();
-                }
-            });
-        }
-
-        private async Task HandleClientAsync(TcpClient client, Player player)
+        private async Task HandlePlayerInputAsync(TcpClient client, Player player)
         {
             try
             {
-                Console.WriteLine($"Client connected: {client.Client.RemoteEndPoint}");
-
                 Task<string>? playerInputTask = default;
 
                 using var stream = client.GetStream();
@@ -129,7 +98,7 @@ namespace CrawlerGame.Logic
                             if (!stream.DataAvailable)
                                 continue;
 
-                            byte[] buffer = new byte[4096];
+                            var buffer = new byte[4096];
 
                             var bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
                             inputData = Encoding.UTF8.GetString(buffer, 0, bytesRead);
@@ -148,7 +117,7 @@ namespace CrawlerGame.Logic
                     var playerInput = await playerInputTask;
                     playerInputTask = default;
 
-                    if (playerInput is null)
+                    if (string.IsNullOrEmpty(playerInput))
                         continue;
 
                     var data = Encoding.UTF8.GetBytes($"Echo -> {playerInput}");
@@ -166,13 +135,29 @@ namespace CrawlerGame.Logic
             finally
             {
                 client.Close();
-                Console.WriteLine($"Client disconnected: {client.Client.RemoteEndPoint}");
+
+                _players.Remove(player);
+
+                Console.WriteLine($"Client disconnected: {player.Name}");
             }
         }
 
         private static IEnumerable<string> GetAvailableCommands()
         {
             return Enum.GetNames(typeof(CommandEnum)).Select(d => d);
+        }
+
+        public void Stop()
+        {
+            foreach (var client in _playerConnections)
+            {
+                client.Close();
+                _playerConnections.Remove(client);
+            }
+
+            _players.Clear();
+            _playerCommands.Clear();
+            _clock.Stop();
         }
     }
 }

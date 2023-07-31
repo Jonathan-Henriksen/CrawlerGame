@@ -1,4 +1,5 @@
-﻿using CrawlerGame.Logic.Services.Interfaces;
+﻿using CrawlerGame.Logic.Options;
+using CrawlerGame.Logic.Services.Interfaces;
 using System.Timers;
 using Timer = System.Timers.Timer;
 
@@ -6,54 +7,43 @@ namespace CrawlerGame.Logic.Services
 {
     public class ClockService : IClockService
     {
-        private TimeOnly inGameTime;
-        private bool isRunning;
-        private readonly Timer timer;
+        private readonly Timer _timer;
 
-        public ClockService()
+        private TimeOnly Time;
+
+        public ClockService(GameOptions gameOptions)
         {
-            inGameTime = new TimeOnly(0, 0);
-            isRunning = false;
-            timer = new Timer(15000);
-            timer.Elapsed += OnTimerElapsed;
+            Time = new TimeOnly(12, 0);
+            _timer = new Timer(gameOptions.SecondsPerMinute);
+            _timer.Elapsed += OnTimerElapsed;
         }
 
         public void Start()
         {
-            if (!isRunning)
-            {
-                isRunning = true;
-                timer.Start();
-            }
+            _timer.Start();
         }
 
-        public void Pause()
+        public void Stop()
         {
-            isRunning = false;
-            timer.Stop();
+            _timer.Stop();
         }
 
-        public void Resume()
+        public void Toogle()
         {
-            if (!isRunning)
-            {
-                isRunning = true;
-                timer.Start();
-            }
+            if (_timer.Enabled)
+                _timer.Stop();
+            else
+                _timer.Start();
         }
 
-        public TimeOnly GetInGameTime()
+        public TimeOnly GetTime()
         {
-            return inGameTime;
+            return Time;
         }
 
         private void OnTimerElapsed(object? sender, ElapsedEventArgs e)
         {
-            if (!isRunning)
-                return;
-
-            inGameTime = inGameTime.AddMinutes(1);
-
+            Time = Time.AddMinutes(1);
         }
     }
 }

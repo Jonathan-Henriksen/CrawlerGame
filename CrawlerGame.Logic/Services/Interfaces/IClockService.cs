@@ -4,8 +4,10 @@
     {
         public void Start();
 
-        public void Pause();
+        public void Stop();
 
-        public void Resume();
+        public void Toogle();
+
+        public TimeOnly GetTime();
     }
 }

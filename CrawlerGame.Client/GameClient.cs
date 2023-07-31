@@ -1,12 +1,10 @@
-﻿using CrawlerGame.Library.Models.Player;
-using CrawlerGame.Logic.Options;
+﻿using CrawlerGame.Logic.Options;
 using System.Net.Sockets;
-using System.Numerics;
 using System.Text;
 
 namespace CrawlerGame.Client
 {
-    internal class PlayerClient : IClient
+    internal class GameClient
     {
         private readonly TcpClient _tcpClient;
         private readonly string _serverIp;
@@ -15,11 +13,20 @@ namespace CrawlerGame.Client
         private Task<string?>? PlayerInputTask;
         private bool IsRunning;
 
-        public PlayerClient(ClientOptions options)
+        public GameClient(ClientOptions options)
         {
             _tcpClient = new TcpClient();
             _serverIp = options.ServerIp;
             _port = options.ServerPort;
+        }
+
+        public async Task<GameClient> Init()
+        {
+            await _tcpClient.ConnectAsync(_serverIp, _port);
+
+            Console.WriteLine("Connected to the server.");
+
+            return this;
         }
 
         public async Task Start()
@@ -28,9 +35,6 @@ namespace CrawlerGame.Client
 
             try
             {
-                await _tcpClient.ConnectAsync(_serverIp, _port);
-                Console.WriteLine("Connected to the server.");
-
                 using var stream = _tcpClient.GetStream();
                 while (IsRunning)
                 {
@@ -77,10 +81,5 @@ namespace CrawlerGame.Client
                 _tcpClient.Close();
             }
         }
-    }
-
-    public interface IClient
-    {
-        Task Start();
     }
 }
