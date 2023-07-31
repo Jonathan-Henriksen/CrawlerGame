@@ -6,8 +6,6 @@
 
         public void Stop();
 
-        public void Toogle();
-
         public TimeOnly GetTime();
     }
 }

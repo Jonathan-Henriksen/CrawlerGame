@@ -6,6 +6,7 @@ using CrawlerGame.Logic.Services.Interfaces;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System;
 
 namespace CrawlerGame.Logic
 {
@@ -46,9 +47,9 @@ namespace CrawlerGame.Logic
             _players.Add(player);
             _playerConnections.Add(playerClient);
 
-            _ = HandlePlayerInputAsync(playerClient, player);
+            _ = StartAsync();
 
-            Start();
+            _ = HandlePlayerInputAsync(playerClient, player);
         }
 
         public IGameEngine Init()
@@ -56,21 +57,38 @@ namespace CrawlerGame.Logic
             return this;
         }
 
-        public void Start()
+        public Task StartAsync()
         {
-            if (IsRunning)
-                return;
-
-            IsRunning = true;
-            _clock.Start();
-
-            while (_players.Any())
+            return Task.Run(() =>
             {
-                ExecutePlayerCommands();
+                if (IsRunning || !_players.Any())
+                    return;
+
+                IsRunning = true;
+                _clock.Start();
+
+                while (IsRunning)
+                {
+                    ExecutePlayerCommands();
+                }
+
+                _clock.Stop();
+                IsRunning = false;
+            });
+        }
+
+        public void Stop()
+        {
+            IsRunning = false;
+
+            foreach (var client in _playerConnections)
+            {
+                client.Close();
+                _playerConnections.Remove(client);
             }
 
-            _clock.Stop();
-            IsRunning = false;
+            _players.Clear();
+            _playerCommands.Clear();
         }
 
         private void ExecutePlayerCommands()
@@ -90,26 +108,7 @@ namespace CrawlerGame.Logic
                 using var stream = client.GetStream();
                 while (client is not null && client.Connected)
                 {
-                    playerInputTask ??= Task.Run(async () =>
-                    {
-                        string? inputData = default;
-                        while (inputData is null)
-                        {
-                            if (!stream.DataAvailable)
-                                continue;
-
-                            var buffer = new byte[4096];
-
-                            var bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
-                            inputData = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-                            await stream.FlushAsync();
-
-                            Console.WriteLine($"{player.Name} - {inputData}");
-
-                        }
-
-                        return inputData;
-                    });
+                    playerInputTask ??= GetPlayerInputAsync(stream);
 
                     if (!playerInputTask.IsCompleted)
                         continue;
@@ -120,8 +119,10 @@ namespace CrawlerGame.Logic
                     if (string.IsNullOrEmpty(playerInput))
                         continue;
 
-                    var data = Encoding.UTF8.GetBytes($"Echo -> {playerInput}");
-                    await stream.WriteAsync(data, 0, data.Length);
+                    Console.WriteLine($"{_clock.GetTime()}: {player.Name} -> {playerInput}");
+
+                    var data = Encoding.UTF8.GetBytes($"{_clock.GetTime()}: Echo -> {playerInput}");
+                    await stream.WriteAsync(data);
 
                     //var response = await _chatGPTService.GetCommandFromPlayerInput(playerInput, GetAvailableCommands());
 
@@ -142,22 +143,32 @@ namespace CrawlerGame.Logic
             }
         }
 
+        private Task<string> GetPlayerInputAsync(NetworkStream? stream)
+        {
+            return Task.Run(async () =>
+            {
+                if (stream is null)
+                    return string.Empty;
+
+                string? inputData = default;
+                while (inputData is null)
+                {
+                    if (!stream.DataAvailable)
+                        continue;
+
+                    var buffer = new byte[4096];
+
+                    var bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
+                    inputData = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+                }
+
+                return inputData;
+            });
+        }
+
         private static IEnumerable<string> GetAvailableCommands()
         {
             return Enum.GetNames(typeof(CommandEnum)).Select(d => d);
-        }
-
-        public void Stop()
-        {
-            foreach (var client in _playerConnections)
-            {
-                client.Close();
-                _playerConnections.Remove(client);
-            }
-
-            _players.Clear();
-            _playerCommands.Clear();
-            _clock.Stop();
         }
     }
 }

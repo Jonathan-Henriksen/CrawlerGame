@@ -10,6 +10,8 @@ namespace CrawlerGame.Client
         private readonly string _serverIp;
         private readonly int _port;
 
+        private const string InputPrefix = "> ";
+
         private Task<string?>? PlayerInputTask;
         private bool IsRunning;
 
@@ -32,6 +34,7 @@ namespace CrawlerGame.Client
         public async Task Start()
         {
             IsRunning = true;
+            Console.Write(InputPrefix);
 
             try
             {
@@ -56,7 +59,7 @@ namespace CrawlerGame.Client
                         continue;
 
                     var data = Encoding.UTF8.GetBytes(playerInput);
-                    await stream.WriteAsync(data, 0, data.Length);
+                    await stream.WriteAsync(data);
 
                     string? response = default;
                     while (response is null)
@@ -65,11 +68,12 @@ namespace CrawlerGame.Client
                             continue;
 
                         var buffer = new byte[4096];
-                        var bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
+                        var bytesRead = await stream.ReadAsync(buffer);
                         response = Encoding.UTF8.GetString(buffer, 0, bytesRead);
                     }
 
                     Console.WriteLine(response);
+                    Console.Write(InputPrefix);
                 }
             }
             catch (Exception ex)

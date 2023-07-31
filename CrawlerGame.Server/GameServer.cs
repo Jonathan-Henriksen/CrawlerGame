@@ -8,22 +8,22 @@ namespace CrawlerGame.Server
     internal class GameServer
     {
         private readonly IGameEngine _gameEngine;
-        private readonly TcpListener _server;
+        private readonly TcpListener _tcpListener;
 
         private bool IsRunning;
 
         public GameServer(IGameEngine gameEngine, ServerOptions serverOptions)
         {
             _gameEngine = gameEngine;
-            _server = new TcpListener(IPAddress.Any, serverOptions.Port);
+            _tcpListener = new TcpListener(IPAddress.Any, serverOptions.Port);
         }
 
         public GameServer Init()
         {
-            _gameEngine.Init().Start();
-            _server.Start();
-
             IsRunning = true;
+
+            _ = _gameEngine.Init().StartAsync();
+            _ = HandleAdminInputAsync();
 
             return this;
         }
@@ -33,15 +33,14 @@ namespace CrawlerGame.Server
             if (!IsRunning)
                 Console.WriteLine("The GameServer have not been initialized yet. A call to Init() must be made before starting.");
 
+            _tcpListener.Start();
+
             try
             {
                 Console.WriteLine("Starting server and waiting for clients");
                 while (IsRunning)
                 {
-                    if (Console.KeyAvailable && Console.ReadKey().Key == ConsoleKey.Escape)
-                        break;
-
-                    var client = await _server.AcceptTcpClientAsync();
+                    var client = await _tcpListener.AcceptTcpClientAsync();
 
                     Console.WriteLine($"Client connected: {client.Client.RemoteEndPoint}");
 
@@ -54,16 +53,32 @@ namespace CrawlerGame.Server
             }
             finally
             {
-                Stop();
+                _gameEngine.Stop();
+                _tcpListener.Stop();
             }
         }
 
-        public void Stop()
+        private Task HandleAdminInputAsync()
         {
-            IsRunning = false;
+            return Task.Run(async () =>
+            {
+                Task<string?>? adminInputTask = default;
+                while (IsRunning)
+                {
+                    adminInputTask ??= Task.Run(Console.In.ReadLineAsync);
 
-            _gameEngine.Stop();
-            _server.Stop();
+                    if (!adminInputTask.IsCompleted)
+                        continue;
+
+                    var adminInput = await adminInputTask;
+                    adminInputTask = default;
+
+                    if (string.IsNullOrEmpty(adminInput))
+                        continue;
+
+                    IsRunning = !adminInput.Equals("exit", StringComparison.InvariantCultureIgnoreCase);
+                }
+            });
         }
     }
 }

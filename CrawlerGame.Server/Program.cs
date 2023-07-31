@@ -21,7 +21,6 @@ try
 }
 catch (Exception e)
 {
-    services.GetRequiredService<GameServer>().Stop();
     Console.WriteLine(e.Message);
 }
 

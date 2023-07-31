@@ -14,26 +14,20 @@ namespace CrawlerGame.Logic.Services
         public ClockService(GameOptions gameOptions)
         {
             Time = new TimeOnly(12, 0);
-            _timer = new Timer(gameOptions.SecondsPerMinute);
+            _timer = new Timer(gameOptions.SecondsPerMinute * 1000);
             _timer.Elapsed += OnTimerElapsed;
         }
 
         public void Start()
         {
+            Console.WriteLine("Starting clock");
             _timer.Start();
         }
 
         public void Stop()
         {
+            Console.WriteLine("Stopping clock");
             _timer.Stop();
-        }
-
-        public void Toogle()
-        {
-            if (_timer.Enabled)
-                _timer.Stop();
-            else
-                _timer.Start();
         }
 
         public TimeOnly GetTime()

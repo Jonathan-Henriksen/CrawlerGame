@@ -8,7 +8,7 @@ namespace CrawlerGame.Logic
 
         public IGameEngine Init();
 
-        public void Start();
+        public Task StartAsync();
 
         public void Stop();
     }
