@@ -43,7 +43,7 @@ namespace CrawlerGame.Logic
 
             foreach (var player in _players)
             {
-                player.GetClient()?.Close();
+                player.GetStream()?.Close();
             }
 
             _players.Clear();
@@ -67,8 +67,8 @@ namespace CrawlerGame.Logic
         {
             try
             {
-                using var stream = player.GetClient()?.GetStream();
-                while (stream is not null && player.IsConnected)
+                var stream = player.GetStream();
+                while (player.IsConnected)
                 {
                     var playerInput = await GetPlayerInputAsync(stream, player);
 
@@ -88,7 +88,7 @@ namespace CrawlerGame.Logic
             }
             finally
             {
-                player.GetClient()?.Close();
+                player.GetStream()?.Close();
                 _players.Remove(player);
                 Console.WriteLine($"Client disconnected: {player.Name}");
             }

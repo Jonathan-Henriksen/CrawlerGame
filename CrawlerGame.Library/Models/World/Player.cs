@@ -8,13 +8,13 @@ namespace CrawlerGame.Library.Models.World
     public class Player
     {
         private readonly string _ip;
-        private readonly TcpClient _tcpClient;
+        private readonly NetworkStream _stream;
         private readonly Timer _heartbeatTimer;
 
-        public Player(TcpClient playerClient)
+        public Player(TcpClient client)
         {
-            _tcpClient = playerClient;
-            _ip = ((IPEndPoint?) _tcpClient.Client.RemoteEndPoint)?.Address.ToString() ?? string.Empty;
+            _stream = client.GetStream();
+            _ip = ((IPEndPoint?) client.Client.RemoteEndPoint)?.Address.ToString() ?? string.Empty;
 
             _heartbeatTimer = new Timer(5000);
             _heartbeatTimer.Elapsed += (sender, args) => HeartbeatTimer_Elapsed();
@@ -38,22 +38,14 @@ namespace CrawlerGame.Library.Models.World
 
         public int Thirst { get; set; }
 
-        public TcpClient? GetClient()
+        public NetworkStream GetStream()
         {
-            if (!_tcpClient.Connected)
-                return default;
-
-            return _tcpClient;
+            return _stream;
         }
 
         private void HeartbeatTimer_Elapsed()
         {
-            if (!_tcpClient.Connected)
-            {
-                IsConnected = false;
-            }
-
-            IsConnected = _tcpClient.GetStream().IsConnected();
+            IsConnected = _stream.IsConnected();
         }
     }
 }
