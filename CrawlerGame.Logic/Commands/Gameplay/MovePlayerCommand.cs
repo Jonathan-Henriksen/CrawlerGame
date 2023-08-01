@@ -1,24 +1,24 @@
 ﻿using CrawlerGame.Library.Enums;
 using CrawlerGame.Library.Models.ChatGPT;
-using CrawlerGame.Library.Models.Player;
+using CrawlerGame.Library.Models.World;
 using CrawlerGame.Logic.Commands.Base;
 
 namespace CrawlerGame.Logic.Commands.Gameplay
 {
     internal class MovePlayerCommand : Command
     {
-        private readonly Player _player;
+        private readonly Player? _player;
         private readonly Direction _direction;
 
-        public MovePlayerCommand(Player player, Direction direction, CommandInfo commandInfo) : base(commandInfo, player.GetStream())
+        public MovePlayerCommand(CommandInfo commandInfo, Direction direction) : base(commandInfo)
         {
-            _player = player;
+            _player = commandInfo?.Player;
             _direction = direction;
         }
 
-        protected override bool ExecuteSpecific()
+        protected override bool Execute()
         {
-            if (_player.Location is null)
+            if (_player?.Location is null)
                 return false;
 
             switch (_direction)

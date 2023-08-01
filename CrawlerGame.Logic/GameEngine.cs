@@ -1,7 +1,7 @@
 ﻿using System.Net.Sockets;
 using CrawlerGame.Library.Enums;
 using CrawlerGame.Library.Extensions;
-using CrawlerGame.Library.Models.Player;
+using CrawlerGame.Library.Models.World;
 using CrawlerGame.Logic.Factories.Interfaces;
 using CrawlerGame.Logic.Services.Interfaces;
 
@@ -43,7 +43,7 @@ namespace CrawlerGame.Logic
 
             foreach (var player in _players)
             {
-                player.GetStream()?.Close();
+                player.GetClient()?.Close();
             }
 
             _players.Clear();
@@ -67,7 +67,7 @@ namespace CrawlerGame.Logic
         {
             try
             {
-                using var stream = player.GetStream();
+                using var stream = player.GetClient()?.GetStream();
                 while (stream is not null && player.IsConnected)
                 {
                     var playerInput = await GetPlayerInputAsync(stream, player);
@@ -88,7 +88,7 @@ namespace CrawlerGame.Logic
             }
             finally
             {
-                player.GetStream()?.Close();
+                player.GetClient()?.Close();
                 _players.Remove(player);
                 Console.WriteLine($"Client disconnected: {player.Name}");
             }

@@ -8,30 +8,29 @@ namespace CrawlerGame.Logic.Commands.Base
     {
         protected readonly string SuccessMessage;
         protected readonly string FailureMessage;
-        protected readonly NetworkStream? ResponseStream;
+        protected readonly TcpClient? ResponseClient;
 
-        protected Command(CommandInfo commandInfo, NetworkStream? responseStream)
+        protected Command(CommandInfo commandInfo)
         {
             SuccessMessage = commandInfo.SuccessMessage;
             FailureMessage = commandInfo.FailureMessage;
-            ResponseStream = responseStream;
+            ResponseClient = commandInfo.Player?.GetClient();
         }
 
         internal async Task ExecuteAsync()
         {
             string responseMessage;
-            if (ExecuteSpecific())
-            {
-                responseMessage = SuccessMessage;
-            }
-            else
-            {
-                responseMessage = FailureMessage;
-            }
 
-            await ResponseStream.SendMessageAsync(responseMessage);
+            if (Execute())
+                responseMessage = SuccessMessage;
+            else
+                responseMessage = FailureMessage;
+
+            using var responseStream = ResponseClient?.GetStream();
+
+            await responseStream.SendMessageAsync(responseMessage);
         }
 
-        protected abstract bool ExecuteSpecific();
+        protected abstract bool Execute();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CrawlerGame.Library.Enums;
+using CrawlerGame.Library.Models.World;
 
 namespace CrawlerGame.Library.Models.ChatGPT
 {
@@ -11,5 +12,7 @@ namespace CrawlerGame.Library.Models.ChatGPT
         public string SuccessMessage { get; set; } = string.Empty;
 
         public string FailureMessage { get; set; } = string.Empty;
+
+        public Player? Player { get; set; }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using CrawlerGame.Library.Models.ChatGPT;
 using CrawlerGame.Logic.Commands.Base;
-using System.Net.Sockets;
 
 namespace CrawlerGame.Logic.Commands.System
 {
@@ -8,12 +7,12 @@ namespace CrawlerGame.Logic.Commands.System
     {
         private readonly bool _isAdmin;
 
-        public UnknownCommand(CommandInfo commandInfo, NetworkStream? responseStream, bool isAdmin = false) : base(commandInfo, responseStream)
+        public UnknownCommand(CommandInfo commandInfo, bool isAdmin = false) : base(commandInfo)
         {
             _isAdmin = isAdmin;
         }
 
-        protected override bool ExecuteSpecific()
+        protected override bool Execute()
         {
             if (_isAdmin)
                 Console.WriteLine(SuccessMessage);
