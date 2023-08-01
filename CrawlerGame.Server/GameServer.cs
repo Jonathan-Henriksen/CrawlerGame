@@ -19,11 +19,11 @@ namespace CrawlerGame.Server
             _tcpListener = new TcpListener(IPAddress.Any, serverOptions.Port);
         }
 
-        public async Task<GameServer> Init()
+        public GameServer Init()
         {
-            await _gameEngine.Init().StartAsync();
-
             Initialized = true;
+
+            _ = _gameEngine.Init().StartAsync();
 
             return this;
         }
