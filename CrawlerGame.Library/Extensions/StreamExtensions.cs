@@ -14,11 +14,15 @@ namespace CrawlerGame.Library.Extensions
             await stream.WriteAsync(data);
         }
 
-        public static async Task<string> ReadMessageAsync(this NetworkStream stream)
+        public static async Task<string?> ReadMessageAsync(this NetworkStream stream)
         {
             var buffer = new byte[4096];
 
             var bytesRead = await stream.ReadAsync(buffer);
+
+            if (bytesRead == 1 && buffer[0] == 0)
+                return default;
+
             return Encoding.UTF8.GetString(buffer, 0, bytesRead);
         }
 

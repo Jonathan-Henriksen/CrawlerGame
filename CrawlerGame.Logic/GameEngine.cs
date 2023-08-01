@@ -118,16 +118,15 @@ namespace CrawlerGame.Logic
         {
             return Task.Run(async () =>
             {
-                string? inputData = default;
-                while (inputData is null && player.IsConnected)
+                while (player.IsConnected)
                 {
                     if (!stream.DataAvailable)
                         continue;
 
-                    inputData = await stream.ReadMessageAsync();
+                    return await stream.ReadMessageAsync();
                 }
 
-                return inputData;
+                return default;
             });
         }
     }

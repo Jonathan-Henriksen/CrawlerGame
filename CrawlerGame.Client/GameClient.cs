@@ -1,4 +1,5 @@
-﻿using CrawlerGame.Logic.Options;
+﻿using CrawlerGame.Library.Extensions;
+using CrawlerGame.Logic.Options;
 using System.Net.Sockets;
 using System.Text;
 
@@ -52,8 +53,7 @@ namespace CrawlerGame.Client
                     if (string.IsNullOrEmpty(playerInput))
                         continue;
 
-                    var data = Encoding.UTF8.GetBytes(playerInput);
-                    await stream.WriteAsync(data);
+                    await stream.SendMessageAsync(playerInput);
 
                     string? response = default;
                     while (response is null)
@@ -61,10 +61,11 @@ namespace CrawlerGame.Client
                         if (!stream.DataAvailable)
                             continue;
 
-                        var buffer = new byte[4096];
-                        var bytesRead = await stream.ReadAsync(buffer);
-                        response = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+                        response = await stream.ReadMessageAsync();
                     }
+
+                    if (string.IsNullOrEmpty(response))
+                        continue;
 
                     Console.WriteLine(response);
                     Console.Write(InputPrefix);
