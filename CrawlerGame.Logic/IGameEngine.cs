@@ -10,6 +10,8 @@ namespace CrawlerGame.Logic
 
         public Task StartAsync();
 
+        public void Stop();
+
         public Task HandleAdminCommandAsync(string adminInput);
     }
 }

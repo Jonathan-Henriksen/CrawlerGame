@@ -65,8 +65,8 @@ namespace CrawlerGame.Server
 
                     if (adminInput == "exit")
                     {
-                        IsRunning = false;
-                        continue;
+                        Stop();
+                        return;
                     }
 
                     _ = _gameEngine.HandleAdminCommandAsync(adminInput);
@@ -101,6 +101,12 @@ namespace CrawlerGame.Server
                     _tcpListener.Stop();
                 }
             });
+        }
+
+        private void Stop()
+        {
+            IsRunning= false;
+            _tcpListener?.Stop();
         }
     }
 }

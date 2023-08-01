@@ -93,7 +93,7 @@ namespace CrawlerGame.Logic
                     if (string.IsNullOrEmpty(playerInput))
                         continue;
 
-                    await stream.SendMessageAsync($"{_clock.GetTime()}: Echo -> {playerInput}");
+                    _ = stream.SendMessageAsync($"{_clock.GetTime()}: Echo -> {playerInput}");
 
                     //var response = await _chatGPTService.GetCommandFromPlayerInput(playerInput, GetAvailableCommands());
 
@@ -128,6 +128,20 @@ namespace CrawlerGame.Logic
 
                 return default;
             });
+        }
+
+        public void Stop()
+        {
+            IsRunning = false;
+
+            _clock.Reset();
+            _playerCommands.Clear();
+
+            foreach (var player in _players)
+            {
+                player.GetStream().Close();
+                _players.Remove(player);
+            }
         }
     }
 }
