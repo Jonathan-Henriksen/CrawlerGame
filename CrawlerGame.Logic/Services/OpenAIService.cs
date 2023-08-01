@@ -1,4 +1,5 @@
-﻿using CrawlerGame.Library.Models.ChatGPT;
+﻿using CrawlerGame.Library.Enums;
+using CrawlerGame.Library.Models.ChatGPT;
 using CrawlerGame.Logic.Options;
 using CrawlerGame.Logic.Services.Interfaces;
 using Newtonsoft.Json;
@@ -25,13 +26,13 @@ namespace CrawlerGame.Logic.Services
             InitConversations();
         }
 
-        public async Task<CommandMapperResponse?> GetCommandFromPlayerInput(string userinput, IEnumerable<string> availableCommands)
+        public async Task<CommandInfo> GetCommandFromPlayerInput(string userinput, IEnumerable<string> availableCommands)
         {
             CommandMapperConversation.AppendUserInput($"{string.Join(',', availableCommands)}\n\n{userinput}");
 
             var response = await CommandMapperConversation.GetResponseFromChatbotAsync();
 
-            return JsonConvert.DeserializeObject<CommandMapperResponse>(response);
+            return JsonConvert.DeserializeObject<CommandInfo>(response) ?? new CommandInfo() { Command = CommandEnum.Unknown };
         }
 
         private void InitConversations()

@@ -1,7 +1,7 @@
 ﻿using System.Net.Sockets;
+using CrawlerGame.Library.Enums;
 using CrawlerGame.Library.Extensions;
 using CrawlerGame.Library.Models.Player;
-using CrawlerGame.Logic.Commands.Interfaces;
 using CrawlerGame.Logic.Factories.Interfaces;
 using CrawlerGame.Logic.Services.Interfaces;
 
@@ -14,16 +14,13 @@ namespace CrawlerGame.Logic
         private readonly IOpenAIService _openAIService;
 
         private readonly List<Player> _players;
-        private readonly List<ICommand> _playerCommands;
 
         public GameEngine(IClockService clockService, ICommandFactory commandFactory, IOpenAIService openAIService)
         {
             _clock = clockService;
             _commandFactory = commandFactory;
             _openAIService = openAIService;
-
             _players = new List<Player>();
-            _playerCommands = new List<ICommand>();
         }
 
         private bool IsRunning { get; set; }
@@ -33,26 +30,16 @@ namespace CrawlerGame.Logic
             return this;
         }
 
-        public async Task StartAsync()
+        public void Start()
         {
             IsRunning = true;
             _clock.Start();
-
-            await Task.Run(async () =>
-            {
-                while (IsRunning)
-                {
-                    await ExecutePlayerCommandsAsync();
-                }
-            });
         }
 
         public void Stop()
         {
             IsRunning = false;
-
             _clock.Reset();
-            _playerCommands.Clear();
 
             foreach (var player in _players)
             {
@@ -62,9 +49,9 @@ namespace CrawlerGame.Logic
             _players.Clear();
         }
 
-        public async Task HandleAdminCommandAsync(string adminInput)
+        public async Task ExecuteAdminCommandAsync(string input)
         {
-            await _commandFactory.GetAdminCommand(this, adminInput).ExecuteAsync();
+            await _commandFactory.GetAdminCommand(this, input).ExecuteAsync();
         }
 
         public void AddPlayer(TcpClient playerClient)
@@ -73,18 +60,10 @@ namespace CrawlerGame.Logic
 
             _players.Add(player);
 
-            _ = HandlePlayerAsync(player);
+            _ = HandlePlayerInputAsync(player);
         }
 
-        private async Task ExecutePlayerCommandsAsync()
-        {
-            var commandsToExecute = _playerCommands;
-            _playerCommands.Clear();
-
-            await Task.WhenAll(commandsToExecute.Select(command => command.ExecuteAsync()));
-        }
-
-        private async Task HandlePlayerAsync(Player player)
+        private async Task HandlePlayerInputAsync(Player player)
         {
             try
             {
@@ -98,8 +77,9 @@ namespace CrawlerGame.Logic
 
                     _ = stream.SendMessageAsync($"{_clock.GetTime()}: Echo -> {playerInput}");
 
-                    //var response = await _chatGPTService.GetCommandFromPlayerInput(playerInput, GetAvailableCommands());
-                    //_playerCommands.Add(_commandFactory.GetPlayerCommand(player, response?.Command));
+                    //var commandInfo = await _openAIService.GetCommandFromPlayerInput(playerInput, Enum.GetNames(typeof(CommandEnum)));
+
+                    //await _commandFactory.GetPlayerCommand(player, commandInfo).ExecuteAsync();
                 }
             }
             catch (Exception ex)

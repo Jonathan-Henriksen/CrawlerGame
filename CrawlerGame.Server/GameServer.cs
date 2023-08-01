@@ -21,9 +21,9 @@ namespace CrawlerGame.Server
 
         public GameServer Init()
         {
-            Initialized = true;
+            _gameEngine.Init().Start();
 
-            _ = _gameEngine.Init().StartAsync();
+            Initialized = true;
 
             return this;
         }
@@ -38,10 +38,13 @@ namespace CrawlerGame.Server
 
             IsRunning = true;
 
-            var adminTask = HandleAdminInputAsync();
-            var clientTask = HandleClientsAsync();
+            await Task.WhenAll(HandleAdminInputAsync(), HandleClientsAsync());
+        }
 
-            await Task.WhenAll(adminTask, clientTask);
+        private void Stop()
+        {
+            IsRunning = false;
+            _tcpListener?.Stop();
         }
 
         private Task HandleAdminInputAsync()
@@ -69,7 +72,7 @@ namespace CrawlerGame.Server
                         return;
                     }
 
-                    _ = _gameEngine.HandleAdminCommandAsync(adminInput);
+                    _ = _gameEngine.ExecuteAdminCommandAsync(adminInput);
                 }
             });
         }
@@ -101,12 +104,6 @@ namespace CrawlerGame.Server
                     _tcpListener.Stop();
                 }
             });
-        }
-
-        private void Stop()
-        {
-            IsRunning= false;
-            _tcpListener?.Stop();
         }
     }
 }

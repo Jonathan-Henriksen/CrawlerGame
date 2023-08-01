@@ -1,13 +1,13 @@
-﻿using CrawlerGame.Library.Enums;
+﻿using CrawlerGame.Library.Models.ChatGPT;
 using CrawlerGame.Library.Models.Player;
-using CrawlerGame.Logic.Commands.Interfaces;
+using CrawlerGame.Logic.Commands.Base;
 
 namespace CrawlerGame.Logic.Factories.Interfaces
 {
     public interface ICommandFactory
     {
-        internal ICommand GetPlayerCommand(Player player, CommandEnum? command);
+        internal Command GetPlayerCommand(Player player, CommandInfo commandInfo);
 
-        internal ICommand GetAdminCommand(IGameEngine game, string adminInput, params string[] parameters);
+        internal Command GetAdminCommand(IGameEngine game, string adminInput, params string[] parameters);
     }
 }

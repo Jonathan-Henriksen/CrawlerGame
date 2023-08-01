@@ -4,14 +4,16 @@ namespace CrawlerGame.Logic
 {
     public interface IGameEngine
     {
-        public void AddPlayer(TcpClient playerClient);
+        
 
         public IGameEngine Init();
 
-        public Task StartAsync();
+        public void Start();
 
         public void Stop();
 
-        public Task HandleAdminCommandAsync(string adminInput);
+        public void AddPlayer(TcpClient playerClient);
+
+        public Task ExecuteAdminCommandAsync(string adminInput);
     }
 }

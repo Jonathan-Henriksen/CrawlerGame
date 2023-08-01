@@ -5,6 +5,7 @@
         MoveSouth,
         MoveWest,
         MoveEast,
-        MoveNorth
+        MoveNorth,
+        Unknown
     }
 }

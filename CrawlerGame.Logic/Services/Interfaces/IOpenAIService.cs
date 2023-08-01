@@ -4,6 +4,6 @@ namespace CrawlerGame.Logic.Services.Interfaces
 {
     public interface IOpenAIService
     {
-        public Task<CommandMapperResponse?> GetCommandFromPlayerInput(string userinput, IEnumerable<string> commands);
+        public Task<CommandInfo> GetCommandFromPlayerInput(string userinput, IEnumerable<string> commands);
     }
 }
