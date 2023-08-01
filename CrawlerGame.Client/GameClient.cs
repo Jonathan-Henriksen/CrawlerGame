@@ -33,7 +33,6 @@ namespace CrawlerGame.Client
         public async Task Run()
         {
             IsRunning = true;
-            Console.Write(InputPrefix);
 
             using var stream = _tcpClient.GetStream();
 
@@ -48,6 +47,8 @@ namespace CrawlerGame.Client
         {
             try
             {
+                Console.Write(InputPrefix);
+
                 while (IsRunning)
                 {
                     var input = await Task.Run(Console.In.ReadLineAsync);
