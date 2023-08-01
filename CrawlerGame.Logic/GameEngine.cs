@@ -4,8 +4,6 @@ using CrawlerGame.Logic.Commands.Interfaces;
 using CrawlerGame.Logic.Factories.Interfaces;
 using CrawlerGame.Logic.Services.Interfaces;
 using System.Net.Sockets;
-using System.Text;
-using Timer = System.Timers.Timer;
 
 namespace CrawlerGame.Logic
 {
@@ -53,8 +51,7 @@ namespace CrawlerGame.Logic
         {
             return Task.Run(() =>
             {
-                var command = _commandFactory.GetAdminCommand(this, adminInput);
-                command.Execute();
+                _commandFactory.GetAdminCommand(this, adminInput).Execute();
             });
         }
 
@@ -82,7 +79,7 @@ namespace CrawlerGame.Logic
             {
                 Task<string?>? playerInputTask = default;
 
-                using var stream = player.GetClient().GetStream();
+                using var stream = player.GetStream();
                 while (player.IsConnected)
                 {
                     playerInputTask ??= GetPlayerInputAsync(stream, player);
@@ -95,8 +92,6 @@ namespace CrawlerGame.Logic
 
                     if (string.IsNullOrEmpty(playerInput))
                         continue;
-
-                    Console.WriteLine($"{_clock.GetTime()}: {player.Name} -> {playerInput}");
 
                     await stream.SendMessageAsync($"{_clock.GetTime()}: Echo -> {playerInput}");
 
@@ -111,7 +106,7 @@ namespace CrawlerGame.Logic
             }
             finally
             {
-                player.GetClient().Close();
+                player.GetStream().Close();
 
                 _players.Remove(player);
 
