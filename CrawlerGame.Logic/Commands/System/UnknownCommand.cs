@@ -4,10 +4,10 @@ namespace CrawlerGame.Logic.Commands.System
 {
     internal class UnknownCommand : ICommand
     {
-        public bool Execute()
+        public Task<bool> ExecuteAsync()
         {
             Console.WriteLine("Unknown command");
-            return true;
+            return Task.FromResult(true);
         }
     }
 }

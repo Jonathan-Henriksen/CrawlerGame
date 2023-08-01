@@ -18,7 +18,7 @@ namespace CrawlerGame.Library.Models.Player
             _ip = ((IPEndPoint?) _tcpClient.Client.RemoteEndPoint)?.Address.ToString() ?? string.Empty;
 
             _heartbeatTimer = new Timer(5000);
-            _heartbeatTimer.Elapsed += (sender, args) => HeartbeatTimer_Elapsed(_tcpClient.GetStream());
+            _heartbeatTimer.Elapsed += (sender, args) => HeartbeatTimer_Elapsed();
             _heartbeatTimer.Start();
 
             IsConnected = true;
@@ -39,14 +39,22 @@ namespace CrawlerGame.Library.Models.Player
 
         public int Thirst { get; set; }
 
-        public NetworkStream GetStream()
+        public NetworkStream? GetStream()
         {
+            if (!_tcpClient.Connected)
+                return default;
+
             return _tcpClient.GetStream();
         }
-        
-        private void HeartbeatTimer_Elapsed(NetworkStream stream)
+
+        private void HeartbeatTimer_Elapsed()
         {
-            IsConnected = stream.IsConnected();
+            if (!_tcpClient.Connected)
+            {
+                IsConnected = false;
+            }
+
+            IsConnected = GetStream().IsConnected();
         }
     }
 }

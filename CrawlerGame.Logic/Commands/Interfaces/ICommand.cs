@@ -2,6 +2,6 @@
 {
     public interface ICommand
     {
-        internal bool Execute();
+        internal Task<bool> ExecuteAsync();
     }
 }

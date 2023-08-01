@@ -15,30 +15,34 @@ namespace CrawlerGame.Logic.Commands.Gameplay
             _direction = direction;
         }
 
-        public bool Execute()
+        public Task<bool> ExecuteAsync()
         {
             if (_player.Location is null)
-                return false;
+                return Task.FromResult(false);
 
-            switch (_direction)
+            return Task.Run(() =>
             {
-                case Direction.North:
-                    _player.Location.Y++;
-                    break;
-                case Direction.South:
-                    _player.Location.Y--;
-                    break;
-                case Direction.East:
-                    _player.Location.X++;
-                    break;
-                case Direction.West:
-                    _player.Location.X--;
-                    break;
-                default:
-                    return false;
-            }
+                switch (_direction)
+                {
+                    case Direction.North:
+                        _player.Location.Y++;
+                        break;
+                    case Direction.South:
+                        _player.Location.Y--;
+                        break;
+                    case Direction.East:
+                        _player.Location.X++;
+                        break;
+                    case Direction.West:
+                        _player.Location.X--;
+                        break;
+                    default:
+                        return false;
+                }
 
-            return true;
+                return true;
+            });
+
         }
     }
 }
