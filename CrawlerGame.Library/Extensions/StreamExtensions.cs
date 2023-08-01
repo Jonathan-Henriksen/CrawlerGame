@@ -5,13 +5,25 @@ namespace CrawlerGame.Library.Extensions
 {
     public static class StreamExtensions
     {
+        private static Dictionary<Stream, SemaphoreSlim> _streamSemaphores = new Dictionary<Stream, SemaphoreSlim>();
+
         public static async Task SendMessageAsync(this NetworkStream? stream, string message)
         {
             if (stream is null)
                 return;
 
-            var data = Encoding.UTF8.GetBytes(message);
-            await stream.WriteAsync(data);
+            var semaphore = GetSemaphore(stream);
+            try
+            {
+                await semaphore.WaitAsync();
+
+                var data = Encoding.UTF8.GetBytes(message);
+                await stream.WriteAsync(data);
+            }
+            finally
+            {
+                semaphore.Release();
+            }
         }
 
         public static async Task<string?> ReadMessageAsync(this NetworkStream stream)
@@ -52,6 +64,19 @@ namespace CrawlerGame.Library.Extensions
             }
 
             return result;
+        }
+
+        private static SemaphoreSlim GetSemaphore(Stream stream)
+        {
+            lock (_streamSemaphores)
+            {
+                if (!_streamSemaphores.TryGetValue(stream, out var semaphore))
+                {
+                    semaphore = new SemaphoreSlim(1);
+                    _streamSemaphores[stream] = semaphore;
+                }
+                return semaphore;
+            }
         }
     }
 }
