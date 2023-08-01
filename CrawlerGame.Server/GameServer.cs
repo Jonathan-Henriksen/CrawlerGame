@@ -31,7 +31,10 @@ namespace CrawlerGame.Server
         public async Task Run()
         {
             if (!Initialized)
-                Console.WriteLine("The GameServer have not been initialized yet. A call to Init() must be made before running.");
+            {
+                Console.WriteLine("Operation was cancelled. -> The server have not been initialized yet. Call Init() before running.");
+                return;
+            }
 
             IsRunning = true;
 

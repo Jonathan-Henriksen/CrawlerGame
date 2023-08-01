@@ -1,7 +1,6 @@
 ﻿using CrawlerGame.Library.Extensions;
 using CrawlerGame.Logic.Options;
 using System.Net.Sockets;
-using System.Text;
 
 namespace CrawlerGame.Client
 {
@@ -13,7 +12,6 @@ namespace CrawlerGame.Client
 
         private const string InputPrefix = "> ";
 
-        private Task<string?>? PlayerInputTask;
         private bool IsRunning;
 
         public GameClient(ClientOptions options)
@@ -37,47 +35,62 @@ namespace CrawlerGame.Client
             IsRunning = true;
             Console.Write(InputPrefix);
 
+            using var stream = _tcpClient.GetStream();
+
+            var clientInputTask = HandleClientInputAsync(stream);
+            var serverMessageTask = HandleServerMessagesAsync(stream);
+
+
+            await Task.WhenAll(clientInputTask, serverMessageTask);
+        }
+
+        private async Task HandleClientInputAsync(NetworkStream stream)
+        {
             try
             {
-                using var stream = _tcpClient.GetStream();
                 while (IsRunning)
                 {
-                    PlayerInputTask ??= Task.Run(Console.In.ReadLineAsync);
+                    var input = await Task.Run(Console.In.ReadLineAsync);
 
-                    if (!PlayerInputTask.IsCompleted)
+                    if (string.IsNullOrEmpty(input))
                         continue;
 
-                    var playerInput = await PlayerInputTask;
-                    PlayerInputTask = default;
-
-                    if (string.IsNullOrEmpty(playerInput))
-                        continue;
-
-                    await stream.SendMessageAsync(playerInput);
-
-                    string? response = default;
-                    while (response is null)
-                    {
-                        if (!stream.DataAvailable)
-                            continue;
-
-                        response = await stream.ReadMessageAsync();
-                    }
-
-                    if (string.IsNullOrEmpty(response))
-                        continue;
-
-                    Console.WriteLine(response);
-                    Console.Write(InputPrefix);
+                    await stream.SendMessageAsync(input);
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                Console.WriteLine(ex.Message);
             }
-            finally
+        }
+
+        private async Task HandleServerMessagesAsync(NetworkStream stream)
+        {
+            try
             {
-                _tcpClient.Close();
+                string? message = default;
+                while (IsRunning)
+                {
+                    while (message is null)
+                    {
+                        if (!stream.DataAvailable)
+                            continue;
+
+                        message = await stream.ReadMessageAsync();
+                    }
+
+                    if (string.IsNullOrEmpty(message))
+                        continue;
+
+                    Console.WriteLine(message);
+                    Console.Write(InputPrefix);
+
+                    message = default;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
     }
