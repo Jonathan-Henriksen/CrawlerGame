@@ -6,7 +6,7 @@ NeuralJourney is an innovative multiplayer gaming experience that seamlessly int
 
 ## OpenAI Implementation
 
-NeuralJourney uses OpenAI's GPT model to interpret player commands. The player's input and available commands are sent as a prompt to OpenAI, formatted as `"{availableCommands}\n\n{userInput}\n\n###\n\n"`. The completion end sequences are defined by the stop sequence `StopSequence` option in the OpenAI configuration. This integration allows for a dynamic mapping of player inputs to in-game actions, enhancing the gameplay experience.
+NeuralJourney uses OpenAI's GPT model to interpret player commands. The player's input and available commands are sent as a prompt to OpenAI, formatted as `"{availableCommands}\n\n{userInput}\n\n###\n\n"`. The completions consist of the mapped command and a message to send the player on successfull execution and are cut-off is controlled by using the stop sequence `##END##`. This integration allows for a dynamic mapping of player inputs to in-game actions, enhancing the gameplay experience.
 
 ## Strategy and Programming Patterns
 
