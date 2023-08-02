@@ -8,7 +8,7 @@ NeuralJourney is an innovative multiplayer gaming experience that seamlessly int
 
 NeuralJourney uses OpenAI's GPT model to interpret player commands. The player's input and available commands are sent as a prompt to OpenAI, formatted as `"{availableCommands}\n\n{userInput}\n\n###\n\n"`. The completion end sequences are defined by the stop sequence `StopSequence` option in the OpenAI configuration. This integration allows for a dynamic mapping of player inputs to in-game actions, enhancing the gameplay experience.
 
-## Technical Overview: Programming Patterns in NeuralJourney
+## Technical Overview: Strategies and Programming Patterns
 
 1. **Service-Oriented Architecture (SOA):** NeuralJourney employs a service-oriented architecture, modularizing functionalities into distinct services like `OpenAIService`. This promotes reusability, maintainability, and scalability within the application.
 
