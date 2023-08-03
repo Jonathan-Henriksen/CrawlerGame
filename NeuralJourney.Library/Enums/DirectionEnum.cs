@@ -1,6 +1,6 @@
 ﻿namespace NeuralJourney.Library.Enums
 {
-    public enum Direction
+    public enum DirectionEnum
     {
         East,
         North,

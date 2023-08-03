@@ -1,4 +1,4 @@
-﻿using NeuralJourney.Library.Models.ChatGPT;
+﻿using NeuralJourney.Library.Models.OpenAI;
 
 namespace NeuralJourney.Logic.Services.Interfaces
 {

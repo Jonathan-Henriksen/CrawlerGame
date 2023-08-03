@@ -1,6 +1,7 @@
-﻿using NeuralJourney.Library.Models.ChatGPT;
+﻿using NeuralJourney.Library.Models.OpenAI;
 using NeuralJourney.Library.Models.World;
 using NeuralJourney.Logic.Commands.Base;
+using NeuralJourney.Logic.Engines.Interfaces;
 
 namespace NeuralJourney.Logic.Factories.Interfaces
 {

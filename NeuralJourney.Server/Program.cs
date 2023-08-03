@@ -2,7 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
-using NeuralJourney.Logic;
+using NeuralJourney.Logic.Engines;
+using NeuralJourney.Logic.Engines.Interfaces;
 using NeuralJourney.Logic.Factories;
 using NeuralJourney.Logic.Factories.Interfaces;
 using NeuralJourney.Logic.Options;

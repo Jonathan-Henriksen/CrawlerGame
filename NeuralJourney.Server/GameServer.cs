@@ -1,4 +1,4 @@
-﻿using NeuralJourney.Logic;
+﻿using NeuralJourney.Logic.Engines.Interfaces;
 using NeuralJourney.Logic.Options;
 using System.Net;
 using System.Net.Sockets;

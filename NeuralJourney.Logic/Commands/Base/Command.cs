@@ -1,5 +1,5 @@
 ﻿using NeuralJourney.Library.Extensions;
-using NeuralJourney.Library.Models.ChatGPT;
+using NeuralJourney.Library.Models.OpenAI;
 using System.Net.Sockets;
 
 namespace NeuralJourney.Logic.Commands.Base

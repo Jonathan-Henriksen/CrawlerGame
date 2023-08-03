@@ -1,10 +1,11 @@
 ﻿using NeuralJourney.Library.Constants;
 using NeuralJourney.Library.Enums;
-using NeuralJourney.Library.Models.ChatGPT;
+using NeuralJourney.Library.Models.OpenAI;
 using NeuralJourney.Library.Models.World;
 using NeuralJourney.Logic.Commands.Base;
 using NeuralJourney.Logic.Commands.Gameplay;
 using NeuralJourney.Logic.Commands.System;
+using NeuralJourney.Logic.Engines.Interfaces;
 using NeuralJourney.Logic.Factories.Interfaces;
 using NeuralJourney.Logic.Options;
 
@@ -50,7 +51,7 @@ namespace NeuralJourney.Logic.Factories
 
         private MovePlayerCommand GetMovePlayerCommand(CommandInfo commandInfo)
         {
-            Direction? direction = Enum.TryParse(commandInfo.Params.FirstOrDefault(), out Direction directionParam) ? directionParam : (Direction?) null;
+            DirectionEnum? direction = Enum.TryParse(commandInfo.Params.FirstOrDefault(), out DirectionEnum directionParam) ? directionParam : (DirectionEnum?) null;
 
             return new MovePlayerCommand(commandInfo, direction, _gameOptions.WorldHeight, _gameOptions.WorldWidth);
         }

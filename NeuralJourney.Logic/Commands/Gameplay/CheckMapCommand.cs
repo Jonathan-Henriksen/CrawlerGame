@@ -1,7 +1,7 @@
 ﻿using NeuralJourney.Library.Attributes;
 using NeuralJourney.Library.Enums;
 using NeuralJourney.Library.Extensions;
-using NeuralJourney.Library.Models.ChatGPT;
+using NeuralJourney.Library.Models.OpenAI;
 using NeuralJourney.Library.Models.World;
 using NeuralJourney.Logic.Commands.Base;
 using NeuralJourney.Logic.Options;

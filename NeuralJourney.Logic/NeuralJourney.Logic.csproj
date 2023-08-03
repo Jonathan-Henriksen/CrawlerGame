@@ -20,11 +20,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\NeuralJourney.Analyzer\NeuralJourney.Analyzer.csproj">
-			<ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-			<OutputItemType>Analyzer</OutputItemType>
-			<Private>True</Private>
-		</ProjectReference>
 		<ProjectReference Include="..\NeuralJourney.Library\NeuralJourney.Library.csproj" />
 	</ItemGroup>
 

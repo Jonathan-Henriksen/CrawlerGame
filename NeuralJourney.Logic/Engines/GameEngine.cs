@@ -3,10 +3,11 @@ using NeuralJourney.Library.Constants;
 using NeuralJourney.Library.Enums;
 using NeuralJourney.Library.Extensions;
 using NeuralJourney.Library.Models.World;
+using NeuralJourney.Logic.Engines.Interfaces;
 using NeuralJourney.Logic.Factories.Interfaces;
 using NeuralJourney.Logic.Services.Interfaces;
 
-namespace NeuralJourney.Logic
+namespace NeuralJourney.Logic.Engines
 {
     public class GameEngine : IGameEngine
     {

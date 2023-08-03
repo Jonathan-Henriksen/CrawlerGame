@@ -1,6 +1,6 @@
 ﻿using System.Net.Sockets;
 
-namespace NeuralJourney.Logic
+namespace NeuralJourney.Logic.Engines.Interfaces
 {
     public interface IGameEngine
     {

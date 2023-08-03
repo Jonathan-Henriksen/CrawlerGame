@@ -2,7 +2,7 @@
 using NeuralJourney.Library.Models.World;
 using System.Text.Json.Serialization;
 
-namespace NeuralJourney.Library.Models.ChatGPT
+namespace NeuralJourney.Library.Models.OpenAI
 {
     public class CommandInfo
     {
