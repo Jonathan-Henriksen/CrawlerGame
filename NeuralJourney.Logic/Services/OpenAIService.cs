@@ -1,8 +1,12 @@
-﻿using NeuralJourney.Library.Enums;
+﻿using NeuralJourney.Library.Attributes;
+using NeuralJourney.Library.Enums;
 using NeuralJourney.Library.Models.ChatGPT;
+using NeuralJourney.Logic.Commands.Base;
 using NeuralJourney.Logic.Options;
 using NeuralJourney.Logic.Services.Interfaces;
 using OpenAI_API;
+using System.Reflection;
+using System.Text;
 
 namespace NeuralJourney.Logic.Services
 {
@@ -54,6 +58,44 @@ namespace NeuralJourney.Logic.Services
             }
 
             return commandInfo;
+        }
+
+        public void Init()
+        {
+            var stringBuilder = new StringBuilder();
+
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+
+            var types = assemblies
+                .SelectMany(assembly => assembly.GetExportedTypes())
+                .Where(type => typeof(Command).IsAssignableFrom(type) && type != typeof(Command));
+
+            foreach (var type in types)
+            {
+                var attribute = type.GetCustomAttribute<CommandMappingAttribute>();
+                if (attribute != null)
+                {
+                    var constructorParams = ExtractConstructorParameters(type);
+                    stringBuilder.Append($"{attribute.Command}|{constructorParams},");
+                }
+            }
+
+            var typeMappingsString = stringBuilder.ToString().TrimEnd(',');
+
+            Console.WriteLine(typeMappingsString);
+        }
+
+        private static string ExtractConstructorParameters(Type type)
+        {
+            var constructors = type.GetConstructors()
+                .Where(c => c.DeclaringType == type)
+                .ToArray();
+
+            List<string> constructorParamsList = constructors
+                .Select(constructor => string.Join("", Enumerable.Range(0, constructor.GetParameters().Length).Select(i => $"{{{i}}}")))
+                .ToList();
+
+            return string.Join("|", constructorParamsList);
         }
     }
 }

@@ -28,6 +28,8 @@ namespace NeuralJourney.Logic
 
         public IGameEngine Init()
         {
+            _openAIService.Init();
+
             return this;
         }
 
@@ -45,9 +47,8 @@ namespace NeuralJourney.Logic
             foreach (var player in _players)
             {
                 player.GetStream()?.Close();
+                _players.Remove(player);
             }
-
-            _players.Clear();
         }
 
         public async Task ExecuteAdminCommandAsync(string input)

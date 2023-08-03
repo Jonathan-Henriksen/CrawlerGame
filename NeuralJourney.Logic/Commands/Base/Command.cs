@@ -19,16 +19,15 @@ namespace NeuralJourney.Logic.Commands.Base
 
         internal async Task ExecuteAsync()
         {
-            string responseMessage;
+            var (success, callback) = Execute();
 
-            if (Execute())
-                responseMessage = SuccessMessage;
-            else
-                responseMessage = FailureMessage;
+            var responseMessage = success ? SuccessMessage : FailureMessage;
 
             await ResponseStream.SendMessageAsync(responseMessage);
+
+            callback?.Invoke();
         }
 
-        protected abstract bool Execute();
+        protected abstract (bool Success, Action? Callback) Execute();
     }
 }

@@ -25,10 +25,8 @@ namespace NeuralJourney.Logic.Factories
 
             return commandInfo.Command switch
             {
-                CommandEnum.MoveNorth => GetMovePlayerCommand(commandInfo, Direction.North),
-                CommandEnum.MoveSouth => GetMovePlayerCommand(commandInfo, Direction.South),
-                CommandEnum.MoveEast => GetMovePlayerCommand(commandInfo, Direction.East),
-                CommandEnum.MoveWest => GetMovePlayerCommand(commandInfo, Direction.North),
+                CommandEnum.CheckMap => new CheckMapCommand(commandInfo, _gameOptions),
+                CommandEnum.Move => GetMovePlayerCommand(commandInfo),
                 _ => new UnknownCommand(commandInfo)
             };
         }
@@ -36,22 +34,24 @@ namespace NeuralJourney.Logic.Factories
         public Command GetAdminCommand(IGameEngine game, string adminInput, params string[] parameters)
         {
             if (!adminInput.StartsWith('/') || !Enum.TryParse(adminInput[1..], true, out AdminCommandEnum command))
-                return UnknownAdminCommand();
+                return GetUnknownAdminCommand();
 
             return command switch
             {
-                _ => UnknownAdminCommand()
+                _ => GetUnknownAdminCommand()
             };
         }
 
-        private static Command UnknownAdminCommand()
+        private static UnknownCommand GetUnknownAdminCommand()
         {
-            var commandInfo = new CommandInfo(CommandEnum.Unknown, Phrases.UnknownCommand);
+            var commandInfo = new CommandInfo(CommandEnum.Unknown, Phrases.Failure.UnknownCommand);
             return new UnknownCommand(commandInfo, true);
         }
 
-        private MovePlayerCommand GetMovePlayerCommand(CommandInfo commandInfo, Direction direction)
+        private MovePlayerCommand GetMovePlayerCommand(CommandInfo commandInfo)
         {
+            Direction? direction = Enum.TryParse(commandInfo.Params.FirstOrDefault(), out Direction directionParam) ? directionParam : (Direction?) null;
+
             return new MovePlayerCommand(commandInfo, direction, _gameOptions.WorldHeight, _gameOptions.WorldWidth);
         }
     }

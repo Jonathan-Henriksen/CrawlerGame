@@ -22,6 +22,7 @@ namespace NeuralJourney.Library.Extensions
             }
             finally
             {
+                await Task.Delay(100);
                 semaphore.Release();
             }
         }

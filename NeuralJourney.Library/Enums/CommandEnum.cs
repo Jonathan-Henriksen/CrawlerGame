@@ -2,10 +2,8 @@
 {
     public enum CommandEnum
     {
-        MoveSouth,
-        MoveWest,
-        MoveEast,
-        MoveNorth,
+        CheckMap,
+        Move,
         Unknown
     }
 }
