@@ -17,6 +17,8 @@
 
         public static class Failure
         {
+            public static string CheckMap = "You do not have a map";
+
             public static string MovePlayer = "You cannot move any further {0}";
 
             public static string UnknownCommand = "Unknown command";

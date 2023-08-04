@@ -2,11 +2,11 @@
 
 namespace NeuralJourney.Library.Attributes
 {
-    public class PlayerCommandMappingAttribute : Attribute
+    public class PlayerCommandAttribute : Attribute
     {
         public PlayerCommandEnum Command { get; }
 
-        public PlayerCommandMappingAttribute(PlayerCommandEnum enumValue)
+        public PlayerCommandAttribute(PlayerCommandEnum enumValue)
         {
             Command = enumValue;
         }

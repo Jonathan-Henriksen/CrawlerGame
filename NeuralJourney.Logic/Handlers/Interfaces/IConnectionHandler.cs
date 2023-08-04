@@ -4,10 +4,10 @@ namespace NeuralJourney.Logic.Handlers.Interfaces
 {
     public interface IConnectionHandler
     {
-        public event Action<Player> Connected;
+        internal event Action<Player> Connected;
 
-        public Task HandleAsync();
+        internal Task HandleAsync();
 
-        public void Stop();
+        internal void Stop();
     }
 }

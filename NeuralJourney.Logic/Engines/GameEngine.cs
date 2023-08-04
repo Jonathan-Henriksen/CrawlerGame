@@ -1,4 +1,5 @@
 ﻿using NeuralJourney.Library.Models.World;
+using NeuralJourney.Logic.Dispatchers.Interfaces;
 using NeuralJourney.Logic.Engines.Interfaces;
 using NeuralJourney.Logic.Handlers.Interfaces;
 using NeuralJourney.Logic.Services.Interfaces;
@@ -8,18 +9,24 @@ namespace NeuralJourney.Logic.Engines
     public class GameEngine : IGameEngine
     {
         private readonly IClockService _clock;
+        private readonly ICommandDispatcher _commandDispatcher;
         private readonly IInputHandler _inputHandler;
         private readonly IConnectionHandler _connectionHandler;
 
         private readonly List<Player> _players = new();
 
-        public GameEngine(IClockService clockService, IInputHandler inputHandler, IConnectionHandler playerConnectionHandler)
+        public GameEngine(IClockService clockService, ICommandDispatcher commandDispatcher, IInputHandler inputHandler, IConnectionHandler playerConnectionHandler)
         {
             _clock = clockService;
-            _inputHandler = inputHandler;
-            _connectionHandler = playerConnectionHandler;
 
+            _commandDispatcher = commandDispatcher;
+
+            _connectionHandler = playerConnectionHandler;
             _connectionHandler.Connected += AddPlayer;
+
+            _inputHandler = inputHandler;
+            _inputHandler.OnPlayerInputReceived += _commandDispatcher.DispatchPlayerCommandAsync;
+            _inputHandler.OnAdminInputReceived += _commandDispatcher.DispatchAdminCommandAsync;
         }
 
         public async Task Run()

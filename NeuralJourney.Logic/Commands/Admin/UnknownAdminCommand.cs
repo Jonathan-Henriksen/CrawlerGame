@@ -6,7 +6,7 @@ using NeuralJourney.Logic.Commands.Admin.Base;
 
 namespace NeuralJourney.Logic.Commands.Admin
 {
-    [PlayerCommandMapping(PlayerCommandEnum.Unknown)]
+    [PlayerCommand(PlayerCommandEnum.Unknown)]
     internal class UnknownAdminCommand : AdminCommand
     {
         public UnknownAdminCommand(AdminCommandInfo commandInfo) : base(commandInfo)

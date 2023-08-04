@@ -1,4 +1,5 @@
 ﻿using NeuralJourney.Library.Attributes;
+using NeuralJourney.Library.Constants;
 using NeuralJourney.Library.Enums;
 using NeuralJourney.Library.Extensions;
 using NeuralJourney.Library.Models.CommandInfo;
@@ -8,7 +9,7 @@ using NeuralJourney.Logic.Options;
 
 namespace NeuralJourney.Logic.Commands.Players
 {
-    [PlayerCommandMapping(PlayerCommandEnum.CheckMap)]
+    [PlayerCommand(PlayerCommandEnum.CheckMap)]
     internal class CheckMapCommand : PlayerCommand
     {
         private readonly Player? _player;
@@ -21,6 +22,8 @@ namespace NeuralJourney.Logic.Commands.Players
             _player = commandInfo.Player;
             _worldWidth = gameOptions.WorldWidth;
             _worldHeight = gameOptions.WorldHeight;
+
+            commandInfo.FailureMessage = Phrases.Failure.CheckMap;
         }
 
         protected override (bool Success, Action? Callback) Execute()

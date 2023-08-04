@@ -1,11 +1,11 @@
-﻿using NeuralJourney.Library.Models.CommandInfo;
+﻿using NeuralJourney.Library.Models.World;
 
 namespace NeuralJourney.Logic.Dispatchers.Interfaces
 {
     public interface ICommandDispatcher
     {
-        internal Task DispatchPlayerCommandAsync(PlayerCommandInfo commandInfo);
+        internal void DispatchPlayerCommandAsync((Player Player, string Text) playerinput);
 
-        internal Task DispatchAdminCommandAsync(AdminCommandInfo commandInfo);
+        internal void DispatchAdminCommandAsync(string input);
     }
 }

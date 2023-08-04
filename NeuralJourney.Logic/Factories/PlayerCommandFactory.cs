@@ -23,10 +23,10 @@ namespace NeuralJourney.Logic.Factories
 
             var commandTypes = assembly?
                 .GetExportedTypes()
-                .Where(type => typeof(PlayerCommand).IsAssignableFrom(type) && type != typeof(PlayerCommand) && type.CustomAttributes.Any(a => a.AttributeType == typeof(PlayerCommandMappingAttribute)))
-                .Select(t => (Type: t, CommandAttribute: t.GetCustomAttribute<PlayerCommandMappingAttribute>()));
+                .Where(type => typeof(PlayerCommand).IsAssignableFrom(type) && type != typeof(PlayerCommand) && type.CustomAttributes.Any(a => a.AttributeType == typeof(PlayerCommandAttribute)))
+                .Select(t => (Type: t, CommandAttribute: t.GetCustomAttribute<PlayerCommandAttribute>()));
 
-            foreach (var commandType in commandTypes ?? Enumerable.Empty<(Type, PlayerCommandMappingAttribute)>())
+            foreach (var commandType in commandTypes ?? Enumerable.Empty<(Type, PlayerCommandAttribute)>())
             {
                 if (commandType.CommandAttribute is null)
                     continue;

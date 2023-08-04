@@ -8,10 +8,10 @@ using NeuralJourney.Logic.Options;
 
 namespace NeuralJourney.Logic.Commands.Players
 {
-    [PlayerCommandMapping(PlayerCommandEnum.CheckMap)]
+    [PlayerCommand(PlayerCommandEnum.CheckMap)]
     internal class MoveCommand : PlayerCommand
     {
-        private readonly Player? _player;
+        private readonly Player _player;
         private readonly DirectionEnum? _direction;
         private readonly int _worldHeight;
         private readonly int _worldWidth;
@@ -30,7 +30,7 @@ namespace NeuralJourney.Logic.Commands.Players
 
         protected override (bool Success, Action? Callback) Execute()
         {
-            if (_player?.Location is null)
+            if (_player.Location is null)
                 return (false, null);
 
             switch (_direction)

@@ -44,7 +44,7 @@ namespace NeuralJourney.Logic.Services
 
             foreach (var type in types)
             {
-                var attribute = type.GetCustomAttribute<PlayerCommandMappingAttribute>();
+                var attribute = type.GetCustomAttribute<PlayerCommandAttribute>();
                 if (attribute is not null)
                 {
                     var constructorParams = ExtractConstructorParameters(type);
