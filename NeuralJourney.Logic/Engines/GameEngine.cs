@@ -22,7 +22,7 @@ namespace NeuralJourney.Logic.Engines
             _connectionHandler = connectionHandler;
             _inputHandler = inputHandler;
 
-            _connectionHandler.Connected += AddPlayer;
+            _connectionHandler.OnPlayerConnected += AddPlayer;
 
             _inputHandler.OnPlayerInputReceived += _commandDispatcher.DispatchPlayerCommandAsync;
             _inputHandler.OnAdminInputReceived += _commandDispatcher.DispatchAdminCommandAsync;

@@ -11,7 +11,7 @@ namespace NeuralJourney.Logic.Handlers
     {
         private readonly TcpListener _tcpListener;
 
-        public event Action<Player>? Connected;
+        public event Action<Player>? OnPlayerConnected;
 
         private bool IsRunning;
 
@@ -39,7 +39,7 @@ namespace NeuralJourney.Logic.Handlers
                     if (client is null)
                         continue;
 
-                    Connected?.Invoke(new Player(client));
+                    OnPlayerConnected?.Invoke(new Player(client));
                 }
             }
             catch (Exception ex)

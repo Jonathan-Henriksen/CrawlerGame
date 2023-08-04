@@ -14,9 +14,9 @@ namespace NeuralJourney.Logic.Commands.Admin
             commandInfo.FailureMessage = Phrases.Failure.UnknownCommand;
         }
 
-        protected override bool Execute()
+        protected override (bool, Action?) Execute()
         {
-            return true;
+            return (false, null);
         }
     }
 }

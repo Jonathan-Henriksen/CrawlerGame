@@ -2,27 +2,16 @@
 
 namespace NeuralJourney.Logic.Commands.Admin.Base
 {
-    public abstract class AdminCommand
+    public abstract class AdminCommand : CommandBase
     {
-        public readonly string? SuccessMessage;
-        public readonly string? FailureMessage;
-
-        protected AdminCommand(AdminCommandInfo commandInfo)
+        protected AdminCommand(AdminCommandInfo commandInfo) : base(commandInfo.Params, commandInfo.SuccessMessage, commandInfo.FailureMessage)
         {
-
         }
 
-        internal Task ExecuteAsync()
+        protected override Task SendResponseAsync(string responseMessage)
         {
-            return Task.Run(() =>
-            {
-                if (Execute())
-                    Console.WriteLine(SuccessMessage);
-                else
-                    Console.WriteLine(FailureMessage);
-            });
+            Console.WriteLine(responseMessage);
+            return Task.CompletedTask;
         }
-
-        protected abstract bool Execute();
     }
 }
