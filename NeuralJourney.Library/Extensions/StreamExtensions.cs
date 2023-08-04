@@ -5,7 +5,7 @@ namespace NeuralJourney.Library.Extensions
 {
     public static class StreamExtensions
     {
-        private static Dictionary<Stream, SemaphoreSlim> _streamSemaphores = new Dictionary<Stream, SemaphoreSlim>();
+        private static readonly Dictionary<Stream, SemaphoreSlim> _streamSemaphores = new Dictionary<Stream, SemaphoreSlim>();
 
         public static async Task SendMessageAsync(this NetworkStream? stream, string message)
         {

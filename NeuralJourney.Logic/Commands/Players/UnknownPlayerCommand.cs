@@ -1,17 +1,17 @@
 ﻿using NeuralJourney.Library.Attributes;
 using NeuralJourney.Library.Constants;
 using NeuralJourney.Library.Enums;
-using NeuralJourney.Library.Models.OpenAI;
-using NeuralJourney.Logic.Commands.Base;
+using NeuralJourney.Library.Models.CommandInfo;
+using NeuralJourney.Logic.Commands.Players.Base;
 
-namespace NeuralJourney.Logic.Commands.System
+namespace NeuralJourney.Logic.Commands.Players
 {
-    [CommandMapping(CommandEnum.Unknown)]
-    internal class UnknownCommand : Command
+    [PlayerCommandMapping(PlayerCommandEnum.Unknown)]
+    internal class UnknownPlayerCommand : PlayerCommand
     {
         private readonly bool _isAdmin;
 
-        public UnknownCommand(CommandInfo commandInfo, bool isAdmin = false) : base(commandInfo)
+        public UnknownPlayerCommand(PlayerCommandInfo commandInfo, bool isAdmin = false) : base(commandInfo)
         {
             _isAdmin = isAdmin;
 

@@ -2,7 +2,7 @@
 {
     public static class Phrases
     {
-        
+
 
         public static class System
         {
@@ -11,6 +11,8 @@
             public static string ClientDisconnected = "Client disconnected";
 
             public static string ClientError = "Error handling client";
+
+            public static string StartingServer = "Starting server and waiting for clients";
         }
 
         public static class Failure

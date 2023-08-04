@@ -1,7 +1,5 @@
 ﻿using NeuralJourney.Library.Attributes;
-using NeuralJourney.Library.Enums;
-using NeuralJourney.Library.Models.OpenAI;
-using NeuralJourney.Logic.Commands.Base;
+using NeuralJourney.Logic.Commands.Players.Base;
 using NeuralJourney.Logic.Options;
 using NeuralJourney.Logic.Services.Interfaces;
 using OpenAI_API;
@@ -13,6 +11,7 @@ namespace NeuralJourney.Logic.Services
     public class OpenAIService : IOpenAIService
     {
         private readonly OpenAIAPI _openApi;
+        private readonly string _availableCommands;
 
         public OpenAIService(OpenAIOptions options)
         {
@@ -23,44 +22,17 @@ namespace NeuralJourney.Logic.Services
             _openApi.Completions.DefaultCompletionRequestArgs.StopSequence = options.StopSequence;
             _openApi.Completions.DefaultCompletionRequestArgs.Temperature = options.Temperature;
             _openApi.Completions.DefaultCompletionRequestArgs.user = "Nerual Journey";
+
+            _availableCommands = GetAvailableCommands();
         }
 
-        public async Task<CommandInfo> GetCommandFromPlayerInput(string userinput, IEnumerable<string> availableCommands)
+        public async Task<string> GetCommandCompletionAsync(string userinput)
         {
-            var completionResponse = await _openApi.Completions.CreateCompletionAsync($"{string.Join(',', availableCommands)}\n\n{userinput}\n\n###\n\n");
-            var completion = completionResponse?.Completions.FirstOrDefault();
-
-            if (completion is null || string.IsNullOrEmpty(completion.Text))
-                return new CommandInfo(CommandEnum.Unknown, userinput);
-
-            return GetCommandInfoFromCompletion(completion.Text);
+            var completionResponse = await _openApi.Completions.CreateCompletionAsync($"{_availableCommands}\n\n{userinput}\n\n###\n\n");
+            return completionResponse?.Completions.FirstOrDefault()?.Text ?? string.Empty;
         }
 
-        private CommandInfo GetCommandInfoFromCompletion(string completionText)
-        {
-            string[] mainParts = completionText.Split(new string[] { ",Param:", ",SuccessMessage:" }, StringSplitOptions.None);
-
-            var commandInfo = new CommandInfo(CommandEnum.Unknown, Array.Empty<string>(), string.Empty);
-
-            if (Enum.TryParse(mainParts[0].TrimStart(), true, out CommandEnum cmd))
-            {
-                commandInfo.Command = cmd;
-            }
-
-            if (mainParts.Length > 1 && mainParts[1] != "null")
-            {
-                commandInfo.Params = mainParts[1].Split(',');
-            }
-
-            if (mainParts.Length > 2 && mainParts[2] != "null")
-            {
-                commandInfo.SuccessMessage = mainParts[2];
-            }
-
-            return commandInfo;
-        }
-
-        public void Init()
+        private static string GetAvailableCommands()
         {
             var stringBuilder = new StringBuilder();
 
@@ -68,21 +40,19 @@ namespace NeuralJourney.Logic.Services
 
             var types = assemblies
                 .SelectMany(assembly => assembly.GetExportedTypes())
-                .Where(type => typeof(Command).IsAssignableFrom(type) && type != typeof(Command));
+                .Where(type => typeof(PlayerCommand).IsAssignableFrom(type) && type != typeof(PlayerCommand));
 
             foreach (var type in types)
             {
-                var attribute = type.GetCustomAttribute<CommandMappingAttribute>();
-                if (attribute != null)
+                var attribute = type.GetCustomAttribute<PlayerCommandMappingAttribute>();
+                if (attribute is not null)
                 {
                     var constructorParams = ExtractConstructorParameters(type);
                     stringBuilder.Append($"{attribute.Command}|{constructorParams},");
                 }
             }
 
-            var typeMappingsString = stringBuilder.ToString().TrimEnd(',');
-
-            Console.WriteLine(typeMappingsString);
+            return stringBuilder.ToString().TrimEnd(',');
         }
 
         private static string ExtractConstructorParameters(Type type)

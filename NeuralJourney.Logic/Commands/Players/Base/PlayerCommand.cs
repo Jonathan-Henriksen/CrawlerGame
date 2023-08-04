@@ -1,16 +1,16 @@
 ﻿using NeuralJourney.Library.Extensions;
-using NeuralJourney.Library.Models.OpenAI;
+using NeuralJourney.Library.Models.CommandInfo;
 using System.Net.Sockets;
 
-namespace NeuralJourney.Logic.Commands.Base
+namespace NeuralJourney.Logic.Commands.Players.Base
 {
-    public abstract class Command
+    public abstract class PlayerCommand
     {
         protected readonly string SuccessMessage;
         protected readonly string FailureMessage;
         protected readonly NetworkStream? ResponseStream;
 
-        protected Command(CommandInfo commandInfo)
+        protected PlayerCommand(PlayerCommandInfo commandInfo)
         {
             SuccessMessage = commandInfo.SuccessMessage;
             FailureMessage = commandInfo.FailureMessage ?? string.Empty;

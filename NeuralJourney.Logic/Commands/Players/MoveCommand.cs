@@ -1,28 +1,31 @@
 ﻿using NeuralJourney.Library.Attributes;
 using NeuralJourney.Library.Constants;
 using NeuralJourney.Library.Enums;
-using NeuralJourney.Library.Models.OpenAI;
+using NeuralJourney.Library.Models.CommandInfo;
 using NeuralJourney.Library.Models.World;
-using NeuralJourney.Logic.Commands.Base;
+using NeuralJourney.Logic.Commands.Players.Base;
+using NeuralJourney.Logic.Options;
 
-namespace NeuralJourney.Logic.Commands.Gameplay
+namespace NeuralJourney.Logic.Commands.Players
 {
-    [CommandMapping(CommandEnum.CheckMap)]
-    internal class MovePlayerCommand : Command
+    [PlayerCommandMapping(PlayerCommandEnum.CheckMap)]
+    internal class MoveCommand : PlayerCommand
     {
         private readonly Player? _player;
         private readonly DirectionEnum? _direction;
         private readonly int _worldHeight;
         private readonly int _worldWidth;
 
-        public MovePlayerCommand(CommandInfo commandInfo, DirectionEnum? direction, int worldHeight, int worldWidth) : base(commandInfo)
+        public MoveCommand(PlayerCommandInfo commandInfo, GameOptions gameOptions) : base(commandInfo)
         {
             _player = commandInfo.Player;
-            _direction = direction;
-            _worldHeight = worldHeight;
-            _worldWidth = worldWidth;
+            _worldHeight = gameOptions.WorldHeight;
+            _worldWidth = gameOptions.WorldWidth;
 
             commandInfo.FailureMessage = string.Format(Phrases.Failure.MovePlayer, _direction);
+
+            if (commandInfo.Params is not null && Enum.TryParse(commandInfo.Params[0], out DirectionEnum direction))
+                _direction = direction;
         }
 
         protected override (bool Success, Action? Callback) Execute()
