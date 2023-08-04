@@ -2,6 +2,6 @@
 {
     public interface IOpenAIService
     {
-        public Task<string> GetCommandCompletionAsync(string userinput);
+        public Task<string> GetCommandCompletionTextAsync(string userinput);
     }
 }

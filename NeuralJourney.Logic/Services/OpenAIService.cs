@@ -26,7 +26,7 @@ namespace NeuralJourney.Logic.Services
             _availableCommands = GetAvailableCommands();
         }
 
-        public async Task<string> GetCommandCompletionAsync(string userinput)
+        public async Task<string> GetCommandCompletionTextAsync(string userinput)
         {
             var completionResponse = await _openApi.Completions.CreateCompletionAsync($"{_availableCommands}\n\n{userinput}\n\n###\n\n");
             return completionResponse?.Completions.FirstOrDefault()?.Text ?? string.Empty;

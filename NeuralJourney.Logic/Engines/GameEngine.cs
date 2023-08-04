@@ -15,26 +15,25 @@ namespace NeuralJourney.Logic.Engines
 
         private readonly List<Player> _players = new();
 
-        public GameEngine(IClockService clockService, ICommandDispatcher commandDispatcher, IInputHandler inputHandler, IConnectionHandler playerConnectionHandler)
+        public GameEngine(IClockService clockService, ICommandDispatcher commandDispatcher, IInputHandler inputHandler, IConnectionHandler connectionHandler)
         {
             _clock = clockService;
-
             _commandDispatcher = commandDispatcher;
+            _connectionHandler = connectionHandler;
+            _inputHandler = inputHandler;
 
-            _connectionHandler = playerConnectionHandler;
             _connectionHandler.Connected += AddPlayer;
 
-            _inputHandler = inputHandler;
             _inputHandler.OnPlayerInputReceived += _commandDispatcher.DispatchPlayerCommandAsync;
             _inputHandler.OnAdminInputReceived += _commandDispatcher.DispatchAdminCommandAsync;
         }
 
         public async Task Run()
         {
+            _clock.Start();
+
             var connectionHandlerTask = _connectionHandler.HandleAsync();
             var inputHandlerTask = _inputHandler.HandleAdminInputAsync();
-
-            _clock.Start();
 
             await Task.WhenAll(connectionHandlerTask, inputHandlerTask);
         }
