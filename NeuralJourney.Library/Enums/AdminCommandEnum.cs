@@ -2,7 +2,6 @@
 {
     public enum AdminCommandEnum
     {
-        Announce,
-        Unknown
+        Announce
     }
 }

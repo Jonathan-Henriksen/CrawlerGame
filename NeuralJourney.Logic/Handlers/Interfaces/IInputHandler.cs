@@ -5,9 +5,9 @@ namespace NeuralJourney.Logic.Handlers.Interfaces
 {
     public interface IInputHandler
     {
-        public event Action<AdminCommandInfo>? OnAdminInputReceived;
+        public event Action<string>? OnAdminInputReceived;
 
-        public event Action<PlayerCommandInfo>? OnPlayerInputReceived;
+        public event Action<(Player Player, string PlayerInput)>? OnPlayerInputReceived;
 
         internal Task HandleAdminInputAsync();
 

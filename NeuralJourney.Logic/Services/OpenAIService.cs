@@ -1,4 +1,5 @@
 ﻿using NeuralJourney.Library.Attributes;
+using NeuralJourney.Library.Exceptions.Commands;
 using NeuralJourney.Logic.Commands.Players.Base;
 using NeuralJourney.Logic.Options;
 using NeuralJourney.Logic.Services.Interfaces;
@@ -11,7 +12,8 @@ namespace NeuralJourney.Logic.Services
     public class OpenAIService : IOpenAIService
     {
         private readonly OpenAIAPI _openApi;
-        private readonly string _availableCommands;
+
+        private readonly string AvailableCommands;
 
         public OpenAIService(OpenAIOptions options)
         {
@@ -21,15 +23,20 @@ namespace NeuralJourney.Logic.Services
             _openApi.Completions.DefaultCompletionRequestArgs.MaxTokens = options.MaxTokens;
             _openApi.Completions.DefaultCompletionRequestArgs.StopSequence = options.StopSequence;
             _openApi.Completions.DefaultCompletionRequestArgs.Temperature = options.Temperature;
-            _openApi.Completions.DefaultCompletionRequestArgs.user = "Nerual Journey";
 
-            _availableCommands = GetAvailableCommands();
+            AvailableCommands = GetAvailableCommands();
         }
 
         public async Task<string> GetCommandCompletionTextAsync(string userinput)
         {
-            var completionResponse = await _openApi.Completions.CreateCompletionAsync($"{_availableCommands}\n\n{userinput}\n\n###\n\n");
-            return completionResponse?.Completions.FirstOrDefault()?.Text ?? string.Empty;
+            var completionResponse = await _openApi.Completions.CreateCompletionAsync($"{AvailableCommands}\n\n{userinput}\n\n###\n\n");
+
+            var completionText = completionResponse?.Completions.FirstOrDefault()?.Text;
+
+            if (string.IsNullOrEmpty(completionText))
+                throw new InvalidCompletionDataException(completionText, string.Format("Completion text for the user input \'{0}\' was null or empty", userinput));
+
+            return completionText;
         }
 
         private static string GetAvailableCommands()
@@ -61,7 +68,7 @@ namespace NeuralJourney.Logic.Services
                 .Where(c => c.DeclaringType == type)
                 .ToArray();
 
-            List<string> constructorParamsList = constructors
+            var constructorParamsList = constructors
                 .Select(constructor => string.Join("", Enumerable.Range(0, constructor.GetParameters().Length).Select(i => $"{{{i}}}")))
                 .ToList();
 

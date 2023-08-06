@@ -1,6 +1,7 @@
 ﻿using NeuralJourney.Library.Attributes;
-using NeuralJourney.Library.Constants;
 using NeuralJourney.Library.Enums;
+using NeuralJourney.Library.Exceptions.Commands;
+using NeuralJourney.Library.Exceptions.PlayerActions;
 using NeuralJourney.Library.Models.CommandInfo;
 using NeuralJourney.Library.Models.World;
 using NeuralJourney.Logic.Commands.Players.Base;
@@ -8,58 +9,60 @@ using NeuralJourney.Logic.Options;
 
 namespace NeuralJourney.Logic.Commands.Players
 {
-    [PlayerCommand(PlayerCommandEnum.CheckMap)]
+    [PlayerCommand(PlayerCommandEnum.Move)]
     internal class MoveCommand : PlayerCommand
     {
-        private readonly Player _player;
-        private readonly DirectionEnum? _direction;
-        private readonly int _worldHeight;
-        private readonly int _worldWidth;
+        private readonly Player Player;
 
-        public MoveCommand(PlayerCommandInfo commandInfo, GameOptions gameOptions) : base(commandInfo)
+        private readonly DirectionEnum Direction;
+
+        private readonly int WorldHeight;
+        private readonly int WorldWidth;
+
+        internal MoveCommand(PlayerCommandInfo commandInfo, GameOptions gameOptions) : base(commandInfo)
         {
-            _player = commandInfo.Player;
-            _worldHeight = gameOptions.WorldHeight;
-            _worldWidth = gameOptions.WorldWidth;
+            Player = commandInfo.Player;
 
-            commandInfo.FailureMessage = string.Format(Phrases.Failure.MovePlayer, _direction);
+            WorldHeight = gameOptions.WorldHeight;
+            WorldWidth = gameOptions.WorldWidth;
 
-            if (commandInfo.Params is not null && Enum.TryParse(commandInfo.Params[0], out DirectionEnum direction))
-                _direction = direction;
+            if (commandInfo.Params is null || commandInfo.Params.Length < 1)
+                throw new MissingParameterException(nameof(Direction));
+
+            if (!Enum.TryParse(commandInfo.Params[0], out DirectionEnum direction))
+                throw new InvalidParameterException($"{commandInfo.CommandEnum}", nameof(Direction), commandInfo.Params[0]);
+
+            Direction = direction;
         }
 
-        protected override (bool Success, Action? Callback) Execute()
+        protected override void Execute()
         {
-            if (_player.Location is null)
-                return (false, null);
-
-            switch (_direction)
+            switch (Direction)
             {
                 case DirectionEnum.North:
-                    if (_player.Location.Y < _worldHeight - 1)
-                        _player.Location.Y++;
+                    Player.Location.Y = Move(Player.Location.Y, WorldHeight, 1);
                     break;
 
                 case DirectionEnum.South:
-                    if (_player.Location.Y > 0)
-                        _player.Location.Y--;
+                    Player.Location.Y = Move(Player.Location.Y, WorldHeight, -1);
                     break;
 
                 case DirectionEnum.East:
-                    if (_player.Location.X < _worldWidth - 1)
-                        _player.Location.X++;
+                    Player.Location.X = Move(Player.Location.X, WorldWidth, 1);
                     break;
 
                 case DirectionEnum.West:
-                    if (_player.Location.X > 0)
-                        _player.Location.X--;
+                    Player.Location.X = Move(Player.Location.X, WorldWidth, -1);
                     break;
-
-                default:
-                    return (false, null);
             }
+        }
 
-            return (true, null);
+        private int Move(int coordinate, int boundary, int increment)
+        {
+            if ((increment > 0 && coordinate < boundary - 1) || (increment < 0 && coordinate > 0))
+                return coordinate + increment;
+            else
+                throw new MapLimitReachedException(Player, Direction);
         }
     }
 }

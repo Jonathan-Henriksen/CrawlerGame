@@ -24,13 +24,14 @@ namespace NeuralJourney.Library.Models.World
             Name = $"Player({_ip})";
             Health = 100;
             Thirst = 100;
+            Location = new Coordinates();
         }
 
         public bool IsConnected { get; private set; }
 
         public string Name { get; set; }
 
-        public Coordinates? Location { get; set; }
+        public Coordinates Location { get; set; }
 
         public int Health { get; set; }
 

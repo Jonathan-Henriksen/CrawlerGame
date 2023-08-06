@@ -1,8 +1,8 @@
 ﻿namespace NeuralJourney.Analyzer
 {
-    using System.Collections.Immutable;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.Diagnostics;
+    using System.Collections.Immutable;
 
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class CommandMappingEnforcementAnalyzer : DiagnosticAnalyzer

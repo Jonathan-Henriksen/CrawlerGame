@@ -4,9 +4,9 @@ using NeuralJourney.Library.Models.World;
 
 namespace NeuralJourney.Library.Models.CommandInfo
 {
-    public class PlayerCommandInfo : CommandInfoBase
+    public class PlayerCommandInfo : CommandInfoBase<PlayerCommandEnum>
     {
-        public PlayerCommandInfo(Player player, PlayerCommandEnum command, string[]? @params, string successMessage, string failureMessage) : base(command, @params, successMessage, failureMessage)
+        public PlayerCommandInfo(PlayerCommandEnum commandNameEnum, string[]? @params, string successMessage, Player player) : base(commandNameEnum, @params, successMessage)
         {
             Player = player;
         }

@@ -1,33 +1,18 @@
-﻿using NeuralJourney.Library.Enums;
-
-namespace NeuralJourney.Library.Models.CommandInfo.Base
+﻿namespace NeuralJourney.Library.Models.CommandInfo.Base
 {
-    public class CommandInfoBase
+    public abstract class CommandInfoBase<TCommandEnumType> : ICommandInfo<TCommandEnumType>
     {
-        public CommandInfoBase(AdminCommandEnum command, string[]? @params, string successMessage, string failureMessage)
+        public CommandInfoBase(TCommandEnumType commandEnum, string[]? @params, string successMessage)
         {
-            AdminCommand = command;
+            CommandEnum = commandEnum;
             Params = @params;
             SuccessMessage = successMessage;
-            FailureMessage = failureMessage;
         }
 
-        public CommandInfoBase(PlayerCommandEnum command, string[]? @params, string successMessage, string failureMessage)
-        {
-            PlayerCommand = command;
-            Params = @params;
-            SuccessMessage = successMessage;
-            FailureMessage = failureMessage;
-        }
+        public TCommandEnumType CommandEnum { get; }
 
-        public AdminCommandEnum AdminCommand { get; set; }
+        public string[]? Params { get; }
 
-        public PlayerCommandEnum PlayerCommand { get; set; }
-
-        public string[]? Params { get; set; }
-
-        public string SuccessMessage { get; set; }
-
-        public string FailureMessage { get; set; }
+        public string SuccessMessage { get; }
     }
 }

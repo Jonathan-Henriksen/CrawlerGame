@@ -6,11 +6,11 @@ namespace NeuralJourney.Logic.Commands.Players.Base
 {
     public abstract class PlayerCommand : CommandBase
     {
-        protected readonly NetworkStream? ResponseStream;
+        protected readonly NetworkStream ResponseStream;
 
-        protected PlayerCommand(PlayerCommandInfo commandInfo) : base(commandInfo.Params, commandInfo.SuccessMessage, commandInfo.FailureMessage)
+        protected PlayerCommand(PlayerCommandInfo commandInfo) : base(commandInfo.Params, commandInfo.SuccessMessage)
         {
-            ResponseStream = commandInfo.Player?.GetStream();
+            ResponseStream = commandInfo.Player.GetStream();
         }
 
         protected override async Task SendResponseAsync(string responseMessage)

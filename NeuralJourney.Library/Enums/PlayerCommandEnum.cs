@@ -3,7 +3,6 @@
     public enum PlayerCommandEnum
     {
         CheckMap,
-        Move,
-        Unknown
+        Move
     }
 }

@@ -1,4 +1,8 @@
-﻿using NeuralJourney.Library.Models.CommandInfo;
+﻿using NeuralJourney.Library.Enums;
+using NeuralJourney.Library.Exceptions.Commands;
+using NeuralJourney.Library.Exceptions.Commands.Base;
+using NeuralJourney.Library.Exceptions.PlayerActions.Base;
+using NeuralJourney.Library.Models.World;
 using NeuralJourney.Logic.Commands.Admin.Base;
 using NeuralJourney.Logic.Commands.Players.Base;
 using NeuralJourney.Logic.Dispatchers.Interfaces;
@@ -8,33 +12,92 @@ namespace NeuralJourney.Logic.Dispatchers
 {
     public class CommandDispatcher : ICommandDispatcher
     {
-        private readonly ICommandFactory<AdminCommand, AdminCommandInfo> _adminCommandFactory;
-        private readonly ICommandFactory<PlayerCommand, PlayerCommandInfo> _playerCommandFactory;
+        private readonly ICommandInfoFactory _commandInfoFactory;
 
-        public CommandDispatcher(ICommandFactory<AdminCommand, AdminCommandInfo> adminCommandFactory, ICommandFactory<PlayerCommand, PlayerCommandInfo> playerCommandFactory)
+        private readonly ICommandFactory<AdminCommand, AdminCommandEnum> _adminCommandFactory;
+        private readonly ICommandFactory<PlayerCommand, PlayerCommandEnum> _playerCommandFactory;
+
+
+        public CommandDispatcher(ICommandInfoFactory commandInfoFactory, ICommandFactory<AdminCommand, AdminCommandEnum> adminCommandFactory, ICommandFactory<PlayerCommand, PlayerCommandEnum> playerCommandFactory)
         {
+            _commandInfoFactory = commandInfoFactory;
+
             _adminCommandFactory = adminCommandFactory;
             _playerCommandFactory = playerCommandFactory;
         }
 
-        public async void DispatchAdminCommandAsync(AdminCommandInfo commandInfo)
+        public async void DispatchAdminCommand(string input)
         {
-            var command = _adminCommandFactory.GetCommand(commandInfo);
+            try
+            {
+                var commandInfo = await _commandInfoFactory.CreateAdminCommandInfoFromInputAsync(input);
 
-            if (command is null)
-                return;
+                if (commandInfo is null)
+                    return;
 
-            await command.ExecuteAsync();
+                var command = _adminCommandFactory.CreateCommand(commandInfo);
+
+                if (command is null)
+                    return;
+
+                await command.ExecuteAsync();
+            }
+            catch (InvalidCommandException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (MissingParameterException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (InvalidParameterException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (CommandMappingException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+
         }
 
-        public async void DispatchPlayerCommandAsync(PlayerCommandInfo commandInfo)
+        public async void DispatchPlayerCommand((Player Player, string Input) inputContext)
         {
-            var command = _playerCommandFactory.GetCommand(commandInfo);
+            try
+            {
+                var commandInfo = await _commandInfoFactory.CreatePlayerCommandInfoFromInputAsync(inputContext.Input, inputContext.Player);
 
-            if (command is null)
-                return;
+                if (commandInfo is null)
+                    return;
 
-            await command.ExecuteAsync();
+                var command = _playerCommandFactory.CreateCommand(commandInfo);
+
+                if (command is null)
+                    return;
+
+                await command.ExecuteAsync();
+            }
+            catch (InvalidCommandException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (MissingParameterException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (InvalidParameterException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (CommandMappingException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (PlayerActionException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }

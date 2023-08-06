@@ -1,42 +1,36 @@
 ﻿using System.Net.Sockets;
-using System.Text;
 
 namespace NeuralJourney.Library.Extensions
 {
     public static class StreamExtensions
     {
-        private static readonly Dictionary<Stream, SemaphoreSlim> _streamSemaphores = new Dictionary<Stream, SemaphoreSlim>();
+        private static readonly Dictionary<Stream, SemaphoreSlim> _streamSemaphores = new();
 
         public static async Task SendMessageAsync(this NetworkStream? stream, string message)
         {
             if (stream is null)
-                return;
+                throw new ArgumentNullException(nameof(stream));
 
             var semaphore = GetSemaphore(stream);
             try
             {
                 await semaphore.WaitAsync();
 
-                var data = Encoding.UTF8.GetBytes(message);
-                await stream.WriteAsync(data);
+                using var writer = new StreamWriter(stream, leaveOpen: true);
+
+                await writer.WriteAsync(message);
             }
             finally
             {
-                await Task.Delay(100);
                 semaphore.Release();
             }
         }
 
-        public static async Task<string?> ReadMessageAsync(this NetworkStream stream)
+        public static async Task<string> ReadMessageAsync(this NetworkStream stream)
         {
-            var buffer = new byte[4096];
+            using var reader = new StreamReader(stream, leaveOpen: true);
 
-            var bytesRead = await stream.ReadAsync(buffer);
-
-            if (bytesRead == 1 && buffer[0] == 0)
-                return default;
-
-            return Encoding.UTF8.GetString(buffer, 0, bytesRead);
+            return await reader.ReadLineAsync() ?? string.Empty;
         }
 
         public static bool IsConnected(this NetworkStream? stream)
@@ -44,27 +38,19 @@ namespace NeuralJourney.Library.Extensions
             if (stream is null)
                 return false;
 
-            var result = false;
-
-            var streamReader = new StreamReader(stream);
+            using var streamReader = new StreamReader(stream, leaveOpen: true);
             var timeout = streamReader.BaseStream.ReadTimeout;
 
             try
             {
                 streamReader.BaseStream.ReadTimeout = 250;
                 streamReader.BaseStream.WriteByte(0);
-                result = true;
+                return true;
             }
             catch
             {
-                result = false;
+                return false;
             }
-            finally
-            {
-                streamReader.BaseStream.ReadTimeout = timeout;
-            }
-
-            return result;
         }
 
         private static SemaphoreSlim GetSemaphore(Stream stream)

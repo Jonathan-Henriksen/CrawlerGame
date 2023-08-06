@@ -1,5 +1,4 @@
 ﻿using NeuralJourney.Library.Attributes;
-using NeuralJourney.Library.Constants;
 using NeuralJourney.Library.Enums;
 using NeuralJourney.Library.Extensions;
 using NeuralJourney.Library.Models.CommandInfo;
@@ -12,51 +11,38 @@ namespace NeuralJourney.Logic.Commands.Players
     [PlayerCommand(PlayerCommandEnum.CheckMap)]
     internal class CheckMapCommand : PlayerCommand
     {
-        private readonly Player? _player;
-        private readonly int _worldWidth;
-        private readonly int _worldHeight;
+        private readonly Player Player;
 
+        private readonly int WorldWidth;
+        private readonly int WorldHeight;
 
-        public CheckMapCommand(PlayerCommandInfo commandInfo, GameOptions gameOptions) : base(commandInfo)
+        internal CheckMapCommand(PlayerCommandInfo commandInfo, GameOptions gameOptions) : base(commandInfo)
         {
-            _player = commandInfo.Player;
-            _worldWidth = gameOptions.WorldWidth;
-            _worldHeight = gameOptions.WorldHeight;
-
-            commandInfo.FailureMessage = Phrases.Failure.CheckMap;
+            Player = commandInfo.Player;
+            WorldWidth = gameOptions.WorldWidth;
+            WorldHeight = gameOptions.WorldHeight;
         }
 
-        protected override (bool Success, Action? Callback) Execute()
+        protected override void Execute()
         {
-            try
+            var map = new string('#', WorldWidth + 2) + "\n";
+            for (var y = 0; y < WorldHeight; y++)
             {
-                var map = new string('#', _worldWidth + 2) + "\n";
-                for (var y = 0; y < _worldHeight; y++)
+                map += "#";
+                for (var x = 0; x < WorldWidth; x++)
                 {
-                    map += "#";
-                    for (var x = 0; x < _worldWidth; x++)
+                    if (x == Player.Location.X && y == Player.Location.Y)
+                        map += "P"; // 'P' for player
+                    else
                     {
-                        if (x == _player?.Location?.X && y == _player?.Location?.Y)
-                            map += "P"; // 'P' for player
-                        else
-                        {
-                            map += "."; // '.' for an empty room
-                        }
+                        map += "."; // '.' for an empty room
                     }
-                    map += "#\n";
                 }
-                map += new string('#', _worldWidth + 2) + "\n";
-
-                var callback = () => { _player?.GetStream().SendMessageAsync(map); };
-
-                return (true, callback);
+                map += "#\n";
             }
-            catch (Exception e)
-            {
-                Console.Error.WriteLine(e.Message);
+            map += new string('#', WorldWidth + 2) + "\n";
 
-                return (false, null);
-            }
+            CallBack = async () => { await Player.GetStream().SendMessageAsync(map); };
         }
     }
 }

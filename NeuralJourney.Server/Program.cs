@@ -2,6 +2,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using NeuralJourney.Library.Enums;
+using NeuralJourney.Logic.Commands.Admin.Base;
+using NeuralJourney.Logic.Commands.Players.Base;
 using NeuralJourney.Logic.Dispatchers;
 using NeuralJourney.Logic.Dispatchers.Interfaces;
 using NeuralJourney.Logic.Engines;
@@ -39,8 +42,11 @@ IHostBuilder CreateHostBuilder(string[] strings)
         {
             services.AddTransient<IClockService, ClockService>();
             services.AddTransient<ICommandDispatcher, CommandDispatcher>();
+            services.AddTransient<ICommandInfoFactory, CommandInfoFactory>();
 
-            services.AddSingleton(typeof(ICommandFactory<,>), new[] { typeof(AdminCommandFactory), typeof(PlayerCommandFactory) });
+            services.AddSingleton(typeof(ICommandFactory<AdminCommand, AdminCommandEnum>), typeof(CommandFactory<AdminCommand, AdminCommandEnum>));
+            services.AddSingleton(typeof(ICommandFactory<PlayerCommand, PlayerCommandEnum>), typeof(CommandFactory<PlayerCommand, PlayerCommandEnum>));
+
             services.AddSingleton<IConnectionHandler, ConnectionHandler>();
             services.AddSingleton<IGameEngine, GameEngine>();
             services.AddSingleton<IInputHandler, InputHandler>();

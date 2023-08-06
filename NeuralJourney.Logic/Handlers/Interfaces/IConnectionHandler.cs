@@ -6,7 +6,7 @@ namespace NeuralJourney.Logic.Handlers.Interfaces
     {
         internal event Action<Player> OnPlayerConnected;
 
-        internal Task HandleAsync();
+        internal Task HandleConnectionsAsync();
 
         internal void Stop();
     }

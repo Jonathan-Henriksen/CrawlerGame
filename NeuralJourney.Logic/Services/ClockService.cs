@@ -7,30 +7,30 @@ namespace NeuralJourney.Logic.Services
 {
     public class ClockService : IClockService
     {
-        private readonly Timer _timer;
+        private readonly Timer Timer;
 
         private TimeOnly Time;
 
         public ClockService(GameOptions gameOptions)
         {
             Time = new TimeOnly(12, 0);
-            _timer = new Timer(gameOptions.SecondsPerMinute * 1000);
-            _timer.Elapsed += OnTimerElapsed;
+            Timer = new Timer(gameOptions.SecondsPerMinute * 1000);
+            Timer.Elapsed += OnTimerElapsed;
         }
 
         public void Start()
         {
-            _timer.Start();
+            Timer.Start();
         }
 
         public void Stop()
         {
-            _timer.Stop();
+            Timer.Stop();
         }
 
         public void Reset()
         {
-            _timer.Stop();
+            Timer.Stop();
             Time = new TimeOnly(12, 0);
         }
 

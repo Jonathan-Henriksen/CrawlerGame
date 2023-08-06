@@ -1,7 +1,12 @@
-﻿namespace NeuralJourney.Logic.Factories.Interfaces
+﻿using NeuralJourney.Library.Models.CommandInfo.Base;
+using NeuralJourney.Logic.Commands;
+
+namespace NeuralJourney.Logic.Factories.Interfaces
 {
-    public interface ICommandFactory<TCommandType, TCommandInfoType>
+    public interface ICommandFactory<TCommandType, TCommandEnumType>
+        where TCommandType : CommandBase
+        where TCommandEnumType : Enum
     {
-        internal TCommandType GetCommand(TCommandInfoType commandInfo);
+        TCommandType CreateCommand(ICommandInfo<TCommandEnumType> commandInfo);
     }
 }

@@ -13,26 +13,27 @@ namespace NeuralJourney.Logic.Engines
         private readonly IInputHandler _inputHandler;
         private readonly IConnectionHandler _connectionHandler;
 
-        private readonly List<Player> _players = new();
+        private readonly List<Player> Players = new();
 
-        public GameEngine(IClockService clockService, ICommandDispatcher commandDispatcher, IInputHandler inputHandler, IConnectionHandler connectionHandler)
+        public GameEngine(IClockService clockService, ICommandDispatcher commandDispatcher, IConnectionHandler connectionHandler, IInputHandler inputHandler)
         {
             _clock = clockService;
             _commandDispatcher = commandDispatcher;
             _connectionHandler = connectionHandler;
             _inputHandler = inputHandler;
 
+
             _connectionHandler.OnPlayerConnected += AddPlayer;
 
-            _inputHandler.OnPlayerInputReceived += _commandDispatcher.DispatchPlayerCommandAsync;
-            _inputHandler.OnAdminInputReceived += _commandDispatcher.DispatchAdminCommandAsync;
+            _inputHandler.OnAdminInputReceived += _commandDispatcher.DispatchAdminCommand;
+            _inputHandler.OnPlayerInputReceived += _commandDispatcher.DispatchPlayerCommand;
         }
 
         public async Task Run()
         {
             _clock.Start();
 
-            var connectionHandlerTask = _connectionHandler.HandleAsync();
+            var connectionHandlerTask = _connectionHandler.HandleConnectionsAsync();
             var inputHandlerTask = _inputHandler.HandleAdminInputAsync();
 
             await Task.WhenAll(connectionHandlerTask, inputHandlerTask);
@@ -44,16 +45,16 @@ namespace NeuralJourney.Logic.Engines
 
             _connectionHandler.Stop();
 
-            foreach (var player in _players)
+            foreach (var player in Players)
             {
                 player.GetStream()?.Close();
-                _players.Remove(player);
+                Players.Remove(player);
             }
         }
 
         private void AddPlayer(Player player)
         {
-            _players.Add(player);
+            Players.Add(player);
 
             _ = _inputHandler.HandlePlayerInputAsync(player);
         }

@@ -21,7 +21,7 @@ namespace NeuralJourney.Logic.Handlers
             IsRunning = false;
         }
 
-        public async Task HandleAsync()
+        public async Task HandleConnectionsAsync()
         {
             IsRunning = true;
 
