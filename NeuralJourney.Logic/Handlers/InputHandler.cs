@@ -7,7 +7,7 @@ namespace NeuralJourney.Logic.Handlers
     public class InputHandler : IInputHandler
     {
         public event Action<string>? OnAdminInputReceived;
-        public event Action<(Player Player, string PlayerInput)>? OnPlayerInputReceived;
+        public event Action<string, Player>? OnPlayerInputReceived;
 
         public async Task HandleAdminInputAsync()
         {
@@ -38,7 +38,7 @@ namespace NeuralJourney.Logic.Handlers
                 if (string.IsNullOrEmpty(input))
                     continue;
 
-                OnPlayerInputReceived?.Invoke((player, input));
+                OnPlayerInputReceived?.Invoke(input, player);
             }
         }
     }

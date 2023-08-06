@@ -1,5 +1,4 @@
-﻿using NeuralJourney.Library.Models.CommandInfo;
-using NeuralJourney.Library.Models.World;
+﻿using NeuralJourney.Library.Models.World;
 
 namespace NeuralJourney.Logic.Handlers.Interfaces
 {
@@ -7,7 +6,7 @@ namespace NeuralJourney.Logic.Handlers.Interfaces
     {
         public event Action<string>? OnAdminInputReceived;
 
-        public event Action<(Player Player, string PlayerInput)>? OnPlayerInputReceived;
+        public event Action<string, Player>? OnPlayerInputReceived;
 
         internal Task HandleAdminInputAsync();
 

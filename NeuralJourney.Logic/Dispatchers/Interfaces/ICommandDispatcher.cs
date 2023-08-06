@@ -6,6 +6,6 @@ namespace NeuralJourney.Logic.Dispatchers.Interfaces
     {
         internal void DispatchAdminCommand(string adminInput);
 
-        internal void DispatchPlayerCommand((Player Player, string Input) inputContext);
+        internal void DispatchPlayerCommand(string playerInput, Player player);
     }
 }
