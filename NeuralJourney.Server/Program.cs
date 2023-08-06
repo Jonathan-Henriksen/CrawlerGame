@@ -42,7 +42,6 @@ IHostBuilder CreateHostBuilder(string[] strings)
         {
             services.AddTransient<IClockService, ClockService>();
             services.AddTransient<ICommandDispatcher, CommandDispatcher>();
-            services.AddTransient<ICommandInfoFactory, CommandInfoFactory>();
 
             services.AddSingleton(typeof(ICommandFactory<AdminCommand, AdminCommandEnum>), typeof(CommandFactory<AdminCommand, AdminCommandEnum>));
             services.AddSingleton(typeof(ICommandFactory<PlayerCommand, PlayerCommandEnum>), typeof(CommandFactory<PlayerCommand, PlayerCommandEnum>));

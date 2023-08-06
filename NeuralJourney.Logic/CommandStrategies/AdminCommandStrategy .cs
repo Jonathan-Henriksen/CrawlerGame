@@ -4,25 +4,24 @@ using NeuralJourney.Logic.CommandStrategies.Interfaces;
 using NeuralJourney.Logic.Factories.Interfaces;
 using NeuralJourney.Library.Enums;
 using NeuralJourney.Logic.Commands.Admin.Base;
+using NeuralJourney.Library.Models.CommandInfo;
 
 namespace NeuralJourney.Logic.CommandStrategies
 {
     public class AdminCommandStrategy : IAdminCommandStrategy
     {
         private readonly ICommandFactory<AdminCommand, AdminCommandEnum> _commandFactory;
-        private readonly ICommandInfoFactory _commandInfoFactory;
 
-        public AdminCommandStrategy(ICommandFactory<AdminCommand, AdminCommandEnum> commandFactory, ICommandInfoFactory commandInfoFactory)
+        public AdminCommandStrategy(ICommandFactory<AdminCommand, AdminCommandEnum> commandFactory)
         {
             _commandFactory = commandFactory;
-            _commandInfoFactory = commandInfoFactory;
         }
 
         public async Task ExecuteAsync(string adminInput)
         {
             try
             {
-                var commandInfo = await _commandInfoFactory.CreateAdminCommandInfoFromInputAsync(adminInput);
+                var commandInfo = new AdminCommandInfo(AdminCommandEnum.Announce, Array.Empty<string>(), adminInput);
 
                 var command = _commandFactory.CreateCommand(commandInfo);
 
