@@ -1,4 +1,4 @@
-﻿namespace NeuralJourney.Library.Enums
+﻿namespace NeuralJourney.Library.Enums.Parameters
 {
     public enum DirectionEnum
     {

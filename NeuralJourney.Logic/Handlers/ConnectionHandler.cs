@@ -1,6 +1,5 @@
 ﻿using NeuralJourney.Library.Constants;
 using NeuralJourney.Library.Models.World;
-using NeuralJourney.Logic.Handlers.Interfaces;
 using NeuralJourney.Logic.Options;
 using System.Net;
 using System.Net.Sockets;

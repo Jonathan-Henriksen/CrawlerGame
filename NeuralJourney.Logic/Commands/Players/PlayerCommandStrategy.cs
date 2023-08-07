@@ -2,21 +2,18 @@
 using NeuralJourney.Library.Exceptions.Commands;
 using NeuralJourney.Library.Exceptions.Commands.Base;
 using NeuralJourney.Library.Exceptions.PlayerActions.Base;
-using NeuralJourney.Library.Models.CommandInfo;
+using NeuralJourney.Library.Models.CommandContext;
 using NeuralJourney.Library.Models.World;
-using NeuralJourney.Logic.Commands.Players.Base;
-using NeuralJourney.Logic.CommandStrategies.Interfaces;
-using NeuralJourney.Logic.Factories.Interfaces;
-using NeuralJourney.Logic.Services.Interfaces;
+using NeuralJourney.Logic.Services;
 
-namespace NeuralJourney.Logic.CommandStrategies
+namespace NeuralJourney.Logic.Commands.Players
 {
     public class PlayerCommandStrategy : IPlayerCommandStrategy
     {
-        private readonly ICommandFactory<PlayerCommand, PlayerCommandEnum> _commandFactory;
+        private readonly ICommandFactory _commandFactory;
         private readonly IOpenAIService _openAIService;
 
-        public PlayerCommandStrategy(ICommandFactory<PlayerCommand, PlayerCommandEnum> commandFactory, IOpenAIService openAIService)
+        public PlayerCommandStrategy(ICommandFactory commandFactory, IOpenAIService openAIService)
         {
             _commandFactory = commandFactory;
             _openAIService = openAIService;
@@ -28,9 +25,9 @@ namespace NeuralJourney.Logic.CommandStrategies
             {
                 var completionText = await _openAIService.GetCommandCompletionTextAsync(playerInput);
 
-                var commandInfo = GetCommandInfoFromCompletionText(completionText, player);
+                var commandContext = GetCommandContextFromCompletionText(completionText, player);
 
-                var command = _commandFactory.CreateCommand(commandInfo);
+                var command = _commandFactory.CreateCommand(commandContext);
 
                 await command.ExecuteAsync();
             }
@@ -56,7 +53,7 @@ namespace NeuralJourney.Logic.CommandStrategies
             }
         }
 
-        private static PlayerCommandInfo GetCommandInfoFromCompletionText(string completionText, Player player)
+        private static CommandContext GetCommandContextFromCompletionText(string completionText, Player player)
         {
             var mainParts = completionText.Split('|');
 
@@ -65,11 +62,11 @@ namespace NeuralJourney.Logic.CommandStrategies
 
             var commandParts = mainParts[0].Split(new[] { "(", ")" }, StringSplitOptions.None) ?? Array.Empty<string>();
 
-            var commandName = commandParts[0].TrimStart();
+            var commandIdentifierText = commandParts[0].TrimStart();
             var commandParams = Array.Empty<string>();
 
-            if (!Enum.TryParse(commandName, true, out PlayerCommandEnum commandEnum))
-                throw new InvalidCompletionDataException(completionText, string.Format("Could not parse the command \'{0}\' to {1}", commandName, nameof(PlayerCommandEnum)));
+            if (!Enum.TryParse(commandIdentifierText, true, out CommandIdentifierEnum commandIdentifier))
+                throw new InvalidCompletionDataException(completionText, string.Format("Could not parse the command \'{0}\' to {1}", commandIdentifier, nameof(CommandIdentifierEnum)));
 
             if (commandParts.Length >= 2)
                 commandParams = commandParts[1].Split(',');
@@ -82,7 +79,7 @@ namespace NeuralJourney.Logic.CommandStrategies
             if (string.IsNullOrEmpty(successMessage))
                 throw new InvalidCompletionDataException(completionText, "SuccessMessage is blank");
 
-            return new PlayerCommandInfo(commandEnum, commandParams, successMessage, player);
+            return new CommandContext(commandIdentifier, commandParams, successMessage);
         }
     }
 }

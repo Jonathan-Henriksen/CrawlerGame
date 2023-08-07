@@ -1,24 +1,20 @@
 ﻿using NeuralJourney.Library.Attributes;
 using NeuralJourney.Library.Enums.Commands;
 using NeuralJourney.Library.Extensions;
-using NeuralJourney.Library.Models.CommandInfo;
+using NeuralJourney.Library.Models.CommandContext;
 using NeuralJourney.Library.Models.World;
-using NeuralJourney.Logic.Commands.Players.Base;
 using NeuralJourney.Logic.Options;
 
 namespace NeuralJourney.Logic.Commands.Players
 {
-    [PlayerCommand(PlayerCommandEnum.CheckMap)]
-    internal class CheckMapCommand : PlayerCommand
+    [CommandIdentifier(CommandIdentifierEnum.CheckMap)]
+    internal class CheckMapCommand : PlayerCommandBase
     {
-        private readonly Player Player;
-
         private readonly int WorldWidth;
         private readonly int WorldHeight;
 
-        internal CheckMapCommand(PlayerCommandInfo commandInfo, GameOptions gameOptions) : base(commandInfo)
+        internal CheckMapCommand(CommandContext commandContext, GameOptions gameOptions) : base(commandContext)
         {
-            Player = commandInfo.Player;
             WorldWidth = gameOptions.WorldWidth;
             WorldHeight = gameOptions.WorldHeight;
         }

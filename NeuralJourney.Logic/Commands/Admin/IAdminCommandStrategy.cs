@@ -1,4 +1,4 @@
-﻿namespace NeuralJourney.Logic.CommandStrategies.Interfaces
+﻿namespace NeuralJourney.Logic.Commands.Admin
 {
     public interface IAdminCommandStrategy
     {

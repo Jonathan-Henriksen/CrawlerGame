@@ -1,7 +1,8 @@
 ﻿namespace NeuralJourney.Library.Enums.Commands
 {
-    public enum AdminCommandEnum
+    public enum CommandTypeEnum
     {
-        Announce
+        Admin,
+        Player
     }
 }

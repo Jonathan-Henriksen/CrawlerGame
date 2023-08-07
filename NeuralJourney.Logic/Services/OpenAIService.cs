@@ -1,8 +1,7 @@
 ﻿using NeuralJourney.Library.Attributes;
 using NeuralJourney.Library.Exceptions.Commands;
-using NeuralJourney.Logic.Commands.Players.Base;
+using NeuralJourney.Logic.Commands.Players;
 using NeuralJourney.Logic.Options;
-using NeuralJourney.Logic.Services.Interfaces;
 using OpenAI_API;
 using System.Reflection;
 using System.Text;
@@ -47,15 +46,15 @@ namespace NeuralJourney.Logic.Services
 
             var types = assemblies
                 .SelectMany(assembly => assembly.GetExportedTypes())
-                .Where(type => typeof(PlayerCommand).IsAssignableFrom(type) && type != typeof(PlayerCommand));
+                .Where(type => typeof(PlayerCommandBase).IsAssignableFrom(type) && type != typeof(PlayerCommandBase));
 
             foreach (var type in types)
             {
-                var attribute = type.GetCustomAttribute<PlayerCommandAttribute>();
+                var attribute = type.GetCustomAttribute<CommandTypeAttribute>();
                 if (attribute is not null)
                 {
                     var constructorParams = ExtractConstructorParameters(type);
-                    stringBuilder.Append($"{attribute.Command}|{constructorParams},");
+                    stringBuilder.Append($"{attribute.CommandType}|{constructorParams},");
                 }
             }
 

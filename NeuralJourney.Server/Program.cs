@@ -2,20 +2,11 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
-using NeuralJourney.Library.Enums.Commands;
-using NeuralJourney.Logic.Commands.Admin.Base;
-using NeuralJourney.Logic.Commands.Players.Base;
-using NeuralJourney.Logic.Dispatchers;
-using NeuralJourney.Logic.Dispatchers.Interfaces;
+using NeuralJourney.Logic.Commands;
 using NeuralJourney.Logic.Engines;
-using NeuralJourney.Logic.Engines.Interfaces;
-using NeuralJourney.Logic.Factories;
-using NeuralJourney.Logic.Factories.Interfaces;
 using NeuralJourney.Logic.Handlers;
-using NeuralJourney.Logic.Handlers.Interfaces;
 using NeuralJourney.Logic.Options;
 using NeuralJourney.Logic.Services;
-using NeuralJourney.Logic.Services.Interfaces;
 
 using var host = CreateHostBuilder(args).Build();
 using var scope = host.Services.CreateScope();
@@ -42,13 +33,12 @@ IHostBuilder CreateHostBuilder(string[] strings)
         {
             services.AddTransient<IClockService, ClockService>();
             services.AddTransient<ICommandDispatcher, CommandDispatcher>();
+            services.AddTransient<IInputHandler, InputHandler>();
 
-            services.AddSingleton(typeof(ICommandFactory<AdminCommand, AdminCommandEnum>), typeof(CommandFactory<AdminCommand, AdminCommandEnum>));
-            services.AddSingleton(typeof(ICommandFactory<PlayerCommand, PlayerCommandEnum>), typeof(CommandFactory<PlayerCommand, PlayerCommandEnum>));
-
+            services.AddSingleton<ICommandFactory, CommandFactory>();
             services.AddSingleton<IConnectionHandler, ConnectionHandler>();
             services.AddSingleton<IGameEngine, GameEngine>();
-            services.AddSingleton<IInputHandler, InputHandler>();
+
             services.AddSingleton<IOpenAIService, OpenAIService>();
 
             services.AddOptions<GameOptions>().BindConfiguration("Game");

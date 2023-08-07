@@ -1,37 +1,32 @@
 ﻿using NeuralJourney.Library.Attributes;
-using NeuralJourney.Library.Enums;
 using NeuralJourney.Library.Enums.Commands;
+using NeuralJourney.Library.Enums.Parameters;
 using NeuralJourney.Library.Exceptions.Commands;
 using NeuralJourney.Library.Exceptions.PlayerActions;
-using NeuralJourney.Library.Models.CommandInfo;
+using NeuralJourney.Library.Models.CommandContext;
 using NeuralJourney.Library.Models.World;
-using NeuralJourney.Logic.Commands.Players.Base;
 using NeuralJourney.Logic.Options;
 
 namespace NeuralJourney.Logic.Commands.Players
 {
-    [PlayerCommand(PlayerCommandEnum.Move)]
-    internal class MoveCommand : PlayerCommand
+    [CommandIdentifier(CommandIdentifierEnum.Move)]
+    internal class MoveCommand : PlayerCommandBase
     {
-        private readonly Player Player;
-
         private readonly DirectionEnum Direction;
 
         private readonly int WorldHeight;
         private readonly int WorldWidth;
 
-        internal MoveCommand(PlayerCommandInfo commandInfo, GameOptions gameOptions) : base(commandInfo)
+        internal MoveCommand(CommandContext commandContext, GameOptions gameOptions) : base(commandContext)
         {
-            Player = commandInfo.Player;
-
             WorldHeight = gameOptions.WorldHeight;
             WorldWidth = gameOptions.WorldWidth;
 
-            if (commandInfo.Params is null || commandInfo.Params.Length < 1)
+            if (commandContext.Params is null || commandContext.Params.Length < 1)
                 throw new MissingParameterException(nameof(Direction));
 
-            if (!Enum.TryParse(commandInfo.Params[0], out DirectionEnum direction))
-                throw new InvalidParameterException($"{commandInfo.CommandEnum}", nameof(Direction), commandInfo.Params[0], "North/South/East/West");
+            if (!Enum.TryParse(commandContext.Params[0], out DirectionEnum direction))
+                throw new InvalidParameterException($"{commandContext.CommandIdentifier}", nameof(Direction), commandContext.Params[0], "North/South/East/West");
 
             Direction = direction;
         }

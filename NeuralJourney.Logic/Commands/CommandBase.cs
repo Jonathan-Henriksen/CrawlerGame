@@ -17,13 +17,13 @@
         {
             Execute();
 
-            await SendResponseAsync(SuccessMessage);
+            await SendExecutionMessageAsync(SuccessMessage);
 
             CallBack?.Invoke();
         }
 
         protected abstract void Execute();
 
-        protected abstract Task SendResponseAsync(string responseMessage);
+        protected abstract Task SendExecutionMessageAsync(string responseMessage);
     }
 }

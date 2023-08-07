@@ -1,6 +1,6 @@
 ﻿using NeuralJourney.Library.Models.World;
 
-namespace NeuralJourney.Logic.CommandStrategies.Interfaces
+namespace NeuralJourney.Logic.Commands.Players
 {
     public interface IPlayerCommandStrategy
     {

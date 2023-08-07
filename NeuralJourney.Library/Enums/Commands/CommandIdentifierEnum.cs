@@ -1,8 +1,9 @@
 ﻿namespace NeuralJourney.Library.Enums.Commands
 {
-    public enum PlayerCommandEnum
+    public enum CommandIdentifierEnum
     {
         CheckMap,
-        Move
+        Move,
+        Unknown
     }
 }

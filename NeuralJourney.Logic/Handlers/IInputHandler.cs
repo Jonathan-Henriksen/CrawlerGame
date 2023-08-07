@@ -1,6 +1,6 @@
 ﻿using NeuralJourney.Library.Models.World;
 
-namespace NeuralJourney.Logic.Handlers.Interfaces
+namespace NeuralJourney.Logic.Handlers
 {
     public interface IInputHandler
     {

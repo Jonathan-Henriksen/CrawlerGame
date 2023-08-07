@@ -1,8 +1,7 @@
 ﻿using NeuralJourney.Library.Models.World;
-using NeuralJourney.Logic.Dispatchers.Interfaces;
-using NeuralJourney.Logic.Engines.Interfaces;
-using NeuralJourney.Logic.Handlers.Interfaces;
-using NeuralJourney.Logic.Services.Interfaces;
+using NeuralJourney.Logic.Commands;
+using NeuralJourney.Logic.Handlers;
+using NeuralJourney.Logic.Services;
 
 namespace NeuralJourney.Logic.Engines
 {

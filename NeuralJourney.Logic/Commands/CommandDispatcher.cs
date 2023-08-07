@@ -1,8 +1,8 @@
 ﻿using NeuralJourney.Library.Models.World;
-using NeuralJourney.Logic.CommandStrategies.Interfaces;
-using NeuralJourney.Logic.Dispatchers.Interfaces;
+using NeuralJourney.Logic.Commands.Admin;
+using NeuralJourney.Logic.Commands.Players;
 
-namespace NeuralJourney.Logic.Dispatchers
+namespace NeuralJourney.Logic.Commands
 {
     public class CommandDispatcher : ICommandDispatcher
     {

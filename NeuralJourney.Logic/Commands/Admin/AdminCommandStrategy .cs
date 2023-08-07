@@ -1,18 +1,15 @@
 ﻿using NeuralJourney.Library.Enums.Commands;
 using NeuralJourney.Library.Exceptions.Commands;
 using NeuralJourney.Library.Exceptions.Commands.Base;
-using NeuralJourney.Library.Models.CommandInfo;
-using NeuralJourney.Logic.Commands.Admin.Base;
-using NeuralJourney.Logic.CommandStrategies.Interfaces;
-using NeuralJourney.Logic.Factories.Interfaces;
+using NeuralJourney.Library.Models.CommandContext;
 
-namespace NeuralJourney.Logic.CommandStrategies
+namespace NeuralJourney.Logic.Commands.Admin
 {
     public class AdminCommandStrategy : IAdminCommandStrategy
     {
-        private readonly ICommandFactory<AdminCommand, AdminCommandEnum> _commandFactory;
+        private readonly ICommandFactory _commandFactory;
 
-        public AdminCommandStrategy(ICommandFactory<AdminCommand, AdminCommandEnum> commandFactory)
+        public AdminCommandStrategy(ICommandFactory commandFactory)
         {
             _commandFactory = commandFactory;
         }
@@ -21,9 +18,9 @@ namespace NeuralJourney.Logic.CommandStrategies
         {
             try
             {
-                var commandInfo = new AdminCommandInfo(AdminCommandEnum.Announce, Array.Empty<string>(), adminInput);
+                var commandContext = new CommandContext(CommandIdentifierEnum.Unknown, Array.Empty<string>(), adminInput);
 
-                var command = _commandFactory.CreateCommand(commandInfo);
+                var command = _commandFactory.CreateCommand(commandContext);
 
                 if (command is null)
                     return;

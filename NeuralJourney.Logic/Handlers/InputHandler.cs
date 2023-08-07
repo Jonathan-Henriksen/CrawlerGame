@@ -1,6 +1,5 @@
 ﻿using NeuralJourney.Library.Extensions;
 using NeuralJourney.Library.Models.World;
-using NeuralJourney.Logic.Handlers.Interfaces;
 
 namespace NeuralJourney.Logic.Handlers
 {

@@ -1,4 +1,4 @@
-﻿namespace NeuralJourney.Logic.Engines.Interfaces
+﻿namespace NeuralJourney.Logic.Engines
 {
     public interface IGameEngine
     {
