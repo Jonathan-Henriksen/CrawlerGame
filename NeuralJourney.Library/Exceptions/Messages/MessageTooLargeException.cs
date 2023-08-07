@@ -1,4 +1,5 @@
-﻿using NeuralJourney.Library.Exceptions.Messages.Base;
+﻿using NeuralJourney.Library.Constants;
+using NeuralJourney.Library.Exceptions.Messages.Base;
 
 namespace NeuralJourney.Library.Exceptions.Messages
 {
@@ -14,7 +15,7 @@ namespace NeuralJourney.Library.Exceptions.Messages
           System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
 
         public MessageTooLargeException(string messageText, int characterLimit) :
-            base(string.Format("The message \'{0}\' is too large. Messages can't more than \'{1}\' characters", messageText, characterLimit), messageText, characterLimit)
+            base(string.Format(ErrorMessages.Messages.MessageTooLarge, characterLimit), messageText, characterLimit)
         { }
     }
 }

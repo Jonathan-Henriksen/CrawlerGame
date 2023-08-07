@@ -1,8 +1,8 @@
-﻿using NeuralJourney.Library.Exceptions.Messages.Base;
+﻿using NeuralJourney.Library.Constants;
+using NeuralJourney.Library.Exceptions.Messages.Base;
 
 namespace NeuralJourney.Library.Exceptions.Messages
 {
-
     [Serializable]
     public class MessageTooSmallException : MessageSizeException
     {
@@ -13,8 +13,8 @@ namespace NeuralJourney.Library.Exceptions.Messages
           System.Runtime.Serialization.SerializationInfo info,
           System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
 
-        public MessageTooSmallException(string messageText, int characterLimit) :
-            base(string.Format("The message \'{0}\' is too small. Messages must be larger than \'{1}\' characters", messageText, characterLimit), messageText, characterLimit)
+        public MessageTooSmallException(string messageText, int messageSizeLimit) :
+            base(string.Format(ErrorMessages.Messages.MessageTooSmall, messageSizeLimit), messageText, messageSizeLimit)
         { }
     }
 }

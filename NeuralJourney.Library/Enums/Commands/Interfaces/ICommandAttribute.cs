@@ -1,4 +1,4 @@
-﻿namespace NeuralJourney.Library.Enums.Interfaces
+﻿namespace NeuralJourney.Library.Enums.Commands.Interfaces
 {
     public interface ICommandAttribute<TCommandEnumType>
     {

@@ -29,12 +29,12 @@ namespace NeuralJourney.Logic.Handlers
 
             try
             {
-                Console.WriteLine(Phrases.System.StartingServer);
+                Console.WriteLine(InfoMessages.System.StartingServer);
                 while (IsRunning)
                 {
                     var client = await _tcpListener.AcceptTcpClientAsync();
 
-                    Console.WriteLine($"{Phrases.System.ClientConnected}: {client.Client.RemoteEndPoint}");
+                    Console.WriteLine($"{InfoMessages.System.ClientConnected}: {client.Client.RemoteEndPoint}");
 
                     if (client is null)
                         continue;

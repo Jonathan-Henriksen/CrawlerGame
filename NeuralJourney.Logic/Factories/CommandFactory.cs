@@ -1,4 +1,4 @@
-﻿using NeuralJourney.Library.Enums.Interfaces;
+﻿using NeuralJourney.Library.Enums.Commands.Interfaces;
 using NeuralJourney.Library.Exceptions.Commands;
 using NeuralJourney.Library.Exceptions.Commands.Base;
 using NeuralJourney.Library.Models.CommandInfo.Base;

@@ -1,4 +1,5 @@
-﻿using NeuralJourney.Library.Exceptions.Commands.Base;
+﻿using NeuralJourney.Library.Constants;
+using NeuralJourney.Library.Exceptions.Commands.Base;
 
 namespace NeuralJourney.Library.Exceptions.Commands
 {
@@ -14,7 +15,7 @@ namespace NeuralJourney.Library.Exceptions.Commands
           System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
 
         public MissingParameterException(string commandName, string paramName) :
-            base(string.Format("Parameter \'{0}\' is missing for the command \'{1}\'", paramName, commandName), paramName, commandName)
+            base(string.Format(ErrorMessages.Commands.MissingParameter, commandName, paramName), commandName, paramName)
         { }
     }
 }

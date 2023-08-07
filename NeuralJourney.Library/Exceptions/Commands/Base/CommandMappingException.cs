@@ -1,6 +1,4 @@
-﻿using NeuralJourney.Library.Models.CommandInfo.Base;
-
-namespace NeuralJourney.Library.Exceptions.Commands.Base
+﻿namespace NeuralJourney.Library.Exceptions.Commands.Base
 {
     [Serializable]
     public class CommandMappingException : Exception

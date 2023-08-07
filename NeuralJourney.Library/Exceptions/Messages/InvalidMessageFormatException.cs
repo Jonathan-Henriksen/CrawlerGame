@@ -1,4 +1,5 @@
-﻿using NeuralJourney.Library.Exceptions.Messages.Base;
+﻿using NeuralJourney.Library.Constants;
+using NeuralJourney.Library.Exceptions.Messages.Base;
 
 namespace NeuralJourney.Library.Exceptions.Messages
 {
@@ -14,7 +15,7 @@ namespace NeuralJourney.Library.Exceptions.Messages
           System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
 
         public InvalidMessageFormatException(string messageText, string reason) :
-            base(string.Format("The message \'{0}\' was formatted incorrectly.\nReason: \'{1}\'", messageText, reason), messageText)
+            base(string.Format(ErrorMessages.Messages.MessageFormat, reason), messageText)
         { }
     }
 }

@@ -1,4 +1,4 @@
-﻿using NeuralJourney.Library.Enums;
+﻿using NeuralJourney.Library.Enums.Commands;
 
 namespace NeuralJourney.Library.Attributes
 {

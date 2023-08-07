@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
-using NeuralJourney.Library.Enums;
+using NeuralJourney.Library.Enums.Commands;
 using NeuralJourney.Logic.Commands.Admin.Base;
 using NeuralJourney.Logic.Commands.Players.Base;
 using NeuralJourney.Logic.Dispatchers;

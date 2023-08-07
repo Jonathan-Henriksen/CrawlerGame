@@ -1,5 +1,5 @@
 ﻿using NeuralJourney.Library.Attributes;
-using NeuralJourney.Library.Enums;
+using NeuralJourney.Library.Enums.Commands;
 using NeuralJourney.Library.Extensions;
 using NeuralJourney.Library.Models.CommandInfo;
 using NeuralJourney.Library.Models.World;

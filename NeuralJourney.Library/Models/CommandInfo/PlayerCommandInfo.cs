@@ -1,4 +1,4 @@
-﻿using NeuralJourney.Library.Enums;
+﻿using NeuralJourney.Library.Enums.Commands;
 using NeuralJourney.Library.Models.CommandInfo.Base;
 using NeuralJourney.Library.Models.World;
 

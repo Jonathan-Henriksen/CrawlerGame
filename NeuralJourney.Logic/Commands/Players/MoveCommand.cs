@@ -1,5 +1,6 @@
 ﻿using NeuralJourney.Library.Attributes;
 using NeuralJourney.Library.Enums;
+using NeuralJourney.Library.Enums.Commands;
 using NeuralJourney.Library.Exceptions.Commands;
 using NeuralJourney.Library.Exceptions.PlayerActions;
 using NeuralJourney.Library.Models.CommandInfo;
@@ -30,7 +31,7 @@ namespace NeuralJourney.Logic.Commands.Players
                 throw new MissingParameterException(nameof(Direction));
 
             if (!Enum.TryParse(commandInfo.Params[0], out DirectionEnum direction))
-                throw new InvalidParameterException($"{commandInfo.CommandEnum}", nameof(Direction), commandInfo.Params[0]);
+                throw new InvalidParameterException($"{commandInfo.CommandEnum}", nameof(Direction), commandInfo.Params[0], "North/South/East/West");
 
             Direction = direction;
         }

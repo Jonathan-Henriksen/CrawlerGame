@@ -1,6 +1,4 @@
-﻿using NeuralJourney.Library.Models.World;
-
-namespace NeuralJourney.Library.Exceptions.Messages.Base
+﻿namespace NeuralJourney.Library.Exceptions.Messages.Base
 {
 
     [Serializable]

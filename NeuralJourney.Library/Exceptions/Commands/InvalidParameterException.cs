@@ -1,4 +1,5 @@
-﻿using NeuralJourney.Library.Exceptions.Commands.Base;
+﻿using NeuralJourney.Library.Constants;
+using NeuralJourney.Library.Exceptions.Commands.Base;
 
 namespace NeuralJourney.Library.Exceptions.Commands
 {
@@ -15,8 +16,8 @@ namespace NeuralJourney.Library.Exceptions.Commands
           System.Runtime.Serialization.SerializationInfo info,
           System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
 
-        public InvalidParameterException(string commandName, string paramName, object? paramValue) :
-            base(string.Format("The value \'{0}\' is not valid for the parameter \'{1}\' om the command \'{2}\'", paramValue, paramName, commandName), commandName, paramName)
+        public InvalidParameterException(string commandName, string paramName, object? paramValue, string expectedValue) :
+            base(string.Format(ErrorMessages.Commands.InvalidParameter, paramName, commandName, paramValue, expectedValue), commandName, paramName)
         { }
     }
 }
