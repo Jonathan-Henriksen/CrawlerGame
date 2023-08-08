@@ -1,16 +1,20 @@
-﻿using NeuralJourney.Library.Enums.Commands;
+﻿using NeuralJourney.Library.Constants;
+using NeuralJourney.Library.Enums.Commands;
 using NeuralJourney.Library.Exceptions.Commands;
 using NeuralJourney.Library.Models.Commands;
+using Serilog;
 
 namespace NeuralJourney.Logic.Commands.Admin
 {
     public class AdminCommandStrategy : IAdminCommandStrategy
     {
         private readonly ICommandFactory _commandFactory;
+        private readonly ILogger _logger;
 
-        public AdminCommandStrategy(ICommandFactory commandFactory)
+        public AdminCommandStrategy(ICommandFactory commandFactory, ILogger logger)
         {
             _commandFactory = commandFactory;
+            _logger = logger;
         }
 
         public async Task ExecuteAsync(string adminInput)
@@ -25,22 +29,24 @@ namespace NeuralJourney.Logic.Commands.Admin
                     return;
 
                 await command.ExecuteAsync();
+
+                _logger.Information(InfoMessageTemplates.ExecutedCommand, commandContext.CommandType, commandContext.CommandIdentifier);
             }
             catch (InvalidCommandException ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.Error(ex, ex.Message);
             }
             catch (MissingParameterException ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.Error(ex, ex.Message);
             }
             catch (InvalidParameterException ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.Error(ex, ex.Message);
             }
             catch (CommandMappingException ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.Error(ex, ex.Message);
             }
         }
     }

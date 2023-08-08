@@ -1,7 +1,9 @@
-﻿using NeuralJourney.Library.Models.World;
+﻿using NeuralJourney.Library.Constants;
+using NeuralJourney.Library.Models.World;
 using NeuralJourney.Logic.Commands;
 using NeuralJourney.Logic.Handlers;
 using NeuralJourney.Logic.Services;
+using Serilog;
 
 namespace NeuralJourney.Logic.Engines
 {
@@ -10,20 +12,22 @@ namespace NeuralJourney.Logic.Engines
         private readonly IClockService _clock;
 
         private readonly ICommandDispatcher _commandDispatcher;
-        private readonly IInputHandler _inputHandler;
         private readonly IConnectionHandler _connectionHandler;
+        private readonly IInputHandler _inputHandler;
+        private readonly ILogger _logger;
 
         private CancellationTokenSource? _adminInputToken;
         private readonly Dictionary<Player, CancellationTokenSource> _playerTokens = new();
 
         private readonly List<Player> Players = new();
 
-        public GameEngine(IClockService clockService, ICommandDispatcher commandDispatcher, IConnectionHandler connectionHandler, IInputHandler inputHandler)
+        public GameEngine(IClockService clockService, ICommandDispatcher commandDispatcher, IConnectionHandler connectionHandler, IInputHandler inputHandler, ILogger logger)
         {
             _clock = clockService;
             _commandDispatcher = commandDispatcher;
             _connectionHandler = connectionHandler;
             _inputHandler = inputHandler;
+            _logger = logger;
 
             _inputHandler.OnAdminInputReceived += _commandDispatcher.DispatchAdminCommand;
             _inputHandler.OnPlayerInputReceived += _commandDispatcher.DispatchPlayerCommand;
@@ -40,6 +44,8 @@ namespace NeuralJourney.Logic.Engines
             var connectionHandlerTask = _connectionHandler.HandleConnectionsAsync();
             var inputHandlerTask = _inputHandler.HandleAdminInputAsync(_adminInputToken.Token);
 
+            _logger.Information(InfoMessageTemplates.GameStarted);
+
             await Task.WhenAll(connectionHandlerTask, inputHandlerTask);
         }
 
@@ -55,6 +61,8 @@ namespace NeuralJourney.Logic.Engines
             }
 
             _clock.Reset();
+
+            _logger.Information(InfoMessageTemplates.GameStopped);
         }
 
         private void AddPlayer(Player player)
@@ -62,10 +70,12 @@ namespace NeuralJourney.Logic.Engines
             var cts = new CancellationTokenSource();
 
             if (!_playerTokens.TryAdd(player, cts))
-                throw new InvalidOperationException("Could not add player");
+                throw new InvalidOperationException("Failed to add player '{0}' to the game. A cancellation token is alread associated with the player.");
 
             _inputHandler.HandlePlayerInputAsync(player, cts.Token);
             Players.Add(player);
+
+            _logger.Information(InfoMessageTemplates.PlayerAdded, player.Name);
         }
 
         private void RemovePlayer(Player player)
@@ -77,6 +87,8 @@ namespace NeuralJourney.Logic.Engines
             }
 
             Players.Remove(player);
+
+            _logger.Information(InfoMessageTemplates.PlayerRemoved, player.Name);
         }
     }
 }

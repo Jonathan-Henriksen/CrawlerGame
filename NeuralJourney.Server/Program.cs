@@ -9,6 +9,7 @@ using NeuralJourney.Logic.Engines;
 using NeuralJourney.Logic.Handlers;
 using NeuralJourney.Logic.Options;
 using NeuralJourney.Logic.Services;
+using Serilog;
 
 using var host = CreateHostBuilder(args).Build();
 using var scope = host.Services.CreateScope();
@@ -19,9 +20,10 @@ try
 {
     await services.GetRequiredService<IGameEngine>().Run();
 }
-catch (Exception e)
+catch (Exception ex)
 {
-    Console.WriteLine(e.Message);
+    var logger = services.GetRequiredService<ILogger>();
+    logger.Error(ex, ex.Message);
 }
 
 IHostBuilder CreateHostBuilder(string[] strings)
@@ -31,12 +33,15 @@ IHostBuilder CreateHostBuilder(string[] strings)
         {
             config.AddJsonFile("appsettings.json", false);
         })
+        .UseSerilog((hostingContext, loggerConfiguration) =>
+        {
+            loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration);
+        })
         .ConfigureServices((_, services) =>
         {
             services.AddTransient<IClockService, ClockService>();
             services.AddTransient<ICommandDispatcher, CommandDispatcher>();
             services.AddTransient<IInputHandler, InputHandler>();
-            services.AddTransient<ILoggerService, LoggerService>();
             services.AddTransient<IMessageService, MessageService>();
 
             services.AddTransient<IAdminCommandStrategy, AdminCommandStrategy>();
