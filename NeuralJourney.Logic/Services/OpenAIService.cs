@@ -1,7 +1,6 @@
 ﻿using NeuralJourney.Library.Attributes;
 using NeuralJourney.Library.Exceptions.Commands;
 using NeuralJourney.Logic.Commands;
-using NeuralJourney.Logic.Commands.Players;
 using NeuralJourney.Logic.Options;
 using OpenAI_API;
 using System.Reflection;

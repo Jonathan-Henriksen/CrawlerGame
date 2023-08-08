@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using NeuralJourney.Client;
 using NeuralJourney.Logic.Options;
+using NeuralJourney.Logic.Services;
 
 using var host = CreateHostBuilder(args).Build();
 using var scope = host.Services.CreateScope();
@@ -32,10 +33,9 @@ IHostBuilder CreateHostBuilder(string[] strings)
         {
             services.AddSingleton<GameClient>();
 
-            services.AddOptions<ClientOptions>()
-            .BindConfiguration("Client");
+            services.AddTransient<IMessageService, MessageService>();
 
-            services.AddSingleton(resolver =>
-                resolver.GetRequiredService<IOptions<ClientOptions>>().Value);
+            services.AddOptions<ClientOptions>().BindConfiguration("Client");
+            services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<ClientOptions>>().Value);
         });
 }
