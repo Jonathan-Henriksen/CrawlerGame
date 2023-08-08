@@ -4,6 +4,7 @@ using NeuralJourney.Library.Exceptions.PlayerActions;
 using NeuralJourney.Library.Models.Commands;
 using NeuralJourney.Library.Models.World;
 using NeuralJourney.Logic.Services;
+using System.Text.RegularExpressions;
 
 namespace NeuralJourney.Logic.Commands.Players
 {
@@ -69,31 +70,22 @@ namespace NeuralJourney.Logic.Commands.Players
 
         private static CommandContext GetCommandContextFromCompletionText(string completionText, Player player)
         {
-            var mainParts = completionText.Split('|');
+            var regexPattern = @"^(?<commandIdentifier>\w+)\((?<params>[^\)]+)\)\|(?<successMessage>.+?)$";
+            var match = Regex.Match(completionText, regexPattern);
 
-            if (mainParts.Length <= 1)
-                throw new InvalidCompletionDataException(completionText, "Could not split text into Command and SuccessMessage");
+            if (!match.Success)
+                throw new InvalidCompletionDataException(completionText, "Invalid command format.");
 
-            var commandParts = mainParts[0].Split(new[] { "(", ")" }, StringSplitOptions.None) ?? Array.Empty<string>();
-
-            var commandIdentifierText = commandParts[0].TrimStart();
-            var commandParams = Array.Empty<string>();
-
+            var commandIdentifierText = match.Groups["commandIdentifier"].Value;
             if (!Enum.TryParse(commandIdentifierText, true, out CommandIdentifierEnum commandIdentifier))
-                throw new InvalidCompletionDataException(completionText, string.Format("Could not parse the command \'{0}\' to {1}", commandIdentifier, nameof(CommandIdentifierEnum)));
+                throw new InvalidCompletionDataException(completionText, $"Could not parse the command '{commandIdentifierText}' to {nameof(CommandIdentifierEnum)}");
 
-            if (commandParts.Length >= 2)
-                commandParams = commandParts[1].Split(',');
+            var commandParams = match.Groups["params"].Value.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 
-            if (commandParams.Any(string.IsNullOrEmpty))
-                throw new InvalidCompletionDataException(completionText, "Has empty command parameters");
-
-            var successMessage = mainParts[1];
-
-            if (string.IsNullOrEmpty(successMessage))
-                throw new InvalidCompletionDataException(completionText, "SuccessMessage is blank");
+            var successMessage = match.Groups["successMessage"].Value;
 
             return new CommandContext(commandIdentifier, commandParams, successMessage);
         }
+
     }
 }

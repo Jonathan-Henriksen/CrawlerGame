@@ -1,10 +1,7 @@
-﻿using NeuralJourney.Library.Attributes;
-using NeuralJourney.Library.Exceptions.Commands;
+﻿using NeuralJourney.Library.Exceptions.Commands;
 using NeuralJourney.Logic.Commands;
 using NeuralJourney.Logic.Options;
 using OpenAI_API;
-using System.Reflection;
-using System.Text;
 
 namespace NeuralJourney.Logic.Services
 {
@@ -12,7 +9,7 @@ namespace NeuralJourney.Logic.Services
     {
         private readonly OpenAIAPI _openApi;
 
-        private readonly string AvailableCommands;
+        private readonly string _availableCommands;
 
         public OpenAIService(OpenAIOptions options)
         {
@@ -23,12 +20,12 @@ namespace NeuralJourney.Logic.Services
             _openApi.Completions.DefaultCompletionRequestArgs.StopSequence = options.StopSequence;
             _openApi.Completions.DefaultCompletionRequestArgs.Temperature = options.Temperature;
 
-            AvailableCommands = GetAvailableCommands();
+            _availableCommands = CommandRegistry.GetAllPlayerCommands();
         }
 
         public async Task<string> GetCommandCompletionTextAsync(string userinput)
         {
-            var completionResponse = await _openApi.Completions.CreateCompletionAsync($"{AvailableCommands}\n\n{userinput}\n\n###\n\n");
+            var completionResponse = await _openApi.Completions.CreateCompletionAsync($"{_availableCommands}\n\n{userinput}\n\n###\n\n");
 
             var completionText = completionResponse?.Completions.FirstOrDefault()?.Text;
 
@@ -36,42 +33,6 @@ namespace NeuralJourney.Logic.Services
                 throw new InvalidCompletionDataException(completionText, string.Format("Completion text for the user input \'{0}\' was null or empty", userinput));
 
             return completionText;
-        }
-
-        private static string GetAvailableCommands()
-        {
-            var stringBuilder = new StringBuilder();
-
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-
-            var types = assemblies
-                .SelectMany(assembly => assembly.GetExportedTypes())
-                .Where(type => typeof(CommandBase).IsAssignableFrom(type) && type != typeof(CommandBase));
-
-            foreach (var type in types)
-            {
-                var attribute = type.GetCustomAttribute<CommandTypeAttribute>();
-                if (attribute is not null)
-                {
-                    var constructorParams = ExtractConstructorParameters(type);
-                    stringBuilder.Append($"{attribute.CommandType}|{constructorParams},");
-                }
-            }
-
-            return stringBuilder.ToString().TrimEnd(',');
-        }
-
-        private static string ExtractConstructorParameters(Type type)
-        {
-            var constructors = type.GetConstructors()
-                .Where(c => c.DeclaringType == type)
-                .ToArray();
-
-            var constructorParamsList = constructors
-                .Select(constructor => string.Join("", Enumerable.Range(0, constructor.GetParameters().Length).Select(i => $"{{{i}}}")))
-                .ToList();
-
-            return string.Join("|", constructorParamsList);
         }
     }
 }

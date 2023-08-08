@@ -17,7 +17,7 @@ namespace NeuralJourney.Logic.Services
             var semaphore = GetSemaphore(stream);
             try
             {
-                await semaphore.WaitAsync();
+                await semaphore.WaitAsync(cancellationToken);
 
                 await stream.WriteAsync(lengthBytes, cancellationToken);
                 await stream.WriteAsync(messageBytes, cancellationToken);
@@ -31,7 +31,7 @@ namespace NeuralJourney.Logic.Services
         public async Task<string> ReadMessageAsync(Stream stream, CancellationToken cancellationToken = default)
         {
             var lengthBytes = new byte[4];
-            await stream.ReadAsync(lengthBytes);
+            await stream.ReadAsync(lengthBytes, cancellationToken);
 
             var messageLength = BitConverter.ToInt32(lengthBytes, 0);
             var messageBytes = new byte[messageLength];

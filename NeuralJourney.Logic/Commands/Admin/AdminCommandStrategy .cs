@@ -1,5 +1,6 @@
 ﻿using NeuralJourney.Library.Enums.Commands;
 using NeuralJourney.Library.Exceptions.Commands;
+using NeuralJourney.Library.Models.Commands;
 
 namespace NeuralJourney.Logic.Commands.Admin
 {
