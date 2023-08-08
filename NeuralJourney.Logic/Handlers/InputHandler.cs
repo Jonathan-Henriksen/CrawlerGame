@@ -19,7 +19,7 @@ namespace NeuralJourney.Logic.Handlers
         {
             while (!cancellationToken.IsCancellationRequested)
             {
-                var input = await Console.In.ReadLineAsync();
+                var input = await Console.In.ReadLineAsync(cancellationToken);
 
                 if (string.IsNullOrEmpty(input))
                     continue;

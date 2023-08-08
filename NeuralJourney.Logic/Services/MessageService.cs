@@ -9,7 +9,7 @@ namespace NeuralJourney.Logic.Services
 
         public const string CloseConnectionMessage = "__CLOSE_CONNECTION__";
 
-        public async Task SendMessageAsync(Stream stream, string message)
+        public async Task SendMessageAsync(Stream stream, string message, CancellationToken cancellationToken = default)
         {
             byte[] messageBytes = _encoding.GetBytes(message);
             byte[] lengthBytes = BitConverter.GetBytes(messageBytes.Length);
@@ -19,8 +19,8 @@ namespace NeuralJourney.Logic.Services
             {
                 await semaphore.WaitAsync();
 
-                await stream.WriteAsync(lengthBytes);
-                await stream.WriteAsync(messageBytes);
+                await stream.WriteAsync(lengthBytes, cancellationToken);
+                await stream.WriteAsync(messageBytes, cancellationToken);
             }
             finally
             {
@@ -28,21 +28,21 @@ namespace NeuralJourney.Logic.Services
             }
         }
 
-        public async Task<string> ReadMessageAsync(Stream stream)
+        public async Task<string> ReadMessageAsync(Stream stream, CancellationToken cancellationToken = default)
         {
             byte[] lengthBytes = new byte[4];
             await stream.ReadAsync(lengthBytes);
 
             int messageLength = BitConverter.ToInt32(lengthBytes, 0);
             byte[] messageBytes = new byte[messageLength];
-            await stream.ReadAsync(messageBytes.AsMemory(0, messageLength));
+            await stream.ReadAsync(messageBytes.AsMemory(0, messageLength), cancellationToken);
 
             return _encoding.GetString(messageBytes);
         }
 
-        public async Task SendCloseConnectionAsync(Stream stream)
+        public async Task SendCloseConnectionAsync(Stream stream, CancellationToken cancellationToken = default)
         {
-            await SendMessageAsync(stream, CloseConnectionMessage);
+            await SendMessageAsync(stream, CloseConnectionMessage, cancellationToken);
         }
 
         public bool IsCloseConnectionMessage(string message)
