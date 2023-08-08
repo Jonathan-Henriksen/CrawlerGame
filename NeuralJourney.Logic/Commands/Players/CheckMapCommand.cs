@@ -2,6 +2,7 @@
 using NeuralJourney.Library.Enums.Commands;
 using NeuralJourney.Library.Exceptions.Commands;
 using NeuralJourney.Library.Models.CommandContext;
+using NeuralJourney.Library.Models.Commands;
 using NeuralJourney.Logic.Options;
 
 namespace NeuralJourney.Logic.Commands.Players
@@ -18,7 +19,7 @@ namespace NeuralJourney.Logic.Commands.Players
             WorldHeight = gameOptions.WorldHeight;
         }
 
-        internal override Task ExecuteAsync()
+        internal override Task<CommandResult> ExecuteAsync()
         {
             return Task.Run(() =>
             {
@@ -42,7 +43,7 @@ namespace NeuralJourney.Logic.Commands.Players
                 }
                 map += new string('#', WorldWidth + 2) + "\n";
 
-                // TODO: Figure out a way to send the map to the player
+                return new CommandResult(map);
             });
         }
     }

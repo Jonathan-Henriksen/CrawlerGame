@@ -1,4 +1,5 @@
 ﻿using NeuralJourney.Library.Models.CommandContext;
+using NeuralJourney.Library.Models.Commands;
 
 namespace NeuralJourney.Logic.Commands
 {
@@ -11,6 +12,6 @@ namespace NeuralJourney.Logic.Commands
             Context = context;
         }
 
-        internal abstract Task ExecuteAsync();
+        internal abstract Task<CommandResult> ExecuteAsync();
     }
 }

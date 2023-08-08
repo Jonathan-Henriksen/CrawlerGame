@@ -4,6 +4,7 @@ using NeuralJourney.Library.Enums.Parameters;
 using NeuralJourney.Library.Exceptions.Commands;
 using NeuralJourney.Library.Exceptions.PlayerActions;
 using NeuralJourney.Library.Models.CommandContext;
+using NeuralJourney.Library.Models.Commands;
 using NeuralJourney.Logic.Options;
 
 namespace NeuralJourney.Logic.Commands.Players
@@ -31,7 +32,7 @@ namespace NeuralJourney.Logic.Commands.Players
             WorldWidth = gameOptions.WorldWidth;
         }
 
-        internal override Task ExecuteAsync()
+        internal override Task<CommandResult> ExecuteAsync()
         {
             if (Context.Player is null)
                 throw new MissingParameterException($"{Context.CommandIdentifier}", nameof(Context.Player));
@@ -58,6 +59,8 @@ namespace NeuralJourney.Logic.Commands.Players
                         playerLocation.X = Move(playerLocation.X, WorldWidth, -1);
                         break;
                 }
+
+                return new CommandResult();
             });
         }
 

@@ -32,9 +32,9 @@ namespace NeuralJourney.Logic.Commands.Players
 
                 var command = _commandFactory.CreateCommand(commandContext);
 
-                await command.ExecuteAsync();
+                var result = await command.ExecuteAsync();
 
-                responseMessage = commandContext.ExecutionMessage;
+                responseMessage = $"{commandContext.ExecutionMessage}\n{result.AdditionalMessage ?? string.Empty}".Trim();
             }
             catch (InvalidCommandException ex)
             {
