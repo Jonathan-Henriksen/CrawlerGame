@@ -8,8 +8,8 @@ namespace NeuralJourney.Logic.Handlers
 
         public event Action<string, Player>? OnPlayerInputReceived;
 
-        internal Task HandleAdminInputAsync();
+        internal Task HandleAdminInputAsync(CancellationToken cancellationToken);
 
-        internal Task HandlePlayerInputAsync(Player player);
+        internal Task HandlePlayerInputAsync(Player player, CancellationToken cancellationToken);
     }
 }

@@ -1,7 +1,6 @@
 ﻿using NeuralJourney.Library.Constants;
 using NeuralJourney.Library.Models.World;
 using NeuralJourney.Logic.Options;
-using NeuralJourney.Logic.Services;
 using System.Net;
 using System.Net.Sockets;
 
@@ -9,40 +8,33 @@ namespace NeuralJourney.Logic.Handlers
 {
     public class ConnectionHandler : IConnectionHandler
     {
-        private readonly IMessageService _messageService;
+        private readonly CancellationTokenSource _cts;
         private readonly TcpListener _tcpListener;
+
 
         public event Action<Player>? OnPlayerConnected;
 
-        private bool IsRunning;
-
-        public ConnectionHandler(IMessageService messageService, ServerOptions serverOptions)
+        public ConnectionHandler(ServerOptions serverOptions)
         {
-            _messageService = messageService;
+            _cts = new CancellationTokenSource();
             _tcpListener = new TcpListener(IPAddress.Any, serverOptions.Port);
-
-            IsRunning = false;
         }
 
         public async Task HandleConnectionsAsync()
         {
-            IsRunning = true;
             _tcpListener.Start();
 
             try
             {
                 Console.WriteLine(InfoMessages.System.StartingServer);
 
-                while (IsRunning)
+                while (!_cts.Token.IsCancellationRequested)
                 {
                     var client = await _tcpListener.AcceptTcpClientAsync();
                     Console.WriteLine($"{InfoMessages.System.ClientConnected}: {client.Client.RemoteEndPoint}");
 
                     if (client is null)
                         continue;
-
-                    var stream = client.GetStream();
-                    await _messageService.SendMessageAsync(stream, "Welcome to NeuralJourney!");
 
                     OnPlayerConnected?.Invoke(new Player(client));
                 }
@@ -59,7 +51,7 @@ namespace NeuralJourney.Logic.Handlers
 
         public void Stop()
         {
-            IsRunning = false;
+            _cts.Cancel();
         }
     }
 }

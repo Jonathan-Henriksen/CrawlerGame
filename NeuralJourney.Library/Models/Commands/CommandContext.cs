@@ -3,7 +3,7 @@ using NeuralJourney.Library.Models.World;
 
 namespace NeuralJourney.Library.Models.CommandContext
 {
-    public class CommandContext
+    public readonly struct CommandContext
     {
         public CommandContext(CommandIdentifierEnum commandIdentifier, string[]? @params, string executionMessage, Player? player = null)
         {

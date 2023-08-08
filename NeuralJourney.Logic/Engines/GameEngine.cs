@@ -8,9 +8,13 @@ namespace NeuralJourney.Logic.Engines
     public class GameEngine : IGameEngine
     {
         private readonly IClockService _clock;
+
         private readonly ICommandDispatcher _commandDispatcher;
         private readonly IInputHandler _inputHandler;
         private readonly IConnectionHandler _connectionHandler;
+
+        private CancellationTokenSource? _adminInputToken;
+        private readonly Dictionary<Player, CancellationTokenSource> _playerTokens = new();
 
         private readonly List<Player> Players = new();
 
@@ -21,41 +25,58 @@ namespace NeuralJourney.Logic.Engines
             _connectionHandler = connectionHandler;
             _inputHandler = inputHandler;
 
-
-            _connectionHandler.OnPlayerConnected += AddPlayer;
-
             _inputHandler.OnAdminInputReceived += _commandDispatcher.DispatchAdminCommand;
             _inputHandler.OnPlayerInputReceived += _commandDispatcher.DispatchPlayerCommand;
+
+            _connectionHandler.OnPlayerConnected += AddPlayer;
         }
 
         public async Task Run()
         {
             _clock.Start();
 
+            _adminInputToken = new CancellationTokenSource();
+
             var connectionHandlerTask = _connectionHandler.HandleConnectionsAsync();
-            var inputHandlerTask = _inputHandler.HandleAdminInputAsync();
+            var inputHandlerTask = _inputHandler.HandleAdminInputAsync(_adminInputToken.Token);
 
             await Task.WhenAll(connectionHandlerTask, inputHandlerTask);
         }
 
         public void Stop()
         {
-            _clock.Reset();
+            _adminInputToken?.Cancel();
 
             _connectionHandler.Stop();
 
             foreach (var player in Players)
             {
-                player.GetStream()?.Close();
-                Players.Remove(player);
+                RemovePlayer(player);
             }
+
+            _clock.Reset();
         }
 
         private void AddPlayer(Player player)
         {
-            Players.Add(player);
+            var cts = new CancellationTokenSource();
 
-            _ = _inputHandler.HandlePlayerInputAsync(player);
+            if (!_playerTokens.TryAdd(player, cts))
+                throw new InvalidOperationException("Could not add player");
+
+            _inputHandler.HandlePlayerInputAsync(player, cts.Token);
+            Players.Add(player);
+        }
+
+        private void RemovePlayer(Player player)
+        {
+            if (_playerTokens.TryGetValue(player, out var cts))
+            {
+                cts.Cancel();
+                _playerTokens.Remove(player);
+            }
+
+            Players.Remove(player);
         }
     }
 }

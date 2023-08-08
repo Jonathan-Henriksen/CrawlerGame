@@ -15,9 +15,9 @@ namespace NeuralJourney.Logic.Handlers
             _messageService = messageService;
         }
 
-        public async Task HandleAdminInputAsync()
+        public async Task HandleAdminInputAsync(CancellationToken cancellationToken)
         {
-            while (true)
+            while (!cancellationToken.IsCancellationRequested)
             {
                 var input = await Console.In.ReadLineAsync();
 
@@ -28,15 +28,14 @@ namespace NeuralJourney.Logic.Handlers
             }
         }
 
-        public async Task HandlePlayerInputAsync(Player player)
+        public async Task HandlePlayerInputAsync(Player player, CancellationToken cancellationToken)
         {
             var stream = player.GetStream();
-            while (player.IsConnected)
+            while (!cancellationToken.IsCancellationRequested)
             {
                 var input = await _messageService.ReadMessageAsync(stream);
                 if (_messageService.IsCloseConnectionMessage(input))
                 {
-                    // TODO: Add cancellation token logic to replace IsConnected
                     return;
                 }
 

@@ -1,14 +1,14 @@
 ﻿namespace NeuralJourney.Library.Models.Commands
 {
-    public class CommandResult
+    public readonly struct CommandResult
     {
         public CommandResult() { }
 
-        public CommandResult(string additionalMessage)
+        public CommandResult(string? additionalMessage = null)
         {
             AdditionalMessage = additionalMessage;
         }
 
-        public string? AdditionalMessage { get; set; }
+        public string? AdditionalMessage { get; }
     }
 }
