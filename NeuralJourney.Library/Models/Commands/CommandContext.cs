@@ -1,7 +1,7 @@
 ﻿using NeuralJourney.Library.Enums.Commands;
 using NeuralJourney.Library.Models.World;
 
-namespace NeuralJourney.Library.Models.CommandContext
+namespace NeuralJourney.Library.Models.Commands
 {
     public readonly struct CommandContext
     {

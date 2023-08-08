@@ -1,5 +1,4 @@
-﻿using NeuralJourney.Library.Models.CommandContext;
-using NeuralJourney.Library.Models.Commands;
+﻿using NeuralJourney.Library.Models.Commands;
 
 namespace NeuralJourney.Logic.Commands
 {

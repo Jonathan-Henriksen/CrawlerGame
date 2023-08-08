@@ -1,6 +1,6 @@
 ﻿using NeuralJourney.Library.Models.World;
 
-namespace NeuralJourney.Library.Exceptions.PlayerActions.Base
+namespace NeuralJourney.Library.Exceptions.PlayerActions
 {
     [Serializable]
     public class PlayerActionException : Exception

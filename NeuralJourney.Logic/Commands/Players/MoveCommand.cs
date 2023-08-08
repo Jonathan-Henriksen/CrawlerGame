@@ -3,7 +3,6 @@ using NeuralJourney.Library.Enums.Commands;
 using NeuralJourney.Library.Enums.Parameters;
 using NeuralJourney.Library.Exceptions.Commands;
 using NeuralJourney.Library.Exceptions.PlayerActions;
-using NeuralJourney.Library.Models.CommandContext;
 using NeuralJourney.Library.Models.Commands;
 using NeuralJourney.Logic.Options;
 

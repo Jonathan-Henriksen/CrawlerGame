@@ -1,7 +1,7 @@
 ﻿using NeuralJourney.Library.Attributes;
 using NeuralJourney.Library.Enums.Commands;
 using NeuralJourney.Library.Exceptions.Commands;
-using NeuralJourney.Library.Models.CommandContext;
+using NeuralJourney.Library.Models.Commands;
 using System.Reflection;
 
 namespace NeuralJourney.Logic.Commands
