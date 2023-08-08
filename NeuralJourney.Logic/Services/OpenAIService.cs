@@ -30,7 +30,7 @@ namespace NeuralJourney.Logic.Services
             var completionText = completionResponse?.Completions.FirstOrDefault()?.Text;
 
             if (string.IsNullOrEmpty(completionText))
-                throw new InvalidCompletionDataException(completionText, string.Format("Completion text for the user input \'{0}\' was null or empty", userinput));
+                throw new InvalidCompletionTextException(completionText, "Completion text was empty");
 
             return completionText;
         }

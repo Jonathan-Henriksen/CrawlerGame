@@ -11,14 +11,22 @@ using var scope = host.Services.CreateScope();
 
 var services = scope.ServiceProvider;
 
+var cts = new CancellationTokenSource();
+
 try
 {
-    var gameClient = await services.GetRequiredService<GameClient>().Init();
-
-    await gameClient.Run();
+    var client = await services.GetRequiredService<GameClient>().Init(cts);
+    await client.Run();
+}
+catch (OperationCanceledException)
+{
+    cts.Dispose();
 }
 catch (Exception e)
 {
+    cts.Cancel();
+    cts.Dispose();
+
     Console.WriteLine(e.Message);
 }
 

@@ -5,19 +5,17 @@ using NeuralJourney.Library.Models.World;
 namespace NeuralJourney.Library.Exceptions.PlayerActions
 {
     [Serializable]
-    public class MapLimitReachedException : PlayerActionException
+    public class MapLimitReachedException : GameException
     {
-        public MapLimitReachedException() { }
-        public MapLimitReachedException(string message) : base(message) { }
-        public MapLimitReachedException(string message, Exception inner) : base(message, inner) { }
-        protected MapLimitReachedException(
-          System.Runtime.Serialization.SerializationInfo info,
-          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+        public readonly Player Player;
 
-        public MapLimitReachedException(Player? player, DirectionEnum? direction) :
-            base(string.Format(ErrorMessages.PlayerActions.MapLimitReached, direction), player)
+        public readonly DirectionEnum Direction;
+
+        public MapLimitReachedException(Player player, DirectionEnum direction) :
+            base(PlayerMessageTemplates.Map.LimitReached, ErrorMessageTemplates.Map.LimitReached, direction, player.Name)
         {
-
+            Player = player;
+            Direction = direction;
         }
     }
 }

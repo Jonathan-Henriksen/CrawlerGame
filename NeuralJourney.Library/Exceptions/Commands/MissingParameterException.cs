@@ -1,20 +1,17 @@
 ﻿using NeuralJourney.Library.Constants;
+using NeuralJourney.Library.Enums.Commands;
 
 namespace NeuralJourney.Library.Exceptions.Commands
 {
-
     [Serializable]
-    public class MissingParameterException : CommandParameterException
+    public class MissingParameterException : GameException
     {
-        public MissingParameterException() { }
-        public MissingParameterException(string message) : base(message) { }
-        public MissingParameterException(string message, Exception inner) : base(message, inner) { }
-        protected MissingParameterException(
-          System.Runtime.Serialization.SerializationInfo info,
-          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+        public readonly CommandIdentifierEnum Command;
 
-        public MissingParameterException(string commandName, string paramName) :
-            base(string.Format(ErrorMessages.Commands.MissingParameter, commandName, paramName), commandName, paramName)
-        { }
+        public MissingParameterException(CommandIdentifierEnum command, string paramName) :
+            base(PlayerMessageTemplates.Command.InvalidParameter, ErrorMessageTemplates.Command.MissingParameter, paramName, command)
+        {
+            Command = command;
+        }
     }
 }

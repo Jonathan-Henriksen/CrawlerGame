@@ -2,19 +2,18 @@
 
 namespace NeuralJourney.Library.Exceptions.Messages
 {
-
     [Serializable]
-    public class MessageInvalidFormatException : MessageException
+    public class MessageInvalidFormatException : GameException
     {
-        public MessageInvalidFormatException() { }
-        public MessageInvalidFormatException(string message) : base(message) { }
-        public MessageInvalidFormatException(string message, Exception inner) : base(message, inner) { }
-        protected MessageInvalidFormatException(
-          System.Runtime.Serialization.SerializationInfo info,
-          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+        public readonly string MessageText;
+
+        public readonly string Reason;
 
         public MessageInvalidFormatException(string messageText, string reason) :
-            base(string.Format(ErrorMessages.Messages.MessageFormat, reason), messageText)
-        { }
+            base(PlayerMessageTemplates.Message.InvalidFormat, ErrorMessageTemplates.Message.InvalidFormat, messageText, reason)
+        {
+            MessageText = messageText;
+            Reason = reason;
+        }
     }
 }

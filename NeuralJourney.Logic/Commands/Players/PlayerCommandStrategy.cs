@@ -44,6 +44,11 @@ namespace NeuralJourney.Logic.Commands.Players
                 responseMessage = $"{commandContext.ExecutionMessage}\n{result.AdditionalMessage ?? string.Empty}".Trim();
 
             }
+            catch (InvalidCompletionTextException ex)
+            {
+                _logger.Error(ex, ex.Message);
+                responseMessage = ex.Message;
+            }
             catch (InvalidCommandException ex)
             {
                 _logger.Error(ex, ex.Message);
@@ -55,16 +60,6 @@ namespace NeuralJourney.Logic.Commands.Players
                 responseMessage = ex.Message;
             }
             catch (InvalidParameterException ex)
-            {
-                _logger.Error(ex, ex.Message);
-                responseMessage = ex.Message;
-            }
-            catch (CommandMappingException ex)
-            {
-                _logger.Error(ex, ex.Message);
-                responseMessage = ex.Message;
-            }
-            catch (PlayerActionException ex)
             {
                 _logger.Error(ex, ex.Message);
                 responseMessage = ex.Message;
@@ -81,11 +76,11 @@ namespace NeuralJourney.Logic.Commands.Players
             var match = Regex.Match(completionText, regexPattern);
 
             if (!match.Success)
-                throw new InvalidCompletionDataException(completionText, "Invalid command format.");
+                throw new InvalidCompletionTextException(completionText, "Invalid command format.");
 
             var commandIdentifierText = match.Groups["commandIdentifier"].Value;
             if (!Enum.TryParse(commandIdentifierText, true, out CommandIdentifierEnum commandIdentifier))
-                throw new InvalidCompletionDataException(completionText, $"Could not parse the command '{commandIdentifierText}' to {nameof(CommandIdentifierEnum)}");
+                throw new InvalidCompletionTextException(completionText, $"Could not parse the command '{commandIdentifierText}' to {nameof(CommandIdentifierEnum)}");
 
             var commandParams = match.Groups["params"].Value.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 

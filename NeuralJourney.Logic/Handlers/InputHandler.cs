@@ -33,7 +33,7 @@ namespace NeuralJourney.Logic.Handlers
             var stream = player.GetStream();
             while (!cancellationToken.IsCancellationRequested)
             {
-                var input = await _messageService.ReadMessageAsync(stream);
+                var input = await _messageService.ReadMessageAsync(stream, cancellationToken);
                 if (_messageService.IsCloseConnectionMessage(input))
                 {
                     return;

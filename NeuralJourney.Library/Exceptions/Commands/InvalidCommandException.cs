@@ -1,19 +1,20 @@
 ﻿using NeuralJourney.Library.Constants;
+using NeuralJourney.Library.Enums.Commands;
 
 namespace NeuralJourney.Library.Exceptions.Commands
 {
     [Serializable]
-    public class InvalidCommandException : CommandMappingException
+    public class InvalidCommandException : GameException
     {
-        public InvalidCommandException() { }
-        public InvalidCommandException(string message) : base(message) { }
-        public InvalidCommandException(string message, Exception inner) : base(message, inner) { }
-        protected InvalidCommandException(
-          System.Runtime.Serialization.SerializationInfo info,
-          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+        public readonly CommandIdentifierEnum Command;
 
-        public InvalidCommandException(string command, string reason) :
-            base(string.Format(ErrorMessages.Commands.InvalidCommand, command, reason), command)
-        { }
+        public readonly string Reason;
+
+        public InvalidCommandException(CommandIdentifierEnum command, string reason) :
+            base(PlayerMessageTemplates.Command.InvalidCommand, ErrorMessageTemplates.Command.InvalidCommand, command, reason)
+        {
+            Command = command;
+            Reason = reason;
+        }
     }
 }

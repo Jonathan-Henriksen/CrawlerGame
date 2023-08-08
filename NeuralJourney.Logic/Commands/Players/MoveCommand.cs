@@ -19,10 +19,10 @@ namespace NeuralJourney.Logic.Commands.Players
         internal MoveCommand(CommandContext commandContext, GameOptions gameOptions) : base(commandContext)
         {
             if (commandContext.Params is null || commandContext.Params.Length < 1)
-                throw new MissingParameterException(nameof(Direction));
+                throw new MissingParameterException(commandContext.CommandIdentifier, nameof(Direction));
 
             if (!Enum.TryParse(commandContext.Params[0], out DirectionEnum direction))
-                throw new InvalidParameterException($"{commandContext.CommandIdentifier}", nameof(Direction), commandContext.Params[0],
+                throw new InvalidParameterException(commandContext.CommandIdentifier, nameof(Direction), commandContext.Params[0],
                     string.Format("{0}, {1}, {2}, {3}", DirectionEnum.North, DirectionEnum.South, DirectionEnum.East, DirectionEnum.West));
 
             Direction = direction;
@@ -34,7 +34,7 @@ namespace NeuralJourney.Logic.Commands.Players
         internal override Task<CommandResult> ExecuteAsync()
         {
             if (Context.Player is null)
-                throw new MissingParameterException($"{Context.CommandIdentifier}", nameof(Context.Player));
+                throw new MissingParameterException(Context.CommandIdentifier, nameof(Context.Player));
 
             return Task.Run(() =>
             {
@@ -68,7 +68,7 @@ namespace NeuralJourney.Logic.Commands.Players
             if ((increment > 0 && coordinate < boundary - 1) || (increment < 0 && coordinate > 0))
                 return coordinate + increment;
             else
-                throw new MapLimitReachedException(Context.Player, Direction);
+                throw new MapLimitReachedException(Context.Player!, Direction); // Player can't be null due to checks in the calling function.
         }
     }
 }

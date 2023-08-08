@@ -3,17 +3,17 @@
 namespace NeuralJourney.Library.Exceptions.Messages
 {
     [Serializable]
-    public class MessageTooSmallException : MessageSizeException
+    public class MessageTooSmallException : GameException
     {
-        public MessageTooSmallException() { }
-        public MessageTooSmallException(string message) : base(message) { }
-        public MessageTooSmallException(string message, Exception inner) : base(message, inner) { }
-        protected MessageTooSmallException(
-          System.Runtime.Serialization.SerializationInfo info,
-          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+        public readonly string MessageText;
 
-        public MessageTooSmallException(string messageText, int messageSizeLimit) :
-            base(string.Format(ErrorMessages.Messages.MessageTooSmall, messageSizeLimit), messageText, messageSizeLimit)
-        { }
+        public readonly int CharacterLimit;
+
+        public MessageTooSmallException(string messageText, int characterLimit) :
+            base(PlayerMessageTemplates.Message.TooSmall, ErrorMessageTemplates.Message.TooSmall, messageText.Length, characterLimit)
+        {
+            MessageText = messageText;
+            CharacterLimit = characterLimit;
+        }
     }
 }

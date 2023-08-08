@@ -7,57 +7,76 @@ namespace NeuralJourney.Client
     internal class GameClient
     {
         private readonly IMessageService _messageService;
-
         private readonly TcpClient _tcpClient;
+
         private readonly string _serverIp;
-        private readonly int _port;
+        private readonly int _serverPort;
 
-        private const string InputPrefix = "> ";
+        private CancellationTokenSource? _cts;
 
-        private bool IsRunning;
+        private const string _inputPrefix = "> ";
 
         public GameClient(IMessageService messageService, ClientOptions options)
         {
             _tcpClient = new TcpClient();
             _serverIp = options.ServerIp;
-            _port = options.ServerPort;
+            _serverPort = options.ServerPort;
             _messageService = messageService;
         }
 
-        public async Task<GameClient> Init()
+        public async Task<GameClient> Init(CancellationTokenSource cts)
         {
-            await _tcpClient.ConnectAsync(_serverIp, _port);
+            _cts = cts;
 
-            Console.WriteLine("Connected to the server.");
+            _ = Task.Run(() =>
+            {
+                Console.WriteLine("Press ESC to exit\n\nConnecting to the server...");
+                while (!_cts.IsCancellationRequested)
+                {
+                    if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
+                    {
+                        Console.WriteLine("Quitting the game. Goodbye!");
+                        Stop();
+                    }
+                }
+            });
+
+            var timeoutCts = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token);
+            timeoutCts.CancelAfter(TimeSpan.FromSeconds(10));
+
+            try
+            {
+                await _tcpClient.ConnectAsync(_serverIp, _serverPort, timeoutCts.Token);
+            }
+            catch (OperationCanceledException ex)
+            {
+                if (ex.CancellationToken == timeoutCts.Token)
+                    Console.WriteLine("Could not connect to the server. Quitting...");
+                else
+                    Console.WriteLine("Quitting the game. Goodbye!");
+            }
 
             return this;
         }
 
         public async Task Run()
         {
-            IsRunning = true;
+            if (_cts is null)
+                throw new InvalidOperationException("Failed to start the game. Reason: The client have not been initialized.");
 
-            using var stream = _tcpClient.GetStream();
-
-            var clientInputTask = HandleClientInputAsync(stream);
-            var serverMessageTask = HandleServerMessagesAsync(stream);
-
-            await Task.WhenAll(clientInputTask, serverMessageTask);
-        }
-
-        private async Task HandleClientInputAsync(NetworkStream stream)
-        {
             try
             {
-                Console.Write(InputPrefix);
-                while (IsRunning)
-                {
-                    var input = await Task.Run(Console.In.ReadLineAsync);
-                    if (string.IsNullOrEmpty(input))
-                        continue;
+                var stream = _tcpClient.GetStream();
 
-                    await _messageService.SendMessageAsync(stream, input);
-                }
+                var clientInputTask = HandleClientInputAsync(stream, _cts.Token);
+                var serverMessageTask = HandleServerMessagesAsync(stream, _cts.Token);
+
+                await Task.WhenAny(clientInputTask, serverMessageTask);
+            }
+            catch (OperationCanceledException)
+            {
+                Console.WriteLine("The game stopped unexpectedly.");
+                Stop();
             }
             catch (Exception ex)
             {
@@ -65,37 +84,57 @@ namespace NeuralJourney.Client
             }
         }
 
-        private async Task HandleServerMessagesAsync(NetworkStream stream)
+        public void Stop()
         {
-            try
+            _tcpClient.Close();
+
+            if (_cts is null)
+                return;
+
+            _cts.Cancel();
+            _cts.Dispose();
+        }
+
+        private async Task HandleClientInputAsync(NetworkStream stream, CancellationToken cancellationToken)
+        {
+            Console.Write(_inputPrefix);
+            while (!cancellationToken.IsCancellationRequested)
             {
-                string? message = default;
-                while (IsRunning)
+                var input = await Task.Run(Console.In.ReadLineAsync, cancellationToken);
+                if (string.IsNullOrEmpty(input))
+                    continue;
+
+                await _messageService.SendMessageAsync(stream, input, cancellationToken);
+            }
+        }
+
+        private async Task HandleServerMessagesAsync(NetworkStream stream, CancellationToken cancellationToken)
+        {
+            string? message = default;
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                while (message is null)
                 {
-                    while (message is null)
+                    if (!stream.DataAvailable)
+                        continue;
+
+                    message = await _messageService.ReadMessageAsync(stream, cancellationToken);
+                    if (_messageService.IsCloseConnectionMessage(message))
                     {
-                        if (!stream.DataAvailable)
-                            continue;
+                        cancellationToken.ThrowIfCancellationRequested();
 
-                        message = await _messageService.ReadMessageAsync(stream);
-                        if (_messageService.IsCloseConnectionMessage(message))
-                        {
-                            IsRunning = false;
-                            return;
-                        }
+                        Console.WriteLine("Server closed the connection unexpectedly.");
+
+                        return;
                     }
-
-                    if (string.IsNullOrEmpty(message))
-                        continue;
-
-                    Console.WriteLine(message);
-                    Console.Write(InputPrefix);
-                    message = default;
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
+
+                if (string.IsNullOrEmpty(message))
+                    continue;
+
+                Console.WriteLine(message);
+                Console.Write(_inputPrefix);
+                message = default;
             }
         }
     }

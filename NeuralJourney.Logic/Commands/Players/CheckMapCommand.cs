@@ -23,7 +23,7 @@ namespace NeuralJourney.Logic.Commands.Players
             return Task.Run(() =>
             {
                 if (Context.Player is null)
-                    throw new MissingParameterException($"{Context.CommandIdentifier}", nameof(Context.Player));
+                    throw new MissingParameterException(Context.CommandIdentifier, nameof(Context.Player));
 
                 var map = new string('#', WorldWidth + 2) + "\n";
                 for (var y = 0; y < WorldHeight; y++)

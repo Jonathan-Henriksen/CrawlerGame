@@ -10,12 +10,8 @@ namespace NeuralJourney.Logic.Commands
             var commandType = CommandRegistry.GetCommandType(commandContext);
 
             var command = (CommandBase?) Activator.CreateInstance(commandType, commandContext);
-            if (command == null)
-            {
-                throw new CommandMappingException($"Failed to create an instance of '{commandType.FullName}'");
-            }
 
-            return command;
+            return command ?? throw new InvalidCommandException(command: commandContext.CommandIdentifier, $"Failed to create an instance of '{commandType.FullName}'");
         }
     }
 }

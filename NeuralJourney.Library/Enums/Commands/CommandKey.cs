@@ -1,6 +1,6 @@
 ﻿namespace NeuralJourney.Library.Enums.Commands
 {
-    public struct CommandKey
+    public readonly struct CommandKey
     {
         public CommandTypeEnum CommandType { get; }
         public CommandIdentifierEnum CommandIdentifier { get; }

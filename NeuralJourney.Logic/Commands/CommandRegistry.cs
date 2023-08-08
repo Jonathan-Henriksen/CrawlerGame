@@ -31,7 +31,7 @@ namespace NeuralJourney.Logic.Commands
             var key = new CommandKey(commandContext.CommandType, commandContext.CommandIdentifier);
             if (!_commandMappings.TryGetValue(key, out var commandType))
             {
-                throw new InvalidCommandException($"No command registered for type: {commandContext.CommandType} and identifier: {commandContext.CommandIdentifier}");
+                throw new InvalidCommandException(commandContext.CommandIdentifier, "Command does not exist");
             }
 
             return commandType;

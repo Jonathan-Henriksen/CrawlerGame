@@ -44,10 +44,6 @@ namespace NeuralJourney.Logic.Commands.Admin
             {
                 _logger.Error(ex, ex.Message);
             }
-            catch (CommandMappingException ex)
-            {
-                _logger.Error(ex, ex.Message);
-            }
         }
     }
 }
