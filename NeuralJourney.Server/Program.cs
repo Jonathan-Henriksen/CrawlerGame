@@ -3,6 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using NeuralJourney.Logic.Commands;
+using NeuralJourney.Logic.Commands.Admin;
+using NeuralJourney.Logic.Commands.Players;
 using NeuralJourney.Logic.Engines;
 using NeuralJourney.Logic.Handlers;
 using NeuralJourney.Logic.Options;
@@ -34,6 +36,11 @@ IHostBuilder CreateHostBuilder(string[] strings)
             services.AddTransient<IClockService, ClockService>();
             services.AddTransient<ICommandDispatcher, CommandDispatcher>();
             services.AddTransient<IInputHandler, InputHandler>();
+            services.AddTransient<ILoggerService, LoggerService>();
+            services.AddTransient<IMessageService, MessageService>();
+
+            services.AddTransient<IAdminCommandStrategy, AdminCommandStrategy>();
+            services.AddTransient<IPlayerCommandStrategy, PlayerCommandStrategy>();
 
             services.AddSingleton<ICommandFactory, CommandFactory>();
             services.AddSingleton<IConnectionHandler, ConnectionHandler>();

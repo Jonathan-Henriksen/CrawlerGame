@@ -1,11 +1,13 @@
-﻿using NeuralJourney.Library.Extensions;
-using NeuralJourney.Logic.Options;
+﻿using NeuralJourney.Logic.Options;
+using NeuralJourney.Logic.Services;
 using System.Net.Sockets;
 
 namespace NeuralJourney.Client
 {
     internal class GameClient
     {
+        private readonly IMessageService _messageService;
+
         private readonly TcpClient _tcpClient;
         private readonly string _serverIp;
         private readonly int _port;
@@ -14,11 +16,12 @@ namespace NeuralJourney.Client
 
         private bool IsRunning;
 
-        public GameClient(ClientOptions options)
+        public GameClient(IMessageService messageService, ClientOptions options)
         {
             _tcpClient = new TcpClient();
             _serverIp = options.ServerIp;
             _port = options.ServerPort;
+            _messageService = messageService;
         }
 
         public async Task<GameClient> Init()
@@ -39,7 +42,6 @@ namespace NeuralJourney.Client
             var clientInputTask = HandleClientInputAsync(stream);
             var serverMessageTask = HandleServerMessagesAsync(stream);
 
-
             await Task.WhenAll(clientInputTask, serverMessageTask);
         }
 
@@ -48,15 +50,13 @@ namespace NeuralJourney.Client
             try
             {
                 Console.Write(InputPrefix);
-
                 while (IsRunning)
                 {
                     var input = await Task.Run(Console.In.ReadLineAsync);
-
                     if (string.IsNullOrEmpty(input))
                         continue;
 
-                    await stream.SendMessageAsync(input);
+                    await _messageService.SendMessageAsync(stream, input);
                 }
             }
             catch (Exception ex)
@@ -77,7 +77,12 @@ namespace NeuralJourney.Client
                         if (!stream.DataAvailable)
                             continue;
 
-                        message = await stream.ReadMessageAsync();
+                        message = await _messageService.ReadMessageAsync(stream);
+                        if (_messageService.IsCloseConnectionMessage(message))
+                        {
+                            IsRunning = false;
+                            return;
+                        }
                     }
 
                     if (string.IsNullOrEmpty(message))
@@ -85,7 +90,6 @@ namespace NeuralJourney.Client
 
                     Console.WriteLine(message);
                     Console.Write(InputPrefix);
-
                     message = default;
                 }
             }

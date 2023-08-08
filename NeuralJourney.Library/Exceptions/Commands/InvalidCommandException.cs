@@ -1,5 +1,4 @@
 ﻿using NeuralJourney.Library.Constants;
-using NeuralJourney.Library.Exceptions.Commands.Base;
 
 namespace NeuralJourney.Library.Exceptions.Commands
 {

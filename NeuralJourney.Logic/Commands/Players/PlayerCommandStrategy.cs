@@ -1,6 +1,5 @@
 ﻿using NeuralJourney.Library.Enums.Commands;
 using NeuralJourney.Library.Exceptions.Commands;
-using NeuralJourney.Library.Exceptions.Commands.Base;
 using NeuralJourney.Library.Exceptions.PlayerActions.Base;
 using NeuralJourney.Library.Models.CommandContext;
 using NeuralJourney.Library.Models.World;
@@ -11,16 +10,20 @@ namespace NeuralJourney.Logic.Commands.Players
     public class PlayerCommandStrategy : IPlayerCommandStrategy
     {
         private readonly ICommandFactory _commandFactory;
+        private readonly IMessageService _messageService;
         private readonly IOpenAIService _openAIService;
 
-        public PlayerCommandStrategy(ICommandFactory commandFactory, IOpenAIService openAIService)
+        public PlayerCommandStrategy(ICommandFactory commandFactory, IMessageService messageService, IOpenAIService openAIService)
         {
             _commandFactory = commandFactory;
+            _messageService = messageService;
             _openAIService = openAIService;
         }
 
         public async Task ExecuteAsync(string playerInput, Player player)
         {
+            var responseMessage = string.Empty;
+
             try
             {
                 var completionText = await _openAIService.GetCommandCompletionTextAsync(playerInput);
@@ -30,26 +33,37 @@ namespace NeuralJourney.Logic.Commands.Players
                 var command = _commandFactory.CreateCommand(commandContext);
 
                 await command.ExecuteAsync();
+
+                responseMessage = commandContext.ExecutionMessage;
             }
             catch (InvalidCommandException ex)
             {
                 Console.WriteLine(ex.Message);
+                responseMessage = ex.Message;
             }
             catch (MissingParameterException ex)
             {
                 Console.WriteLine(ex.Message);
+                responseMessage = ex.Message;
             }
             catch (InvalidParameterException ex)
             {
                 Console.WriteLine(ex.Message);
+                responseMessage = ex.Message;
             }
             catch (CommandMappingException ex)
             {
                 Console.WriteLine(ex.Message);
+                responseMessage = ex.Message;
             }
             catch (PlayerActionException ex)
             {
                 Console.WriteLine(ex.Message);
+                responseMessage = ex.Message;
+            }
+            finally
+            {
+                await _messageService.SendMessageAsync(player.GetStream(), responseMessage);
             }
         }
 

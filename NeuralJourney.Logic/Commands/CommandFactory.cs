@@ -1,7 +1,6 @@
 ﻿using NeuralJourney.Library.Attributes;
 using NeuralJourney.Library.Enums.Commands;
 using NeuralJourney.Library.Exceptions.Commands;
-using NeuralJourney.Library.Exceptions.Commands.Base;
 using NeuralJourney.Library.Models.CommandContext;
 using System.Reflection;
 
@@ -17,12 +16,12 @@ namespace NeuralJourney.Logic.Commands
             {
                 foreach (var type in assembly.GetTypes())
                 {
-                    var identifierAttribute = type.GetCustomAttribute<CommandIdentifierAttribute>();
+                    var identifierAttribute = type.GetCustomAttribute<CommandAttribute>();
                     var commandTypeAttribute = type.GetCustomAttribute<CommandTypeAttribute>();
 
                     if (identifierAttribute != null && commandTypeAttribute != null)
                     {
-                        var key = new CommandKey(commandTypeAttribute.CommandType, identifierAttribute.CommandIdentifier);
+                        var key = new CommandKey(commandTypeAttribute.CommandType, identifierAttribute.Identifier);
                         _commandMappings[key] = type;
                     }
                 }

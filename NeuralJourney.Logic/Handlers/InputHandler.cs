@@ -1,12 +1,19 @@
-﻿using NeuralJourney.Library.Extensions;
-using NeuralJourney.Library.Models.World;
+﻿using NeuralJourney.Library.Models.World;
+using NeuralJourney.Logic.Services;
 
 namespace NeuralJourney.Logic.Handlers
 {
     public class InputHandler : IInputHandler
     {
+        private readonly IMessageService _messageService;
+
         public event Action<string>? OnAdminInputReceived;
         public event Action<string, Player>? OnPlayerInputReceived;
+
+        public InputHandler(IMessageService messageService)
+        {
+            _messageService = messageService;
+        }
 
         public async Task HandleAdminInputAsync()
         {
@@ -23,16 +30,15 @@ namespace NeuralJourney.Logic.Handlers
 
         public async Task HandlePlayerInputAsync(Player player)
         {
-            using var stream = player.GetStream();
+            var stream = player.GetStream();
             while (player.IsConnected)
             {
-                if (!stream.DataAvailable)
+                var input = await _messageService.ReadMessageAsync(stream);
+                if (_messageService.IsCloseConnectionMessage(input))
                 {
-                    await Task.Delay(100);
-                    continue;
+                    // TODO: Add cancellation token logic to replace IsConnected
+                    return;
                 }
-
-                var input = await stream.ReadMessageAsync();
 
                 if (string.IsNullOrEmpty(input))
                     continue;

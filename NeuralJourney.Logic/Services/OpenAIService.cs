@@ -1,5 +1,6 @@
 ﻿using NeuralJourney.Library.Attributes;
 using NeuralJourney.Library.Exceptions.Commands;
+using NeuralJourney.Logic.Commands;
 using NeuralJourney.Logic.Commands.Players;
 using NeuralJourney.Logic.Options;
 using OpenAI_API;
@@ -46,7 +47,7 @@ namespace NeuralJourney.Logic.Services
 
             var types = assemblies
                 .SelectMany(assembly => assembly.GetExportedTypes())
-                .Where(type => typeof(PlayerCommandBase).IsAssignableFrom(type) && type != typeof(PlayerCommandBase));
+                .Where(type => typeof(CommandBase).IsAssignableFrom(type) && type != typeof(CommandBase));
 
             foreach (var type in types)
             {

@@ -1,4 +1,4 @@
-﻿namespace NeuralJourney.Library.Exceptions.Messages.Base
+﻿namespace NeuralJourney.Library.Exceptions.Messages
 {
 
     [Serializable]

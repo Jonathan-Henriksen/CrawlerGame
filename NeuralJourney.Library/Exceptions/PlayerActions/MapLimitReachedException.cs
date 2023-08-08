@@ -15,7 +15,7 @@ namespace NeuralJourney.Library.Exceptions.PlayerActions
           System.Runtime.Serialization.SerializationInfo info,
           System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
 
-        public MapLimitReachedException(Player player, DirectionEnum? direction) :
+        public MapLimitReachedException(Player? player, DirectionEnum? direction) :
             base(string.Format(ErrorMessages.PlayerActions.MapLimitReached, direction), player)
         {
 

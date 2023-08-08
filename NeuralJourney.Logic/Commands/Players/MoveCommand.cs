@@ -4,13 +4,12 @@ using NeuralJourney.Library.Enums.Parameters;
 using NeuralJourney.Library.Exceptions.Commands;
 using NeuralJourney.Library.Exceptions.PlayerActions;
 using NeuralJourney.Library.Models.CommandContext;
-using NeuralJourney.Library.Models.World;
 using NeuralJourney.Logic.Options;
 
 namespace NeuralJourney.Logic.Commands.Players
 {
-    [CommandIdentifier(CommandIdentifierEnum.Move)]
-    internal class MoveCommand : PlayerCommandBase
+    [Command(CommandTypeEnum.Player, CommandIdentifierEnum.Move)]
+    internal class MoveCommand : CommandBase
     {
         private readonly DirectionEnum Direction;
 
@@ -19,38 +18,47 @@ namespace NeuralJourney.Logic.Commands.Players
 
         internal MoveCommand(CommandContext commandContext, GameOptions gameOptions) : base(commandContext)
         {
-            WorldHeight = gameOptions.WorldHeight;
-            WorldWidth = gameOptions.WorldWidth;
-
             if (commandContext.Params is null || commandContext.Params.Length < 1)
                 throw new MissingParameterException(nameof(Direction));
 
             if (!Enum.TryParse(commandContext.Params[0], out DirectionEnum direction))
-                throw new InvalidParameterException($"{commandContext.CommandIdentifier}", nameof(Direction), commandContext.Params[0], "North/South/East/West");
+                throw new InvalidParameterException($"{commandContext.CommandIdentifier}", nameof(Direction), commandContext.Params[0],
+                    string.Format("{0}, {1}, {2}, {3}", DirectionEnum.North, DirectionEnum.South, DirectionEnum.East, DirectionEnum.West));
 
             Direction = direction;
+
+            WorldHeight = gameOptions.WorldHeight;
+            WorldWidth = gameOptions.WorldWidth;
         }
 
-        protected override void Execute()
+        internal override Task ExecuteAsync()
         {
-            switch (Direction)
+            if (Context.Player is null)
+                throw new MissingParameterException($"{Context.CommandIdentifier}", nameof(Context.Player));
+
+            return Task.Run(() =>
             {
-                case DirectionEnum.North:
-                    Player.Location.Y = Move(Player.Location.Y, WorldHeight, 1);
-                    break;
+                var playerLocation = Context.Player.Location;
 
-                case DirectionEnum.South:
-                    Player.Location.Y = Move(Player.Location.Y, WorldHeight, -1);
-                    break;
+                switch (Direction)
+                {
+                    case DirectionEnum.North:
+                        playerLocation.Y = Move(playerLocation.Y, WorldHeight, 1);
+                        break;
 
-                case DirectionEnum.East:
-                    Player.Location.X = Move(Player.Location.X, WorldWidth, 1);
-                    break;
+                    case DirectionEnum.South:
+                        playerLocation.Y = Move(playerLocation.Y, WorldHeight, -1);
+                        break;
 
-                case DirectionEnum.West:
-                    Player.Location.X = Move(Player.Location.X, WorldWidth, -1);
-                    break;
-            }
+                    case DirectionEnum.East:
+                        playerLocation.X = Move(playerLocation.X, WorldWidth, 1);
+                        break;
+
+                    case DirectionEnum.West:
+                        playerLocation.X = Move(playerLocation.X, WorldWidth, -1);
+                        break;
+                }
+            });
         }
 
         private int Move(int coordinate, int boundary, int increment)
@@ -58,7 +66,7 @@ namespace NeuralJourney.Logic.Commands.Players
             if ((increment > 0 && coordinate < boundary - 1) || (increment < 0 && coordinate > 0))
                 return coordinate + increment;
             else
-                throw new MapLimitReachedException(Player, Direction);
+                throw new MapLimitReachedException(Context.Player, Direction);
         }
     }
 }

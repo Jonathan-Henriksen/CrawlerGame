@@ -1,4 +1,4 @@
-﻿namespace NeuralJourney.Library.Exceptions.Commands.Base
+﻿namespace NeuralJourney.Library.Exceptions.Commands
 {
     [Serializable]
     public class CommandMappingException : Exception
