@@ -84,7 +84,7 @@ namespace NeuralJourney.Client
             var stream = _tcpClient.GetStream();
 
             var serverMessageTask = HandleServerMessagesAsync(stream, _cts.Token);
-            var clientInputTask = HandleClientInputAsync(stream, _cts.Token);    
+            var clientInputTask = HandleClientInputAsync(stream, _cts.Token);
 
             try
             {
@@ -146,7 +146,7 @@ namespace NeuralJourney.Client
                 {
                     if (!stream.DataAvailable)
                     {
-                        await Task.Delay(100);
+                        await Task.Delay(100, cancellationToken);
                         continue;
                     }
 

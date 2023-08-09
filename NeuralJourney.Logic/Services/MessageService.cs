@@ -62,12 +62,5 @@ namespace NeuralJourney.Logic.Services
                 return semaphore;
             }
         }
-
-        public void Dispose()
-        {
-            GC.SuppressFinalize(this);
-
-            _streamSemaphores.Clear();
-        }
     }
 }
