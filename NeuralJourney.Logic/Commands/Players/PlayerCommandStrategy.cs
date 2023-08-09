@@ -1,7 +1,6 @@
 ﻿using NeuralJourney.Library.Constants;
 using NeuralJourney.Library.Enums.Commands;
 using NeuralJourney.Library.Exceptions.Commands;
-using NeuralJourney.Library.Exceptions.PlayerActions;
 using NeuralJourney.Library.Models.Commands;
 using NeuralJourney.Library.Models.World;
 using NeuralJourney.Logic.Services;

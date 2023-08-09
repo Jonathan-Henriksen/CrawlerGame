@@ -1,5 +1,7 @@
-﻿using NeuralJourney.Logic.Options;
+﻿using NeuralJourney.Library.Constants;
+using NeuralJourney.Logic.Options;
 using NeuralJourney.Logic.Services;
+using Serilog;
 using System.Net.Sockets;
 
 namespace NeuralJourney.Client
@@ -7,6 +9,7 @@ namespace NeuralJourney.Client
     internal class GameClient
     {
         private readonly IMessageService _messageService;
+        private readonly ILogger _logger;
         private readonly TcpClient _tcpClient;
 
         private readonly string _serverIp;
@@ -16,27 +19,33 @@ namespace NeuralJourney.Client
 
         private const string _inputPrefix = "> ";
 
-        public GameClient(IMessageService messageService, ClientOptions options)
+        public GameClient(IMessageService messageService, ILogger logger, ClientOptions options)
         {
+            _messageService = messageService;
+            _logger = logger;
             _tcpClient = new TcpClient();
             _serverIp = options.ServerIp;
             _serverPort = options.ServerPort;
-            _messageService = messageService;
         }
 
         public async Task<GameClient> Init(CancellationTokenSource cts)
         {
             _cts = cts;
 
-            _ = Task.Run(() =>
+            _ = Task.Run(async () =>
             {
-                Console.WriteLine("Press ESC to exit\n\nConnecting to the server...");
+                _logger.Information("Press ESC to exit\n");
+                _logger.Information(ClientMessageTemplates.ConnectionInitialize);
                 while (!_cts.IsCancellationRequested)
                 {
                     if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
                     {
-                        Console.WriteLine("Quitting the game. Goodbye!");
-                        Stop();
+                        _logger.Information(ClientMessageTemplates.StopGame);
+
+                        await _messageService.SendCloseConnectionAsync(_tcpClient.GetStream(), _cts.Token);
+
+                        _ = Stop();
+                        continue;
                     }
                 }
             });
@@ -51,10 +60,18 @@ namespace NeuralJourney.Client
             catch (OperationCanceledException ex)
             {
                 if (ex.CancellationToken == timeoutCts.Token)
-                    Console.WriteLine("Could not connect to the server. Quitting...");
+                    _logger.Information(ClientMessageTemplates.ConnectionFailed);
                 else
-                    Console.WriteLine("Quitting the game. Goodbye!");
+                    _logger.Information(ClientMessageTemplates.StopGame);
+
+                throw;
             }
+            catch (SocketException)
+            {
+                _logger.Information(ClientMessageTemplates.ConnectionFailed);
+            }
+
+            _logger.Information(ClientMessageTemplates.ConnectionEstablished);
 
             return this;
         }
@@ -62,30 +79,38 @@ namespace NeuralJourney.Client
         public async Task Run()
         {
             if (_cts is null)
-                throw new InvalidOperationException("Failed to start the game. Reason: The client have not been initialized.");
+                throw new InvalidOperationException(ClientMessageTemplates.ClientNotInitialized);
+
+            var stream = _tcpClient.GetStream();
+
+            var serverMessageTask = HandleServerMessagesAsync(stream, _cts.Token);
+            var clientInputTask = HandleClientInputAsync(stream, _cts.Token);    
 
             try
             {
-                var stream = _tcpClient.GetStream();
-
-                var clientInputTask = HandleClientInputAsync(stream, _cts.Token);
-                var serverMessageTask = HandleServerMessagesAsync(stream, _cts.Token);
-
                 await Task.WhenAny(clientInputTask, serverMessageTask);
             }
             catch (OperationCanceledException)
             {
-                Console.WriteLine("The game stopped unexpectedly.");
-                Stop();
+                throw;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
+            finally
+            {
+                _ = Stop();
+            }
         }
 
-        public void Stop()
+        public async Task Stop()
         {
+            if (_cts is null)
+                throw new InvalidOperationException(ClientMessageTemplates.ClientNotInitialized);
+
+            await _messageService.SendCloseConnectionAsync(_tcpClient.GetStream(), _cts.Token);
+
             _tcpClient.Close();
 
             if (_cts is null)
@@ -100,11 +125,15 @@ namespace NeuralJourney.Client
             Console.Write(_inputPrefix);
             while (!cancellationToken.IsCancellationRequested)
             {
-                var input = await Task.Run(Console.In.ReadLineAsync, cancellationToken);
+
+                var input = await Console.In.ReadLineAsync(cancellationToken);
+
                 if (string.IsNullOrEmpty(input))
                     continue;
 
-                await _messageService.SendMessageAsync(stream, input, cancellationToken);
+                _ = _messageService.SendMessageAsync(stream, input, cancellationToken);
+
+                Console.Write(_inputPrefix);
             }
         }
 
@@ -116,15 +145,19 @@ namespace NeuralJourney.Client
                 while (message is null)
                 {
                     if (!stream.DataAvailable)
+                    {
+                        await Task.Delay(100);
                         continue;
+                    }
 
                     message = await _messageService.ReadMessageAsync(stream, cancellationToken);
                     if (_messageService.IsCloseConnectionMessage(message))
                     {
                         cancellationToken.ThrowIfCancellationRequested();
 
-                        Console.WriteLine("Server closed the connection unexpectedly.");
+                        _logger.Information(ClientMessageTemplates.ConnectionClosed);
 
+                        _ = Stop();
                         return;
                     }
                 }
@@ -132,8 +165,8 @@ namespace NeuralJourney.Client
                 if (string.IsNullOrEmpty(message))
                     continue;
 
-                Console.WriteLine(message);
-                Console.Write(_inputPrefix);
+                _logger.Information(message);
+
                 message = default;
             }
         }

@@ -5,6 +5,8 @@ using Microsoft.Extensions.Options;
 using NeuralJourney.Client;
 using NeuralJourney.Logic.Options;
 using NeuralJourney.Logic.Services;
+using Serilog;
+using Serilog.Core;
 
 using var host = CreateHostBuilder(args).Build();
 using var scope = host.Services.CreateScope();
@@ -22,12 +24,13 @@ catch (OperationCanceledException)
 {
     cts.Dispose();
 }
-catch (Exception e)
+catch (Exception ex)
 {
     cts.Cancel();
     cts.Dispose();
 
-    Console.WriteLine(e.Message);
+    var logger = services.GetRequiredService<ILogger>();
+    logger.Error(ex, ex.Message);
 }
 
 IHostBuilder CreateHostBuilder(string[] strings)
@@ -36,6 +39,11 @@ IHostBuilder CreateHostBuilder(string[] strings)
         .ConfigureAppConfiguration((hostingContext, config) =>
         {
             config.AddJsonFile("appsettings.json", false);
+        })
+        .UseSerilog((hostingContext, loggerConfiguration) =>
+        {
+            loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration);
+            loggerConfiguration.WriteTo.Sink(new ClientConsoleSink());
         })
         .ConfigureServices((_, services) =>
         {
