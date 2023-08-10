@@ -1,4 +1,4 @@
-﻿namespace NeuralJourney.Logic.Services.Interfaces
+﻿namespace NeuralJourney.Logic.Services
 {
     public interface IMessageService
     {

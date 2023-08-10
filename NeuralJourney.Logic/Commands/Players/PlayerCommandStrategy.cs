@@ -1,7 +1,7 @@
 ﻿using NeuralJourney.Library.Exceptions.Commands;
 using NeuralJourney.Library.Models.Commands;
-using NeuralJourney.Logic.Commands.Interfaces;
-using NeuralJourney.Logic.Services.Interfaces;
+using NeuralJourney.Logic.Commands.Middleware;
+using NeuralJourney.Logic.Services;
 using Serilog;
 
 namespace NeuralJourney.Logic.Commands.Players

@@ -1,6 +1,6 @@
 ﻿using NeuralJourney.Library.Models.Commands;
 
-namespace NeuralJourney.Logic.Commands.Interfaces
+namespace NeuralJourney.Logic.Commands
 {
     public interface ICommandDispatcher
     {

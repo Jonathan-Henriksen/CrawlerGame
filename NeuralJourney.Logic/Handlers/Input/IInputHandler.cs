@@ -7,6 +7,6 @@ namespace NeuralJourney.Logic.Handlers.Input
     {
         public event Action<CommandContext>? OnInputReceived;
 
-        internal Task HandleInputAsync(Player? player = default, CancellationToken cancellationToken = default);
+        public Task HandleInputAsync(Player? player = default, CancellationToken cancellationToken = default);
     }
 }

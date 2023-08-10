@@ -1,15 +1,14 @@
 ﻿using NeuralJourney.Library.Constants;
 using NeuralJourney.Library.Models.World;
-using NeuralJourney.Logic.Commands.Interfaces;
-using NeuralJourney.Logic.Engines.Interfaces;
+using NeuralJourney.Logic.Commands;
 using NeuralJourney.Logic.Handlers.Connection;
 using NeuralJourney.Logic.Handlers.Input;
-using NeuralJourney.Logic.Services.Interfaces;
+using NeuralJourney.Logic.Services;
 using Serilog;
 
 namespace NeuralJourney.Logic.Engines
 {
-    public class GameEngine : IGameEngine
+    public class ServerEngine : IEngine
     {
         private readonly IClockService _clock;
 
@@ -26,7 +25,7 @@ namespace NeuralJourney.Logic.Engines
         private readonly List<Player> _players = new();
         private readonly Dictionary<Player, CancellationTokenSource> _playerTokens = new();
 
-        public GameEngine(IClockService clockService, ICommandDispatcher commandDispatcher, IConnectionHandler connectionHandler, IEnumerable<IInputHandler> inputHandlers, ILogger logger)
+        public ServerEngine(IClockService clockService, ICommandDispatcher commandDispatcher, IConnectionHandler connectionHandler, IEnumerable<IInputHandler> inputHandlers, ILogger logger)
         {
             _clock = clockService;
             _logger = logger;
@@ -34,7 +33,7 @@ namespace NeuralJourney.Logic.Engines
             _adminInputToken = new CancellationTokenSource();
 
             _playerInputHandler = inputHandlers.First(i => i.GetType() == typeof(PlayerInputHandler));
-            _adminInputHandler = inputHandlers.First(i => i.GetType() == typeof(AdminInputHandler));
+            _adminInputHandler = inputHandlers.First(i => i.GetType() == typeof(ConsoleInputHandler));
 
             _commandDispatcher = commandDispatcher;
 
@@ -44,6 +43,11 @@ namespace NeuralJourney.Logic.Engines
             _connectionHandler = connectionHandler;
 
             _connectionHandler.OnPlayerConnected += AddPlayer;
+        }
+
+        public async Task<IEngine> Init(CancellationTokenSource cancellationTokenSource)
+        {
+            return await Task.FromResult(this);
         }
 
         public async Task Run()
@@ -98,6 +102,11 @@ namespace NeuralJourney.Logic.Engines
             _players.Remove(player);
 
             _logger.Information(InfoMessageTemplates.PlayerRemoved, player.Name);
+        }
+
+        Task IEngine.Stop()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,12 +1,13 @@
 ﻿using NeuralJourney.Library.Constants;
 using NeuralJourney.Logic.Options;
-using NeuralJourney.Logic.Services.Interfaces;
+using NeuralJourney.Logic.Services;
 using Serilog;
 using System.Net.Sockets;
 
-namespace NeuralJourney.Client
+namespace NeuralJourney.Logic.Engines
 {
-    internal class GameClient
+    public class ClientEngine : IEngine
+
     {
         private readonly IMessageService _messageService;
         private readonly ILogger _logger;
@@ -19,7 +20,7 @@ namespace NeuralJourney.Client
 
         private const string _inputPrefix = "> ";
 
-        public GameClient(IMessageService messageService, ILogger logger, ClientOptions options)
+        public ClientEngine(IMessageService messageService, ILogger logger, ClientOptions options)
         {
             _messageService = messageService;
             _logger = logger;
@@ -28,7 +29,7 @@ namespace NeuralJourney.Client
             _serverPort = options.ServerPort;
         }
 
-        public async Task<GameClient> Init(CancellationTokenSource cts)
+        public async Task<IEngine> Init(CancellationTokenSource cts)
         {
             _cts = cts;
 

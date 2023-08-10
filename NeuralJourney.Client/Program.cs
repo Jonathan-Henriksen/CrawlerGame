@@ -3,9 +3,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using NeuralJourney.Client;
+using NeuralJourney.Logic.Engines;
+using NeuralJourney.Logic.Handlers.Input;
 using NeuralJourney.Logic.Options;
 using NeuralJourney.Logic.Services;
-using NeuralJourney.Logic.Services.Interfaces;
 using Serilog;
 
 using var host = CreateHostBuilder(args).Build();
@@ -17,7 +18,7 @@ var cts = new CancellationTokenSource();
 
 try
 {
-    var client = await services.GetRequiredService<GameClient>().Init(cts);
+    var client = await services.GetRequiredService<IEngine>().Init(cts);
     await client.Run();
 }
 catch (OperationCanceledException)
@@ -47,9 +48,10 @@ IHostBuilder CreateHostBuilder(string[] strings)
         })
         .ConfigureServices((_, services) =>
         {
-            services.AddSingleton<GameClient>();
+            services.AddSingleton<IEngine, ClientEngine>();
 
             services.AddTransient<IMessageService, MessageService>();
+            services.AddTransient<IInputHandler, ConsoleInputHandler>();
 
             services.AddOptions<ClientOptions>().BindConfiguration("Client");
             services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<ClientOptions>>().Value);

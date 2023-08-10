@@ -4,16 +4,13 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using NeuralJourney.Logic.Commands;
 using NeuralJourney.Logic.Commands.Admin;
-using NeuralJourney.Logic.Commands.Interfaces;
 using NeuralJourney.Logic.Commands.Middleware;
 using NeuralJourney.Logic.Commands.Players;
 using NeuralJourney.Logic.Engines;
-using NeuralJourney.Logic.Engines.Interfaces;
 using NeuralJourney.Logic.Handlers.Connection;
 using NeuralJourney.Logic.Handlers.Input;
 using NeuralJourney.Logic.Options;
 using NeuralJourney.Logic.Services;
-using NeuralJourney.Logic.Services.Interfaces;
 using Serilog;
 
 using var host = CreateHostBuilder(args).Build();
@@ -23,7 +20,7 @@ var services = scope.ServiceProvider;
 
 try
 {
-    await services.GetRequiredService<IGameEngine>().Run();
+    await services.GetRequiredService<IEngine>().Run();
 }
 catch (Exception ex)
 {
@@ -46,13 +43,13 @@ static IHostBuilder CreateHostBuilder(string[] strings)
         {
             services.AddTransient<IClockService, ClockService>();
 
-            services.AddTransient<IInputHandler, AdminInputHandler>();
+            services.AddTransient<IInputHandler, ConsoleInputHandler>();
             services.AddTransient<IInputHandler, PlayerInputHandler>();
 
             services.AddTransient<IMessageService, MessageService>();
 
             services.AddSingleton<IConnectionHandler, PlayerConnectionHandler>();
-            services.AddSingleton<IGameEngine, GameEngine>();
+            services.AddSingleton<IEngine, ServerEngine>();
             services.AddSingleton<IOpenAIService, OpenAIService>();
 
             // Register Command Middleware

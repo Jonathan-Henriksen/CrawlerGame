@@ -4,7 +4,7 @@ using NeuralJourney.Library.Models.World;
 
 namespace NeuralJourney.Logic.Handlers.Input
 {
-    public class AdminInputHandler : IInputHandler
+    public class ConsoleInputHandler : IInputHandler
     {
         public event Action<CommandContext>? OnInputReceived;
 
