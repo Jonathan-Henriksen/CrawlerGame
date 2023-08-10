@@ -24,18 +24,32 @@ namespace NeuralJourney.Logic.Handlers
         public async Task HandleInputAsync(NetworkStream stream, CancellationToken cancellationToken = default)
         {
             if (!stream.CanRead)
-                throw new InvalidOperationException("Failed to handle stream input. Reason: Cannot read from stream");
+                throw new InvalidOperationException("Failed to handle stream input. Reason: Could not read from stream");
 
             var clientCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
             int reconnectionAttempts = 0;
 
-            while (!clientCts.IsCancellationRequested && reconnectionAttempts < MaxReconnectionAttempts)
+            while (!clientCts.IsCancellationRequested)
             {
+                if (reconnectionAttempts == MaxReconnectionAttempts) // Reached max reconnection attempts
+                {
+                    _logger.Error("Max reconnection attempts({Limit}) reached. Shutting down the client", MaxReconnectionAttempts);
+
+                    clientCts.Cancel();
+                    clientCts.Dispose();
+
+                    stream.Close();
+                    stream.Socket.Dispose();
+
+                    return;
+                }
+
                 try
                 {
-                    var input = await _messageService.ReadMessageAsync(stream, clientCts.Token);
-                    if (_messageService.IsCloseConnectionMessage(input))
+                    var input = await _messageService.ReadMessageAsync(stream, clientCts.Token); // Read input from network stream
+
+                    if (_messageService.IsCloseConnectionMessage(input)) // Handle graceful disconnect from remote
                     {
                         OnClosedConnection?.Invoke(stream);
                         await stream.DisposeAsync();
@@ -48,10 +62,16 @@ namespace NeuralJourney.Logic.Handlers
                     if (string.IsNullOrEmpty(input))
                         continue;
 
-                    OnInputReceived?.Invoke(input, stream);
+                    OnInputReceived?.Invoke(input, stream); // Notify subscribers about new input
                 }
                 catch (IOException ex)
                 {
+                    if (ex.InnerException is SocketException socketEx && socketEx.SocketErrorCode == SocketError.ConnectionReset) // An existing connection was forcibly closed by the remote host
+                    {
+                        _logger.Warning("An existing connection was forcibly closed by the remote host: {Host} ", stream.Socket.RemoteEndPoint);
+                        return;
+                    }
+
                     _logger.Warning("Network input stream encountered an error: {ErrorMessage}. Attempting to reconnect...", ex.Message);
 
                     reconnectionAttempts++;
@@ -60,31 +80,21 @@ namespace NeuralJourney.Logic.Handlers
 
                     clientCts.Token.ThrowIfCancellationRequested();
                 }
-                catch (Exception ex)
+                catch (Exception ex) // Disconnect gracefully on unexpected errors
                 {
                     _logger.Error(ex, ex.Message);
 
                     if (stream.CanWrite)
                     {
-                        await _messageService.SendMessageAsync(stream, "Encounted an unexpected error. Closing connection...", clientCts.Token);
                         await _messageService.SendCloseConnectionAsync(stream, clientCts.Token);
                     }
 
                     clientCts.Cancel();
                     clientCts.Dispose();
 
-                    await stream.DisposeAsync();
+                    stream.Close();
+                    stream.Socket.Dispose();
                 }
-            }
-
-            if (reconnectionAttempts == MaxReconnectionAttempts)
-            {
-                _logger.Error("Max reconnection attempts reached. Shutting down the network handler");
-
-                clientCts.Cancel();
-                clientCts.Dispose();
-
-                await stream.DisposeAsync();
             }
         }
     }

@@ -4,6 +4,8 @@
     {
         public const string ClientConnected = "Client connected from {0}";
 
+        public const string ClientDisconnected = "Client disconnected from {0}";
+
         public const string ExecutedCommand = "Executed {0} command {1}";
 
         public const string GameStarted = "The game engine was started";
