@@ -1,5 +1,6 @@
 ﻿using NeuralJourney.Library.Models.World;
-using NeuralJourney.Logic.Services;
+using NeuralJourney.Logic.Handlers.Interfaces;
+using NeuralJourney.Logic.Services.Interfaces;
 
 namespace NeuralJourney.Logic.Handlers
 {

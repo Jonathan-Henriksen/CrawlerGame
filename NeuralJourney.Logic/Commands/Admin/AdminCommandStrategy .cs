@@ -1,6 +1,7 @@
 ﻿using NeuralJourney.Library.Constants;
 using NeuralJourney.Library.Exceptions.Commands;
 using NeuralJourney.Library.Models.Commands;
+using NeuralJourney.Logic.Commands.Interfaces;
 using Serilog;
 
 namespace NeuralJourney.Logic.Commands.Admin

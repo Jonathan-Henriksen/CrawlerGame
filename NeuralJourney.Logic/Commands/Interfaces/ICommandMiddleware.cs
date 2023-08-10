@@ -1,6 +1,6 @@
 ﻿using NeuralJourney.Library.Models.Commands;
 
-namespace NeuralJourney.Logic.Commands.Middleware
+namespace NeuralJourney.Logic.Commands.Interfaces
 {
     public interface ICommandMiddleware
     {

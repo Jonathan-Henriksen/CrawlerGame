@@ -1,6 +1,7 @@
 ﻿using NeuralJourney.Library.Exceptions.Commands;
 using NeuralJourney.Library.Models.Commands;
-using NeuralJourney.Logic.Services;
+using NeuralJourney.Logic.Commands.Interfaces;
+using NeuralJourney.Logic.Services.Interfaces;
 
 namespace NeuralJourney.Logic.Commands.Middleware
 {

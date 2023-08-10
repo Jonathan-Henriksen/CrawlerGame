@@ -1,7 +1,8 @@
 ﻿using NeuralJourney.Library.Constants;
-using NeuralJourney.Logic.Handlers;
+using NeuralJourney.Logic.Engines.Interfaces;
+using NeuralJourney.Logic.Handlers.Interfaces;
 using NeuralJourney.Logic.Options;
-using NeuralJourney.Logic.Services;
+using NeuralJourney.Logic.Services.Interfaces;
 using Serilog;
 using System.Net.Sockets;
 
@@ -19,8 +20,6 @@ namespace NeuralJourney.Logic.Engines
 
         private readonly string _serverIp;
         private readonly int _serverPort;
-
-        private CancellationTokenSource? _cts;
 
         public ClientEngine(IInputHandler<TextReader> consoleInputHandler, IInputHandler<NetworkStream> networkInputHandler, IMessageService messageService, ILogger logger, ClientOptions options)
         {
@@ -97,18 +96,9 @@ namespace NeuralJourney.Logic.Engines
 
         public async Task Stop()
         {
-            if (_cts is null)
-                throw new InvalidOperationException(ClientMessageTemplates.ClientNotInitialized);
-
-            await _messageService.SendCloseConnectionAsync(_client.GetStream(), _cts.Token);
+            await _messageService.SendCloseConnectionAsync(_client.GetStream());
 
             _client.Close();
-
-            if (_cts is null)
-                return;
-
-            _cts.Cancel();
-            _cts.Dispose();
         }
 
         private void _consoleInputHandler_OnInputReceived(string input, TextReader console)

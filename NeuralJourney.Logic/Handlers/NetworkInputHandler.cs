@@ -1,4 +1,5 @@
-﻿using NeuralJourney.Logic.Services;
+﻿using NeuralJourney.Logic.Handlers.Interfaces;
+using NeuralJourney.Logic.Services.Interfaces;
 using System.Net.Sockets;
 
 namespace NeuralJourney.Logic.Handlers

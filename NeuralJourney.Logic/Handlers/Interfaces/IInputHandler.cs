@@ -1,4 +1,4 @@
-﻿namespace NeuralJourney.Logic.Handlers
+﻿namespace NeuralJourney.Logic.Handlers.Interfaces
 {
     public interface IInputHandler<T>
     {

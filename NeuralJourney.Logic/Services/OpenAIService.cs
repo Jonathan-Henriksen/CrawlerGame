@@ -2,6 +2,7 @@
 using NeuralJourney.Library.Exceptions.Commands;
 using NeuralJourney.Logic.Commands;
 using NeuralJourney.Logic.Options;
+using NeuralJourney.Logic.Services.Interfaces;
 using OpenAI_API;
 
 namespace NeuralJourney.Logic.Services

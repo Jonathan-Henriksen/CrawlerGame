@@ -1,4 +1,6 @@
-﻿namespace NeuralJourney.Logic.Handlers
+﻿using NeuralJourney.Logic.Handlers.Interfaces;
+
+namespace NeuralJourney.Logic.Handlers
 {
     public class ConsoleInputHandler : IInputHandler<TextReader>
     {

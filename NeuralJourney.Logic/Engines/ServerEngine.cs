@@ -1,6 +1,7 @@
 ﻿using NeuralJourney.Library.Constants;
-using NeuralJourney.Logic.Handlers;
-using NeuralJourney.Logic.Services;
+using NeuralJourney.Logic.Engines.Interfaces;
+using NeuralJourney.Logic.Handlers.Interfaces;
+using NeuralJourney.Logic.Services.Interfaces;
 using Serilog;
 
 namespace NeuralJourney.Logic.Engines

@@ -2,7 +2,8 @@
 using NeuralJourney.Library.Enums.Commands;
 using NeuralJourney.Library.Models.Commands;
 using NeuralJourney.Library.Models.World;
-using NeuralJourney.Logic.Commands;
+using NeuralJourney.Logic.Commands.Interfaces;
+using NeuralJourney.Logic.Handlers.Interfaces;
 using Serilog;
 using System.Net.Sockets;
 

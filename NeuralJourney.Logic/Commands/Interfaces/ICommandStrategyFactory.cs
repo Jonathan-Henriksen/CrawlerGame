@@ -1,6 +1,6 @@
 ﻿using NeuralJourney.Library.Enums.Commands;
 
-namespace NeuralJourney.Logic.Commands
+namespace NeuralJourney.Logic.Commands.Interfaces
 {
     public interface ICommandStrategyFactory
     {
