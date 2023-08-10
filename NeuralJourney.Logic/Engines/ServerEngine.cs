@@ -44,13 +44,7 @@ namespace NeuralJourney.Logic.Engines
         {
             return Task.Run(() =>
             {
-                _connectionHandler.OnConnected -= AcceptConnections;
-                _connectionHandler.Stop();
-
                 _clock.Reset();
-
-                _cts.Cancel();
-                _cts.Dispose();
 
                 _logger.Information(InfoMessageTemplates.GameStopped);
             });

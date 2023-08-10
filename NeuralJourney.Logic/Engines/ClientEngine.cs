@@ -73,12 +73,10 @@ namespace NeuralJourney.Logic.Engines
         public async Task Stop()
         {
             if (!_client.Connected)
-            {
-                await _messageService.SendCloseConnectionAsync(_client.GetStream(), _cts.Token);
-                _client.Close();
-            }
+                return;
 
-            Dispose();
+            await _messageService.SendCloseConnectionAsync(_client.GetStream(), _cts.Token);
+            _client.Close();
         }
 
         private async Task StartInputHandlersAsync()
@@ -114,8 +112,10 @@ namespace NeuralJourney.Logic.Engines
                 _networkInputHandler.OnInputReceived -= HandleNetworkInputReceived;
                 _consoleInputHandler.OnInputReceived -= HandleConsoleInputReceived;
 
-                _cts?.Dispose();
-                _client?.Dispose();
+                _cts.Cancel();
+                _cts.Dispose();
+
+                _client.Dispose();
             }
         }
     }

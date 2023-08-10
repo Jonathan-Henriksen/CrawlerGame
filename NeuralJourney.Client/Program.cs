@@ -33,6 +33,10 @@ catch (Exception ex)
     cts.Cancel();
     services.GetRequiredService<ILogger>().Error(ex, ex.Message);
 }
+finally
+{
+    cts.Dispose();
+}
 
 IHostBuilder CreateHostBuilder(string[] strings)
 {
