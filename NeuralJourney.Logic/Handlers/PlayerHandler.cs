@@ -26,7 +26,7 @@ namespace NeuralJourney.Logic.Handlers
             _inputHandler.OnInputReceived += DispatchCommand;
         }
 
-        public void AddPlayer(TcpClient playerClient)
+        public void HandlePlayer(TcpClient playerClient, CancellationToken cancellation = default)
         {
             var player = new Player(playerClient);
 

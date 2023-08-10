@@ -4,6 +4,6 @@ namespace NeuralJourney.Logic.Handlers.Interfaces
 {
     public interface IPlayerHandler
     {
-        void AddPlayer(TcpClient playerClient);
+        void HandlePlayer(TcpClient playerClient, CancellationToken cancellation = default);
     }
 }

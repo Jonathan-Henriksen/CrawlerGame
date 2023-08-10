@@ -17,104 +17,106 @@ namespace NeuralJourney.Logic.Engines
         private readonly ILogger _logger;
 
         private readonly TcpClient _client;
-
         private readonly string _serverIp;
         private readonly int _serverPort;
+
+        private CancellationTokenSource _cts;
 
         public ClientEngine(IInputHandler<TextReader> consoleInputHandler, IInputHandler<NetworkStream> networkInputHandler, IMessageService messageService, ILogger logger, ClientOptions options)
         {
             _consoleInputHandler = consoleInputHandler;
             _networkInputHandler = networkInputHandler;
-            _messageService = messageService;
 
+            _messageService = messageService;
             _logger = logger;
 
+            _cts = new CancellationTokenSource();
             _client = new TcpClient();
 
             _serverIp = options.ServerIp;
             _serverPort = options.ServerPort;
+
+            _networkInputHandler.OnInputReceived += HandleNetworkInputReceived;
+            _consoleInputHandler.OnInputReceived += HandleConsoleInputReceived;
         }
 
-        public async Task<IEngine> Init(CancellationToken cancellationToken)
+        public async Task Run(CancellationToken cancellationToken = default)
         {
+            if (cancellationToken != default)
+                _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+
             _logger.Information(ClientMessageTemplates.ConnectionInitialize);
 
-            var timeoutCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-
+            var timeoutCts = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token);
             timeoutCts.CancelAfter(TimeSpan.FromSeconds(10));
 
             try
             {
-                await _client.ConnectAsync(_serverIp, _serverPort, cancellationToken);
+                await _client.ConnectAsync(_serverIp, _serverPort, timeoutCts.Token);
+                _logger.Information(ClientMessageTemplates.ConnectionEstablished);
             }
-            catch (OperationCanceledException ex)
+            catch (OperationCanceledException) when (timeoutCts.IsCancellationRequested)
             {
-                if (ex.CancellationToken == timeoutCts.Token)
-                    _logger.Information(ClientMessageTemplates.ConnectionFailed);
-                else
-                    _logger.Information(ClientMessageTemplates.StopGame);
-
-                throw;
-            }
-            catch (SocketException ex)
-            {
-                _logger.Error(ex, ex.Message);
                 _logger.Information(ClientMessageTemplates.ConnectionFailed);
-            }
-
-            _logger.Information(ClientMessageTemplates.ConnectionEstablished);
-
-            return this;
-        }
-
-        public async Task Run(CancellationToken cancellationToken)
-        {
-            SubscribeToInputEvents();
-
-            var stream = _client.GetStream();
-
-            var serverMessageTask = _networkInputHandler.HandleInputAsync(stream, cancellationToken);
-            var clientInputTask = _consoleInputHandler.HandleInputAsync(Console.In, cancellationToken);
-
-            try
-            {
-                await Task.WhenAny(clientInputTask, serverMessageTask);
-            }
-            catch (OperationCanceledException)
-            {
                 throw;
             }
-            catch (Exception ex)
+            catch (SocketException socketException)
             {
-                _logger.Error(ex, ex.Message);
+                _logger.Error(socketException, socketException.Message);
+                _logger.Information(ClientMessageTemplates.ConnectionFailed);
+                throw;
             }
-            finally
-            {
-                _ = Stop();
-            }
+
+            await StartInputHandlersAsync();
         }
 
         public async Task Stop()
         {
-            await _messageService.SendCloseConnectionAsync(_client.GetStream());
+            if (!_client.Connected)
+            {
+                await _messageService.SendCloseConnectionAsync(_client.GetStream(), _cts.Token);
+                _client.Close();
+            }
 
-            _client.Close();
+            Dispose();
         }
 
-        private void SubscribeToInputEvents()
+        private async Task StartInputHandlersAsync()
         {
-            _networkInputHandler.OnInputReceived += _networkInputHandler_OnInputReceived;
-            _consoleInputHandler.OnInputReceived += _consoleInputHandler_OnInputReceived;
+            var networkInputTask = _networkInputHandler.HandleInputAsync(_client.GetStream(), _cts.Token);
+            var consoleInputTask = _consoleInputHandler.HandleInputAsync(Console.In, _cts.Token);
+
+            try
+            {
+                await Task.WhenAll(consoleInputTask, networkInputTask);
+            }
+            catch (OperationCanceledException)
+            {
+                _logger.Information(ClientMessageTemplates.ConnectionFailed);
+                throw;
+            }
         }
 
-        private void _consoleInputHandler_OnInputReceived(string input, TextReader console)
+        private async void HandleConsoleInputReceived(string input, TextReader console) => await _messageService.SendMessageAsync(_client.GetStream(), input, _cts.Token);
+
+        private void HandleNetworkInputReceived(string message, NetworkStream sender) => _logger.Information(message);
+
+        public void Dispose()
         {
-            _messageService.SendMessageAsync(_client.GetStream(), input);
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
-        private void _networkInputHandler_OnInputReceived(string message, NetworkStream sender)
+        protected virtual void Dispose(bool disposing)
         {
-            _logger.Information(message);
+            if (disposing)
+            {
+                _networkInputHandler.OnInputReceived -= HandleNetworkInputReceived;
+                _consoleInputHandler.OnInputReceived -= HandleConsoleInputReceived;
+
+                _cts?.Dispose();
+                _client?.Dispose();
+            }
         }
     }
 }

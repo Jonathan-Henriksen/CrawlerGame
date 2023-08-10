@@ -19,24 +19,21 @@ using Serilog;
 
 using var host = CreateHostBuilder(args).Build();
 using var scope = host.Services.CreateScope();
+using var cts = new CancellationTokenSource();
 
 var services = scope.ServiceProvider;
 
-var cts = new CancellationTokenSource();
-
 try
 {
-    var server = await services.GetRequiredService<IEngine>().Init(cts.Token);
-    await server.Run(cts.Token);
+    using var engine = services.GetRequiredService<IEngine>();
 
+    await engine.Run(cts.Token);
 }
 catch (Exception ex)
 {
     cts.Cancel();
-    cts.Dispose();
 
-    var logger = services.GetRequiredService<ILogger>();
-    logger.Error(ex, ex.Message);
+    services.GetRequiredService<ILogger>().Error(ex, ex.Message);
 }
 
 static IHostBuilder CreateHostBuilder(string[] strings)

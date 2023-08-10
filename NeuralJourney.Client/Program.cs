@@ -15,27 +15,23 @@ using System.Net.Sockets;
 
 using var host = CreateHostBuilder(args).Build();
 using var scope = host.Services.CreateScope();
+using var cts = new CancellationTokenSource();
 
 var services = scope.ServiceProvider;
 
-var cts = new CancellationTokenSource();
-
 try
 {
-    var client = await services.GetRequiredService<IEngine>().Init(cts.Token);
-    await client.Run(cts.Token);
+    using var engine = services.GetRequiredService<IEngine>();
+    await engine.Run(cts.Token);
 }
-catch (OperationCanceledException)
+catch (OperationCanceledException ex)
 {
-    cts.Dispose();
+    services.GetRequiredService<ILogger>().Error(ex, ex.Message);
 }
 catch (Exception ex)
 {
     cts.Cancel();
-    cts.Dispose();
-
-    var logger = services.GetRequiredService<ILogger>();
-    logger.Error(ex, ex.Message);
+    services.GetRequiredService<ILogger>().Error(ex, ex.Message);
 }
 
 IHostBuilder CreateHostBuilder(string[] strings)

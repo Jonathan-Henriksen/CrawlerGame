@@ -9,7 +9,7 @@ namespace NeuralJourney.Logic.Handlers
 {
     public class NetworkConnectionHandler : IConnectionHandler
     {
-        private readonly CancellationTokenSource _cts;
+        private CancellationTokenSource _cts;
         private readonly TcpListener _tcpListener;
 
         private readonly ILogger _logger;
@@ -23,9 +23,11 @@ namespace NeuralJourney.Logic.Handlers
             _logger = logger;
         }
 
-        public async Task HandleConnectionsAsync()
+        public async Task HandleConnectionsAsync(CancellationToken cancellationToken = default)
         {
             _tcpListener.Start();
+
+            _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
             try
             {
@@ -33,7 +35,7 @@ namespace NeuralJourney.Logic.Handlers
 
                 while (!_cts.Token.IsCancellationRequested)
                 {
-                    var client = await _tcpListener.AcceptTcpClientAsync();
+                    var client = await _tcpListener.AcceptTcpClientAsync(_cts.Token);
 
                     _logger.Information(InfoMessageTemplates.ClientConnected, client.Client.RemoteEndPoint);
 
@@ -57,7 +59,11 @@ namespace NeuralJourney.Logic.Handlers
 
         public void Stop()
         {
+            _tcpListener.Stop();
+            _tcpListener.Server.Dispose();
+
             _cts.Cancel();
+            _cts.Dispose();
         }
     }
 }

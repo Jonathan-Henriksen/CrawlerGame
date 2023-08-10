@@ -6,7 +6,7 @@ namespace NeuralJourney.Logic.Handlers.Interfaces
     {
         internal event Action<TcpClient> OnConnected;
 
-        internal Task HandleConnectionsAsync();
+        internal Task HandleConnectionsAsync(CancellationToken cancellationToken = default);
 
         internal void Stop();
     }
