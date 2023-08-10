@@ -33,9 +33,6 @@ namespace NeuralJourney.Logic.Engines
 
             _serverIp = options.ServerIp;
             _serverPort = options.ServerPort;
-
-            _networkInputHandler.OnInputReceived += _networkInputHandler_OnInputReceived;
-            _consoleInputHandler.OnInputReceived += _consoleInputHandler_OnInputReceived;
         }
 
         public async Task<IEngine> Init(CancellationToken cancellationToken)
@@ -59,8 +56,9 @@ namespace NeuralJourney.Logic.Engines
 
                 throw;
             }
-            catch (SocketException)
+            catch (SocketException ex)
             {
+                _logger.Error(ex, ex.Message);
                 _logger.Information(ClientMessageTemplates.ConnectionFailed);
             }
 
@@ -71,6 +69,8 @@ namespace NeuralJourney.Logic.Engines
 
         public async Task Run(CancellationToken cancellationToken)
         {
+            SubscribeToInputEvents();
+
             var stream = _client.GetStream();
 
             var serverMessageTask = _networkInputHandler.HandleInputAsync(stream, cancellationToken);
@@ -86,7 +86,7 @@ namespace NeuralJourney.Logic.Engines
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.Error(ex, ex.Message);
             }
             finally
             {
@@ -99,6 +99,12 @@ namespace NeuralJourney.Logic.Engines
             await _messageService.SendCloseConnectionAsync(_client.GetStream());
 
             _client.Close();
+        }
+
+        private void SubscribeToInputEvents()
+        {
+            _networkInputHandler.OnInputReceived += _networkInputHandler_OnInputReceived;
+            _consoleInputHandler.OnInputReceived += _consoleInputHandler_OnInputReceived;
         }
 
         private void _consoleInputHandler_OnInputReceived(string input, TextReader console)
