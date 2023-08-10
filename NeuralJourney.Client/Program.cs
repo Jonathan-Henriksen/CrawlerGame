@@ -4,10 +4,11 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using NeuralJourney.Client;
 using NeuralJourney.Logic.Engines;
-using NeuralJourney.Logic.Handlers.Input;
+using NeuralJourney.Logic.Handlers;
 using NeuralJourney.Logic.Options;
 using NeuralJourney.Logic.Services;
 using Serilog;
+using System.Net.Sockets;
 
 using var host = CreateHostBuilder(args).Build();
 using var scope = host.Services.CreateScope();
@@ -18,8 +19,8 @@ var cts = new CancellationTokenSource();
 
 try
 {
-    var client = await services.GetRequiredService<IEngine>().Init(cts);
-    await client.Run();
+    var client = await services.GetRequiredService<IEngine>().Init(cts.Token);
+    await client.Run(cts.Token);
 }
 catch (OperationCanceledException)
 {
@@ -51,7 +52,9 @@ IHostBuilder CreateHostBuilder(string[] strings)
             services.AddSingleton<IEngine, ClientEngine>();
 
             services.AddTransient<IMessageService, MessageService>();
-            services.AddTransient<IInputHandler, ConsoleInputHandler>();
+
+            services.AddTransient<IInputHandler<TextReader>, ConsoleInputHandler>();
+            services.AddTransient<IInputHandler<NetworkStream>, NetworkInputHandler>();
 
             services.AddOptions<ClientOptions>().BindConfiguration("Client");
             services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<ClientOptions>>().Value);

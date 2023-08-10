@@ -2,13 +2,13 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using NeuralJourney.Library.Models.World;
 using NeuralJourney.Logic.Commands;
 using NeuralJourney.Logic.Commands.Admin;
 using NeuralJourney.Logic.Commands.Middleware;
 using NeuralJourney.Logic.Commands.Players;
 using NeuralJourney.Logic.Engines;
-using NeuralJourney.Logic.Handlers.Connection;
-using NeuralJourney.Logic.Handlers.Input;
+using NeuralJourney.Logic.Handlers;
 using NeuralJourney.Logic.Options;
 using NeuralJourney.Logic.Services;
 using Serilog;
@@ -18,12 +18,19 @@ using var scope = host.Services.CreateScope();
 
 var services = scope.ServiceProvider;
 
+var cts = new CancellationTokenSource();
+
 try
 {
-    await services.GetRequiredService<IEngine>().Run();
+    var server = await services.GetRequiredService<IEngine>().Init(cts.Token);
+    await server.Run(cts.Token);
+
 }
 catch (Exception ex)
 {
+    cts.Cancel();
+    cts.Dispose();
+
     var logger = services.GetRequiredService<ILogger>();
     logger.Error(ex, ex.Message);
 }
@@ -43,14 +50,15 @@ static IHostBuilder CreateHostBuilder(string[] strings)
         {
             services.AddTransient<IClockService, ClockService>();
 
-            services.AddTransient<IInputHandler, ConsoleInputHandler>();
-            services.AddTransient<IInputHandler, PlayerInputHandler>();
+            services.AddTransient<IInputHandler<TextReader>, ConsoleInputHandler>();
+            services.AddTransient<IInputHandler<Player>, PlayerInputHandler>();
 
             services.AddTransient<IMessageService, MessageService>();
 
-            services.AddSingleton<IConnectionHandler, PlayerConnectionHandler>();
+            services.AddSingleton<IConnectionHandler, NetworkConnectionHandler>();
             services.AddSingleton<IEngine, ServerEngine>();
             services.AddSingleton<IOpenAIService, OpenAIService>();
+            services.AddSingleton<IPlayerHandler, PlayerHandler>();
 
             // Register Command Middleware
             services.AddSingleton<ICommandFactory, CommandFactory>();

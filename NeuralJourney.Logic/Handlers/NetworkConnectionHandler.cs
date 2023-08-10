@@ -1,22 +1,21 @@
 ﻿using NeuralJourney.Library.Constants;
-using NeuralJourney.Library.Models.World;
 using NeuralJourney.Logic.Options;
 using Serilog;
 using System.Net;
 using System.Net.Sockets;
 
-namespace NeuralJourney.Logic.Handlers.Connection
+namespace NeuralJourney.Logic.Handlers
 {
-    public class PlayerConnectionHandler : IConnectionHandler
+    public class NetworkConnectionHandler : IConnectionHandler
     {
         private readonly CancellationTokenSource _cts;
         private readonly TcpListener _tcpListener;
 
         private readonly ILogger _logger;
 
-        public event Action<Player>? OnPlayerConnected;
+        public event Action<TcpClient>? OnConnected;
 
-        public PlayerConnectionHandler(ServerOptions serverOptions, ILogger logger)
+        public NetworkConnectionHandler(ServerOptions serverOptions, ILogger logger)
         {
             _cts = new CancellationTokenSource();
             _tcpListener = new TcpListener(IPAddress.Any, serverOptions.Port);
@@ -40,7 +39,7 @@ namespace NeuralJourney.Logic.Handlers.Connection
                     if (client is null)
                         continue;
 
-                    OnPlayerConnected?.Invoke(new Player(client));
+                    OnConnected?.Invoke(client);
                 }
             }
             catch (Exception ex)

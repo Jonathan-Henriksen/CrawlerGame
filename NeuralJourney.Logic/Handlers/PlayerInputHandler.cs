@@ -1,22 +1,20 @@
-﻿using NeuralJourney.Library.Enums.Commands;
-using NeuralJourney.Library.Models.Commands;
-using NeuralJourney.Library.Models.World;
+﻿using NeuralJourney.Library.Models.World;
 using NeuralJourney.Logic.Services;
 
-namespace NeuralJourney.Logic.Handlers.Input
+namespace NeuralJourney.Logic.Handlers
 {
-    public class PlayerInputHandler : IInputHandler
+    public class PlayerInputHandler : IInputHandler<Player>
     {
         private readonly IMessageService _messageService;
 
-        public event Action<CommandContext>? OnInputReceived;
+        public event Action<string, Player>? OnInputReceived;
 
         public PlayerInputHandler(IMessageService messageService)
         {
             _messageService = messageService;
         }
 
-        public async Task HandleInputAsync(Player? player = default, CancellationToken cancellationToken = default)
+        public async Task HandleInputAsync(Player player, CancellationToken cancellationToken = default)
         {
             if (player is null)
                 throw new InvalidOperationException("Cannot handle player input. Reason: Player was null");
@@ -33,9 +31,7 @@ namespace NeuralJourney.Logic.Handlers.Input
                 if (string.IsNullOrEmpty(input))
                     continue;
 
-                var context = new CommandContext(input, CommandTypeEnum.Player, player);
-
-                OnInputReceived?.Invoke(context);
+                OnInputReceived?.Invoke(input, player);
             }
         }
     }

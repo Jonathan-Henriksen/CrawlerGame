@@ -8,10 +8,14 @@ namespace NeuralJourney.Library.Models.World
         private readonly string _ip;
         private readonly NetworkStream _stream;
 
+        public readonly Guid ID;
+
         public Player(TcpClient client)
         {
             _stream = client.GetStream();
             _ip = ((IPEndPoint?) client.Client.RemoteEndPoint)?.Address.ToString() ?? string.Empty;
+
+            ID = Guid.NewGuid();
 
             IsConnected = true;
             Name = $"Player({_ip})";
@@ -21,6 +25,8 @@ namespace NeuralJourney.Library.Models.World
         }
 
         public bool IsConnected { get; private set; }
+
+
 
         public string Name { get; set; }
 

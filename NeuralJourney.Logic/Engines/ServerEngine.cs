@@ -1,8 +1,5 @@
 ﻿using NeuralJourney.Library.Constants;
-using NeuralJourney.Library.Models.World;
-using NeuralJourney.Logic.Commands;
-using NeuralJourney.Logic.Handlers.Connection;
-using NeuralJourney.Logic.Handlers.Input;
+using NeuralJourney.Logic.Handlers;
 using NeuralJourney.Logic.Services;
 using Serilog;
 
@@ -11,102 +8,48 @@ namespace NeuralJourney.Logic.Engines
     public class ServerEngine : IEngine
     {
         private readonly IClockService _clock;
-
-        private readonly ICommandDispatcher _commandDispatcher;
-        private readonly IConnectionHandler _connectionHandler;
-
-        private readonly IInputHandler _adminInputHandler;
-        private readonly IInputHandler _playerInputHandler;
-
         private readonly ILogger _logger;
 
-        private readonly CancellationTokenSource _adminInputToken;
+        private readonly IConnectionHandler _connectionHandler;
+        private readonly IPlayerHandler _playerHandler;
 
-        private readonly List<Player> _players = new();
-        private readonly Dictionary<Player, CancellationTokenSource> _playerTokens = new();
-
-        public ServerEngine(IClockService clockService, ICommandDispatcher commandDispatcher, IConnectionHandler connectionHandler, IEnumerable<IInputHandler> inputHandlers, ILogger logger)
+        public ServerEngine(IClockService clockService, ILogger logger, IConnectionHandler connectionHandler, IPlayerHandler playerHandler)
         {
             _clock = clockService;
             _logger = logger;
 
-            _adminInputToken = new CancellationTokenSource();
-
-            _playerInputHandler = inputHandlers.First(i => i.GetType() == typeof(PlayerInputHandler));
-            _adminInputHandler = inputHandlers.First(i => i.GetType() == typeof(ConsoleInputHandler));
-
-            _commandDispatcher = commandDispatcher;
-
-            _playerInputHandler.OnInputReceived += _commandDispatcher.DispatchCommand;
-            _adminInputHandler.OnInputReceived += _commandDispatcher.DispatchCommand;
-
             _connectionHandler = connectionHandler;
+            _playerHandler = playerHandler;
 
-            _connectionHandler.OnPlayerConnected += AddPlayer;
+            _connectionHandler.OnConnected += _playerHandler.AddPlayer;
         }
 
-        public async Task<IEngine> Init(CancellationTokenSource cancellationTokenSource)
+        public async Task<IEngine> Init(CancellationToken cancellationToken = default)
         {
             return await Task.FromResult(this);
         }
 
-        public async Task Run()
+        public async Task Run(CancellationToken cancellationToken)
         {
             _clock.Start();
 
             var connectionHandlerTask = _connectionHandler.HandleConnectionsAsync();
-            var inputHandlerTask = _playerInputHandler.HandleInputAsync(default, _adminInputToken.Token);
 
             _logger.Information(InfoMessageTemplates.GameStarted);
 
-            await Task.WhenAll(connectionHandlerTask, inputHandlerTask);
+            await connectionHandlerTask;
         }
 
-        public void Stop()
+        public Task Stop()
         {
-            _adminInputToken.Cancel();
-
-            _connectionHandler.Stop();
-
-            foreach (var player in _players)
+            return Task.Run(() =>
             {
-                RemovePlayer(player);
-            }
+                _connectionHandler.Stop();
 
-            _clock.Reset();
+                _clock.Reset();
 
-            _logger.Information(InfoMessageTemplates.GameStopped);
-        }
-
-        private void AddPlayer(Player player)
-        {
-            var cts = new CancellationTokenSource();
-
-            if (!_playerTokens.TryAdd(player, cts))
-                throw new InvalidOperationException("Failed to add player '{0}' to the game. Reason: A active cancellation token is already associated with the player.");
-
-            _playerInputHandler.HandleInputAsync(player, cts.Token);
-            _players.Add(player);
-
-            _logger.Information(InfoMessageTemplates.PlayerAdded, player.Name);
-        }
-
-        private void RemovePlayer(Player player)
-        {
-            if (_playerTokens.TryGetValue(player, out var cts))
-            {
-                cts.Cancel();
-                _playerTokens.Remove(player);
-            }
-
-            _players.Remove(player);
-
-            _logger.Information(InfoMessageTemplates.PlayerRemoved, player.Name);
-        }
-
-        Task IEngine.Stop()
-        {
-            throw new NotImplementedException();
+                _logger.Information(InfoMessageTemplates.GameStopped);
+            });
         }
     }
 }

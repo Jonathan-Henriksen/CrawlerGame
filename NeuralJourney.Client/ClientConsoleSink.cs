@@ -9,7 +9,22 @@ namespace NeuralJourney.Client
         {
             var message = logEvent.RenderMessage();
             Console.SetCursorPosition(0, Console.CursorTop);
-            Console.WriteLine(message);
+
+            if (Console.GetCursorPosition().Top > 0)
+            {
+                Console.WriteLine();
+            }
+
+            Console.Write("> ");
+            WriteColoredMessage(message, ConsoleColor.Blue);
+            Console.Write("\n> ");
+        }
+
+        private void WriteColoredMessage(string message, ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+            Console.WriteLine($"{message}");
+            Console.ResetColor();
         }
     }
 }

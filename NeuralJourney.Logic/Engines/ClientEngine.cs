@@ -1,4 +1,5 @@
 ﻿using NeuralJourney.Library.Constants;
+using NeuralJourney.Logic.Handlers;
 using NeuralJourney.Logic.Options;
 using NeuralJourney.Logic.Services;
 using Serilog;
@@ -7,56 +8,48 @@ using System.Net.Sockets;
 namespace NeuralJourney.Logic.Engines
 {
     public class ClientEngine : IEngine
-
     {
+        private readonly IInputHandler<TextReader> _consoleInputHandler;
+        private readonly IInputHandler<NetworkStream> _networkInputHandler;
+
         private readonly IMessageService _messageService;
         private readonly ILogger _logger;
-        private readonly TcpClient _tcpClient;
+
+        private readonly TcpClient _client;
 
         private readonly string _serverIp;
         private readonly int _serverPort;
 
         private CancellationTokenSource? _cts;
 
-        private const string _inputPrefix = "> ";
-
-        public ClientEngine(IMessageService messageService, ILogger logger, ClientOptions options)
+        public ClientEngine(IInputHandler<TextReader> consoleInputHandler, IInputHandler<NetworkStream> networkInputHandler, IMessageService messageService, ILogger logger, ClientOptions options)
         {
+            _consoleInputHandler = consoleInputHandler;
+            _networkInputHandler = networkInputHandler;
             _messageService = messageService;
+
             _logger = logger;
-            _tcpClient = new TcpClient();
+
+            _client = new TcpClient();
+
             _serverIp = options.ServerIp;
             _serverPort = options.ServerPort;
+
+            _networkInputHandler.OnInputReceived += _networkInputHandler_OnInputReceived;
+            _consoleInputHandler.OnInputReceived += _consoleInputHandler_OnInputReceived;
         }
 
-        public async Task<IEngine> Init(CancellationTokenSource cts)
+        public async Task<IEngine> Init(CancellationToken cancellationToken)
         {
-            _cts = cts;
+            _logger.Information(ClientMessageTemplates.ConnectionInitialize);
 
-            _ = Task.Run(async () =>
-            {
-                _logger.Information("Press ESC to exit\n");
-                _logger.Information(ClientMessageTemplates.ConnectionInitialize);
-                while (!_cts.IsCancellationRequested)
-                {
-                    if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
-                    {
-                        _logger.Information(ClientMessageTemplates.StopGame);
+            var timeoutCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
-                        await _messageService.SendCloseConnectionAsync(_tcpClient.GetStream(), _cts.Token);
-
-                        _ = Stop();
-                        continue;
-                    }
-                }
-            });
-
-            var timeoutCts = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token);
             timeoutCts.CancelAfter(TimeSpan.FromSeconds(10));
 
             try
             {
-                await _tcpClient.ConnectAsync(_serverIp, _serverPort, timeoutCts.Token);
+                await _client.ConnectAsync(_serverIp, _serverPort, cancellationToken);
             }
             catch (OperationCanceledException ex)
             {
@@ -77,15 +70,12 @@ namespace NeuralJourney.Logic.Engines
             return this;
         }
 
-        public async Task Run()
+        public async Task Run(CancellationToken cancellationToken)
         {
-            if (_cts is null)
-                throw new InvalidOperationException(ClientMessageTemplates.ClientNotInitialized);
+            var stream = _client.GetStream();
 
-            var stream = _tcpClient.GetStream();
-
-            var serverMessageTask = HandleServerMessagesAsync(stream, _cts.Token);
-            var clientInputTask = HandleClientInputAsync(stream, _cts.Token);
+            var serverMessageTask = _networkInputHandler.HandleInputAsync(stream, cancellationToken);
+            var clientInputTask = _consoleInputHandler.HandleInputAsync(Console.In, cancellationToken);
 
             try
             {
@@ -110,9 +100,9 @@ namespace NeuralJourney.Logic.Engines
             if (_cts is null)
                 throw new InvalidOperationException(ClientMessageTemplates.ClientNotInitialized);
 
-            await _messageService.SendCloseConnectionAsync(_tcpClient.GetStream(), _cts.Token);
+            await _messageService.SendCloseConnectionAsync(_client.GetStream(), _cts.Token);
 
-            _tcpClient.Close();
+            _client.Close();
 
             if (_cts is null)
                 return;
@@ -121,55 +111,14 @@ namespace NeuralJourney.Logic.Engines
             _cts.Dispose();
         }
 
-        private async Task HandleClientInputAsync(NetworkStream stream, CancellationToken cancellationToken)
+        private void _consoleInputHandler_OnInputReceived(string input, TextReader console)
         {
-            Console.Write(_inputPrefix);
-            while (!cancellationToken.IsCancellationRequested)
-            {
-
-                var input = await Console.In.ReadLineAsync(cancellationToken);
-
-                if (string.IsNullOrEmpty(input))
-                    continue;
-
-                _ = _messageService.SendMessageAsync(stream, input, cancellationToken);
-
-                Console.Write(_inputPrefix);
-            }
+            _messageService.SendMessageAsync(_client.GetStream(), input);
         }
 
-        private async Task HandleServerMessagesAsync(NetworkStream stream, CancellationToken cancellationToken)
+        private void _networkInputHandler_OnInputReceived(string message, NetworkStream sender)
         {
-            string? message = default;
-            while (!cancellationToken.IsCancellationRequested)
-            {
-                while (message is null)
-                {
-                    if (!stream.DataAvailable)
-                    {
-                        await Task.Delay(100, cancellationToken);
-                        continue;
-                    }
-
-                    message = await _messageService.ReadMessageAsync(stream, cancellationToken);
-                    if (_messageService.IsCloseConnectionMessage(message))
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-
-                        _logger.Information(ClientMessageTemplates.ConnectionClosed);
-
-                        _ = Stop();
-                        return;
-                    }
-                }
-
-                if (string.IsNullOrEmpty(message))
-                    continue;
-
-                _logger.Information(message);
-
-                message = default;
-            }
+            _logger.Information(message);
         }
     }
 }
