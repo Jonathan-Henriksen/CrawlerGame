@@ -52,7 +52,7 @@ namespace NeuralJourney.Logic.Engines
 
         private void AcceptConnections(TcpClient client)
         {
-            _playerHandler.HandlePlayer(client, _cts.Token);
+            _playerHandler.AddPlayer(client, _cts.Token);
         }
 
         public void Dispose()

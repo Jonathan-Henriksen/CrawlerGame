@@ -9,6 +9,7 @@ namespace NeuralJourney.Logic.Handlers
         private readonly IMessageService _messageService;
 
         public event Action<string, Player>? OnInputReceived;
+        public event Action<Player>? OnClosedConnection;
 
         public PlayerInputHandler(IMessageService messageService)
         {
@@ -26,6 +27,9 @@ namespace NeuralJourney.Logic.Handlers
                 var input = await _messageService.ReadMessageAsync(stream, cancellationToken);
                 if (_messageService.IsCloseConnectionMessage(input))
                 {
+                    OnClosedConnection?.Invoke(player);
+
+                    await stream.DisposeAsync();
                     return;
                 }
 

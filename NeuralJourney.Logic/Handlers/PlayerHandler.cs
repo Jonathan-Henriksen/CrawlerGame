@@ -1,5 +1,4 @@
-﻿using NeuralJourney.Library.Constants;
-using NeuralJourney.Library.Enums.Commands;
+﻿using NeuralJourney.Library.Enums.Commands;
 using NeuralJourney.Library.Models.Commands;
 using NeuralJourney.Library.Models.World;
 using NeuralJourney.Logic.Commands.Interfaces;
@@ -11,6 +10,8 @@ namespace NeuralJourney.Logic.Handlers
 {
     public class PlayerHandler : IPlayerHandler
     {
+        private const int MaxReconnectionAttempts = 3;
+
         private readonly ICommandDispatcher _commandDispatcher;
         private readonly IInputHandler<Player> _inputHandler;
         private readonly ILogger _logger;
@@ -26,25 +27,56 @@ namespace NeuralJourney.Logic.Handlers
             _inputHandler.OnInputReceived += DispatchCommand;
         }
 
-        public void HandlePlayer(TcpClient playerClient, CancellationToken cancellation = default)
+        public async void AddPlayer(TcpClient playerClient, CancellationToken cancellationToken = default)
         {
+            var playerCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+
             var player = new Player(playerClient);
 
-            var cts = new CancellationTokenSource();
+            if (!_players.TryAdd(player, playerCts))
+                throw new InvalidOperationException($"Failed to add player '{player.Name}' to the game. Reason: An active cancellation token is already associated with the player.");
 
-            if (!_players.TryAdd(player, cts))
-                throw new InvalidOperationException("Failed to add player '{0}' to the game. Reason: A active cancellation token is already associated with the player.");
+            int reconnectionAttempts = 0;
 
-            _ = _inputHandler.HandleInputAsync(player, cts.Token);
+            while (!playerCts.IsCancellationRequested && reconnectionAttempts < MaxReconnectionAttempts)
+            {
+                try
+                {
+                    await _inputHandler.HandleInputAsync(player, playerCts.Token);
+                    reconnectionAttempts = 0;
+                }
+                catch (Exception ex)
+                {
+                    _logger.Warning("Error handling player {PlayerName}: {ErrorMessage}. Attempting to reconnect...", player.Name, ex.Message);
 
-            _logger.Information(InfoMessageTemplates.PlayerAdded, player.Name);
+                    reconnectionAttempts++;
+                    await Task.Delay(3000, playerCts.Token);
+                }
+            }
 
+            if (reconnectionAttempts == MaxReconnectionAttempts)
+                _logger.Error("{PlayerName} reached max reconnection attempts. Removing player from the game.", player.Name);
+
+            RemovePlayer(player);
         }
 
         private void DispatchCommand(string input, Player player)
         {
             var context = new CommandContext(input, CommandTypeEnum.Player, player);
             _commandDispatcher.DispatchCommand(context);
+        }
+
+        private void RemovePlayer(Player player)
+        {
+            if (!_players.TryGetValue(player, out var playerCts))
+                return;
+
+            playerCts.Cancel();
+            playerCts.Dispose();
+
+            player.GetStream().Dispose();
+
+            _players.Remove(player);
         }
     }
 }
