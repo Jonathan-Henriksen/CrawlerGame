@@ -17,7 +17,7 @@ namespace NeuralJourney.Logic.Commands
             var strategy = _commandStrategyFactory.CreateCommandStrategy(context.CommandType)
                 ?? throw new InvalidOperationException("Failed to dispatch command. Reason: No strategy was availabl for the provided command type");
 
-            strategy.ExecuteAsync(context);
+            _ = strategy.ExecuteAsync(context);
         }
     }
 }

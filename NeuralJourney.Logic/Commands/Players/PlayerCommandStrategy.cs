@@ -29,7 +29,7 @@ namespace NeuralJourney.Logic.Commands.Players
 
             try
             {
-                int index = -1;
+                var index = -1;
 
                 async Task Next()
                 {

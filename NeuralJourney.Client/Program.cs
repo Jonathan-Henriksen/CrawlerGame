@@ -7,7 +7,6 @@ using NeuralJourney.Logic.Options;
 using NeuralJourney.Logic.Services;
 using NeuralJourney.Logic.Services.Interfaces;
 using Serilog;
-using Serilog.Core;
 
 using var host = CreateHostBuilder(args).Build();
 using var scope = host.Services.CreateScope();
