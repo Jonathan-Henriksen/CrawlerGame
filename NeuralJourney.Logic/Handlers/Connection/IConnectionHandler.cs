@@ -1,6 +1,6 @@
 ﻿using NeuralJourney.Library.Models.World;
 
-namespace NeuralJourney.Logic.Handlers
+namespace NeuralJourney.Logic.Handlers.Connection
 {
     public interface IConnectionHandler
     {

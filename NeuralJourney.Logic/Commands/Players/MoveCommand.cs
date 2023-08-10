@@ -9,21 +9,25 @@ using NeuralJourney.Logic.Options;
 namespace NeuralJourney.Logic.Commands.Players
 {
     [Command(CommandTypeEnum.Player, CommandIdentifierEnum.Move)]
-    internal class MoveCommand : CommandBase
+    internal class MoveCommand : ICommand
     {
+        private readonly CommandContext _context;
+
         private readonly DirectionEnum Direction;
 
         private readonly int WorldHeight;
         private readonly int WorldWidth;
 
-        internal MoveCommand(CommandContext commandContext, GameOptions gameOptions) : base(commandContext)
+        internal MoveCommand(CommandContext context, GameOptions gameOptions)
         {
-            if (commandContext.Params is null || commandContext.Params.Length < 1)
-                throw new MissingParameterException(commandContext.CommandIdentifier, nameof(Direction));
+            if (context.Params is null || context.Params.Length < 1)
+                throw new MissingParameterException(context.CommandKey?.Identifier ?? default, nameof(Direction));
 
-            if (!Enum.TryParse(commandContext.Params[0], out DirectionEnum direction))
-                throw new InvalidParameterException(commandContext.CommandIdentifier, nameof(Direction), commandContext.Params[0],
+            if (!Enum.TryParse(context.Params[0], out DirectionEnum direction))
+                throw new InvalidParameterException(context.CommandKey?.Identifier ?? default, nameof(Direction), context.Params[0],
                     string.Format("{0}, {1}, {2}, {3}", DirectionEnum.North, DirectionEnum.South, DirectionEnum.East, DirectionEnum.West));
+
+            _context = context;
 
             Direction = direction;
 
@@ -31,14 +35,14 @@ namespace NeuralJourney.Logic.Commands.Players
             WorldWidth = gameOptions.WorldWidth;
         }
 
-        internal override Task<CommandResult> ExecuteAsync()
+        public Task<CommandResult> ExecuteAsync()
         {
-            if (Context.Player is null)
-                throw new MissingParameterException(Context.CommandIdentifier, nameof(Context.Player));
+            if (_context.Player is null)
+                throw new MissingParameterException(_context.CommandKey?.Identifier ?? default, nameof(_context.Player));
 
             return Task.Run(() =>
             {
-                var playerLocation = Context.Player.Location;
+                var playerLocation = _context.Player.Location;
 
                 switch (Direction)
                 {
@@ -68,7 +72,7 @@ namespace NeuralJourney.Logic.Commands.Players
             if ((increment > 0 && coordinate < boundary - 1) || (increment < 0 && coordinate > 0))
                 return coordinate + increment;
             else
-                throw new MapLimitReachedException(Context.Player!, Direction); // Player can't be null due to checks in the calling function.
+                throw new MapLimitReachedException(_context.Player!, Direction); // Player can't be null due to checks in the calling function.
         }
     }
 }

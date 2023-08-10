@@ -1,92 +1,73 @@
-﻿using NeuralJourney.Library.Constants;
-using NeuralJourney.Library.Enums.Commands;
-using NeuralJourney.Library.Exceptions.Commands;
+﻿using NeuralJourney.Library.Exceptions.Commands;
 using NeuralJourney.Library.Models.Commands;
-using NeuralJourney.Library.Models.World;
-using NeuralJourney.Logic.Services;
+using NeuralJourney.Logic.Commands.Interfaces;
+using NeuralJourney.Logic.Services.Interfaces;
 using Serilog;
-using System.Text.RegularExpressions;
 
 namespace NeuralJourney.Logic.Commands.Players
 {
-    public class PlayerCommandStrategy : IPlayerCommandStrategy
+    public class PlayerCommandStrategy : ICommandStrategy
     {
-        private readonly ICommandFactory _commandFactory;
+        private readonly ICommandMiddleware[] _middlewareProcessors;
         private readonly IMessageService _messageService;
-        private readonly IOpenAIService _openAIService;
         private readonly ILogger _logger;
 
-        public PlayerCommandStrategy(ICommandFactory commandFactory, IMessageService messageService, IOpenAIService openAIService, ILogger logger)
+        public PlayerCommandStrategy(IEnumerable<ICommandMiddleware> commandMiddleware, IMessageService messageService, ILogger logger)
         {
-            _commandFactory = commandFactory;
+            _middlewareProcessors = commandMiddleware.ToArray();
+
             _messageService = messageService;
-            _openAIService = openAIService;
             _logger = logger;
         }
 
-        public async Task ExecuteAsync(string playerInput, Player player)
+        public async Task ExecuteAsync(CommandContext context, CancellationToken cancellationToken = default)
         {
-            var responseMessage = string.Empty;
+            if (context.Player is null)
+                throw new InvalidOperationException("Cannot execute player command strategy. Reason: Player was null");
+
+            var errorMessage = string.Empty;
 
             try
             {
-                var completionText = await _openAIService.GetCommandCompletionTextAsync(playerInput);
+                int index = -1;
 
-                var commandContext = GetCommandContextFromCompletionText(completionText, player);
+                async Task Next()
+                {
+                    if (++index < _middlewareProcessors.Length)
+                    {
+                        await _middlewareProcessors[index].InvokeAsync(context, Next, cancellationToken);
+                    }
+                }
 
-                var command = _commandFactory.CreateCommand(commandContext);
-
-                var result = await command.ExecuteAsync();
-
-                _logger.Information(InfoMessageTemplates.ExecutedCommand, commandContext.CommandType, commandContext.CommandIdentifier);
-
-                responseMessage = $"{commandContext.ExecutionMessage}\n{result.AdditionalMessage ?? string.Empty}".Trim();
-
+                await Next();
             }
             catch (InvalidCompletionTextException ex)
             {
                 _logger.Error(ex, ex.Message);
-                responseMessage = ex.Message;
+                errorMessage = ex.Message;
             }
             catch (InvalidCommandException ex)
             {
                 _logger.Error(ex, ex.Message);
-                responseMessage = ex.Message;
+                errorMessage = ex.Message;
             }
             catch (MissingParameterException ex)
             {
                 _logger.Error(ex, ex.Message);
-                responseMessage = ex.Message;
+                errorMessage = ex.Message;
             }
             catch (InvalidParameterException ex)
             {
                 _logger.Error(ex, ex.Message);
-                responseMessage = ex.Message;
+                errorMessage = ex.Message;
             }
             finally
             {
-                await _messageService.SendMessageAsync(player.GetStream(), responseMessage);
+                if (!string.IsNullOrEmpty(errorMessage) && context.Player is not null)
+                {
+                    await _messageService.SendMessageAsync(context.Player.GetStream(), errorMessage, cancellationToken);
+                }
             }
         }
-
-        private static CommandContext GetCommandContextFromCompletionText(string completionText, Player player)
-        {
-            var regexPattern = @"^(?<commandIdentifier>\w+)\((?<params>[^\)]+)\)\|(?<successMessage>.+?)$";
-            var match = Regex.Match(completionText, regexPattern);
-
-            if (!match.Success)
-                throw new InvalidCompletionTextException(completionText, "Invalid command format.");
-
-            var commandIdentifierText = match.Groups["commandIdentifier"].Value;
-            if (!Enum.TryParse(commandIdentifierText, true, out CommandIdentifierEnum commandIdentifier))
-                throw new InvalidCompletionTextException(completionText, $"Could not parse the command '{commandIdentifierText}' to {nameof(CommandIdentifierEnum)}");
-
-            var commandParams = match.Groups["params"].Value.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-
-            var successMessage = match.Groups["successMessage"].Value;
-
-            return new CommandContext(commandIdentifier, commandParams, successMessage);
-        }
-
     }
 }

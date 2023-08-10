@@ -3,24 +3,32 @@ using NeuralJourney.Library.Models.World;
 
 namespace NeuralJourney.Library.Models.Commands
 {
-    public readonly struct CommandContext
+    public class CommandContext
     {
-        public CommandContext(CommandIdentifierEnum commandIdentifier, string[]? @params, string executionMessage, Player? player = null)
+        public CommandContext(string rawInput, CommandTypeEnum commandType, Player? player = default)
         {
-            CommandIdentifier = commandIdentifier;
-            Params = @params;
-            ExecutionMessage = executionMessage;
+            RawInput = rawInput;
+            CommandType = commandType;
             Player = player;
         }
 
-        public CommandTypeEnum CommandType { get; }
+        public readonly CommandTypeEnum CommandType;
 
-        public CommandIdentifierEnum CommandIdentifier { get; }
+        public readonly string RawInput;
 
-        public string[]? Params { get; }
+        public readonly Player? Player;
 
-        public string ExecutionMessage { get; }
 
-        public Player? Player { get; }
+        public ICommand? Command { get; set; }
+
+        public CommandKey? CommandKey { get; set; }
+
+        public string? CompletionText { get; set; }
+
+        public string? ExecutionMessage { get; set; }
+
+        public string[]? Params { get; set; }
+
+        public CommandResult? Result { get; set; }
     }
 }

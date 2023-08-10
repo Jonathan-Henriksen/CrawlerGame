@@ -1,6 +1,8 @@
-﻿using NeuralJourney.Library.Exceptions.Commands;
+﻿using NeuralJourney.Library.Enums.Commands;
+using NeuralJourney.Library.Exceptions.Commands;
 using NeuralJourney.Logic.Commands;
 using NeuralJourney.Logic.Options;
+using NeuralJourney.Logic.Services.Interfaces;
 using OpenAI_API;
 
 namespace NeuralJourney.Logic.Services
@@ -20,7 +22,7 @@ namespace NeuralJourney.Logic.Services
             _openApi.Completions.DefaultCompletionRequestArgs.StopSequence = options.StopSequence;
             _openApi.Completions.DefaultCompletionRequestArgs.Temperature = options.Temperature;
 
-            _availableCommands = CommandRegistry.GetAllPlayerCommands();
+            _availableCommands = CommandRegistry.GetCommands(CommandTypeEnum.Player);
         }
 
         public async Task<string> GetCommandCompletionTextAsync(string userinput)

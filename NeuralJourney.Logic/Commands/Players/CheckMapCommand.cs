@@ -7,31 +7,35 @@ using NeuralJourney.Logic.Options;
 namespace NeuralJourney.Logic.Commands.Players
 {
     [Command(CommandTypeEnum.Player, CommandIdentifierEnum.CheckMap)]
-    internal class CheckMapCommand : CommandBase
+    internal class CheckMapCommand : ICommand
     {
-        private readonly int WorldWidth;
-        private readonly int WorldHeight;
+        private readonly CommandContext _context;
 
-        internal CheckMapCommand(CommandContext commandContext, GameOptions gameOptions) : base(commandContext)
+        private readonly int _worldWidth;
+        private readonly int _worldHeight;
+
+        internal CheckMapCommand(CommandContext context, GameOptions gameOptions)
         {
-            WorldWidth = gameOptions.WorldWidth;
-            WorldHeight = gameOptions.WorldHeight;
+            _context = context;
+
+            _worldWidth = gameOptions.WorldWidth;
+            _worldHeight = gameOptions.WorldHeight;
         }
 
-        internal override Task<CommandResult> ExecuteAsync()
+        public Task<CommandResult> ExecuteAsync()
         {
             return Task.Run(() =>
             {
-                if (Context.Player is null)
-                    throw new MissingParameterException(Context.CommandIdentifier, nameof(Context.Player));
+                if (_context.Player is null)
+                    throw new MissingParameterException(_context.CommandKey?.Identifier ?? default, nameof(_context.Player));
 
-                var map = new string('#', WorldWidth + 2) + "\n";
-                for (var y = 0; y < WorldHeight; y++)
+                var map = new string('#', _worldWidth + 2) + "\n";
+                for (var y = 0; y < _worldHeight; y++)
                 {
                     map += "#";
-                    for (var x = 0; x < WorldWidth; x++)
+                    for (var x = 0; x < _worldWidth; x++)
                     {
-                        if (x == Context.Player.Location.X && y == Context.Player.Location.Y)
+                        if (x == _context.Player.Location.X && y == _context.Player.Location.Y)
                             map += "P"; // 'P' for player
                         else
                         {
@@ -40,7 +44,7 @@ namespace NeuralJourney.Logic.Commands.Players
                     }
                     map += "#\n";
                 }
-                map += new string('#', WorldWidth + 2) + "\n";
+                map += new string('#', _worldWidth + 2) + "\n";
 
                 return new CommandResult(map);
             });

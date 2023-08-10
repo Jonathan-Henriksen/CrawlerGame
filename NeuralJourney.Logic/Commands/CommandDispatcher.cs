@@ -1,28 +1,23 @@
-﻿using NeuralJourney.Library.Models.World;
-using NeuralJourney.Logic.Commands.Admin;
-using NeuralJourney.Logic.Commands.Players;
+﻿using NeuralJourney.Library.Models.Commands;
+using NeuralJourney.Logic.Commands.Interfaces;
 
 namespace NeuralJourney.Logic.Commands
 {
     public class CommandDispatcher : ICommandDispatcher
     {
-        private readonly IAdminCommandStrategy _adminCommandStrategy;
-        private readonly IPlayerCommandStrategy _playerCommandStrategy;
+        private readonly ICommandStrategyFactory _commandStrategyFactory;
 
-        public CommandDispatcher(IAdminCommandStrategy adminCommandStrategy, IPlayerCommandStrategy playerCommandStrategy)
+        public CommandDispatcher(ICommandStrategyFactory commandStrategyFactory)
         {
-            _adminCommandStrategy = adminCommandStrategy;
-            _playerCommandStrategy = playerCommandStrategy;
+            _commandStrategyFactory = commandStrategyFactory;
         }
 
-        public async void DispatchAdminCommand(string adminInput)
+        public void DispatchCommand(CommandContext context)
         {
-            await _adminCommandStrategy.ExecuteAsync(adminInput);
-        }
+            var strategy = _commandStrategyFactory.CreateCommandStrategy(context.CommandType)
+                ?? throw new InvalidOperationException("Failed to dispatch command. Reason: No strategy was availabl for the provided command type");
 
-        public async void DispatchPlayerCommand(string playerInput, Player player)
-        {
-            await _playerCommandStrategy.ExecuteAsync(playerInput, player);
+            strategy.ExecuteAsync(context);
         }
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using NeuralJourney.Client;
 using NeuralJourney.Logic.Options;
 using NeuralJourney.Logic.Services;
+using NeuralJourney.Logic.Services.Interfaces;
 using Serilog;
 using Serilog.Core;
 

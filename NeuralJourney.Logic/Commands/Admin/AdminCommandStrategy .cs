@@ -2,11 +2,13 @@
 using NeuralJourney.Library.Enums.Commands;
 using NeuralJourney.Library.Exceptions.Commands;
 using NeuralJourney.Library.Models.Commands;
+using NeuralJourney.Library.Models.World;
+using NeuralJourney.Logic.Commands.Interfaces;
 using Serilog;
 
 namespace NeuralJourney.Logic.Commands.Admin
 {
-    public class AdminCommandStrategy : IAdminCommandStrategy
+    public class AdminCommandStrategy : ICommandStrategy
     {
         private readonly ICommandFactory _commandFactory;
         private readonly ILogger _logger;
@@ -17,20 +19,20 @@ namespace NeuralJourney.Logic.Commands.Admin
             _logger = logger;
         }
 
-        public async Task ExecuteAsync(string adminInput)
+        public async Task ExecuteAsync(CommandContext context, CancellationToken cancellationToken = default)
         {
             try
             {
-                var commandContext = new CommandContext(CommandIdentifierEnum.Unknown, Array.Empty<string>(), adminInput);
+                context.CommandKey = new CommandKey(context.CommandType, default);
 
-                var command = _commandFactory.CreateCommand(commandContext);
+                context.Command = _commandFactory.CreateCommand(context.CommandKey.Value, context.Params);
 
-                if (command is null)
+                if (context.Command is null)
                     return;
 
-                await command.ExecuteAsync();
+                await context.Command.ExecuteAsync();
 
-                _logger.Information(InfoMessageTemplates.ExecutedCommand, commandContext.CommandType, commandContext.CommandIdentifier);
+                _logger.Information(InfoMessageTemplates.ExecutedCommand, context.CommandKey?.Type, context.CommandKey?.Identifier);
             }
             catch (InvalidCommandException ex)
             {

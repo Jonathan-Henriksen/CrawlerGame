@@ -5,9 +5,9 @@ using Serilog;
 using System.Net;
 using System.Net.Sockets;
 
-namespace NeuralJourney.Logic.Handlers
+namespace NeuralJourney.Logic.Handlers.Connection
 {
-    public class ConnectionHandler : IConnectionHandler
+    public class PlayerConnectionHandler : IConnectionHandler
     {
         private readonly CancellationTokenSource _cts;
         private readonly TcpListener _tcpListener;
@@ -16,7 +16,7 @@ namespace NeuralJourney.Logic.Handlers
 
         public event Action<Player>? OnPlayerConnected;
 
-        public ConnectionHandler(ServerOptions serverOptions, ILogger logger)
+        public PlayerConnectionHandler(ServerOptions serverOptions, ILogger logger)
         {
             _cts = new CancellationTokenSource();
             _tcpListener = new TcpListener(IPAddress.Any, serverOptions.Port);

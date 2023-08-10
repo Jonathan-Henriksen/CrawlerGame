@@ -2,8 +2,8 @@
 {
     public enum CommandIdentifierEnum
     {
+        Unknown,
         CheckMap,
         Move,
-        Unknown
     }
 }

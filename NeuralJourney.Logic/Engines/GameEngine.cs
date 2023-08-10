@@ -1,8 +1,10 @@
 ﻿using NeuralJourney.Library.Constants;
 using NeuralJourney.Library.Models.World;
-using NeuralJourney.Logic.Commands;
-using NeuralJourney.Logic.Handlers;
-using NeuralJourney.Logic.Services;
+using NeuralJourney.Logic.Commands.Interfaces;
+using NeuralJourney.Logic.Engines.Interfaces;
+using NeuralJourney.Logic.Handlers.Connection;
+using NeuralJourney.Logic.Handlers.Input;
+using NeuralJourney.Logic.Services.Interfaces;
 using Serilog;
 
 namespace NeuralJourney.Logic.Engines
@@ -13,24 +15,33 @@ namespace NeuralJourney.Logic.Engines
 
         private readonly ICommandDispatcher _commandDispatcher;
         private readonly IConnectionHandler _connectionHandler;
-        private readonly IInputHandler _inputHandler;
+
+        private readonly IInputHandler _adminInputHandler;
+        private readonly IInputHandler _playerInputHandler;
+
         private readonly ILogger _logger;
 
-        private CancellationTokenSource? _adminInputToken;
+        private readonly CancellationTokenSource _adminInputToken;
+
+        private readonly List<Player> _players = new();
         private readonly Dictionary<Player, CancellationTokenSource> _playerTokens = new();
 
-        private readonly List<Player> Players = new();
-
-        public GameEngine(IClockService clockService, ICommandDispatcher commandDispatcher, IConnectionHandler connectionHandler, IInputHandler inputHandler, ILogger logger)
+        public GameEngine(IClockService clockService, ICommandDispatcher commandDispatcher, IConnectionHandler connectionHandler, IEnumerable<IInputHandler> inputHandlers, ILogger logger)
         {
             _clock = clockService;
-            _commandDispatcher = commandDispatcher;
-            _connectionHandler = connectionHandler;
-            _inputHandler = inputHandler;
             _logger = logger;
 
-            _inputHandler.OnAdminInputReceived += _commandDispatcher.DispatchAdminCommand;
-            _inputHandler.OnPlayerInputReceived += _commandDispatcher.DispatchPlayerCommand;
+            _adminInputToken = new CancellationTokenSource();
+
+            _playerInputHandler = inputHandlers.First(i => i.GetType() == typeof(PlayerInputHandler));
+            _adminInputHandler = inputHandlers.First(i => i.GetType() == typeof(AdminInputHandler));
+
+            _commandDispatcher = commandDispatcher;
+
+            _playerInputHandler.OnInputReceived += _commandDispatcher.DispatchCommand;
+            _adminInputHandler.OnInputReceived += _commandDispatcher.DispatchCommand;
+
+            _connectionHandler = connectionHandler;
 
             _connectionHandler.OnPlayerConnected += AddPlayer;
         }
@@ -39,10 +50,8 @@ namespace NeuralJourney.Logic.Engines
         {
             _clock.Start();
 
-            _adminInputToken = new CancellationTokenSource();
-
             var connectionHandlerTask = _connectionHandler.HandleConnectionsAsync();
-            var inputHandlerTask = _inputHandler.HandleAdminInputAsync(_adminInputToken.Token);
+            var inputHandlerTask = _playerInputHandler.HandleInputAsync(default, _adminInputToken.Token);
 
             _logger.Information(InfoMessageTemplates.GameStarted);
 
@@ -51,11 +60,11 @@ namespace NeuralJourney.Logic.Engines
 
         public void Stop()
         {
-            _adminInputToken?.Cancel();
+            _adminInputToken.Cancel();
 
             _connectionHandler.Stop();
 
-            foreach (var player in Players)
+            foreach (var player in _players)
             {
                 RemovePlayer(player);
             }
@@ -70,10 +79,10 @@ namespace NeuralJourney.Logic.Engines
             var cts = new CancellationTokenSource();
 
             if (!_playerTokens.TryAdd(player, cts))
-                throw new InvalidOperationException("Failed to add player '{0}' to the game. A cancellation token is alread associated with the player.");
+                throw new InvalidOperationException("Failed to add player '{0}' to the game. Reason: A active cancellation token is already associated with the player.");
 
-            _inputHandler.HandlePlayerInputAsync(player, cts.Token);
-            Players.Add(player);
+            _playerInputHandler.HandleInputAsync(player, cts.Token);
+            _players.Add(player);
 
             _logger.Information(InfoMessageTemplates.PlayerAdded, player.Name);
         }
@@ -86,7 +95,7 @@ namespace NeuralJourney.Logic.Engines
                 _playerTokens.Remove(player);
             }
 
-            Players.Remove(player);
+            _players.Remove(player);
 
             _logger.Information(InfoMessageTemplates.PlayerRemoved, player.Name);
         }

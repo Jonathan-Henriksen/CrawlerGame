@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using NeuralJourney.Logic.Services.Interfaces;
 
 namespace NeuralJourney.Logic.Services
 {

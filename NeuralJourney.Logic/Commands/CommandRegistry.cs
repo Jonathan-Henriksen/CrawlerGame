@@ -26,26 +26,24 @@ namespace NeuralJourney.Logic.Commands
             }
         }
 
-        public static Type GetCommandType(CommandContext commandContext)
+        public static Type GetCommandType(CommandKey key)
         {
-            var key = new CommandKey(commandContext.CommandType, commandContext.CommandIdentifier);
             if (!_commandMappings.TryGetValue(key, out var commandType))
             {
-                throw new InvalidCommandException(commandContext.CommandIdentifier, "Command does not exist");
+                throw new InvalidCommandException(key.Identifier, "Command does not exist");
             }
 
             return commandType;
         }
 
-        public static string GetAllPlayerCommands()
+        public static string GetCommands(CommandTypeEnum type)
         {
-            var playerCommands = _commandMappings
-                .Where(kvp => kvp.Key.CommandType == CommandTypeEnum.Player)
-                .Select(kvp => kvp.Key.CommandIdentifier.ToString())
+            var commands = _commandMappings
+                .Where(kvp => kvp.Key.Type == type)
+                .Select(kvp => kvp.Key.Identifier.ToString())
                 .ToList();
 
-            return string.Join(", ", playerCommands);
+            return string.Join(", ", commands);
         }
     }
-
 }

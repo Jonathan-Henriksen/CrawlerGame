@@ -1,6 +1,6 @@
 ﻿using NeuralJourney.Library.Constants;
 using NeuralJourney.Logic.Options;
-using NeuralJourney.Logic.Services;
+using NeuralJourney.Logic.Services.Interfaces;
 using Serilog;
 using System.Net.Sockets;
 
