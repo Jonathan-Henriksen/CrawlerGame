@@ -12,17 +12,5 @@ namespace NeuralJourney.Core.Models.Commands
             Type = type;
             Identifier = identifier;
         }
-
-        public override bool Equals(object? obj)
-        {
-            return obj is CommandKey key &&
-                   Type == key.Type &&
-                   Identifier == key.Identifier;
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(Type, Identifier);
-        }
     }
 }
