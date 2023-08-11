@@ -6,13 +6,13 @@ using Serilog;
 
 namespace NeuralJourney.Core.Commands.Players
 {
-    public class PlayerStrategy : ICommandStrategy
+    public class PlayerCommandStrategy : ICommandStrategy
     {
         private readonly ICommandMiddleware[] _middlewareProcessors;
         private readonly IMessageService _messageService;
         private readonly ILogger _logger;
 
-        public PlayerStrategy(IEnumerable<ICommandMiddleware> commandMiddleware, IMessageService messageService, ILogger logger)
+        public PlayerCommandStrategy(IEnumerable<ICommandMiddleware> commandMiddleware, IMessageService messageService, ILogger logger)
         {
             _middlewareProcessors = commandMiddleware.ToArray();
 

@@ -70,7 +70,7 @@ static IHostBuilder CreateHostBuilder(string[] strings)
             services.AddTransient<ICommandDispatcher, CommandDispatcher>();
             services.AddTransient<ICommandStrategyFactory, CommandStrategyFactory>();
             services.AddTransient<ICommandStrategy, AdminCommandStrategy>();
-            services.AddTransient<ICommandStrategy, PlayerStrategy>();
+            services.AddTransient<ICommandStrategy, PlayerCommandStrategy>();
 
             RegisterCommandMiddleware(services);
 
