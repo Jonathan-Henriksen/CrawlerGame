@@ -19,7 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NeuralJourney.Logic\NeuralJourney.Logic.csproj" />
+    <ProjectReference Include="..\NeuralJourney.Core\NeuralJourney.Core.csproj" />
+    <ProjectReference Include="..\NeuralJourney.Infrastructure\NeuralJourney.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
