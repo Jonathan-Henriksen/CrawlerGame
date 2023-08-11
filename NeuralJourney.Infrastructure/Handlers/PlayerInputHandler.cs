@@ -7,12 +7,14 @@ using System.Net.Sockets;
 
 namespace NeuralJourney.Infrastructure.Handlers
 {
-    public class PlayerInputHandler : IInputHandler<Player>
+    public class PlayerInputHandler : IInputHandler<Player>, IDisposable
     {
         private const int MaxReconnectionAttempts = 3;
 
         private readonly IMessageService _messageService;
         private readonly ILogger _logger;
+
+        private readonly Dictionary<Player, CancellationTokenSource> _playerTokens = new();
 
         public event Action<string, Player>? OnInputReceived;
         public event Action<Player>? OnClosedConnection;
@@ -26,7 +28,10 @@ namespace NeuralJourney.Infrastructure.Handlers
         public async Task HandleInputAsync(Player player, CancellationToken cancellationToken = default)
         {
             var stream = player.GetStream();
+
             var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            _playerTokens[player] = cts;
+
             var reconnectionAttempts = 0;
 
             while (!cts.IsCancellationRequested)
@@ -38,7 +43,6 @@ namespace NeuralJourney.Infrastructure.Handlers
                     if (_messageService.IsCloseConnectionMessage(input))
                     {
                         OnClosedConnection?.Invoke(player);
-                        Cleanup(cts);
                         return;
                     }
 
@@ -54,7 +58,6 @@ namespace NeuralJourney.Infrastructure.Handlers
                     if (ex.InnerException is SocketException socketEx && socketEx.SocketErrorCode == SocketError.ConnectionReset)
                     {
                         _logger.Information(InfoMessageTemplates.ClientDisconnected, stream.Socket.RemoteEndPoint);
-                        Cleanup(cts);
                         return;
                     }
 
@@ -64,7 +67,6 @@ namespace NeuralJourney.Infrastructure.Handlers
                     if (reconnectionAttempts >= MaxReconnectionAttempts)
                     {
                         _logger.Error("({PlayerName}) reached the reconnection attempt limit({Limit}) and was removed from the game", player.Name, MaxReconnectionAttempts);
-                        Cleanup(cts);
                         return;
                     }
 
@@ -73,15 +75,20 @@ namespace NeuralJourney.Infrastructure.Handlers
                 catch (Exception ex)
                 {
                     _logger.Error(ex, "Unexpected error while reading the stream of ({PlayerName}): {ErrorMessage}", player.Name, ex.Message);
-                    Cleanup(cts);
                 }
             }
         }
 
-        private void Cleanup(CancellationTokenSource cts)
+
+        public void Dispose()
         {
-            cts.Cancel();
-            cts.Dispose();
+            _logger.Debug("Disposing of {Type}", GetType().Name);
+
+            foreach (var cts in _playerTokens.Values)
+            {
+                cts.Dispose();
+            }
+            _playerTokens.Clear();
         }
     }
 }

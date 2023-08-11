@@ -1,6 +1,6 @@
 ﻿namespace NeuralJourney.Core.Interfaces.Handlers
 {
-    public interface IInputHandler<T>
+    public interface IInputHandler<T> : IDisposable
     {
         public event Action<string, T>? OnInputReceived;
         public event Action<T>? OnClosedConnection;

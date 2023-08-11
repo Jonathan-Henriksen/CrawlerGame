@@ -68,22 +68,17 @@ namespace NeuralJourney.Infrastructure.Handlers
                     await Task.Delay(3000, cancellationToken); // Wait for 3 seconds before retrying
                 }
             }
-
-            Cleanup();
         }
 
-        public void Stop()
+        public void Dispose()
         {
-            Cleanup();
-        }
-
-        private void Cleanup()
-        {
-            _tcpListener.Stop();
-            _tcpListener.Server.Dispose();
+            _logger.Debug("Disposing of {Type}", GetType().Name);
 
             _cts.Cancel();
             _cts.Dispose();
+
+            _tcpListener.Stop();
+            _tcpListener.Server.Dispose();
 
             _logger.Information(InfoMessageTemplates.ServerStopped);
         }
