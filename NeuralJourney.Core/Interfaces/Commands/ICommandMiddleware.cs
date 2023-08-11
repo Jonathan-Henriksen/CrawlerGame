@@ -1,4 +1,4 @@
-﻿using NeuralJourney.Core.Commands;
+﻿using NeuralJourney.Core.Models.Commands;
 
 namespace NeuralJourney.Core.Interfaces.Commands
 {

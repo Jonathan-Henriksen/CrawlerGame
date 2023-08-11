@@ -1,4 +1,4 @@
-﻿using NeuralJourney.Core.Constants;
+﻿using NeuralJourney.Core.Constants.Messages;
 using NeuralJourney.Core.Enums.Commands;
 
 namespace NeuralJourney.Core.Exceptions.Commands

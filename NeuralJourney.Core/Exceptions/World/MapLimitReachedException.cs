@@ -1,8 +1,8 @@
-﻿using NeuralJourney.Core.Constants;
+﻿using NeuralJourney.Core.Constants.Messages;
 using NeuralJourney.Core.Enums.Parameters;
 using NeuralJourney.Core.Models.World;
 
-namespace NeuralJourney.Core.Exceptions.PlayerActions
+namespace NeuralJourney.Core.Exceptions.World
 {
     [Serializable]
     public class MapLimitReachedException : GameException

@@ -1,4 +1,4 @@
-﻿using NeuralJourney.Core.Constants;
+﻿using NeuralJourney.Core.Constants.Messages;
 using NeuralJourney.Core.Interfaces.Handlers;
 using NeuralJourney.Core.Options;
 using Serilog;

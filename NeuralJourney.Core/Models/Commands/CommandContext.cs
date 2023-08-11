@@ -2,7 +2,7 @@
 using NeuralJourney.Core.Interfaces.Commands;
 using NeuralJourney.Core.Models.World;
 
-namespace NeuralJourney.Core.Commands
+namespace NeuralJourney.Core.Models.Commands
 {
     public class CommandContext
     {

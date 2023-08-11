@@ -1,6 +1,6 @@
 ﻿using NeuralJourney.Core.Enums.Commands;
 
-namespace NeuralJourney.Core.Commands
+namespace NeuralJourney.Core.Models.Commands
 {
     public readonly struct CommandKey
     {
