@@ -4,7 +4,7 @@ using NeuralJourney.Core.Exceptions.Commands;
 using NeuralJourney.Core.Interfaces.Commands;
 using NeuralJourney.Core.Options;
 
-namespace NeuralJourney.Core.Commands.Players
+namespace NeuralJourney.Core.Commands.Players.Commands
 {
     [Command(CommandTypeEnum.Player, CommandIdentifierEnum.CheckMap)]
     internal class CheckMapCommand : ICommand

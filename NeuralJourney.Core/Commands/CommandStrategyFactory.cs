@@ -19,7 +19,7 @@ namespace NeuralJourney.Core.Commands
             return type switch
             {
                 CommandTypeEnum.Admin => _commandStrategies.First(s => s.GetType() == typeof(AdminCommandStrategy)),
-                CommandTypeEnum.Player => _commandStrategies.First(s => s.GetType() == typeof(PlayerCommandStrategy)),
+                CommandTypeEnum.Player => _commandStrategies.First(s => s.GetType() == typeof(PlayerStrategy)),
                 _ => throw new ArgumentOutOfRangeException(nameof(type)),
             };
         }

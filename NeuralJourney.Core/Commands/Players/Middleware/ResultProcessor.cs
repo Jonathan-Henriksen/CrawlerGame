@@ -1,7 +1,7 @@
 ﻿using NeuralJourney.Core.Interfaces.Commands;
 using NeuralJourney.Core.Interfaces.Services;
 
-namespace NeuralJourney.Core.Commands.Middleware
+namespace NeuralJourney.Core.Commands.Players.Middleware
 {
     public class ResultProcessor : ICommandMiddleware
     {

@@ -3,9 +3,9 @@ using NeuralJourney.Core.Exceptions.Commands;
 using NeuralJourney.Core.Interfaces.Commands;
 using System.Text.RegularExpressions;
 
-namespace NeuralJourney.Core.Commands.Middleware
+namespace NeuralJourney.Core.Commands.Players.Middleware
 {
-    public class CompletionTextExtractor : ICommandMiddleware
+    public class CompletionTextParser : ICommandMiddleware
     {
         public async Task InvokeAsync(CommandContext context, Func<Task> next, CancellationToken cancellationToken = default)
         {

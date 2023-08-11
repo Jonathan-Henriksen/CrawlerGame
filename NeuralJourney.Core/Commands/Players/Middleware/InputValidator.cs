@@ -2,7 +2,7 @@
 using NeuralJourney.Core.Exceptions.Commands;
 using NeuralJourney.Core.Interfaces.Commands;
 
-namespace NeuralJourney.Core.Commands.Middleware
+namespace NeuralJourney.Core.Commands.Players.Middleware
 {
     public class InputValidation : ICommandMiddleware
     {

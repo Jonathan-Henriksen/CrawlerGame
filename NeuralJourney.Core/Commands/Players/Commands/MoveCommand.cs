@@ -6,7 +6,7 @@ using NeuralJourney.Core.Exceptions.PlayerActions;
 using NeuralJourney.Core.Interfaces.Commands;
 using NeuralJourney.Core.Options;
 
-namespace NeuralJourney.Core.Commands.Players
+namespace NeuralJourney.Core.Commands.Players.Commands
 {
     [Command(CommandTypeEnum.Player, CommandIdentifierEnum.Move)]
     internal class MoveCommand : ICommand

@@ -1,6 +1,6 @@
 ﻿using NeuralJourney.Core.Interfaces.Commands;
 
-namespace NeuralJourney.Core.Commands.Middleware
+namespace NeuralJourney.Core.Commands.Players.Middleware
 {
     public class CommandExecutor : ICommandMiddleware
     {

@@ -4,8 +4,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using NeuralJourney.Core.Commands;
 using NeuralJourney.Core.Commands.Admin;
-using NeuralJourney.Core.Commands.Middleware;
 using NeuralJourney.Core.Commands.Players;
+using NeuralJourney.Core.Commands.Players.Middleware;
 using NeuralJourney.Core.Interfaces.Commands;
 using NeuralJourney.Core.Interfaces.Engines;
 using NeuralJourney.Core.Interfaces.Handlers;
@@ -70,7 +70,7 @@ static IHostBuilder CreateHostBuilder(string[] strings)
             services.AddTransient<ICommandDispatcher, CommandDispatcher>();
             services.AddTransient<ICommandStrategyFactory, CommandStrategyFactory>();
             services.AddTransient<ICommandStrategy, AdminCommandStrategy>();
-            services.AddTransient<ICommandStrategy, PlayerCommandStrategy>();
+            services.AddTransient<ICommandStrategy, PlayerStrategy>();
 
             RegisterCommandMiddleware(services);
 
@@ -91,7 +91,7 @@ static IServiceCollection RegisterCommandMiddleware(IServiceCollection services)
     return services
         .AddTransient<ICommandMiddleware, InputValidation>()
         .AddTransient<ICommandMiddleware, CompletionTextRequester>()
-        .AddTransient<ICommandMiddleware, CompletionTextExtractor>()
+        .AddTransient<ICommandMiddleware, CompletionTextParser>()
         .AddTransient<ICommandMiddleware, CommandInstantiator>()
         .AddTransient<ICommandMiddleware, CommandExecutor>()
         .AddTransient<ICommandMiddleware, ResultProcessor>();
