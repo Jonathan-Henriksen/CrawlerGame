@@ -27,33 +27,18 @@ namespace NeuralJourney.Logic.Handlers
                 throw new InvalidOperationException("Failed to handle stream input. Reason: Could not read from stream");
 
             var clientCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-
             int reconnectionAttempts = 0;
 
             while (!clientCts.IsCancellationRequested)
             {
-                if (reconnectionAttempts == MaxReconnectionAttempts) // Reached max reconnection attempts
-                {
-                    _logger.Error("Max reconnection attempts({Limit}) reached. Shutting down the client", MaxReconnectionAttempts);
-
-                    clientCts.Cancel();
-                    clientCts.Dispose();
-
-                    stream.Close();
-                    stream.Socket.Dispose();
-
-                    return;
-                }
-
                 try
                 {
-                    var input = await _messageService.ReadMessageAsync(stream, clientCts.Token); // Read input from network stream
+                    var input = await _messageService.ReadMessageAsync(stream, clientCts.Token);
 
-                    if (_messageService.IsCloseConnectionMessage(input)) // Handle graceful disconnect from remote
+                    if (_messageService.IsCloseConnectionMessage(input))
                     {
                         OnClosedConnection?.Invoke(stream);
-                        await stream.DisposeAsync();
-
+                        Cleanup(stream, clientCts);
                         return;
                     }
 
@@ -62,40 +47,47 @@ namespace NeuralJourney.Logic.Handlers
                     if (string.IsNullOrEmpty(input))
                         continue;
 
-                    OnInputReceived?.Invoke(input, stream); // Notify subscribers about new input
+                    OnInputReceived?.Invoke(input, stream);
                 }
                 catch (IOException ex)
                 {
-                    if (ex.InnerException is SocketException socketEx && socketEx.SocketErrorCode == SocketError.ConnectionReset) // An existing connection was forcibly closed by the remote host
+                    if (ex.InnerException is SocketException socketEx && socketEx.SocketErrorCode == SocketError.ConnectionReset)
                     {
-                        _logger.Warning("An existing connection was forcibly closed by the remote host: {Host} ", stream.Socket.RemoteEndPoint);
+                        _logger.Warning("An existing connection was forcibly closed by the remote host: {Host}", stream.Socket.RemoteEndPoint);
+                        Cleanup(stream, clientCts);
                         return;
                     }
 
                     _logger.Warning("Network input stream encountered an error: {ErrorMessage}. Attempting to reconnect...", ex.Message);
-
                     reconnectionAttempts++;
 
-                    await Task.Delay(3000, clientCts.Token);
+                    if (reconnectionAttempts >= MaxReconnectionAttempts)
+                    {
+                        _logger.Error("Max reconnection attempts({Limit}) reached. Shutting down the client", MaxReconnectionAttempts);
+                        Cleanup(stream, clientCts);
+                        return;
+                    }
 
-                    clientCts.Token.ThrowIfCancellationRequested();
+                    await Task.Delay(3000, clientCts.Token);
                 }
-                catch (Exception ex) // Disconnect gracefully on unexpected errors
+                catch (Exception ex)
                 {
                     _logger.Error(ex, ex.Message);
-
                     if (stream.CanWrite)
                     {
                         await _messageService.SendCloseConnectionAsync(stream, clientCts.Token);
                     }
-
-                    clientCts.Cancel();
-                    clientCts.Dispose();
-
-                    stream.Close();
-                    stream.Socket.Dispose();
+                    Cleanup(stream, clientCts);
                 }
             }
+        }
+
+        private static void Cleanup(NetworkStream stream, CancellationTokenSource clientCts)
+        {
+            clientCts.Cancel();
+            clientCts.Dispose();
+            stream.Close();
+            stream.Socket.Dispose();
         }
     }
 }

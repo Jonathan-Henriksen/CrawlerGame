@@ -17,11 +17,13 @@ namespace NeuralJourney.Logic.Handlers
 
         public async Task HandleInputAsync(TextReader reader, CancellationToken cancellationToken = default)
         {
+            var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+
             try
             {
-                while (!cancellationToken.IsCancellationRequested)
+                while (!cts.IsCancellationRequested)
                 {
-                    var input = await reader.ReadLineAsync(cancellationToken);
+                    var input = await reader.ReadLineAsync(cts.Token);
 
                     if (string.IsNullOrEmpty(input))
                         continue;
@@ -31,8 +33,21 @@ namespace NeuralJourney.Logic.Handlers
             }
             catch (IOException ex)
             {
-                _logger.Error("Console input stream encountered an error: {ErrorMessage}", ex.Message);
+                _logger.Error("Encountered an error reading console input stream: {ErrorMessage}", ex.Message);
+                Cleanup(reader, cts);
             }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Unexpected error in ConsoleInputHandler: {ErrorMessage}", ex.Message);
+                Cleanup(reader, cts);
+            }
+        }
+
+        private void Cleanup(TextReader reader, CancellationTokenSource cts)
+        {
+            OnClosedConnection?.Invoke(reader);
+            cts.Cancel();
+            cts.Dispose();
         }
     }
 }

@@ -9,9 +9,9 @@ namespace NeuralJourney.Logic.Handlers
 {
     public class NetworkConnectionHandler : IConnectionHandler
     {
+        private const int MaxRetryAttempts = 5;
         private CancellationTokenSource _cts;
         private readonly TcpListener _tcpListener;
-
         private readonly ILogger _logger;
 
         public event Action<TcpClient>? OnConnected;
@@ -29,41 +29,63 @@ namespace NeuralJourney.Logic.Handlers
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
-            try
-            {
-                _logger.Information(InfoMessageTemplates.ServerStarted);
+            int retryCount = 0;
 
-                while (!_cts.Token.IsCancellationRequested)
+            _logger.Information(InfoMessageTemplates.ServerStarted);
+
+            while (!_cts.Token.IsCancellationRequested)
+            {
+                try
                 {
                     var client = await _tcpListener.AcceptTcpClientAsync(_cts.Token);
-
-                    _logger.Information(InfoMessageTemplates.ClientConnected, client.Client.RemoteEndPoint);
 
                     if (client is null)
                         continue;
 
+                    _logger.Information(InfoMessageTemplates.ClientConnected, client.Client.RemoteEndPoint);
                     OnConnected?.Invoke(client);
+
+                    retryCount = 0; // Reset retry count on successful connection
+                }
+                catch (OperationCanceledException)
+                {
+                    // Expected exception when cancellation is requested, no need to log.
+                    break;
+                }
+                catch (Exception ex)
+                {
+                    retryCount++;
+
+                    _logger.Warning(ex, "Error encountered while listening for clients. Attempt {RetryCount}/{MaxAttempts}.\nError: {ErrorMessage}", retryCount, MaxRetryAttempts, ex.Message);
+
+                    if (retryCount > MaxRetryAttempts)
+                    {
+
+                        _logger.Error("Max retry attempts reached. Shutting down the server.");
+                        break;
+                    }
+
+                    await Task.Delay(3000, cancellationToken); // Wait for 3 seconds before retrying
                 }
             }
-            catch (Exception ex)
-            {
-                _logger.Error(ex, ex.Message);
-            }
-            finally
-            {
-                _tcpListener.Stop();
 
-                _logger.Information(InfoMessageTemplates.ServerStopped);
-            }
+            Cleanup();
         }
 
         public void Stop()
+        {
+            Cleanup();
+        }
+
+        private void Cleanup()
         {
             _tcpListener.Stop();
             _tcpListener.Server.Dispose();
 
             _cts.Cancel();
             _cts.Dispose();
+
+            _logger.Information(InfoMessageTemplates.ServerStopped);
         }
     }
 }
