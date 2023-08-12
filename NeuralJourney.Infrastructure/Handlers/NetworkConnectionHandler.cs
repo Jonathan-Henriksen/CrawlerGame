@@ -16,9 +16,9 @@ namespace NeuralJourney.Infrastructure.Handlers
 
         public event Action<TcpClient>? OnConnected;
 
-        public NetworkConnectionHandler(ServerOptions serverOptions, ILogger logger)
+        public NetworkConnectionHandler(NetworkOptions networkOptions, ILogger logger)
         {
-            _tcpListener = new TcpListener(IPAddress.Any, serverOptions.Port);
+            _tcpListener = new TcpListener(IPAddress.Any, networkOptions.Port);
             _logger = logger;
         }
 
@@ -44,6 +44,10 @@ namespace NeuralJourney.Infrastructure.Handlers
 
                     retryCount = 0; // Reset retry count on successful connection
                 }
+                catch (OperationCanceledException)
+                {
+                    return; // Return back to caller who initialized cancellation
+                }
                 catch (SocketException socketException) when (socketException.SocketErrorCode == SocketError.OperationAborted)
                 {
                     _logger.Warning(socketException, "A client disconnected unexpectedly. Reason: {Message}", socketException.Message);
@@ -56,7 +60,7 @@ namespace NeuralJourney.Infrastructure.Handlers
                     if (retryCount++ > MaxRetryAttempts)
                     {
                         _logger.Error(ErrorMessageTemplates.Network.RetryLimitReached, MaxRetryAttempts);
-                        break;
+                        return;
                     }
 
                     _logger.Warning(ex, "Network Error: {ServiceName} encountered a connection issue. Retrying {RetryAttemptCount}/{RetryAttemptLimit}", nameof(NetworkConnectionHandler), retryCount, MaxRetryAttempts);
@@ -65,12 +69,9 @@ namespace NeuralJourney.Infrastructure.Handlers
 
                     continue;
                 }
-                catch (OperationCanceledException ex)
+                catch (Exception ex)
                 {
-
-                }
-                catch
-                {
+                    _logger.Error(ex, "NetworkConnectionHandler encountered an unexpected error. Message: {Message}", ex.Message);
                     throw;
                 }
             }

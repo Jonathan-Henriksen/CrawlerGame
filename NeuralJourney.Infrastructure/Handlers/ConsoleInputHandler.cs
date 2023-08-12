@@ -48,7 +48,7 @@ namespace NeuralJourney.Infrastructure.Handlers
                 }
                 catch (OperationCanceledException)
                 {
-                    // Ignore for now
+                    return; // Return back to caller who initialized cancellation
                 }
                 catch (Exception ex)
                 {

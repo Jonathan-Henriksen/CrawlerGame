@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using NeuralJourney.Client;
 using NeuralJourney.Core.Interfaces.Engines;
 using NeuralJourney.Core.Interfaces.Handlers;
 using NeuralJourney.Core.Interfaces.Services;
@@ -11,78 +12,87 @@ using NeuralJourney.Infrastructure.Handlers;
 using NeuralJourney.Infrastructure.Services;
 using Serilog;
 using Serilog.Events;
+using Serilog.Exceptions.Core;
+using Serilog.Exceptions;
 using System.Net.Sockets;
+using Serilog.Templates.Themes;
+using Serilog.Templates;
+using Serilog.Exceptions.Filters;
 
-namespace NeuralJourney.Client
+using var host = CreateHostBuilder(args).Build();
+using var scope = host.Services.CreateScope();
+using var cts = new CancellationTokenSource();
+
+var services = scope.ServiceProvider;
+
+var engine = services.GetRequiredService<IEngine>();
+
+try
 {
-    class Program
+    Console.CancelKeyPress += delegate (object? sender, ConsoleCancelEventArgs e)
     {
-        static async Task Main(string[] args)
+        e.Cancel = true;
+        engine.Stop();
+        cts.Cancel();
+    };
+
+    await engine.Run(cts.Token);
+}
+catch (OperationCanceledException ex)
+{
+    // Do nothing on intended cancel
+}
+catch (Exception ex)
+{
+    cts.Cancel();
+    services.GetRequiredService<ILogger>().Error(ex, ex.Message);
+}
+finally
+{
+    cts.Dispose();
+
+    services.GetRequiredService<ILogger>().Information("Quitting the game");
+    await Task.Delay(3000); // Let the message hang for 3 seconds before closing the window.
+}
+
+// Configure Application
+static IHostBuilder CreateHostBuilder(string[] strings)
+{
+    return Host.CreateDefaultBuilder()
+        .ConfigureAppConfiguration((hostingContext, config) =>
         {
-            using var host = CreateHostBuilder(args).Build();
-            using var scope = host.Services.CreateScope();
-            using var cts = new CancellationTokenSource();
-
-            var services = scope.ServiceProvider;
-
-            var engine = services.GetRequiredService<IEngine>();
-
-            try
-            {
-                Console.CancelKeyPress += delegate (object? sender, ConsoleCancelEventArgs e)
-                {
-                    e.Cancel = true;
-                    engine.Stop();
-                    cts.Cancel();
-                };
-
-                await engine.Run(cts.Token);
-            }
-            catch (OperationCanceledException ex)
-            {
-                // Do nothing on intended cancel
-            }
-            catch (Exception ex)
-            {
-                cts.Cancel();
-                services.GetRequiredService<ILogger>().Error(ex, ex.Message);
-            }
-            finally
-            {
-                cts.Dispose();
-
-                services.GetRequiredService<ILogger>().Information("Quitting the game");
-                await Task.Delay(3000); // Let the message hang for 3 seconds before closing the window.
-            }
-        }
-
-        // Configure Application
-        static IHostBuilder CreateHostBuilder(string[] strings)
+            config.AddJsonFile("appsettings.json", false);
+        })
+        .UseSerilog((hostingContext, loggerConfiguration) =>
         {
-            return Host.CreateDefaultBuilder()
-                .ConfigureAppConfiguration((hostingContext, config) =>
-                {
-                    config.AddJsonFile("appsettings.json", false);
-                })
-                .UseSerilog((hostingContext, loggerConfiguration) =>
-                {
-                    loggerConfiguration
-                                .WriteTo.Sink<ClientConsoleSink>(restrictedToMinimumLevel: LogEventLevel.Information)
-                                .WriteTo.File(path: "../../../../Logs/client-.txt", restrictedToMinimumLevel: LogEventLevel.Error, outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {Message:lj}{NewLine}{Exception}", rollingInterval: RollingInterval.Day);
-                })
-                .ConfigureServices((_, services) =>
-                {
-                    services.AddSingleton<IEngine, ClientEngine>();
+            var options = hostingContext.Configuration.GetRequiredSection("Client:Serilog").Get<SerilogOptions>()
+                ?? throw new InvalidOperationException("Serilog configuration is missing");
 
-                    services.AddTransient<IMessageService, MessageService>();
+            var logFilePath = options.LogFilePath ?? "Logs/";
 
-                    services.AddTransient<IInputHandler<TextReader>, ConsoleInputHandler>();
-                    services.AddTransient<IInputHandler<NetworkStream>, NetworkInputHandler>();
+            var fileTemplate = new ExpressionTemplate(options.FileOutputTemplate ?? "{@m} {x}");
 
-                    services.AddOptions<ClientOptions>().BindConfiguration("Client");
-                    services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<ClientOptions>>().Value);
-                });
-        }
+            var messageLogEventCondition = new Func<LogEvent, bool>(e => e.Level != LogEventLevel.Error && e.Level != LogEventLevel.Fatal);
+            var errorLogEventCondition = new Func<LogEvent, bool>(e => !messageLogEventCondition(e));
 
-    }
+            loggerConfiguration
+                .Enrich.WithExceptionDetails(new DestructuringOptionsBuilder().WithDefaultDestructurers().WithFilter(new IgnorePropertyByNameExceptionFilter("HResult", "StackTrace")))
+                .WriteTo.File(path: logFilePath, formatter: fileTemplate, rollingInterval: RollingInterval.Day)
+                .WriteTo.Conditional(logEvent => logEvent.Level == LogEventLevel.Information,
+                    sink => sink.Sink<ClientConsoleSink>()
+                );
+
+        })
+        .ConfigureServices((_, services) =>
+        {
+            services.AddSingleton<IEngine, ClientEngine>();
+
+            services.AddTransient<IMessageService, MessageService>();
+
+            services.AddTransient<IInputHandler<TextReader>, ConsoleInputHandler>();
+            services.AddTransient<IInputHandler<NetworkStream>, NetworkInputHandler>();
+
+            services.AddOptions<ClientOptions>().BindConfiguration("Client:Network");
+            services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<ClientOptions>>().Value);
+        });
 }

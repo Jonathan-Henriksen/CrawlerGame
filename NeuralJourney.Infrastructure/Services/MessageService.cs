@@ -30,6 +30,14 @@ namespace NeuralJourney.Infrastructure.Services
                 await stream.WriteAsync(lengthBytes, cancellationToken);
                 await stream.WriteAsync(messageBytes, cancellationToken);
             }
+            catch (OperationCanceledException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error occured while sending message: {Meesage}", message);
+            }
             finally
             {
                 semaphore.Release();

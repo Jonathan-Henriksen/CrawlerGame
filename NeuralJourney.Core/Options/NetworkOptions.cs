@@ -1,6 +1,6 @@
 ﻿namespace NeuralJourney.Core.Options
 {
-    public sealed class ServerOptions
+    public sealed class NetworkOptions
     {
         public int Port { get; set; }
     }

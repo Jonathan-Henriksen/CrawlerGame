@@ -47,6 +47,10 @@ namespace NeuralJourney.Infrastructure.Handlers
 
                     OnInputReceived?.Invoke(input, stream);
                 }
+                catch (OperationCanceledException)
+                {
+                    return; // Return back to caller who initialized cancellation
+                }
                 catch (IOException ex)
                 {
                     if (ex.InnerException is SocketException socketEx && socketEx.SocketErrorCode == SocketError.ConnectionReset)

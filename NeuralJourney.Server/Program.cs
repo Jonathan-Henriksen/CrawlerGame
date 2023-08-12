@@ -18,6 +18,11 @@ using NeuralJourney.Infrastructure.Services;
 using Serilog;
 using Serilog.Events;
 using Serilog.Exceptions;
+using Serilog.Exceptions.Core;
+using Serilog.Exceptions.Filters;
+using Serilog.Sinks.SystemConsole.Themes;
+using Serilog.Templates;
+using Serilog.Templates.Themes;
 
 using var host = CreateHostBuilder(args).Build();
 using var scope = host.Services.CreateScope();
@@ -60,10 +65,21 @@ static IHostBuilder CreateHostBuilder(string[] strings)
         })
         .UseSerilog((hostingContext, loggerConfiguration) =>
         {
+            var options = hostingContext.Configuration.GetRequiredSection("Server:Serilog").Get<SerilogOptions>()
+                ?? throw new InvalidOperationException("Serilog configuration is missing");
+
+            var logFilePath = options.LogFilePath ?? "Logs/";
+
+            var consoleTemplate = new ExpressionTemplate(options.ConsoleOutputTemplate ?? "{@m}", theme: TemplateTheme.Code);
+            var fileTemplate = new ExpressionTemplate(options.FileOutputTemplate ?? "{@m} {x}");
+
+            var nonErrorLogEventCondition = new Func<LogEvent, bool>(e => e.Level != LogEventLevel.Error && e.Level != LogEventLevel.Fatal);
+            var errorLogEventCondition = new Func<LogEvent, bool>(e => !nonErrorLogEventCondition(e));
+
             loggerConfiguration
-                        .Enrich.WithExceptionDetails()
-                        .WriteTo.Console(restrictedToMinimumLevel: LogEventLevel.Information, outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {Message:lj}{NewLine}")
-                        .WriteTo.File(path: "../../../../Logs/server-.txt", restrictedToMinimumLevel: LogEventLevel.Error, outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {Message:lj}{NewLine}{Exception}", rollingInterval: RollingInterval.Day);
+                    .Enrich.WithExceptionDetails(new DestructuringOptionsBuilder().WithDefaultDestructurers().WithFilter(new IgnorePropertyByNameExceptionFilter("HResult", "StackTrace")))
+                    .WriteTo.File(path: logFilePath, formatter: fileTemplate, rollingInterval: RollingInterval.Day)
+                    .WriteTo.Console(formatter: consoleTemplate);
         })
         .ConfigureServices((_, services) =>
         {
@@ -93,14 +109,17 @@ static IHostBuilder CreateHostBuilder(string[] strings)
             RegisterCommandMiddleware(services);
 
             // Configure Options
-            services.AddOptions<GameOptions>().BindConfiguration("Game");
+            var serverConfig = _.Configuration.GetRequiredSection("Server");
+
+            services.Configure<GameOptions>(serverConfig.GetSection("Game"))
+                    .Configure<OpenAIOptions>(serverConfig.GetSection("OpenAI"))
+                    .Configure<SerilogOptions>(serverConfig.GetSection("Serilog"))
+                    .Configure<NetworkOptions>(serverConfig.GetSection("Network"));
+
             services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<GameOptions>>().Value);
-
-            services.AddOptions<OpenAIOptions>().BindConfiguration("OpenAI");
             services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<OpenAIOptions>>().Value);
-
-            services.AddOptions<ServerOptions>().BindConfiguration("Server");
-            services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<ServerOptions>>().Value);
+            services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<SerilogOptions>>().Value);
+            services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<NetworkOptions>>().Value);
         });
 }
 
