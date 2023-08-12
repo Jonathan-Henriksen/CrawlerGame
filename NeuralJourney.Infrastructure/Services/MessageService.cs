@@ -1,4 +1,5 @@
 ﻿using NeuralJourney.Core.Interfaces.Services;
+using Serilog;
 using System.Text;
 
 namespace NeuralJourney.Infrastructure.Services
@@ -7,8 +8,14 @@ namespace NeuralJourney.Infrastructure.Services
     {
         private readonly Dictionary<Stream, SemaphoreSlim> _streamSemaphores = new();
         private readonly Encoding _encoding = Encoding.UTF8;
+        private readonly ILogger _logger;
 
         public const string CloseConnectionMessage = "__CLOSE_CONNECTION__";
+
+        public MessageService(ILogger logger)
+        {
+            _logger = logger;
+        }
 
         public async Task SendMessageAsync(Stream stream, string message, CancellationToken cancellationToken = default)
         {
@@ -43,6 +50,8 @@ namespace NeuralJourney.Infrastructure.Services
 
         public async Task SendCloseConnectionAsync(Stream stream, CancellationToken cancellationToken = default)
         {
+            _logger.Debug("Sending 'Close Connection' message");
+
             await SendMessageAsync(stream, CloseConnectionMessage, cancellationToken);
         }
 

@@ -16,6 +16,8 @@ using NeuralJourney.Infrastructure.Engines;
 using NeuralJourney.Infrastructure.Handlers;
 using NeuralJourney.Infrastructure.Services;
 using Serilog;
+using Serilog.Events;
+using Serilog.Exceptions;
 
 using var host = CreateHostBuilder(args).Build();
 using var scope = host.Services.CreateScope();
@@ -23,11 +25,21 @@ using var cts = new CancellationTokenSource();
 
 var services = scope.ServiceProvider;
 
+var engine = services.GetRequiredService<IEngine>();
+
 try
 {
-    using var engine = services.GetRequiredService<IEngine>();
+    Console.CancelKeyPress += (sender, eventArgs) =>
+    {
+        eventArgs.Cancel = true;
+        cts.Cancel();
+    };
 
     await engine.Run(cts.Token);
+}
+catch (OperationCanceledException ex)
+{
+    services.GetRequiredService<ILogger>().Error(ex, ex.Message);
 }
 catch (Exception ex)
 {
@@ -48,23 +60,29 @@ static IHostBuilder CreateHostBuilder(string[] strings)
         })
         .UseSerilog((hostingContext, loggerConfiguration) =>
         {
-            loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration);
+            loggerConfiguration
+                        .Enrich.WithExceptionDetails()
+                        .WriteTo.Console(restrictedToMinimumLevel: LogEventLevel.Information, outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {Message:lj}{NewLine}")
+                        .WriteTo.File(path: "../../../../Logs/server-.txt", restrictedToMinimumLevel: LogEventLevel.Error, outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {Message:lj}{NewLine}{Exception}", rollingInterval: RollingInterval.Day);
         })
         .ConfigureServices((_, services) =>
         {
-            services.AddTransient<IClockService, ClockService>();
-
+            // Register Handlers
             services.AddTransient<IInputHandler<TextReader>, ConsoleInputHandler>();
             services.AddTransient<IInputHandler<Player>, PlayerInputHandler>();
 
-            services.AddTransient<IMessageService, MessageService>();
-
             services.AddSingleton<IConnectionHandler, NetworkConnectionHandler>();
-            services.AddSingleton<IEngine, ServerEngine>();
-            services.AddSingleton<IOpenAIService, OpenAIService>();
+
             services.AddSingleton<IPlayerHandler, PlayerHandler>();
 
-            // Register Command Middleware
+            // Register Services
+            services.AddSingleton<IClockService, ClockService>();
+            services.AddTransient<IMessageService, MessageService>();
+            services.AddSingleton<IOpenAIService, OpenAIService>();
+
+            services.AddSingleton<IEngine, ServerEngine>();
+
+            // Register Command Execution
             services.AddSingleton<ICommandFactory, CommandFactory>();
 
             services.AddTransient<ICommandDispatcher, CommandDispatcher>();

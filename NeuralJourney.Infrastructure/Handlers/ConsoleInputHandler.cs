@@ -1,60 +1,60 @@
 ﻿using NeuralJourney.Core.Interfaces.Handlers;
+using NeuralJourney.Core.Interfaces.Services;
 using Serilog;
 
 namespace NeuralJourney.Infrastructure.Handlers
 {
     public class ConsoleInputHandler : IInputHandler<TextReader>
     {
+        private readonly IMessageService _messageService;
         private readonly ILogger _logger;
 
-        private CancellationTokenSource _tokenSource;
 
-        public ConsoleInputHandler(ILogger logger)
+        public ConsoleInputHandler(IMessageService messageService, ILogger logger)
         {
+            _messageService = messageService;
             _logger = logger;
-            _tokenSource = new CancellationTokenSource();
         }
 
         public event Action<string, TextReader>? OnInputReceived;
         public event Action<TextReader>? OnClosedConnection;
 
-        public async Task HandleInputAsync(TextReader reader, CancellationToken cancellationToken = default)
+        public async Task HandleInputAsync(TextReader reader, CancellationToken cancellationToken)
         {
-            if (cancellationToken != default)
-                _tokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-
-            var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-
-            try
+            Task<string?>? readTask = null;
+            while (!cancellationToken.IsCancellationRequested)
             {
-                while (!cts.IsCancellationRequested)
+                try
                 {
-                    var input = await reader.ReadLineAsync(cts.Token);
+                    readTask ??= Task.Run(() => Console.ReadLine());
+
+                    await Task.WhenAny(readTask, Task.Delay(-1, cancellationToken));
+
+                    cancellationToken.ThrowIfCancellationRequested();
+
+                    var input = await readTask;
+                    readTask = null;
+
+                    if (_messageService.IsCloseConnectionMessage(input ?? string.Empty))
+                    {
+                        OnClosedConnection?.Invoke(reader);
+                        return;
+                    }
 
                     if (string.IsNullOrEmpty(input))
                         continue;
 
                     OnInputReceived?.Invoke(input, reader);
                 }
+                catch (OperationCanceledException)
+                {
+                    // Ignore for now
+                }
+                catch (Exception ex)
+                {
+                    _logger.Error(ex, ex.Message);
+                }
             }
-            catch (IOException ex)
-            {
-                _logger.Error("Encountered an error reading console input stream: {ErrorMessage}", ex.Message);
-                OnClosedConnection?.Invoke(reader);
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex, "Unexpected error in ConsoleInputHandler: {ErrorMessage}", ex.Message);
-            }
-        }
-
-
-        public void Dispose()
-        {
-            _logger.Debug("Disposing of {Type}", GetType().Name);
-
-            _tokenSource.Cancel();
-            _tokenSource.Dispose();
         }
     }
 }

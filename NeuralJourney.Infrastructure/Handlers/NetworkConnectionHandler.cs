@@ -10,7 +10,7 @@ namespace NeuralJourney.Infrastructure.Handlers
     public class NetworkConnectionHandler : IConnectionHandler
     {
         private const int MaxRetryAttempts = 5;
-        private CancellationTokenSource _cts;
+
         private readonly TcpListener _tcpListener;
         private readonly ILogger _logger;
 
@@ -18,26 +18,23 @@ namespace NeuralJourney.Infrastructure.Handlers
 
         public NetworkConnectionHandler(ServerOptions serverOptions, ILogger logger)
         {
-            _cts = new CancellationTokenSource();
             _tcpListener = new TcpListener(IPAddress.Any, serverOptions.Port);
             _logger = logger;
         }
 
-        public async Task HandleConnectionsAsync(CancellationToken cancellationToken = default)
+        public async Task HandleConnectionsAsync(CancellationToken cancellationToken)
         {
             _tcpListener.Start();
-
-            _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
             var retryCount = 0;
 
             _logger.Information(InfoMessageTemplates.ServerStarted);
 
-            while (!_cts.Token.IsCancellationRequested)
+            while (!cancellationToken.IsCancellationRequested)
             {
                 try
                 {
-                    var client = await _tcpListener.AcceptTcpClientAsync(_cts.Token);
+                    var client = await _tcpListener.AcceptTcpClientAsync(cancellationToken);
 
                     if (client is null)
                         continue;
@@ -47,40 +44,46 @@ namespace NeuralJourney.Infrastructure.Handlers
 
                     retryCount = 0; // Reset retry count on successful connection
                 }
-                catch (OperationCanceledException)
+                catch (SocketException socketException) when (socketException.SocketErrorCode == SocketError.OperationAborted)
                 {
-                    // Expected exception when cancellation is requested, no need to log.
-                    break;
-                }
-                catch (Exception ex)
-                {
+                    _logger.Warning(socketException, "A client disconnected unexpectedly. Reason: {Message}", socketException.Message);
                     retryCount++;
 
-                    _logger.Warning(ex, "Error encountered while listening for clients. Attempt {RetryCount}/{MaxAttempts}.\nError: {ErrorMessage}", retryCount, MaxRetryAttempts, ex.Message);
-
-                    if (retryCount > MaxRetryAttempts)
+                    continue; // Recover when a single client disconnects unexpectedly
+                }
+                catch (SocketException ex)
+                {
+                    if (retryCount++ > MaxRetryAttempts)
                     {
-
-                        _logger.Error("Max retry attempts reached. Shutting down the server.");
+                        _logger.Error(ErrorMessageTemplates.Network.RetryLimitReached, MaxRetryAttempts);
                         break;
                     }
 
+                    _logger.Warning(ex, "Network Error: {ServiceName} encountered a connection issue. Retrying {RetryAttemptCount}/{RetryAttemptLimit}", nameof(NetworkConnectionHandler), retryCount, MaxRetryAttempts);
+
                     await Task.Delay(3000, cancellationToken); // Wait for 3 seconds before retrying
+
+                    continue;
+                }
+                catch (OperationCanceledException ex)
+                {
+
+                }
+                catch
+                {
+                    throw;
                 }
             }
         }
 
         public void Dispose()
         {
-            _logger.Debug("Disposing of {Type}", GetType().Name);
-
-            _cts.Cancel();
-            _cts.Dispose();
-
             _tcpListener.Stop();
             _tcpListener.Server.Dispose();
 
             _logger.Information(InfoMessageTemplates.ServerStopped);
+
+            _logger.Debug(DebugMessageTemplates.DispoedOfType, GetType().Name);
         }
     }
 }

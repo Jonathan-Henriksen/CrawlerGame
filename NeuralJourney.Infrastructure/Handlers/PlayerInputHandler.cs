@@ -7,14 +7,12 @@ using System.Net.Sockets;
 
 namespace NeuralJourney.Infrastructure.Handlers
 {
-    public class PlayerInputHandler : IInputHandler<Player>, IDisposable
+    public class PlayerInputHandler : IInputHandler<Player>
     {
         private const int MaxReconnectionAttempts = 3;
 
         private readonly IMessageService _messageService;
         private readonly ILogger _logger;
-
-        private readonly Dictionary<Player, CancellationTokenSource> _playerTokens = new();
 
         public event Action<string, Player>? OnInputReceived;
         public event Action<Player>? OnClosedConnection;
@@ -25,20 +23,17 @@ namespace NeuralJourney.Infrastructure.Handlers
             _logger = logger;
         }
 
-        public async Task HandleInputAsync(Player player, CancellationToken cancellationToken = default)
+        public async Task HandleInputAsync(Player player, CancellationToken cancellationToken)
         {
             var stream = player.GetStream();
 
-            var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            _playerTokens[player] = cts;
-
             var reconnectionAttempts = 0;
 
-            while (!cts.IsCancellationRequested)
+            while (!cancellationToken.IsCancellationRequested)
             {
                 try
                 {
-                    var input = await _messageService.ReadMessageAsync(stream, cts.Token);
+                    var input = await _messageService.ReadMessageAsync(stream, cancellationToken);
 
                     if (_messageService.IsCloseConnectionMessage(input))
                     {
@@ -70,25 +65,17 @@ namespace NeuralJourney.Infrastructure.Handlers
                         return;
                     }
 
-                    await Task.Delay(3000, cts.Token);
+                    await Task.Delay(3000, cancellationToken);
+                }
+                catch (OperationCanceledException)
+                {
+                    throw; // Thorw back to player handler
                 }
                 catch (Exception ex)
                 {
                     _logger.Error(ex, "Unexpected error while reading the stream of ({PlayerName}): {ErrorMessage}", player.Name, ex.Message);
                 }
             }
-        }
-
-
-        public void Dispose()
-        {
-            _logger.Debug("Disposing of {Type}", GetType().Name);
-
-            foreach (var cts in _playerTokens.Values)
-            {
-                cts.Dispose();
-            }
-            _playerTokens.Clear();
         }
     }
 }

@@ -12,13 +12,13 @@ namespace NeuralJourney.Client
 
             Console.Write("> ");
             WriteColoredMessage(message, ConsoleColor.Blue);
-            Console.Write("\n> ");
+            Console.Write("> ");
         }
 
         private void WriteColoredMessage(string message, ConsoleColor color)
         {
             Console.ForegroundColor = color;
-            Console.WriteLine($"{message}");
+            Console.WriteLine($"{message}\n");
             Console.ResetColor();
         }
     }

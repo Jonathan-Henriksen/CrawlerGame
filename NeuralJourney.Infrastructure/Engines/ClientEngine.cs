@@ -20,7 +20,7 @@ namespace NeuralJourney.Infrastructure.Engines
         private readonly string _serverIp;
         private readonly int _serverPort;
 
-        private CancellationTokenSource _cts;
+        private CancellationTokenSource _tokenSource;
 
         public ClientEngine(IInputHandler<TextReader> consoleInputHandler, IInputHandler<NetworkStream> networkInputHandler, IMessageService messageService, ILogger logger, ClientOptions options)
         {
@@ -30,24 +30,26 @@ namespace NeuralJourney.Infrastructure.Engines
             _messageService = messageService;
             _logger = logger;
 
-            _cts = new CancellationTokenSource();
+            _tokenSource = new CancellationTokenSource();
             _client = new TcpClient();
 
             _serverIp = options.ServerIp;
             _serverPort = options.ServerPort;
 
             _networkInputHandler.OnInputReceived += HandleNetworkInputReceived;
+            _networkInputHandler.OnClosedConnection += HandleClosedConnection;
+
             _consoleInputHandler.OnInputReceived += HandleConsoleInputReceived;
         }
 
         public async Task Run(CancellationToken cancellationToken = default)
         {
             if (cancellationToken != default)
-                _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+                _tokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
             _logger.Information(ClientMessageTemplates.ConnectionInitialize);
 
-            var timeoutCts = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token);
+            var timeoutCts = CancellationTokenSource.CreateLinkedTokenSource(_tokenSource.Token);
             timeoutCts.CancelAfter(TimeSpan.FromSeconds(10));
 
             try
@@ -58,13 +60,16 @@ namespace NeuralJourney.Infrastructure.Engines
             catch (OperationCanceledException) when (timeoutCts.IsCancellationRequested)
             {
                 _logger.Information(ClientMessageTemplates.ConnectionFailed);
-                throw;
+                throw; // Throw back to main
+            }
+            catch (OperationCanceledException)
+            {
+                throw; // Throw back to main
             }
             catch (SocketException socketException)
             {
                 _logger.Error(socketException, socketException.Message);
                 _logger.Information(ClientMessageTemplates.ConnectionFailed);
-                throw;
             }
 
             await StartInputHandlersAsync();
@@ -75,48 +80,58 @@ namespace NeuralJourney.Infrastructure.Engines
             if (!_client.Connected)
                 return;
 
-            await _messageService.SendCloseConnectionAsync(_client.GetStream(), _cts.Token);
+            await _messageService.SendCloseConnectionAsync(_client.GetStream(), _tokenSource.Token);
+
+            _tokenSource.Cancel();
+
             _client.Close();
         }
 
         private async Task StartInputHandlersAsync()
         {
-            var networkInputTask = _networkInputHandler.HandleInputAsync(_client.GetStream(), _cts.Token);
-            var consoleInputTask = _consoleInputHandler.HandleInputAsync(Console.In, _cts.Token);
+            var networkInputTask = _networkInputHandler.HandleInputAsync(_client.GetStream(), _tokenSource.Token);
+            var consoleInputTask = _consoleInputHandler.HandleInputAsync(Console.In, _tokenSource.Token);
 
             try
             {
-                await Task.WhenAll(consoleInputTask, networkInputTask);
+                await Task.WhenAny(consoleInputTask, networkInputTask);
             }
             catch (OperationCanceledException)
             {
-                _logger.Information(ClientMessageTemplates.ConnectionFailed);
-                throw;
+                throw; // Throw back to main
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "An unexpected error occured. Message: {ErrorMessage}", ex.Message);
             }
         }
 
-        private async void HandleConsoleInputReceived(string input, TextReader console) => await _messageService.SendMessageAsync(_client.GetStream(), input, _cts.Token);
+        private async void HandleConsoleInputReceived(string input, TextReader reader) => await _messageService.SendMessageAsync(_client.GetStream(), input, _tokenSource.Token);
 
         private void HandleNetworkInputReceived(string message, NetworkStream sender) => _logger.Information(message);
 
-        public void Dispose()
+        private void HandleClosedConnection(NetworkStream sender)
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            _logger.Information("The server closed the connection");
+            _tokenSource.Cancel();
         }
 
-        protected virtual void Dispose(bool disposing)
+        public void Dispose()
         {
-            if (disposing)
-            {
-                _networkInputHandler.OnInputReceived -= HandleNetworkInputReceived;
-                _consoleInputHandler.OnInputReceived -= HandleConsoleInputReceived;
+            _networkInputHandler.OnInputReceived -= HandleNetworkInputReceived;
+            _networkInputHandler.OnClosedConnection -= HandleClosedConnection;
 
-                _cts.Cancel();
-                _cts.Dispose();
+            _consoleInputHandler.OnInputReceived -= HandleConsoleInputReceived;
 
-                _client.Dispose();
-            }
+            if (!_tokenSource.IsCancellationRequested)
+                _tokenSource.Cancel();
+
+            _tokenSource.Dispose();
+
+            _client.Close();
+            _client.Dispose();
+
+            _logger.Debug(DebugMessageTemplates.DispoedOfType, GetType().Name);
         }
     }
 }

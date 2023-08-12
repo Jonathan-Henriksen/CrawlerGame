@@ -12,8 +12,6 @@ namespace NeuralJourney.Infrastructure.Handlers
         private readonly IMessageService _messageService;
         private readonly ILogger _logger;
 
-        private CancellationTokenSource _tokenSource;
-
         public event Action<string, NetworkStream>? OnInputReceived;
         public event Action<NetworkStream>? OnClosedConnection;
 
@@ -21,25 +19,20 @@ namespace NeuralJourney.Infrastructure.Handlers
         {
             _messageService = messageService;
             _logger = logger;
-
-            _tokenSource = new CancellationTokenSource();
         }
 
-        public async Task HandleInputAsync(NetworkStream stream, CancellationToken cancellationToken = default)
+        public async Task HandleInputAsync(NetworkStream stream, CancellationToken cancellationToken)
         {
             if (!stream.CanRead)
                 throw new InvalidOperationException("Failed to handle stream input. Reason: Could not read from stream");
 
-            if (cancellationToken != default)
-                _tokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-
             var reconnectionAttempts = 0;
 
-            while (!_tokenSource.IsCancellationRequested)
+            while (!cancellationToken.IsCancellationRequested)
             {
                 try
                 {
-                    var input = await _messageService.ReadMessageAsync(stream, _tokenSource.Token);
+                    var input = await _messageService.ReadMessageAsync(stream, cancellationToken);
 
                     if (_messageService.IsCloseConnectionMessage(input))
                     {
@@ -47,7 +40,7 @@ namespace NeuralJourney.Infrastructure.Handlers
                         return;
                     }
 
-                    _tokenSource.Token.ThrowIfCancellationRequested();
+                    cancellationToken.ThrowIfCancellationRequested();
 
                     if (string.IsNullOrEmpty(input))
                         continue;
@@ -58,7 +51,8 @@ namespace NeuralJourney.Infrastructure.Handlers
                 {
                     if (ex.InnerException is SocketException socketEx && socketEx.SocketErrorCode == SocketError.ConnectionReset)
                     {
-                        _logger.Warning("An existing connection was forcibly closed by the remote host: {Host}", stream.Socket.RemoteEndPoint);
+                        _logger.Debug("An existing connection was forcibly closed by the remote host: {Host}", stream.Socket.RemoteEndPoint);
+                        _logger.Information("The server closed the connection");
                         return;
                     }
 
@@ -71,21 +65,15 @@ namespace NeuralJourney.Infrastructure.Handlers
                         return;
                     }
 
-                    await Task.Delay(3000, _tokenSource.Token);
+                    await Task.Delay(3000, cancellationToken);
                 }
                 catch (Exception ex)
                 {
                     _logger.Error(ex, ex.Message);
                     if (stream.CanWrite)
-                        await _messageService.SendCloseConnectionAsync(stream, _tokenSource.Token);
+                        await _messageService.SendCloseConnectionAsync(stream, cancellationToken);
                 }
             }
-        }
-
-        public void Dispose()
-        {
-            _tokenSource.Cancel();
-            _tokenSource.Dispose();
         }
     }
 }

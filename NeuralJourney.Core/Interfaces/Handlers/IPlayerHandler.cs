@@ -2,7 +2,7 @@
 
 namespace NeuralJourney.Core.Interfaces.Handlers
 {
-    public interface IPlayerHandler
+    public interface IPlayerHandler : IDisposable
     {
         void AddPlayer(TcpClient playerClient, CancellationToken cancellation = default);
     }
