@@ -14,7 +14,7 @@ namespace NeuralJourney.Infrastructure.Engines
         private readonly IConnectionHandler _connectionHandler;
         private readonly IPlayerHandler _playerHandler;
 
-        private CancellationTokenSource _tokenSource;
+        private CancellationToken _token;
 
         public ServerEngine(IClockService clockService, ILogger logger, IConnectionHandler connectionHandler, IPlayerHandler playerHandler)
         {
@@ -23,15 +23,13 @@ namespace NeuralJourney.Infrastructure.Engines
             _connectionHandler = connectionHandler;
             _playerHandler = playerHandler;
 
-            _tokenSource = new CancellationTokenSource();
-
             _connectionHandler.OnConnected += AcceptConnections;
         }
 
         public async Task Run(CancellationToken cancellationToken = default)
         {
-            if (cancellationToken != default)
-                _tokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+
+            _token = cancellationToken;
 
             _clock.Start();
 
@@ -39,38 +37,35 @@ namespace NeuralJourney.Infrastructure.Engines
 
             try
             {
-                await _connectionHandler.HandleConnectionsAsync(_tokenSource.Token);
+                await _connectionHandler.HandleConnectionsAsync(_token);
+            }
+            catch (OperationCanceledException)
+            {
+                await Stop();
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Unexpected error occcured in {Type}", GetType().Name);
+                _logger.Error(ex, "Unexpected error in {Type}", GetType().Name);
             }
         }
 
         public Task Stop()
         {
-            return Task.Run(() =>
-            {
-                _clock.Reset();
+            _logger.Information(InfoMessageTemplates.GameStopped);
+            _clock.Reset();
 
-                _logger.Information(InfoMessageTemplates.GameStopped);
-            });
+            return Task.CompletedTask;
         }
 
         private void AcceptConnections(TcpClient client)
         {
-            _playerHandler.AddPlayer(client, _tokenSource.Token);
+            _playerHandler.AddPlayer(client, _token);
         }
 
         public void Dispose()
         {
-            if (!_tokenSource.IsCancellationRequested)
-                _tokenSource.Cancel();
-
             _connectionHandler.Dispose();
             _playerHandler.Dispose();
-
-            _tokenSource.Dispose();
 
             _logger.Debug(DebugMessageTemplates.DispoedOfType, GetType().Name);
         }

@@ -15,7 +15,6 @@ using Serilog.Events;
 using Serilog.Exceptions.Core;
 using Serilog.Exceptions;
 using System.Net.Sockets;
-using Serilog.Templates.Themes;
 using Serilog.Templates;
 using Serilog.Exceptions.Filters;
 
@@ -40,7 +39,7 @@ try
 }
 catch (OperationCanceledException ex)
 {
-    // Do nothing on intended cancel
+    // Do nothing on expected cancellation. Engine is handling shutdown itself.
 }
 catch (Exception ex)
 {
@@ -68,21 +67,19 @@ static IHostBuilder CreateHostBuilder(string[] strings)
             var options = hostingContext.Configuration.GetRequiredSection("Client:Serilog").Get<SerilogOptions>()
                 ?? throw new InvalidOperationException("Serilog configuration is missing");
 
+            var logLevel = Enum.TryParse(options.LogLevel, out LogEventLevel level) ? level : LogEventLevel.Information;
             var logFilePath = options.LogFilePath ?? "Logs/";
 
             var fileTemplate = new ExpressionTemplate(options.FileOutputTemplate ?? "{@m} {x}");
 
-            var messageLogEventCondition = new Func<LogEvent, bool>(e => e.Level != LogEventLevel.Error && e.Level != LogEventLevel.Fatal);
-            var errorLogEventCondition = new Func<LogEvent, bool>(e => !messageLogEventCondition(e));
-
             loggerConfiguration
+                .MinimumLevel.Is(logLevel)
                 .Enrich.WithExceptionDetails(new DestructuringOptionsBuilder().WithDefaultDestructurers().WithFilter(new IgnorePropertyByNameExceptionFilter("HResult", "StackTrace")))
-                .WriteTo.File(path: logFilePath, formatter: fileTemplate, rollingInterval: RollingInterval.Day)
+                .WriteTo.File(path: logFilePath, formatter: fileTemplate, rollingInterval: RollingInterval.Day, restrictedToMinimumLevel: logLevel)
                 .WriteTo.Conditional(logEvent => logEvent.Level == LogEventLevel.Information,
                     sink => sink.Sink<ClientConsoleSink>()
-                );
-
-        })
+            );
+        }, preserveStaticLogger: true)
         .ConfigureServices((_, services) =>
         {
             services.AddSingleton<IEngine, ClientEngine>();

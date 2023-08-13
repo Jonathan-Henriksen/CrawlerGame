@@ -58,6 +58,9 @@ namespace NeuralJourney.Infrastructure.Services
 
         public async Task SendCloseConnectionAsync(Stream stream, CancellationToken cancellationToken = default)
         {
+            if (!stream.CanWrite)
+                return;
+            
             _logger.Debug("Sending 'Close Connection' message");
 
             await SendMessageAsync(stream, CloseConnectionMessage, cancellationToken);

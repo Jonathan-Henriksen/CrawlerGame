@@ -20,7 +20,6 @@ using Serilog.Events;
 using Serilog.Exceptions;
 using Serilog.Exceptions.Core;
 using Serilog.Exceptions.Filters;
-using Serilog.Sinks.SystemConsole.Themes;
 using Serilog.Templates;
 using Serilog.Templates.Themes;
 
@@ -54,6 +53,9 @@ catch (Exception ex)
 finally
 {
     cts.Dispose();
+
+    services.GetRequiredService<ILogger>().Information("The server is shutting down");
+    await Task.Delay(2000); // Let the message hang for 2 seconds before closing the window
 }
 
 static IHostBuilder CreateHostBuilder(string[] strings)
@@ -68,6 +70,7 @@ static IHostBuilder CreateHostBuilder(string[] strings)
             var options = hostingContext.Configuration.GetRequiredSection("Server:Serilog").Get<SerilogOptions>()
                 ?? throw new InvalidOperationException("Serilog configuration is missing");
 
+            var logLevel = Enum.TryParse(options.LogLevel, out LogEventLevel level) ? level : LogEventLevel.Information;
             var logFilePath = options.LogFilePath ?? "Logs/";
 
             var consoleTemplate = new ExpressionTemplate(options.ConsoleOutputTemplate ?? "{@m}", theme: TemplateTheme.Code);
@@ -77,8 +80,9 @@ static IHostBuilder CreateHostBuilder(string[] strings)
             var errorLogEventCondition = new Func<LogEvent, bool>(e => !nonErrorLogEventCondition(e));
 
             loggerConfiguration
+                    .MinimumLevel.Is(logLevel)
                     .Enrich.WithExceptionDetails(new DestructuringOptionsBuilder().WithDefaultDestructurers().WithFilter(new IgnorePropertyByNameExceptionFilter("HResult", "StackTrace")))
-                    .WriteTo.File(path: logFilePath, formatter: fileTemplate, rollingInterval: RollingInterval.Day)
+                    .WriteTo.File(path: logFilePath, formatter: fileTemplate, rollingInterval: RollingInterval.Day, restrictedToMinimumLevel: logLevel)
                     .WriteTo.Console(formatter: consoleTemplate);
         })
         .ConfigureServices((_, services) =>
