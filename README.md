@@ -2,7 +2,7 @@
 
 ## Overview
 
-NeuralJourney began as a simple idea: to explore the OpenAI API and see how it could be integrated into a text-based game. What started as a weekend project soon expanded, becoming a canvas where I could experiment, learn, and play. As the lines of code multiplied, so did the layers of complexity, integrating various coding patterns, technologies, and best practices. It wasn't just about building a game anymore; it was about the journey of discovery and the joy of creation.
+The project began as a simple idea: to explore the OpenAI API and see how it could be integrated into a text-based game. What started as a weekend project soon expanded, becoming a canvas where I could experiment, learn, and play. As the lines of code multiplied, so did the layers of complexity, integrating various coding patterns, technologies, and best practices. It wasn't just about building a game anymore; it was about the journey of discovery and the joy of creation.
 
 ## Purpose
 
@@ -16,24 +16,23 @@ Behind the code and mechanics of NeuralJourney lie two fundamental pillars:
 
 ### Technologies:
 
-- [Serilog](./Documentation/Serilog.md) - Advanced logging techniques.
-- [OpenAI Integration](./Documentation/OpenAI.md) - AI-driven interactive gameplay.
-- [Cancellation Tokens](./Documentation/Cancellation_Tokens.md) - Responsive software design.
 - [Async/Await](./Documentation/Asynchronous_Programming.md) - Real-time game responsiveness.
-- [Events](./Documentation/Events.md) - Game component communication.
-- [Middleware Pattern](./Documentation/Middleware_Pattern.md) - Command processing flow.
-- [Exception Handling](./Documentation/Exception_Handling.md) - Smooth gameplay experience.
+- [Cancellation Tokens](./Documentation/Cancellation_Tokens.md) - Responsive software design.
 - [Documentation: XML and Comments](./Documentation/XML_and_In-line_Documentation.md) - Navigating the codebase.
+- [Events](./Documentation/Events.md) - Game component communication.
+- [Exception Handling](./Documentation/Exception_Handling.md) - Smooth gameplay experience.
+- [OpenAI Integration](./Documentation/OpenAI.md) - AI-driven interactive gameplay.
+- [Serilog](./Documentation/Serilog.md) - Advanced logging techniques.
 
 ### Programming Patterns:
 
-- [Factory Pattern](./Documentation/Factory_Pattern.md) - Object creation principles.
 - [Command Pattern](./Documentation/Command_Pattern.md) - Player-command encapsulation.
 - [Dispatcher Pattern](./Documentation/Dispatcher_Pattern.md) - Efficient command handling.
+- [Factory Pattern](./Documentation/Factory_Pattern.md) - Object creation principles.
+- [Middleware Pattern](./Documentation/Middleware_Pattern.md) - Command processing flow.
 - [Options Pattern](./Documentation/Options_Pattern.md) - Game configuration flexibility.
 - [Reflection and Attributes](./Documentation/Reflection_and_Attributes.md) - Dynamic command management.
 - [Solution and Code Structure](./Documentation/Code_Structure.md) - Organizing the Codebase.
-
 
 ---
 
