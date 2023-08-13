@@ -43,6 +43,8 @@ namespace NeuralJourney.Infrastructure.Engines
 
         public async Task Run(CancellationToken cancellationToken = default)
         {
+            _logger.Information(ClientMessageTemplates.StartingGame);
+
             _token = cancellationToken;
 
             _logger.Information(ClientMessageTemplates.ConnectionInitialize);
@@ -67,6 +69,8 @@ namespace NeuralJourney.Infrastructure.Engines
             {
                 _logger.Error(ex, ex.Message);
                 _logger.Information(ClientMessageTemplates.ConnectionFailed, ex.Message);
+                await Stop();
+                return;
             }
 
             await StartInputHandlersAsync();
@@ -74,7 +78,7 @@ namespace NeuralJourney.Infrastructure.Engines
 
         public async Task Stop()
         {
-            _logger.Information("The game was stopped");
+            _logger.Information(ClientMessageTemplates.StoppingGame);
 
             if (!_client.Connected)
                 return;
@@ -95,11 +99,12 @@ namespace NeuralJourney.Infrastructure.Engines
             }
             catch (OperationCanceledException)
             {
-                await Stop();
+                // Just stop via 'finally' clause
             }
             catch (Exception ex)
             {
                 _logger.Error(ex, "An unexpected error occured. Message: {ErrorMessage}", ex.Message);
+                await Stop();
             }
         }
 
@@ -109,7 +114,7 @@ namespace NeuralJourney.Infrastructure.Engines
 
         private void HandleClosedConnection(NetworkStream sender)
         {
-            _logger.Information("The server closed the connection");
+            _logger.Information(ClientMessageTemplates.ConnectionClosed);
             _ = Stop();
         }
 

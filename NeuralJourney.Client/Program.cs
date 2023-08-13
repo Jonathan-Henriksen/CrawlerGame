@@ -17,6 +17,7 @@ using Serilog.Exceptions;
 using System.Net.Sockets;
 using Serilog.Templates;
 using Serilog.Exceptions.Filters;
+using Serilog.Configuration;
 
 using var host = CreateHostBuilder(args).Build();
 using var scope = host.Services.CreateScope();
@@ -24,11 +25,12 @@ using var cts = new CancellationTokenSource();
 
 var services = scope.ServiceProvider;
 
+var logger = services.GetRequiredService<ILogger>();
 var engine = services.GetRequiredService<IEngine>();
 
 try
 {
-    Console.CancelKeyPress += delegate (object? sender, ConsoleCancelEventArgs e)
+    Console.CancelKeyPress += delegate (object? sender, ConsoleCancelEventArgs e) // Gracefully shuut down on request by user
     {
         e.Cancel = true;
         engine.Stop();
@@ -37,21 +39,21 @@ try
 
     await engine.Run(cts.Token);
 }
-catch (OperationCanceledException ex)
+catch (OperationCanceledException)
 {
-    // Do nothing on expected cancellation. Engine is handling shutdown itself.
+    // Do nothing on expected cancellation. Engine is handling shutdown itself
 }
 catch (Exception ex)
 {
     cts.Cancel();
-    services.GetRequiredService<ILogger>().Error(ex, ex.Message);
+    logger.Fatal(ex, ex.Message); // Unexpected error that crashed the application
 }
 finally
 {
     cts.Dispose();
 
-    services.GetRequiredService<ILogger>().Information("Quitting the game");
-    await Task.Delay(3000); // Let the message hang for 3 seconds before closing the window.
+    logger.Information("Shutting down");
+    await Task.Delay(2000); // Let the message hang for 2 seconds before closing the window.
 }
 
 // Configure Application
@@ -79,7 +81,7 @@ static IHostBuilder CreateHostBuilder(string[] strings)
                 .WriteTo.Conditional(logEvent => logEvent.Level == LogEventLevel.Information,
                     sink => sink.Sink<ClientConsoleSink>()
             );
-        }, preserveStaticLogger: true)
+        })
         .ConfigureServices((_, services) =>
         {
             services.AddSingleton<IEngine, ClientEngine>();

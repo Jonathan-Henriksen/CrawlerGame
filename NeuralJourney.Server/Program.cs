@@ -29,7 +29,9 @@ using var cts = new CancellationTokenSource();
 
 var services = scope.ServiceProvider;
 
+var logger = services.GetRequiredService<ILogger>();
 var engine = services.GetRequiredService<IEngine>();
+
 
 try
 {
@@ -41,20 +43,20 @@ try
 
     await engine.Run(cts.Token);
 }
-catch (OperationCanceledException ex)
+catch (OperationCanceledException)
 {
-    services.GetRequiredService<ILogger>().Error(ex, ex.Message);
+    // Intended cancellation. Handling and logging is handled in the engine
 }
 catch (Exception ex)
 {
     cts.Cancel();
-    services.GetRequiredService<ILogger>().Error(ex, ex.Message);
+    logger.Fatal(ex, ex.Message); // Unexpected that crashed the application
 }
 finally
 {
     cts.Dispose();
 
-    services.GetRequiredService<ILogger>().Information("The server is shutting down");
+    logger.Information("Shutting down");
     await Task.Delay(2000); // Let the message hang for 2 seconds before closing the window
 }
 
