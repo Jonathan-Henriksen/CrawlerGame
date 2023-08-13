@@ -1,6 +1,6 @@
-## Cancellation Tokens in NeuralJourney
+## Cancellation Tokens in The project
 
-NeuralJourney employs Cancellation Tokens to enhance responsiveness and resource management, ensuring that operations can be monitored and, if necessary, canceled to maintain application responsiveness.
+The project employs Cancellation Tokens to enhance responsiveness and resource management, ensuring that operations can be monitored and, if necessary, canceled to maintain application responsiveness.
 
 ### Overview:
 Cancellation Tokens in .NET provide a cooperative cancellation model, allowing tasks to be canceled in a non-abrupt manner. This ensures that resources are freed up and that the application remains responsive, especially during potentially long-running operations.
@@ -22,4 +22,4 @@ Cancellation Tokens in .NET provide a cooperative cancellation model, allowing t
 
 - **Enhanced User Experience**: Players aren't left waiting indefinitely. If an operation takes too long or if there's a need to cancel a task, the game provides immediate feedback, ensuring a seamless user experience.
 
-By utilizing Cancellation Tokens, NeuralJourney prioritizes user experience, ensuring smooth gameplay without unnecessary delays or hang-ups.
+By utilizing Cancellation Tokens, The project prioritizes user experience, ensuring smooth gameplay without unnecessary delays or hang-ups.
