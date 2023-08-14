@@ -84,7 +84,7 @@ static IHostBuilder CreateHostBuilder(string[] strings)
                     .MinimumLevel.Is(logLevel)
                     .Enrich.FromLogContext()
                     .Enrich.WithExceptionDetails(new DestructuringOptionsBuilder().WithDefaultDestructurers().WithFilter(new IgnorePropertyByNameExceptionFilter("HResult", "StackTrace", "$type")))
-                    .Enrich.WithProperty("Application", "NeuralJourney Server")
+                    .Enrich.WithProperty("Application", "Server")
                     .WriteTo.Seq(serverUrl: "http://localhost:5341/", restrictedToMinimumLevel: logLevel)
                     .WriteTo.Console(formatter: consoleTemplate);
         })

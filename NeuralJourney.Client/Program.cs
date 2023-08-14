@@ -78,7 +78,7 @@ static IHostBuilder CreateHostBuilder(string[] strings)
             loggerConfiguration
                 .MinimumLevel.Is(logLevel)
                 .Enrich.WithExceptionDetails(new DestructuringOptionsBuilder().WithDefaultDestructurers().WithFilter(new IgnorePropertyByNameExceptionFilter("HResult", "StackTrace")))
-                .Enrich.WithProperty("Application", "NeuralJourney Client")
+                .Enrich.WithProperty("Application", "Client")
                 .WriteTo.Seq(serverUrl: "http://localhost:5341/", restrictedToMinimumLevel: logLevel)
                 .WriteTo.Conditional(logEvent => logEvent.Level == LogEventLevel.Information,
                     sink => sink.Sink<ClientConsoleSink>()
