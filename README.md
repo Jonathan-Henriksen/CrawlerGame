@@ -2,7 +2,7 @@
 
 ## Overview
 
-NeuralJourney is a text-based game engine developed with a server/client architecture, facilitating multiplayer interactions within a shared virtual environment. The project integrates OpenAI to dynamically process and map player commands, creating a responsive and adaptive gameplay experience. With the integration of Serilog and Seq, detailed logging of events and interactions is achieved through detailed structured and contextual logging, providing developers and sysadmins easy access to important application events. Beyond the technological integrations, the engine is built upon a foundation of best practices and design patterns, making it a robust and scalable solution.
+NeuralJourney is a text-based game engine developed with a server/client architecture, facilitating multiplayer interactions within a shared virtual environment. The project integrates OpenAI to dynamically process and map player commands, creating a responsive and adaptive gameplay experience. With the integration of Serilog and Seq, detailed logging of events and interactions is achieved through structured and contextual logging, providing developers and sysadmins easy access to important application events. Beyond the technological integrations, the engine is built upon a foundation of best practices and design patterns, making it a robust and scalable solution.
 
 This project is more than just lines of code; it's a story of passion, learning, and creativity. It's about the countless hours spent refining a feature, the moments of eureka, and the challenges overcome. As you delve into its various sections, I hope you experience a bit of the journey I undertook in creating it.
 
