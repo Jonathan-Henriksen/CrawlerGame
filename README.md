@@ -22,7 +22,7 @@ While the project leverages tools like OpenAI and Serilog, its core strength lie
 ### Core Technologies:
 
 - [OpenAI API](./Documentation/OpenAI.md): Powering the game with AI-driven interactions, making gameplay dynamic and engaging.
-- [Serilog and Seq](./Documentation/Serilog.md): Advanced logging techniques combined with powerful visualization, ensuring developers have clear insights into the game's operations.
+- [Serilog and Seq](./Documentation/Serilog.md): Advanced logging techniques combined with powerful visualization.
 
 ### Programming Patterns:
 
