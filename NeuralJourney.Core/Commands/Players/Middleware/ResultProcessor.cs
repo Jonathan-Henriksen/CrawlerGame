@@ -17,7 +17,7 @@ namespace NeuralJourney.Core.Commands.Players.Middleware
         {
             var result = context.Result ?? throw new InvalidOperationException("Could not process result. Reason: Result was null at point of processing.");
 
-            var playerStream = context.Player?.GetStream() ?? throw new InvalidOperationException("Could not send execution message. Reason: Player reference was null at point of processing.");
+            var playerStream = context.Player?.GetClient() ?? throw new InvalidOperationException("Could not send execution message. Reason: Player reference was null at point of processing.");
 
             if (string.IsNullOrEmpty(context.ExecutionMessage))
                 return;

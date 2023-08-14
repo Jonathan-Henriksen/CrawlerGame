@@ -1,4 +1,5 @@
-﻿using NeuralJourney.Core.Exceptions.Commands;
+﻿using NeuralJourney.Core.Exceptions;
+using NeuralJourney.Core.Extensions;
 using NeuralJourney.Core.Interfaces.Commands;
 using NeuralJourney.Core.Interfaces.Services;
 using NeuralJourney.Core.Models.Commands;
@@ -17,13 +18,14 @@ namespace NeuralJourney.Core.Commands.Players
             _middlewareProcessors = commandMiddleware.ToArray();
 
             _messageService = messageService;
-            _logger = logger;
+
+            _logger = logger.ForContext("Source", typeof(PlayerCommandStrategy).FullName);
         }
 
         public async Task ExecuteAsync(CommandContext context, CancellationToken cancellationToken = default)
         {
             if (context.Player is null)
-                throw new InvalidOperationException("Cannot execute player command strategy. Reason: Player was null");
+                throw new InvalidOperationException("Failed to execute player command strategy. Reason: Player was null");
 
             var errorMessage = string.Empty;
 
@@ -39,30 +41,28 @@ namespace NeuralJourney.Core.Commands.Players
 
                 await Next();
             }
-            catch (InvalidCompletionTextException ex)
+            catch (CommandCreationException ex)
             {
-                _logger.Error(ex, ex.Message);
-                errorMessage = ex.Message;
+                _logger.Error(ex, "Failed to create command {@CommandContext}", context.ToSimplified());
+                errorMessage = string.Format("Could not find any commands matching your input {0]", context.RawInput);
             }
-            catch (InvalidCommandException ex)
+            catch (CommandExecutionException ex)
             {
-                _logger.Error(ex, ex.Message);
-                errorMessage = ex.Message;
+                _logger.Error(ex, "Error while executing command {@CommandContext}", context.ToSimplified());
+                errorMessage = string.Format("Encountered an error while executing your command {0]", context.RawInput);
             }
-            catch (MissingParameterException ex)
+            catch (OperationCanceledException)
             {
-                _logger.Error(ex, ex.Message);
-                errorMessage = ex.Message;
+                return; // Do nothing on intended cancellation. Player Handler closes connections gracefully
             }
-            catch (InvalidParameterException ex)
+            catch (Exception)
             {
-                _logger.Error(ex, ex.Message);
-                errorMessage = ex.Message;
+                throw;
             }
             finally
             {
                 if (!string.IsNullOrEmpty(errorMessage) && context.Player is not null)
-                    await _messageService.SendMessageAsync(context.Player.GetStream(), errorMessage, cancellationToken);
+                    await _messageService.SendMessageAsync(context.Player.GetClient(), errorMessage, cancellationToken);
             }
         }
     }

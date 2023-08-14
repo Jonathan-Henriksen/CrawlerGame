@@ -1,5 +1,4 @@
 ﻿using NeuralJourney.Core.Constants.Messages;
-using NeuralJourney.Core.Exceptions.Commands;
 using NeuralJourney.Core.Interfaces.Commands;
 using NeuralJourney.Core.Models.Commands;
 using Serilog;
@@ -14,7 +13,7 @@ namespace NeuralJourney.Core.Commands.Admin
         public AdminCommandStrategy(ICommandFactory commandFactory, ILogger logger)
         {
             _commandFactory = commandFactory;
-            _logger = logger;
+            _logger = logger.ForContext<AdminCommandStrategy>();
         }
 
         public async Task ExecuteAsync(CommandContext context, CancellationToken cancellationToken = default)
@@ -32,17 +31,9 @@ namespace NeuralJourney.Core.Commands.Admin
 
                 _logger.Information(InfoMessageTemplates.ExecutedCommand, context.CommandKey?.Type, context.CommandKey?.Identifier);
             }
-            catch (InvalidCommandException ex)
+            catch (Exception)
             {
-                _logger.Error(ex, ex.Message);
-            }
-            catch (MissingParameterException ex)
-            {
-                _logger.Error(ex, ex.Message);
-            }
-            catch (InvalidParameterException ex)
-            {
-                _logger.Error(ex, ex.Message);
+                // TODO: Implement
             }
         }
     }

@@ -11,7 +11,7 @@ namespace NeuralJourney.Infrastructure.Engines
     public class ClientEngine : IEngine
     {
         private readonly IInputHandler<TextReader> _consoleInputHandler;
-        private readonly IInputHandler<NetworkStream> _networkInputHandler;
+        private readonly IInputHandler<TcpClient> _networkInputHandler;
 
         private readonly IMessageService _messageService;
         private readonly ILogger _logger;
@@ -22,13 +22,13 @@ namespace NeuralJourney.Infrastructure.Engines
 
         private CancellationToken _token;
 
-        public ClientEngine(IInputHandler<TextReader> consoleInputHandler, IInputHandler<NetworkStream> networkInputHandler, IMessageService messageService, ILogger logger, ClientOptions options)
+        public ClientEngine(IInputHandler<TextReader> consoleInputHandler, IInputHandler<TcpClient> networkInputHandler, IMessageService messageService, ILogger logger, ClientOptions options)
         {
             _consoleInputHandler = consoleInputHandler;
             _networkInputHandler = networkInputHandler;
 
             _messageService = messageService;
-            _logger = logger;
+            _logger = logger.ForContext<ClientEngine>();
 
             _client = new TcpClient();
 
@@ -83,14 +83,14 @@ namespace NeuralJourney.Infrastructure.Engines
             if (!_client.Connected)
                 return;
 
-            await _messageService.SendCloseConnectionAsync(_client.GetStream(), _token);
+            await _messageService.SendCloseConnectionAsync(_client, _token);
 
             _client.Close();
         }
 
         private async Task StartInputHandlersAsync()
         {
-            var networkInputTask = _networkInputHandler.HandleInputAsync(_client.GetStream(), _token);
+            var networkInputTask = _networkInputHandler.HandleInputAsync(_client, _token);
             var consoleInputTask = _consoleInputHandler.HandleInputAsync(Console.In, _token);
 
             try
@@ -108,11 +108,11 @@ namespace NeuralJourney.Infrastructure.Engines
             }
         }
 
-        private async void HandleConsoleInputReceived(string input, TextReader reader) => await _messageService.SendMessageAsync(_client.GetStream(), input, _token);
+        private async void HandleConsoleInputReceived(string input, TextReader reader) => await _messageService.SendMessageAsync(_client, input, _token);
 
-        private void HandleNetworkInputReceived(string message, NetworkStream sender) => _logger.Information(message);
+        private void HandleNetworkInputReceived(string message, TcpClient sender) => _logger.Information(message);
 
-        private void HandleClosedConnection(NetworkStream sender)
+        private void HandleClosedConnection(TcpClient sender)
         {
             _logger.Information(ClientMessageTemplates.ConnectionClosed);
             _ = Stop();

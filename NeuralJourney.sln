@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeuralJourney.Core", "Neura
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeuralJourney.Client", "NeuralJourney.Client\NeuralJourney.Client.csproj", "{6E688CFA-A1FC-4622-8C48-9C7DA26001FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeuralJourney.Infrastructure", "NeuralJourney.Infrastructure\NeuralJourney.Infrastructure.csproj", "{5C6E6EE3-3EB3-43E3-BCA3-DA1C3363D2E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeuralJourney.Infrastructure", "NeuralJourney.Infrastructure\NeuralJourney.Infrastructure.csproj", "{5C6E6EE3-3EB3-43E3-BCA3-DA1C3363D2E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

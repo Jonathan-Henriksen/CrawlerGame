@@ -31,7 +31,7 @@
         {
             public const string RetryConnection = "{Service } encountered an unexpected error.";
 
-            public const string RetryLimitReached = "Max retry attempts reached{RetryLimit}. Shutting down the server";
+            public const string RetryLimitReached = "Retry limit reached({RetryLimit}) while processing {ProcessName}";
         }
     }
 }

@@ -17,7 +17,7 @@ using Serilog.Exceptions;
 using System.Net.Sockets;
 using Serilog.Templates;
 using Serilog.Exceptions.Filters;
-using Serilog.Configuration;
+using Serilog.Formatting.Compact;
 
 using var host = CreateHostBuilder(args).Build();
 using var scope = host.Services.CreateScope();
@@ -26,12 +26,15 @@ using var cts = new CancellationTokenSource();
 var services = scope.ServiceProvider;
 
 var logger = services.GetRequiredService<ILogger>();
-var engine = services.GetRequiredService<IEngine>();
+
 
 try
 {
+    var engine = services.GetRequiredService<IEngine>();
     Console.CancelKeyPress += delegate (object? sender, ConsoleCancelEventArgs e) // Gracefully shuut down on request by user
     {
+        logger.Debug("Client initializd shutdown");
+
         e.Cancel = true;
         engine.Stop();
         cts.Cancel();
@@ -72,12 +75,11 @@ static IHostBuilder CreateHostBuilder(string[] strings)
             var logLevel = Enum.TryParse(options.LogLevel, out LogEventLevel level) ? level : LogEventLevel.Information;
             var logFilePath = options.LogFilePath ?? "Logs/";
 
-            var fileTemplate = new ExpressionTemplate(options.FileOutputTemplate ?? "{@m} {x}");
-
             loggerConfiguration
                 .MinimumLevel.Is(logLevel)
                 .Enrich.WithExceptionDetails(new DestructuringOptionsBuilder().WithDefaultDestructurers().WithFilter(new IgnorePropertyByNameExceptionFilter("HResult", "StackTrace")))
-                .WriteTo.File(path: logFilePath, formatter: fileTemplate, rollingInterval: RollingInterval.Day, restrictedToMinimumLevel: logLevel)
+                .Enrich.WithProperty("Application", "NeuralJourney Client")
+                .WriteTo.Seq(serverUrl: "http://localhost:5341/", restrictedToMinimumLevel: logLevel)
                 .WriteTo.Conditional(logEvent => logEvent.Level == LogEventLevel.Information,
                     sink => sink.Sink<ClientConsoleSink>()
             );
@@ -89,7 +91,7 @@ static IHostBuilder CreateHostBuilder(string[] strings)
             services.AddTransient<IMessageService, MessageService>();
 
             services.AddTransient<IInputHandler<TextReader>, ConsoleInputHandler>();
-            services.AddTransient<IInputHandler<NetworkStream>, NetworkInputHandler>();
+            services.AddTransient<IInputHandler<TcpClient>, NetworkInputHandler>();
 
             services.AddOptions<ClientOptions>().BindConfiguration("Client:Network");
             services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<ClientOptions>>().Value);

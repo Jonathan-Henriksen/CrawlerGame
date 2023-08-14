@@ -19,7 +19,7 @@ namespace NeuralJourney.Infrastructure.Engines
         public ServerEngine(IClockService clockService, ILogger logger, IConnectionHandler connectionHandler, IPlayerHandler playerHandler)
         {
             _clock = clockService;
-            _logger = logger;
+            _logger = logger.ForContext<ServerEngine>();
             _connectionHandler = connectionHandler;
             _playerHandler = playerHandler;
 
@@ -64,9 +64,6 @@ namespace NeuralJourney.Infrastructure.Engines
 
         public void Dispose()
         {
-            _connectionHandler.Dispose();
-            _playerHandler.Dispose();
-
             _logger.Debug(DebugMessageTemplates.DispoedOfType, GetType().Name);
         }
     }

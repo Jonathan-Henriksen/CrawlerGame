@@ -1,6 +1,6 @@
 ﻿using NeuralJourney.Core.Attributes;
 using NeuralJourney.Core.Enums.Commands;
-using NeuralJourney.Core.Exceptions.Commands;
+using NeuralJourney.Core.Exceptions;
 using NeuralJourney.Core.Interfaces.Commands;
 using NeuralJourney.Core.Models.Commands;
 using NeuralJourney.Core.Options;
@@ -28,7 +28,7 @@ namespace NeuralJourney.Core.Commands.Players.Commands
             return Task.Run(() =>
             {
                 if (_context.Player is null)
-                    throw new MissingParameterException(_context.CommandKey?.Identifier ?? default, nameof(_context.Player));
+                    throw new CommandExecutionException("The player was null");
 
                 var map = new string('#', _worldWidth + 2) + "\n";
                 for (var y = 0; y < _worldHeight; y++)

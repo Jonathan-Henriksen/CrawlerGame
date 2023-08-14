@@ -32,6 +32,8 @@
             public const string ConnectionLost = "Connection lost. Please check your network and try reconnecting.";
 
             public const string ConnectionError = "A network error occurred. Please try again later.";
+
+            public const string RetryLimitReached = "The program reached the try limit of {RetryLimit} while processing {ProcessName}}";
         }
     }
 }

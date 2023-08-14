@@ -12,8 +12,8 @@
 
         public const string ConnectionInitialize = "Connecting to the server...";
 
-        public const string StartingGame = "Starting the game...";
+        public const string StartingGame = "Started the game";
 
-        public const string StoppingGame = "Stopping the game...";
+        public const string StoppingGame = "Stopped the game";
     }
 }

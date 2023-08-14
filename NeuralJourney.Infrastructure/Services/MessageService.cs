@@ -1,12 +1,14 @@
 ﻿using NeuralJourney.Core.Interfaces.Services;
 using Serilog;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 
 namespace NeuralJourney.Infrastructure.Services
 {
     public class MessageService : IMessageService
     {
-        private readonly Dictionary<Stream, SemaphoreSlim> _streamSemaphores = new();
+        private readonly Dictionary<TcpClient, SemaphoreSlim> _streamSemaphores = new();
         private readonly Encoding _encoding = Encoding.UTF8;
         private readonly ILogger _logger;
 
@@ -14,18 +16,33 @@ namespace NeuralJourney.Infrastructure.Services
 
         public MessageService(ILogger logger)
         {
-            _logger = logger;
+            _logger = logger.ForContext<MessageService>();
         }
 
-        public async Task SendMessageAsync(Stream stream, string message, CancellationToken cancellationToken = default)
+        public async Task SendMessageAsync(TcpClient client, string message, CancellationToken cancellationToken = default)
         {
+            var stream = client.GetStream();
+
+            var messageData = GetMessageData(message, client);
+
+            if (!stream.CanWrite)
+            {
+                _logger.Error("Failed to send message {@Reason} {@MessageData}", messageData, "Could not write to stream");
+            }
+
+            _logger.Debug("Sending message {@MessageData}", messageData);
+
             var messageBytes = _encoding.GetBytes(message);
             var lengthBytes = BitConverter.GetBytes(messageBytes.Length);
 
-            var semaphore = GetSemaphore(stream);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            var semaphore = GetSemaphore(client);
             try
             {
                 await semaphore.WaitAsync(cancellationToken);
+
+                cancellationToken.ThrowIfCancellationRequested();
 
                 await stream.WriteAsync(lengthBytes, cancellationToken);
                 await stream.WriteAsync(messageBytes, cancellationToken);
@@ -36,16 +53,19 @@ namespace NeuralJourney.Infrastructure.Services
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Error occured while sending message: {Meesage}", message);
+                _logger.Error(ex, "Failed to send message {@MessageData}", messageData);
             }
             finally
             {
+                _logger.Debug("Sent message {@MessageData}", messageData);
                 semaphore.Release();
             }
         }
 
-        public async Task<string> ReadMessageAsync(Stream stream, CancellationToken cancellationToken = default)
+        public async Task<string> ReadMessageAsync(TcpClient client, CancellationToken cancellationToken = default)
         {
+            var stream = client.GetStream();
+
             var lengthBytes = new byte[4];
             await stream.ReadAsync(lengthBytes, cancellationToken);
 
@@ -53,17 +73,17 @@ namespace NeuralJourney.Infrastructure.Services
             var messageBytes = new byte[messageLength];
             await stream.ReadAsync(messageBytes.AsMemory(0, messageLength), cancellationToken);
 
-            return _encoding.GetString(messageBytes);
+            var message = _encoding.GetString(messageBytes);
+
+            var messageData = GetMessageData(message, client);
+            _logger.Debug("Read message {@MessageData}", messageData);
+
+            return message;
         }
 
-        public async Task SendCloseConnectionAsync(Stream stream, CancellationToken cancellationToken = default)
+        public async Task SendCloseConnectionAsync(TcpClient client, CancellationToken cancellationToken = default)
         {
-            if (!stream.CanWrite)
-                return;
-            
-            _logger.Debug("Sending 'Close Connection' message");
-
-            await SendMessageAsync(stream, CloseConnectionMessage, cancellationToken);
+            await SendMessageAsync(client, CloseConnectionMessage, cancellationToken);
         }
 
         public bool IsCloseConnectionMessage(string message)
@@ -71,17 +91,22 @@ namespace NeuralJourney.Infrastructure.Services
             return message == CloseConnectionMessage;
         }
 
-        private SemaphoreSlim GetSemaphore(Stream stream)
+        private SemaphoreSlim GetSemaphore(TcpClient client)
         {
             lock (_streamSemaphores)
             {
-                if (!_streamSemaphores.TryGetValue(stream, out var semaphore))
+                if (!_streamSemaphores.TryGetValue(client, out var semaphore))
                 {
                     semaphore = new SemaphoreSlim(1);
-                    _streamSemaphores[stream] = semaphore;
+                    _streamSemaphores[client] = semaphore;
                 }
                 return semaphore;
             }
+        }
+
+        private static object GetMessageData(string? message, TcpClient client)
+        {
+            return new { Message = message, Address = ((IPEndPoint?) client.Client.RemoteEndPoint)?.Address.ToString() ?? string.Empty };
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using NeuralJourney.Core.Attributes;
 using NeuralJourney.Core.Enums.Commands;
-using NeuralJourney.Core.Exceptions.Commands;
+using NeuralJourney.Core.Exceptions;
 using NeuralJourney.Core.Models.Commands;
 using System.Reflection;
 
@@ -29,7 +29,7 @@ namespace NeuralJourney.Core.Commands
         public static Type GetCommandType(CommandKey key)
         {
             if (!_commandMappings.TryGetValue(key, out var commandType))
-                throw new InvalidCommandException(key.Identifier, "Command does not exist");
+                throw new CommandCreationException("Command not found");
 
             return commandType;
         }

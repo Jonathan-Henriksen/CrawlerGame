@@ -1,5 +1,5 @@
 ﻿using NeuralJourney.Core.Enums.Commands;
-using NeuralJourney.Core.Exceptions.Commands;
+using NeuralJourney.Core.Exceptions;
 using NeuralJourney.Core.Interfaces.Commands;
 using NeuralJourney.Core.Models.Commands;
 using System.Text.RegularExpressions;
@@ -10,17 +10,17 @@ namespace NeuralJourney.Core.Commands.Players.Middleware
     {
         public async Task InvokeAsync(CommandContext context, Func<Task> next, CancellationToken cancellationToken = default)
         {
-            var completionText = context.CompletionText ?? throw new InvalidCompletionTextException(context.CompletionText, "Completion text was blank");
+            var completionText = context.CompletionText ?? throw new CommandCreationException("Completion text was blank");
 
             var regexPattern = @"^(?<commandIdentifier>\w+)\((?<params>[^\)]+)\)\|(?<successMessage>.+?)$";
             var match = Regex.Match(completionText, regexPattern);
 
             if (!match.Success)
-                throw new InvalidCompletionTextException(context.CompletionText, "Invalid command format.");
+                throw new CommandCreationException("Completion text did not match the expected format");
 
             var commandIdentifierText = match.Groups["commandIdentifier"].Value;
             if (!Enum.TryParse(commandIdentifierText, true, out CommandIdentifierEnum commandIdentifier))
-                throw new InvalidCompletionTextException(completionText, $"Could not parse the command '{commandIdentifierText}' to {nameof(CommandIdentifierEnum)}");
+                throw new CommandCreationException("Failed to parse commandIdentifier to enum");
 
             context.CommandKey = new CommandKey(CommandTypeEnum.Player, commandIdentifier);
 
@@ -29,7 +29,7 @@ namespace NeuralJourney.Core.Commands.Players.Middleware
             context.ExecutionMessage = match.Groups["successMessage"].Value;
 
             if (string.IsNullOrEmpty(context.ExecutionMessage))
-                throw new InvalidCompletionTextException(context.CompletionText, "Execution message was blank");
+                throw new CommandCreationException("Execution message was blank");
 
             await next();
         }

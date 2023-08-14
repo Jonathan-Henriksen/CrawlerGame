@@ -1,5 +1,5 @@
 ﻿using NeuralJourney.Core.Enums.Commands;
-using NeuralJourney.Core.Exceptions.Commands;
+using NeuralJourney.Core.Exceptions;
 using NeuralJourney.Core.Interfaces.Commands;
 using NeuralJourney.Core.Models.Commands;
 
@@ -16,7 +16,7 @@ namespace NeuralJourney.Core.Commands.Players.Middleware
 
         public async Task InvokeAsync(CommandContext context, Func<Task> next, CancellationToken cancellationToken = default)
         {
-            var commandKey = context.CommandKey ?? throw new MissingParameterException(CommandIdentifierEnum.Unknown, nameof(context.CommandKey));
+            var commandKey = context.CommandKey ?? throw new CommandCreationException("CommandKey was null");
 
             context.Command = _commandFactory.CreateCommand(commandKey, context.Params);
 

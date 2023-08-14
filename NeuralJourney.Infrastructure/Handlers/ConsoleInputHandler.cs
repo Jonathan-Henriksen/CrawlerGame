@@ -13,7 +13,7 @@ namespace NeuralJourney.Infrastructure.Handlers
         public ConsoleInputHandler(IMessageService messageService, ILogger logger)
         {
             _messageService = messageService;
-            _logger = logger;
+            _logger = logger.ForContext<ConsoleInputHandler>();
         }
 
         public event Action<string, TextReader>? OnInputReceived;

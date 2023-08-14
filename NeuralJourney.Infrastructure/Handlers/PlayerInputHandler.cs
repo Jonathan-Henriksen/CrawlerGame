@@ -20,12 +20,12 @@ namespace NeuralJourney.Infrastructure.Handlers
         public PlayerInputHandler(IMessageService messageService, ILogger logger)
         {
             _messageService = messageService;
-            _logger = logger;
+            _logger = logger.ForContext<PlayerInputHandler>();
         }
 
         public async Task HandleInputAsync(Player player, CancellationToken cancellationToken)
         {
-            var stream = player.GetStream();
+            var client = player.GetClient();
 
             var reconnectionAttempts = 0;
 
@@ -33,7 +33,7 @@ namespace NeuralJourney.Infrastructure.Handlers
             {
                 try
                 {
-                    var input = await _messageService.ReadMessageAsync(stream, cancellationToken);
+                    var input = await _messageService.ReadMessageAsync(client, cancellationToken);
 
                     if (_messageService.IsCloseConnectionMessage(input))
                     {
@@ -52,7 +52,7 @@ namespace NeuralJourney.Infrastructure.Handlers
                 {
                     if (ex.InnerException is SocketException socketEx && socketEx.SocketErrorCode == SocketError.ConnectionReset)
                     {
-                        _logger.Information(InfoMessageTemplates.ClientDisconnected, stream.Socket.RemoteEndPoint);
+                        _logger.Information(InfoMessageTemplates.ClientDisconnected, client.Client.RemoteEndPoint);
                         return;
                     }
 

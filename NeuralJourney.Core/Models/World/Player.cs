@@ -6,13 +6,13 @@ namespace NeuralJourney.Core.Models.World
     public class Player
     {
         private readonly string _ip;
-        private readonly NetworkStream _stream;
+        private readonly TcpClient _client;
 
         public readonly Guid ID;
 
         public Player(TcpClient client)
         {
-            _stream = client.GetStream();
+            _client = client;
             _ip = ((IPEndPoint?) client.Client.RemoteEndPoint)?.Address.ToString() ?? string.Empty;
 
             ID = Guid.NewGuid();
@@ -26,8 +26,6 @@ namespace NeuralJourney.Core.Models.World
 
         public bool IsConnected { get; private set; }
 
-
-
         public string Name { get; set; }
 
         public Coordinates Location { get; set; }
@@ -38,9 +36,9 @@ namespace NeuralJourney.Core.Models.World
 
         public int Thirst { get; set; }
 
-        public NetworkStream GetStream()
+        public TcpClient GetClient()
         {
-            return _stream;
+            return _client;
         }
     }
 }

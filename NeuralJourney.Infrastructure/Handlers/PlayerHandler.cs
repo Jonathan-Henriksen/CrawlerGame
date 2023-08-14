@@ -6,6 +6,7 @@ using NeuralJourney.Core.Interfaces.Services;
 using NeuralJourney.Core.Models.Commands;
 using NeuralJourney.Core.Models.World;
 using Serilog;
+using Serilog.Context;
 using System.Net.Sockets;
 
 namespace NeuralJourney.Infrastructure.Handlers
@@ -24,7 +25,7 @@ namespace NeuralJourney.Infrastructure.Handlers
             _commandDispatcher = commandDispatcher;
             _inputHandler = inputHandler;
             _messageService = messageService;
-            _logger = logger;
+            _logger = logger.ForContext<PlayerHandler>();
 
             // Subscribe to input events
             _inputHandler.OnInputReceived += DispatchCommand;
@@ -37,8 +38,13 @@ namespace NeuralJourney.Infrastructure.Handlers
 
             _players.Add(player);
 
-            // Start background task to dispatch commands on input
-            _ = _inputHandler.HandleInputAsync(player, cancellationToken);
+
+            using (LogContext.PushProperty("Player", player.Name))
+            {
+                _logger.Information("Added player {@Player}", new {PlayerId = player.ID, PlayerName = player.Name });
+                
+                _ = _inputHandler.HandleInputAsync(player, cancellationToken); // Start background task to notify about new input
+            }
         }
 
         private void DispatchCommand(string input, Player player)
@@ -51,12 +57,12 @@ namespace NeuralJourney.Infrastructure.Handlers
 
         private void RemovePlayer(Player player)
         {
-            var stream = player.GetStream();
+            var client = player.GetClient();
 
-            _logger.Information(InfoMessageTemplates.ClientDisconnected, stream.Socket.RemoteEndPoint);
+            _logger.Information(InfoMessageTemplates.ClientDisconnected, client.Client.RemoteEndPoint);
 
-            stream.Socket.Close();
-            stream.Socket.Dispose();
+            client.Close();
+            client.Dispose();
 
             _players.Remove(player);
         }
@@ -69,7 +75,7 @@ namespace NeuralJourney.Infrastructure.Handlers
 
             foreach (var player in _players)
             {
-                _messageService.SendCloseConnectionAsync(player.GetStream());
+                _messageService.SendCloseConnectionAsync(player.GetClient());
             }
 
             _logger.Debug(DebugMessageTemplates.DispoedOfType, GetType().Name);

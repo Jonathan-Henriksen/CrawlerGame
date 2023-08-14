@@ -5,24 +5,26 @@ using System.Net.Sockets;
 
 namespace NeuralJourney.Infrastructure.Handlers
 {
-    public class NetworkInputHandler : IInputHandler<NetworkStream>
+    public class NetworkInputHandler : IInputHandler<TcpClient>
     {
-        private const int MaxReconnectionAttempts = 3;
+        private const int _maxReconnectionAttempts = 3;
 
         private readonly IMessageService _messageService;
         private readonly ILogger _logger;
 
-        public event Action<string, NetworkStream>? OnInputReceived;
-        public event Action<NetworkStream>? OnClosedConnection;
+        public event Action<string, TcpClient>? OnInputReceived;
+        public event Action<TcpClient>? OnClosedConnection;
 
         public NetworkInputHandler(IMessageService messageService, ILogger logger)
         {
             _messageService = messageService;
-            _logger = logger;
+            _logger = logger.ForContext<NetworkInputHandler>();
         }
 
-        public async Task HandleInputAsync(NetworkStream stream, CancellationToken cancellationToken)
+        public async Task HandleInputAsync(TcpClient client, CancellationToken cancellationToken)
         {
+            var stream = client.GetStream();
+
             if (!stream.CanRead)
                 throw new InvalidOperationException("Failed to handle stream input. Reason: Could not read from stream");
 
@@ -32,24 +34,30 @@ namespace NeuralJourney.Infrastructure.Handlers
             {
                 try
                 {
-                    var input = await _messageService.ReadMessageAsync(stream, cancellationToken);
+                    if (!stream.DataAvailable)
+                    {
+                        await Task.Delay(200);
+                        continue;
+                    }
+
+                    var input = await _messageService.ReadMessageAsync(client, cancellationToken);
+
+                    cancellationToken.ThrowIfCancellationRequested();
 
                     if (_messageService.IsCloseConnectionMessage(input))
                     {
-                        OnClosedConnection?.Invoke(stream);
+                        OnClosedConnection?.Invoke(client);
                         return;
                     }
-
-                    cancellationToken.ThrowIfCancellationRequested();
 
                     if (string.IsNullOrEmpty(input))
                         continue;
 
-                    OnInputReceived?.Invoke(input, stream);
+                    OnInputReceived?.Invoke(input, client);
                 }
                 catch (OperationCanceledException)
                 {
-                    return; // Return back to caller who initialized cancellation
+                    throw;
                 }
                 catch (IOException ex)
                 {
@@ -63,19 +71,19 @@ namespace NeuralJourney.Infrastructure.Handlers
                     _logger.Warning("Network input stream encountered an error: {ErrorMessage}. Attempting to reconnect...", ex.Message);
                     reconnectionAttempts++;
 
-                    if (reconnectionAttempts >= MaxReconnectionAttempts)
+                    if (reconnectionAttempts >= _maxReconnectionAttempts)
                     {
-                        _logger.Error("Max reconnection attempts({Limit}) reached. Shutting down the client", MaxReconnectionAttempts);
+                        _logger.Error("Max reconnection attempts({Limit}) reached. Shutting down the client", _maxReconnectionAttempts);
                         return;
                     }
 
-                    await Task.Delay(3000, cancellationToken);
+                    await Task.Delay(100, cancellationToken);
                 }
                 catch (Exception ex)
                 {
                     _logger.Error(ex, ex.Message);
                     if (stream.CanWrite)
-                        await _messageService.SendCloseConnectionAsync(stream, cancellationToken);
+                        await _messageService.SendCloseConnectionAsync(client, cancellationToken);
                 }
             }
         }

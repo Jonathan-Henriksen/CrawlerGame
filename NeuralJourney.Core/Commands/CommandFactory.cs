@@ -1,5 +1,4 @@
-﻿using NeuralJourney.Core.Exceptions.Commands;
-using NeuralJourney.Core.Interfaces.Commands;
+﻿using NeuralJourney.Core.Interfaces.Commands;
 using NeuralJourney.Core.Models.Commands;
 
 namespace NeuralJourney.Core.Commands
@@ -8,11 +7,17 @@ namespace NeuralJourney.Core.Commands
     {
         public ICommand CreateCommand(CommandKey key, string[]? parameters)
         {
-            var commandType = CommandRegistry.GetCommandType(key);
+            try
+            {
+                var commandType = CommandRegistry.GetCommandType(key);
+                var command = (ICommand?) Activator.CreateInstance(commandType, parameters);
 
-            var command = (ICommand?) Activator.CreateInstance(commandType, parameters);
-
-            return command ?? throw new InvalidCommandException(command: key.Identifier, $"Failed to create an instance of '{commandType.FullName}'");
+                return command ?? throw new InvalidOperationException("Failed to create an instance of the coomand");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

@@ -76,15 +76,16 @@ static IHostBuilder CreateHostBuilder(string[] strings)
             var logFilePath = options.LogFilePath ?? "Logs/";
 
             var consoleTemplate = new ExpressionTemplate(options.ConsoleOutputTemplate ?? "{@m}", theme: TemplateTheme.Code);
-            var fileTemplate = new ExpressionTemplate(options.FileOutputTemplate ?? "{@m} {x}");
 
             var nonErrorLogEventCondition = new Func<LogEvent, bool>(e => e.Level != LogEventLevel.Error && e.Level != LogEventLevel.Fatal);
             var errorLogEventCondition = new Func<LogEvent, bool>(e => !nonErrorLogEventCondition(e));
 
             loggerConfiguration
                     .MinimumLevel.Is(logLevel)
-                    .Enrich.WithExceptionDetails(new DestructuringOptionsBuilder().WithDefaultDestructurers().WithFilter(new IgnorePropertyByNameExceptionFilter("HResult", "StackTrace")))
-                    .WriteTo.File(path: logFilePath, formatter: fileTemplate, rollingInterval: RollingInterval.Day, restrictedToMinimumLevel: logLevel)
+                    .Enrich.FromLogContext()
+                    .Enrich.WithExceptionDetails(new DestructuringOptionsBuilder().WithDefaultDestructurers().WithFilter(new IgnorePropertyByNameExceptionFilter("HResult", "StackTrace", "$type")))
+                    .Enrich.WithProperty("Application", "NeuralJourney Server")
+                    .WriteTo.Seq(serverUrl: "http://localhost:5341/", restrictedToMinimumLevel: logLevel)
                     .WriteTo.Console(formatter: consoleTemplate);
         })
         .ConfigureServices((_, services) =>
@@ -94,7 +95,6 @@ static IHostBuilder CreateHostBuilder(string[] strings)
             services.AddTransient<IInputHandler<Player>, PlayerInputHandler>();
 
             services.AddSingleton<IConnectionHandler, NetworkConnectionHandler>();
-
             services.AddSingleton<IPlayerHandler, PlayerHandler>();
 
             // Register Services

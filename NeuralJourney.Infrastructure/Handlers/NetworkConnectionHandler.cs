@@ -19,7 +19,7 @@ namespace NeuralJourney.Infrastructure.Handlers
         public NetworkConnectionHandler(NetworkOptions networkOptions, ILogger logger)
         {
             _tcpListener = new TcpListener(IPAddress.Any, networkOptions.Port);
-            _logger = logger;
+            _logger = logger.ForContext<NetworkConnectionHandler>();
         }
 
         public async Task HandleConnectionsAsync(CancellationToken cancellationToken)
@@ -59,7 +59,7 @@ namespace NeuralJourney.Infrastructure.Handlers
                 {
                     if (retryCount++ > MaxRetryAttempts)
                     {
-                        _logger.Error(ErrorMessageTemplates.Network.RetryLimitReached, MaxRetryAttempts);
+                        // TODO: Add Logging
                         return;
                     }
 
@@ -81,8 +81,6 @@ namespace NeuralJourney.Infrastructure.Handlers
         {
             _tcpListener.Stop();
             _tcpListener.Server.Dispose();
-
-            _logger.Information(InfoMessageTemplates.ServerStopped);
 
             _logger.Debug(DebugMessageTemplates.DispoedOfType, GetType().Name);
         }
