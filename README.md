@@ -2,9 +2,9 @@
 
 ## Overview
 
-NeuralJourney is a captivating text-based game that operates on a server/client architecture, enabling multiplayer interactions in a shared virtual environment. This design allows players from different locations to engage with the game simultaneously, fostering collaborative and competitive gameplay dynamics. At its core, NeuralJourney seamlessly integrates advanced technologies and best practices within the .NET ecosystem. The game harnesses the capabilities of OpenAI to dynamically interpret and map player commands, ensuring a rich and immersive experience for every participant. Coupled with the meticulous structural logging provided by Serilog and Seq, every aspect of the gameplay is captured in detail. Beyond its innovative multiplayer design and technological integrations, NeuralJourney stands as a beacon for developers, exemplifying the potential of modern development practices and the joy of creation.
+NeuralJourney is a text-based game engine that operates on a server/client architecture, enabling multiplayer interactions in a shared virtual environment. The project aims to demonstrate implementation of advanced technologies and best practices within the .NET ecosystem. The game utilizes the capabilities of OpenAI to dynamically interpret and map player commands, ensuring a rich and immersive experience. Coupled with the meticulous structural logging provided by Serilog and Seq, every aspect of the gameplay is captured in detail.
 
-This porject is more than just lines of code; it's a story of passion, learning, and creativity. It's about the countless hours spent refining a feature, the moments of eureka, and the challenges overcome. As you delve into its various sections, I hope you experience a bit of the journey I undertook in creating it.
+The project is more than just lines of code; it's a story of passion, learning, and creativity. It's about the countless hours spent refining a feature, the moments of eureka, and the challenges overcome. As you delve into its various sections, I hope you experience a bit of the journey I undertook in creating it.
 
 ## Purpose
 
