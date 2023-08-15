@@ -20,9 +20,7 @@ namespace NeuralJourney.Core.Commands.Admin
         {
             try
             {
-                context.CommandKey = new CommandKey(context.CommandType, default);
-
-                context.Command = _commandFactory.CreateCommand(context.CommandKey.Value, context.Params);
+                context.Command = _commandFactory.CreateCommand(context.CommandKey, context.Params);
 
                 if (context.Command is null)
                     return;

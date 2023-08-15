@@ -1,5 +1,5 @@
 ﻿using NeuralJourney.Core.Constants.Messages;
-using NeuralJourney.Core.Enums.Commands;
+using NeuralJourney.Core.Extensions;
 using NeuralJourney.Core.Interfaces.Commands;
 using NeuralJourney.Core.Interfaces.Handlers;
 using NeuralJourney.Core.Interfaces.Services;
@@ -41,18 +41,19 @@ namespace NeuralJourney.Infrastructure.Handlers
 
             using (LogContext.PushProperty("Player", player.Name))
             {
-                _logger.Information("Added player {@Player}", new {PlayerId = player.ID, PlayerName = player.Name });
-                
+                _logger.Information("Added player {@Player}", new { PlayerId = player.ID, PlayerName = player.Name });
+
                 _ = _inputHandler.HandleInputAsync(player, cancellationToken); // Start background task to notify about new input
             }
         }
 
         private void DispatchCommand(string input, Player player)
         {
-            var context = new CommandContext(input, CommandTypeEnum.Player, player);
-            _commandDispatcher.DispatchCommand(context);
+            var context = new CommandContext(input, player);
 
-            _logger.Debug(DebugMessageTemplates.PlayerDispatchedCommand, player.Name, input);
+            _logger.Debug(DebugMessageTemplates.PlayerDispatchedCommand, context.ToSimplified());
+
+            _commandDispatcher.DispatchCommand(context);
         }
 
         private void RemovePlayer(Player player)

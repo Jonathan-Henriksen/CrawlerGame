@@ -1,4 +1,5 @@
-﻿using NeuralJourney.Core.Interfaces.Commands;
+﻿using NeuralJourney.Core.Exceptions;
+using NeuralJourney.Core.Interfaces.Commands;
 using NeuralJourney.Core.Interfaces.Services;
 using NeuralJourney.Core.Models.Commands;
 
@@ -15,19 +16,20 @@ namespace NeuralJourney.Core.Commands.Players.Middleware
 
         public async Task InvokeAsync(CommandContext context, Func<Task> next, CancellationToken cancellationToken = default)
         {
-            var result = context.Result ?? throw new InvalidOperationException("Could not process result. Reason: Result was null at point of processing.");
+            if (context.Result is null || string.IsNullOrEmpty(context.ExecutionMessage))
+                throw new CommandExecutionException("No execution message generated");
 
-            var playerStream = context.Player?.GetClient() ?? throw new InvalidOperationException("Could not send execution message. Reason: Player reference was null at point of processing.");
+            var client = context.Player?.GetClient();
 
-            if (string.IsNullOrEmpty(context.ExecutionMessage))
+            if (client is null)
                 return;
 
-            await _messageService.SendMessageAsync(playerStream, context.ExecutionMessage, cancellationToken);
+            await _messageService.SendMessageAsync(client, context.ExecutionMessage, cancellationToken);
 
-            if (string.IsNullOrEmpty(result.AdditionalMessage))
+            if (context.Result.HasValue && string.IsNullOrEmpty(context.Result.Value.AdditionalMessage))
                 return;
 
-            await _messageService.SendMessageAsync(playerStream, context.ExecutionMessage, cancellationToken);
+            await _messageService.SendMessageAsync(client, context.ExecutionMessage, cancellationToken);
 
             await next();
         }

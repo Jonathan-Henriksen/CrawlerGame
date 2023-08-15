@@ -16,7 +16,7 @@ namespace NeuralJourney.Core.Commands.Players.Middleware
 
         public async Task InvokeAsync(CommandContext context, Func<Task> next, CancellationToken cancellationToken = default)
         {
-            var commandKey = context.CommandKey ?? throw new CommandCreationException("CommandKey was null");
+            var commandKey = context.CommandKey ?? throw new CommandMappingException("CommandKey was null");
 
             context.Command = _commandFactory.CreateCommand(commandKey, context.Params);
 

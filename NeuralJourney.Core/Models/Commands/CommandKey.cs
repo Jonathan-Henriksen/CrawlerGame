@@ -2,12 +2,12 @@
 
 namespace NeuralJourney.Core.Models.Commands
 {
-    public readonly struct CommandKey
+    public class CommandKey
     {
         public CommandTypeEnum Type { get; }
-        public CommandIdentifierEnum Identifier { get; }
+        public CommandIdentifierEnum Identifier { get; set; }
 
-        public CommandKey(CommandTypeEnum type, CommandIdentifierEnum identifier)
+        public CommandKey(CommandTypeEnum type, CommandIdentifierEnum identifier = default)
         {
             Type = type;
             Identifier = identifier;

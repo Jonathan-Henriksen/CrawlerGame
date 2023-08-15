@@ -29,7 +29,7 @@ namespace NeuralJourney.Core.Commands
         public static Type GetCommandType(CommandKey key)
         {
             if (!_commandMappings.TryGetValue(key, out var commandType))
-                throw new CommandCreationException("Command not found");
+                throw new CommandMappingException("Command not found", "Could not match the input to any available commands. Please try rephrasing");
 
             return commandType;
         }

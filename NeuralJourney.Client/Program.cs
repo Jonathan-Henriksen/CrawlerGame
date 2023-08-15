@@ -27,7 +27,6 @@ var services = scope.ServiceProvider;
 
 var logger = services.GetRequiredService<ILogger>();
 
-
 try
 {
     var engine = services.GetRequiredService<IEngine>();

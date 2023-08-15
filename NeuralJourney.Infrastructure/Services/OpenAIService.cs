@@ -1,5 +1,6 @@
 ﻿using NeuralJourney.Core.Commands;
 using NeuralJourney.Core.Enums.Commands;
+using NeuralJourney.Core.Exceptions;
 using NeuralJourney.Core.Interfaces.Services;
 using NeuralJourney.Core.Models.Commands;
 using NeuralJourney.Core.Options;
@@ -34,6 +35,7 @@ namespace NeuralJourney.Infrastructure.Services
         public async Task<string> GetCommandCompletionTextAsync(CommandContext context)
         {
             var retryCount = 0;
+            object? completionData = null;
 
             while (retryCount < _maxRetryAttempts)
             {
@@ -46,7 +48,7 @@ namespace NeuralJourney.Infrastructure.Services
                     var completionResponse = await _openApi.Completions.CreateCompletionAsync(promptText);
                     var completionText = completionResponse?.Completions.FirstOrDefault()?.Text;
 
-                    var completionData = new
+                    completionData = new
                     {
                         completionResponse?.Id,
                         completionResponse?.RequestId,
@@ -59,14 +61,14 @@ namespace NeuralJourney.Infrastructure.Services
                     _logger.Debug("Received completion from OpenAI {@CompletionResponse}", completionData);
 
                     if (string.IsNullOrEmpty(completionText))
-                        throw new InvalidOperationException("Completion text was empty");
+                        throw new CommandMappingException("Completion text was empty", "The server experienced an error with the OpenAI API. Please try agian");
 
                     return completionText;
                 }
                 catch (WebException webEx) when (webEx.Status == WebExceptionStatus.Timeout || webEx.Status == WebExceptionStatus.ConnectFailure)
                 {
-                    var retryData = new { Reason = webEx.Status, RetryCount = retryCount };
-                    _logger.Warning(webEx, "Network error while requesting OpenAI completion {@CompletionRetryData}", retryData);
+                    var retryData = completionData ?? new { Reason = webEx.Status, RetryCount = retryCount };
+                    _logger.Warning(webEx, "Network error while requesting OpenAI completion {@CompletionRetryData}", completionData);
 
                     retryCount++;
 
@@ -78,8 +80,7 @@ namespace NeuralJourney.Infrastructure.Services
                 }
             }
 
-            throw new InvalidOperationException("Retry limit exceeded");
+            throw new CommandMappingException("Retry limit exceeded", "The server could not connect to the OpenAI API. Please try agian.");
         }
-
     }
 }

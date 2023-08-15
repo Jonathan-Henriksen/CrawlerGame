@@ -4,6 +4,6 @@
     {
         public const string DispoedOfType = "Disposed of {Type}";
 
-        public const string PlayerDispatchedCommand = "Dispatched a player command. Player: {Player}. Input: {Input}";
+        public const string PlayerDispatchedCommand = "Dispatched a command {@CommandContext}";
     }
 }

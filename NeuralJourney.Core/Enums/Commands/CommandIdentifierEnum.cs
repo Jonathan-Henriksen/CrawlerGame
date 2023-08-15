@@ -1,8 +1,12 @@
-﻿namespace NeuralJourney.Core.Enums.Commands
+﻿using Newtonsoft.Json.Linq;
+using System.Runtime.Serialization;
+
+namespace NeuralJourney.Core.Enums.Commands
 {
     public enum CommandIdentifierEnum
     {
-        Unknown,
+        [EnumMember(Value = "N/A")]
+        NotAvailable,
         CheckMap,
         Move,
     }

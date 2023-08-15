@@ -20,6 +20,7 @@ using Serilog.Events;
 using Serilog.Exceptions;
 using Serilog.Exceptions.Core;
 using Serilog.Exceptions.Filters;
+using Serilog.Filters;
 using Serilog.Templates;
 using Serilog.Templates.Themes;
 

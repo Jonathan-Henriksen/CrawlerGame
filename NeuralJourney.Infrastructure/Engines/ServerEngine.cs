@@ -45,7 +45,7 @@ namespace NeuralJourney.Infrastructure.Engines
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Unexpected error in {Type}", GetType().Name);
+                _logger.Error(ex, "The server engine encountered an error");
             }
         }
 

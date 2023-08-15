@@ -21,10 +21,10 @@ namespace NeuralJourney.Core.Commands.Players.Commands
         internal MoveCommand(CommandContext context, GameOptions gameOptions)
         {
             if (context.Params is null || context.Params.Length < 1)
-                throw new CommandExecutionException("Missing required parameter 'Direction'");
+                throw new CommandExecutionException("Missing required parameter 'Direction'", "Could not determine which direction to move");
 
             if (!Enum.TryParse(context.Params[0], out DirectionEnum direction))
-                throw new CommandExecutionException("Could not parse 'Direction' parameter to DirectionEnum");
+                throw new CommandExecutionException("Could not parse 'Direction' parameter to DirectionEnum", "Could not determine which direction to move");
 
             _context = context;
 
@@ -37,7 +37,7 @@ namespace NeuralJourney.Core.Commands.Players.Commands
         public Task<CommandResult> ExecuteAsync()
         {
             if (_context.Player is null)
-                throw new CommandExecutionException("The player was null");
+                throw new CommandExecutionException("The player was null", "Something went wrong. Please try again");
 
             return Task.Run(() =>
             {
@@ -71,7 +71,7 @@ namespace NeuralJourney.Core.Commands.Players.Commands
             if (increment > 0 && coordinate < boundary - 1 || increment < 0 && coordinate > 0)
                 return coordinate + increment;
             else
-                throw new CommandExecutionException("The map limit was reached");
+                throw new CommandExecutionException("Player tried to move beyond map boundriesl", $"You cannot go any further {_direction}");
         }
     }
 }

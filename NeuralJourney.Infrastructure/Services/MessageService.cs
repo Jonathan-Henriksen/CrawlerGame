@@ -23,19 +23,10 @@ namespace NeuralJourney.Infrastructure.Services
         {
             var stream = client.GetStream();
 
-            var messageData = GetMessageData(message, client);
-
-            if (!stream.CanWrite)
-            {
-                _logger.Error("Failed to send message {@Reason} {@MessageData}", messageData, "Could not write to stream");
-            }
-
-            _logger.Debug("Sending message {@MessageData}", messageData);
+            var messageData = GetMessageData(message, stream);
 
             var messageBytes = _encoding.GetBytes(message);
             var lengthBytes = BitConverter.GetBytes(messageBytes.Length);
-
-            cancellationToken.ThrowIfCancellationRequested();
 
             var semaphore = GetSemaphore(client);
             try
@@ -46,10 +37,18 @@ namespace NeuralJourney.Infrastructure.Services
 
                 await stream.WriteAsync(lengthBytes, cancellationToken);
                 await stream.WriteAsync(messageBytes, cancellationToken);
+
+                _logger.Debug("Sent message {@MessageData}", messageData);
             }
-            catch (OperationCanceledException)
+            catch (OperationCanceledException ex)
             {
+                _logger.Debug(ex, "Cancelled sending message {@MessageData}", messageData);
                 throw;
+            }
+            catch (IOException ex)
+            {
+                _logger.Debug(ex, "Trouble writing to the stream {@MessageData}", messageData);
+                throw; // Add retry logic
             }
             catch (Exception ex)
             {
@@ -57,7 +56,6 @@ namespace NeuralJourney.Infrastructure.Services
             }
             finally
             {
-                _logger.Debug("Sent message {@MessageData}", messageData);
                 semaphore.Release();
             }
         }
@@ -66,19 +64,35 @@ namespace NeuralJourney.Infrastructure.Services
         {
             var stream = client.GetStream();
 
-            var lengthBytes = new byte[4];
-            await stream.ReadAsync(lengthBytes, cancellationToken);
+            try
+            {
+                var lengthBytes = new byte[4];
+                await stream.ReadAsync(lengthBytes, cancellationToken);
 
-            var messageLength = BitConverter.ToInt32(lengthBytes, 0);
-            var messageBytes = new byte[messageLength];
-            await stream.ReadAsync(messageBytes.AsMemory(0, messageLength), cancellationToken);
+                var messageLength = BitConverter.ToInt32(lengthBytes, 0);
+                var messageBytes = new byte[messageLength];
+                await stream.ReadAsync(messageBytes.AsMemory(0, messageLength), cancellationToken);
 
-            var message = _encoding.GetString(messageBytes);
+                var message = _encoding.GetString(messageBytes);
 
-            var messageData = GetMessageData(message, client);
-            _logger.Debug("Read message {@MessageData}", messageData);
+                var messageData = GetMessageData(message, stream);
+                _logger.Debug("Read message {@MessageData}", messageData);
 
-            return message;
+                return message;
+            }
+            catch (OperationCanceledException)
+            {
+                throw;
+            }
+            catch (IOException)
+            {
+                throw; // Add retry logic
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Failed to read message from stream {Address}", GetStreamIp(stream));
+                return string.Empty;
+            }
         }
 
         public async Task SendCloseConnectionAsync(TcpClient client, CancellationToken cancellationToken = default)
@@ -104,9 +118,15 @@ namespace NeuralJourney.Infrastructure.Services
             }
         }
 
-        private static object GetMessageData(string? message, TcpClient client)
+        private static object GetMessageData(string? message, NetworkStream stream)
         {
-            return new { Message = message, Address = ((IPEndPoint?) client.Client.RemoteEndPoint)?.Address.ToString() ?? string.Empty };
+            return new { Message = message, Address = GetStreamIp(stream) };
+        }
+
+        private static string GetStreamIp(NetworkStream stream)
+        {
+
+            return ((IPEndPoint?) stream.Socket.RemoteEndPoint)?.Address?.ToString()?.Replace("::ffff:", "") ?? "N/A";
         }
     }
 }

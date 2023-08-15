@@ -110,7 +110,7 @@ namespace NeuralJourney.Infrastructure.Engines
 
         private async void HandleConsoleInputReceived(string input, TextReader reader) => await _messageService.SendMessageAsync(_client, input, _token);
 
-        private void HandleNetworkInputReceived(string message, TcpClient sender) => _logger.Information(message);
+        private void HandleNetworkInputReceived(string message, TcpClient sender) => _logger.Information("{Message}", message);
 
         private void HandleClosedConnection(TcpClient sender)
         {

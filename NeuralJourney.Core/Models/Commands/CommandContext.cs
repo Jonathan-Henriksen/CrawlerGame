@@ -6,14 +6,14 @@ namespace NeuralJourney.Core.Models.Commands
 {
     public class CommandContext
     {
-        public CommandContext(string rawInput, CommandTypeEnum commandType, Player? player = default)
+        public CommandContext(string rawInput, Player? player = default)
         {
             RawInput = rawInput;
-            CommandType = commandType;
             Player = player;
-        }
 
-        public readonly CommandTypeEnum CommandType;
+            var commandType = player is not null ? CommandTypeEnum.Player : CommandTypeEnum.Admin;
+            CommandKey = new CommandKey(commandType);
+        }
 
         public readonly string RawInput;
 
@@ -22,7 +22,7 @@ namespace NeuralJourney.Core.Models.Commands
 
         public ICommand? Command { get; set; }
 
-        public CommandKey? CommandKey { get; set; }
+        public CommandKey CommandKey { get; set; }
 
         public string? CompletionText { get; set; }
 

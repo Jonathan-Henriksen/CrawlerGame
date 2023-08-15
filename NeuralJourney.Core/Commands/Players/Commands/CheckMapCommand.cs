@@ -4,6 +4,7 @@ using NeuralJourney.Core.Exceptions;
 using NeuralJourney.Core.Interfaces.Commands;
 using NeuralJourney.Core.Models.Commands;
 using NeuralJourney.Core.Options;
+using System.Text;
 
 namespace NeuralJourney.Core.Commands.Players.Commands
 {
@@ -28,27 +29,26 @@ namespace NeuralJourney.Core.Commands.Players.Commands
             return Task.Run(() =>
             {
                 if (_context.Player is null)
-                    throw new CommandExecutionException("The player was null");
+                    throw new CommandExecutionException("The player was null", "Something went wrong. Please try again");
 
-                var map = new string('#', _worldWidth + 2) + "\n";
+                var mapBuilder = new StringBuilder();
+                mapBuilder.AppendLine(new string('#', _worldWidth + 2));
                 for (var y = 0; y < _worldHeight; y++)
                 {
-                    map += "#";
+                    mapBuilder.Append("#");
                     for (var x = 0; x < _worldWidth; x++)
                     {
                         if (x == _context.Player.Location.X && y == _context.Player.Location.Y)
-                            map += "P"; // 'P' for player
+                            mapBuilder.Append("P");
                         else
-                        {
-                            map += "."; // '.' for an empty room
-                        }
+                            mapBuilder.Append(".");
                     }
-                    map += "#\n";
+                    mapBuilder.AppendLine("#");
                 }
-                map += new string('#', _worldWidth + 2) + "\n";
-
-                return new CommandResult(map);
+                mapBuilder.Append(new string('#', _worldWidth + 2));
+                return new CommandResult(mapBuilder.ToString());
             });
         }
+
     }
 }
