@@ -35,11 +35,24 @@ namespace NeuralJourney.Infrastructure.Handlers
         {
             var player = new Player(playerClient);
 
+            _players.Add(player);
+
             using (LogContext.PushProperty("Player", player, true))
             {
-                _logger.Information("Added player {PlayerName}", player.Name);
+                _logger.Information("Added player {PlayerName} to the game", player.Name);
 
-                _ = _inputHandler.HandleInputAsync(player, cancellationToken); // Start background task to notify about new input
+                // Start background task to notify about new input
+                _ = _inputHandler.HandleInputAsync(player, cancellationToken).ContinueWith(t =>
+                {
+                    if (t.IsFaulted)
+                    {
+                        _logger.Warning(t.Exception?.InnerException, "Failed to handle player input");
+
+                        RemovePlayer(player);
+
+                        return;
+                    }
+                }, cancellationToken);
             }
         }
 
