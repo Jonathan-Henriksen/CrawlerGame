@@ -9,7 +9,7 @@ namespace NeuralJourney.Infrastructure.Handlers
 {
     public class NetworkConnectionHandler : IConnectionHandler
     {
-        private const int MaxRetryAttempts = 5;
+        private const int _maxRetryAttempts = 10;
 
         private readonly TcpListener _tcpListener;
         private readonly ILogger _logger;
@@ -46,32 +46,28 @@ namespace NeuralJourney.Infrastructure.Handlers
                 }
                 catch (OperationCanceledException)
                 {
-                    return; // Return back to caller who initialized cancellation
-                }
-                catch (SocketException socketException) when (socketException.SocketErrorCode == SocketError.OperationAborted)
-                {
-                    _logger.Warning(socketException, "A client disconnected unexpectedly. Reason: {Message}", socketException.Message);
-                    retryCount++;
-
-                    continue; // Recover when a single client disconnects unexpectedly
+                    throw;
                 }
                 catch (SocketException ex)
                 {
-                    if (retryCount++ > MaxRetryAttempts)
+                    ++retryCount;
+
+                    if (retryCount > _maxRetryAttempts)
                     {
-                        // TODO: Add Logging
-                        return;
+                        _logger.Error(ex, "Failed to accept incoming connections. Retry limit reached");
+                        throw new OperationCanceledException();
                     }
 
-                    _logger.Warning(ex, "Network Error: {ServiceName} encountered a connection issue. Retrying {RetryAttemptCount}/{RetryAttemptLimit}", nameof(NetworkConnectionHandler), retryCount, MaxRetryAttempts);
+                    _logger.Warning(ex, "Error while listening for incoming connections {RetryCount}/{RetryLimit}", retryCount, _maxRetryAttempts);
 
-                    await Task.Delay(3000, cancellationToken); // Wait for 3 seconds before retrying
+                    await Task.Delay(5000, cancellationToken); // Give connection some time to recover
 
                     continue;
                 }
                 catch (Exception ex)
                 {
-                    _logger.Error(ex, "NetworkConnectionHandler encountered an unexpected error. Message: {Message}", ex.Message);
+                    _logger.Error(ex, "Unexpected error while handling network input");
+
                     throw;
                 }
             }

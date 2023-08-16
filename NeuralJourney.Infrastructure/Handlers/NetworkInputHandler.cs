@@ -25,7 +25,7 @@ namespace NeuralJourney.Infrastructure.Handlers
             var stream = client.GetStream();
 
             if (!stream.CanRead)
-                throw new InvalidOperationException("Failed to handle stream input. Reason: Could not read from stream");
+                throw new InvalidOperationException("Could not read from stream");
 
             while (!cancellationToken.IsCancellationRequested)
             {
