@@ -45,7 +45,7 @@ namespace NeuralJourney.Infrastructure.Handlers
                 }
                 catch (OperationCanceledException)
                 {
-                    return;
+                    return; // Should be caught and used to remove players in the player handler
                 }
                 catch (MessageException ex)
                 {

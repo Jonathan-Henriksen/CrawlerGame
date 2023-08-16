@@ -1,6 +1,6 @@
-﻿namespace NeuralJourney.Core.Constants.Messages
+﻿namespace NeuralJourney.Core.Constants
 {
-    public static class DebugMessageTemplates
+    public static class SystemMessageTemplates
     {
         public const string DispoedOfType = "Disposed of {Type}";
 

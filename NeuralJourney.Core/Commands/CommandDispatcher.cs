@@ -1,4 +1,4 @@
-﻿using NeuralJourney.Core.Constants.Messages;
+﻿using NeuralJourney.Core.Constants;
 using NeuralJourney.Core.Interfaces.Commands;
 using NeuralJourney.Core.Interfaces.Services;
 using NeuralJourney.Core.Models.Commands;
@@ -31,7 +31,7 @@ namespace NeuralJourney.Core.Commands
                     if (strategy is null)
                     {
                         _logger.ForContext("Reason", "No strategy was found for the command type")
-                            .Error(ErrorMessageTemplates.CommandDispatchFailed, context.CommandKey.Type);
+                            .Error(CommandLogTemplates.Error.CommandDispatchFailed, context.CommandKey.Type);
 
                         if (context.Player is not null)
                             _messageService.SendMessageAsync(context.Player.GetClient(), PlayerMessageTemplates.Command.NoMatch);
@@ -43,7 +43,7 @@ namespace NeuralJourney.Core.Commands
                 }
                 catch (Exception ex)
                 {
-                    _logger.Error(ex, ErrorMessageTemplates.CommandDispatchFailed, context.CommandKey.Type);
+                    _logger.Error(ex, CommandLogTemplates.Error.CommandDispatchFailed, context.CommandKey.Type);
 
                     if (context.Player is not null)
                         _messageService.SendMessageAsync(context.Player.GetClient(), PlayerMessageTemplates.SomethingWentWrong);

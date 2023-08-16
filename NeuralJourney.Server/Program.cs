@@ -32,13 +32,12 @@ var services = scope.ServiceProvider;
 var logger = services.GetRequiredService<ILogger>();
 var engine = services.GetRequiredService<IEngine>();
 
-
 try
 {
     Console.CancelKeyPress += (sender, eventArgs) =>
     {
         eventArgs.Cancel = true;
-        engine.Stop();
+        engine.StopAsync();
         cts.Cancel();
     };
 

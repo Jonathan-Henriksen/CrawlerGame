@@ -11,10 +11,10 @@ using NeuralJourney.Infrastructure.Handlers;
 using NeuralJourney.Infrastructure.Services;
 using Serilog;
 using Serilog.Events;
-using Serilog.Exceptions.Core;
 using Serilog.Exceptions;
-using System.Net.Sockets;
+using Serilog.Exceptions.Core;
 using Serilog.Exceptions.Filters;
+using System.Net.Sockets;
 
 using var host = CreateHostBuilder(args).Build();
 using var scope = host.Services.CreateScope();
@@ -32,7 +32,7 @@ try
         logger.Debug("Client initializd shutdown");
 
         e.Cancel = true;
-        engine.Stop();
+        engine.StopAsync();
         cts.Cancel();
     };
 

@@ -1,4 +1,4 @@
-﻿using NeuralJourney.Core.Constants.Messages;
+﻿using NeuralJourney.Core.Constants;
 using NeuralJourney.Core.Interfaces.Engines;
 using NeuralJourney.Core.Interfaces.Handlers;
 using NeuralJourney.Core.Interfaces.Services;
@@ -31,7 +31,7 @@ namespace NeuralJourney.Infrastructure.Engines
 
             _token = cancellationToken;
 
-            _logger.Information(InfoMessageTemplates.GameStarted);
+            _logger.Information(ServerLogTemplates.Info.ServerStarted);
 
             _clock.Start();
 
@@ -41,23 +41,21 @@ namespace NeuralJourney.Infrastructure.Engines
             }
             catch (OperationCanceledException)
             {
-                await Stop();
+                await StopAsync();
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "The server engine encountered an error");
+                _logger.Error(ex, ServerLogTemplates.Error.UnexpectedError);
             }
         }
 
-        public Task Stop()
+        public async Task StopAsync()
         {
-            _logger.Information(InfoMessageTemplates.GameStopped);
+            _logger.Information(ServerLogTemplates.Info.ServerStopped);
 
-            _playerHandler.Dispose();
+            await _playerHandler.StopAsync();
 
             _clock.Reset();
-
-            return Task.CompletedTask;
         }
 
         private void AcceptConnections(TcpClient client)
@@ -67,7 +65,7 @@ namespace NeuralJourney.Infrastructure.Engines
 
         public void Dispose()
         {
-            _logger.Debug(DebugMessageTemplates.DispoedOfType, GetType().Name);
+            _logger.Debug(SystemMessageTemplates.DispoedOfType, GetType().Name);
         }
     }
 }

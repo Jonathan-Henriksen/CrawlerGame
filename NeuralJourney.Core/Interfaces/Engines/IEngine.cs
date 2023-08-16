@@ -4,6 +4,6 @@
     {
         public Task Run(CancellationToken cancellationToken);
 
-        public Task Stop();
+        public Task StopAsync();
     }
 }

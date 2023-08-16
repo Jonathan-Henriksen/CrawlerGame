@@ -1,4 +1,4 @@
-﻿namespace NeuralJourney.Core.Constants.Messages
+﻿namespace NeuralJourney.Core.Constants
 {
     public static class PlayerMessageTemplates
     {

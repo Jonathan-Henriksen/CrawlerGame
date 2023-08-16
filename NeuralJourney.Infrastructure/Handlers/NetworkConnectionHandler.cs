@@ -1,4 +1,4 @@
-﻿using NeuralJourney.Core.Constants.Messages;
+﻿using NeuralJourney.Core.Constants;
 using NeuralJourney.Core.Interfaces.Handlers;
 using NeuralJourney.Core.Options;
 using Serilog;
@@ -28,7 +28,7 @@ namespace NeuralJourney.Infrastructure.Handlers
 
             var retryCount = 0;
 
-            _logger.Information(InfoMessageTemplates.ServerStarted);
+            _logger.Debug(NetworkLogTemplates.Debug.TcpListenerStarted);
 
             while (!cancellationToken.IsCancellationRequested)
             {
@@ -39,7 +39,7 @@ namespace NeuralJourney.Infrastructure.Handlers
                     if (client is null)
                         continue;
 
-                    _logger.Information(InfoMessageTemplates.ClientConnected, client.Client.RemoteEndPoint);
+                    _logger.Information(NetworkLogTemplates.Info.ClientConnected, client.Client.RemoteEndPoint);
                     OnConnected?.Invoke(client);
 
                     retryCount = 0; // Reset retry count on successful connection
@@ -50,15 +50,13 @@ namespace NeuralJourney.Infrastructure.Handlers
                 }
                 catch (SocketException ex)
                 {
-                    ++retryCount;
-
-                    if (retryCount > _maxRetryAttempts)
+                    if (++retryCount > _maxRetryAttempts)
                     {
-                        _logger.Error(ex, "Failed to accept incoming connections. Retry limit reached");
+                        _logger.Error(ex, NetworkLogTemplates.Error.SocketFailure);
                         throw new OperationCanceledException();
                     }
 
-                    _logger.Warning(ex, "Error while listening for incoming connections {RetryCount}/{RetryLimit}", retryCount, _maxRetryAttempts);
+                    _logger.Warning(ex, NetworkLogTemplates.Warning.SocketFailureRetry, retryCount, _maxRetryAttempts);
 
                     await Task.Delay(5000, cancellationToken); // Give connection some time to recover
 
@@ -66,7 +64,7 @@ namespace NeuralJourney.Infrastructure.Handlers
                 }
                 catch (Exception ex)
                 {
-                    _logger.Error(ex, "Unexpected error while handling network input");
+                    _logger.Error(ex, NetworkLogTemplates.Error.UnexpectedError);
 
                     throw;
                 }
@@ -78,7 +76,7 @@ namespace NeuralJourney.Infrastructure.Handlers
             _tcpListener.Stop();
             _tcpListener.Server.Dispose();
 
-            _logger.Debug(DebugMessageTemplates.DispoedOfType, GetType().Name);
+            _logger.Debug(SystemMessageTemplates.DispoedOfType, GetType().Name);
         }
     }
 }

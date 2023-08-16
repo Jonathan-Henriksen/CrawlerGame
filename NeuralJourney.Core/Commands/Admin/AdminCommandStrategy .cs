@@ -1,4 +1,4 @@
-﻿using NeuralJourney.Core.Constants.Messages;
+﻿using NeuralJourney.Core.Constants;
 using NeuralJourney.Core.Interfaces.Commands;
 using NeuralJourney.Core.Models.Commands;
 using Serilog;
@@ -27,7 +27,7 @@ namespace NeuralJourney.Core.Commands.Admin
 
                 await context.Command.ExecuteAsync();
 
-                _logger.Information(InfoMessageTemplates.ExecutedCommand, context.CommandKey?.Type, context.CommandKey?.Identifier);
+                _logger.Information(CommandLogTemplates.Info.ExecutedCommand, context.CommandKey.Identifier);
             }
             catch (Exception)
             {

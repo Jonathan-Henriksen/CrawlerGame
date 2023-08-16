@@ -1,4 +1,4 @@
-﻿using NeuralJourney.Core.Constants.Messages;
+﻿using NeuralJourney.Core.Constants;
 using NeuralJourney.Core.Interfaces.Commands;
 using NeuralJourney.Core.Interfaces.Handlers;
 using NeuralJourney.Core.Interfaces.Services;
@@ -39,20 +39,14 @@ namespace NeuralJourney.Infrastructure.Handlers
 
             using (LogContext.PushProperty("Player", player, true))
             {
-                _logger.Information("Added player {PlayerName} to the game", player.Name);
+                _logger.Information(ServerLogTemplates.Info.PlayerAdded, player.Name);
 
                 // Start background task to notify about new input
                 _ = _inputHandler.HandleInputAsync(player, cancellationToken).ContinueWith(t =>
                 {
-                    if (t.IsCanceled)
-                    {
-                        _messageService.SendCloseConnectionAsync(playerClient);
-                        RemovePlayer(player);
-                    }
-
                     if (t.IsFaulted)
                     {
-                        _logger.Warning(t.Exception?.InnerException, "Failed to handle player input");
+                        _logger.Error(t.Exception?.InnerException, ServerLogTemplates.Error.PlayerInputFailed);
 
                         RemovePlayer(player);
                     }
@@ -64,7 +58,7 @@ namespace NeuralJourney.Infrastructure.Handlers
         {
             var context = new CommandContext(input, player);
 
-            _logger.Debug(DebugMessageTemplates.PlayerDispatchedCommand, player.Name);
+            _logger.Debug(ServerLogTemplates.Debug.DispatchedPlayerCommand, player.Name);
 
             _commandDispatcher.DispatchCommand(context);
         }
@@ -73,12 +67,21 @@ namespace NeuralJourney.Infrastructure.Handlers
         {
             var client = player.GetClient();
 
-            _logger.Information(InfoMessageTemplates.ClientDisconnected, client.Client.RemoteEndPoint);
+            _logger.Information(ServerLogTemplates.Info.PlayerRemoved, client.Client.RemoteEndPoint);
 
             client.Close();
             client.Dispose();
 
             _players.Remove(player);
+        }
+
+        public async Task StopAsync()
+        {
+            foreach (var player in _players)
+            {
+                await _messageService.SendCloseConnectionAsync(player.GetClient());
+                RemovePlayer(player);
+            }
         }
 
         public void Dispose()
@@ -93,7 +96,9 @@ namespace NeuralJourney.Infrastructure.Handlers
                 _messageService.SendCloseConnectionAsync(player.GetClient());
             }
 
-            _logger.Debug(DebugMessageTemplates.DispoedOfType, GetType().Name);
+            _players.Clear();
+
+            _logger.Debug(SystemMessageTemplates.DispoedOfType, GetType().Name);
         }
     }
 }
