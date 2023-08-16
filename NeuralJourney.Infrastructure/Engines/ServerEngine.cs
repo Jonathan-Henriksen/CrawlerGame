@@ -52,6 +52,9 @@ namespace NeuralJourney.Infrastructure.Engines
         public Task Stop()
         {
             _logger.Information(InfoMessageTemplates.GameStopped);
+
+            _playerHandler.Dispose();
+
             _clock.Reset();
 
             return Task.CompletedTask;

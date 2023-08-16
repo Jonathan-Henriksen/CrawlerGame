@@ -2,7 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
-using NeuralJourney.Client;
 using NeuralJourney.Core.Interfaces.Engines;
 using NeuralJourney.Core.Interfaces.Handlers;
 using NeuralJourney.Core.Interfaces.Services;
@@ -15,9 +14,7 @@ using Serilog.Events;
 using Serilog.Exceptions.Core;
 using Serilog.Exceptions;
 using System.Net.Sockets;
-using Serilog.Templates;
 using Serilog.Exceptions.Filters;
-using Serilog.Formatting.Compact;
 
 using var host = CreateHostBuilder(args).Build();
 using var scope = host.Services.CreateScope();
@@ -78,9 +75,7 @@ static IHostBuilder CreateHostBuilder(string[] strings)
                 .MinimumLevel.Is(logLevel)
                 .Enrich.WithExceptionDetails(new DestructuringOptionsBuilder().WithDefaultDestructurers().WithFilter(new IgnorePropertyByNameExceptionFilter("HResult", "StackTrace")))
                 .Enrich.WithProperty("Application", "Client")
-                .WriteTo.Seq(serverUrl: "http://localhost:5341/", restrictedToMinimumLevel: logLevel)
-                .WriteTo.Conditional(logEvent => logEvent.Level == LogEventLevel.Information,
-                    sink => sink.Sink<ClientConsoleSink>()
+                .WriteTo.Seq(serverUrl: "http://localhost:5341/", restrictedToMinimumLevel: logLevel
             );
         })
         .ConfigureServices((_, services) =>

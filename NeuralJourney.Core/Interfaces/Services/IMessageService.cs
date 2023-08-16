@@ -11,5 +11,7 @@ namespace NeuralJourney.Core.Interfaces.Services
         Task SendCloseConnectionAsync(TcpClient stream, CancellationToken cancellationToken = default);
 
         bool IsCloseConnectionMessage(string message);
+
+        void DisplayConsoleMessage(string message);
     }
 }

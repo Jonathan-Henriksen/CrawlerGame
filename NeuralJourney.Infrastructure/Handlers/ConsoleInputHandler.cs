@@ -52,7 +52,8 @@ namespace NeuralJourney.Infrastructure.Handlers
                 }
                 catch (Exception ex)
                 {
-                    _logger.Error(ex, ex.Message);
+                    _messageService.DisplayConsoleMessage("There was an error processing the input. Plesae try again");
+                    _logger.Error(ex, "Failed to read console input");
                 }
             }
         }

@@ -20,7 +20,6 @@ using Serilog.Events;
 using Serilog.Exceptions;
 using Serilog.Exceptions.Core;
 using Serilog.Exceptions.Filters;
-using Serilog.Filters;
 using Serilog.Templates;
 using Serilog.Templates.Themes;
 
@@ -39,6 +38,7 @@ try
     Console.CancelKeyPress += (sender, eventArgs) =>
     {
         eventArgs.Cancel = true;
+        engine.Stop();
         cts.Cancel();
     };
 
@@ -51,7 +51,7 @@ catch (OperationCanceledException)
 catch (Exception ex)
 {
     cts.Cancel();
-    logger.Fatal(ex, ex.Message); // Unexpected that crashed the application
+    logger.Fatal(ex, "Unexpected error crashed the application");
 }
 finally
 {

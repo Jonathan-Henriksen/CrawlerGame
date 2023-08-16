@@ -42,7 +42,7 @@ namespace NeuralJourney.Core.Commands.Players
             }
             catch (CommandMappingException ex)
             {
-                _logger.Error(ex, "Failed to create command");
+                _logger.Error(ex, "Failed to map input to command");
                 errorMessage = ex.PlayerMessage;
             }
             catch (CommandExecutionException ex)

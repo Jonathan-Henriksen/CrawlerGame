@@ -44,13 +44,17 @@ namespace NeuralJourney.Infrastructure.Handlers
                 // Start background task to notify about new input
                 _ = _inputHandler.HandleInputAsync(player, cancellationToken).ContinueWith(t =>
                 {
+                    if (t.IsCanceled)
+                    {
+                        _messageService.SendCloseConnectionAsync(playerClient);
+                        RemovePlayer(player);
+                    }
+
                     if (t.IsFaulted)
                     {
                         _logger.Warning(t.Exception?.InnerException, "Failed to handle player input");
 
                         RemovePlayer(player);
-
-                        return;
                     }
                 }, cancellationToken);
             }

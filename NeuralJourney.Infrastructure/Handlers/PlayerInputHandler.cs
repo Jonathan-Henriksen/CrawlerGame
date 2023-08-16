@@ -30,6 +30,8 @@ namespace NeuralJourney.Infrastructure.Handlers
                 {
                     var input = await _messageService.ReadMessageAsync(client, cancellationToken);
 
+                    cancellationToken.ThrowIfCancellationRequested();
+
                     if (_messageService.IsCloseConnectionMessage(input))
                     {
                         OnClosedConnection?.Invoke(player);
@@ -47,7 +49,11 @@ namespace NeuralJourney.Infrastructure.Handlers
                 }
                 catch (MessageException ex)
                 {
+                    if (!client.Connected)
+                        return;
+
                     await _messageService.SendMessageAsync(client, ex.Message, cancellationToken);
+
                     await Task.Delay(500, cancellationToken);
                 }
                 catch (Exception ex)

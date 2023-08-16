@@ -1,4 +1,5 @@
-﻿using NeuralJourney.Core.Interfaces.Handlers;
+﻿using NeuralJourney.Core.Exceptions;
+using NeuralJourney.Core.Interfaces.Handlers;
 using NeuralJourney.Core.Interfaces.Services;
 using Serilog;
 using System.Net.Sockets;
@@ -7,8 +8,6 @@ namespace NeuralJourney.Infrastructure.Handlers
 {
     public class NetworkInputHandler : IInputHandler<TcpClient>
     {
-        private const int _maxReconnectionAttempts = 3;
-
         private readonly IMessageService _messageService;
         private readonly ILogger _logger;
 
@@ -28,15 +27,13 @@ namespace NeuralJourney.Infrastructure.Handlers
             if (!stream.CanRead)
                 throw new InvalidOperationException("Failed to handle stream input. Reason: Could not read from stream");
 
-            var reconnectionAttempts = 0;
-
             while (!cancellationToken.IsCancellationRequested)
             {
                 try
                 {
                     if (!stream.DataAvailable)
                     {
-                        await Task.Delay(200);
+                        await Task.Delay(200, cancellationToken);
                         continue;
                     }
 
@@ -57,33 +54,27 @@ namespace NeuralJourney.Infrastructure.Handlers
                 }
                 catch (OperationCanceledException)
                 {
-                    throw;
+                    return;
                 }
-                catch (IOException ex)
+                catch (MessageException ex)
                 {
-                    if (ex.InnerException is SocketException socketEx && socketEx.SocketErrorCode == SocketError.ConnectionReset)
-                    {
-                        _logger.Debug("An existing connection was forcibly closed by the remote host: {Host}", stream.Socket.RemoteEndPoint);
-                        _logger.Information("The server closed the connection");
+                    if (!client.Connected)
                         return;
-                    }
 
-                    _logger.Warning("Network input stream encountered an error: {ErrorMessage}. Attempting to reconnect...", ex.Message);
-                    reconnectionAttempts++;
+                    await _messageService.SendMessageAsync(client, ex.Message, cancellationToken);
 
-                    if (reconnectionAttempts >= _maxReconnectionAttempts)
-                    {
-                        _logger.Error("Max reconnection attempts({Limit}) reached. Shutting down the client", _maxReconnectionAttempts);
-                        return;
-                    }
-
-                    await Task.Delay(100, cancellationToken);
+                    await Task.Delay(500, cancellationToken);
                 }
                 catch (Exception ex)
                 {
-                    _logger.Error(ex, ex.Message);
-                    if (stream.CanWrite)
-                        await _messageService.SendCloseConnectionAsync(client, cancellationToken);
+                    _logger.Error(ex, "Unexpected error while handling network input");
+
+                    await _messageService.SendCloseConnectionAsync(client, cancellationToken);
+
+                    client.Close();
+                    client.Dispose();
+
+                    return;
                 }
             }
         }

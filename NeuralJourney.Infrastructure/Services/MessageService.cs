@@ -128,16 +128,16 @@ namespace NeuralJourney.Infrastructure.Services
 
                     retryLogger.Error(ex, ErrorMessageTemplates.Messages.MessageReadFailed, remoteAddress);
 
-                    throw new MessageException(ex, "Failed to read message", remoteAddress);
+                    throw new MessageException(ex, "Failed to read incoming message", remoteAddress);
                 }
                 catch (Exception ex)
                 {
                     retryLogger.Error(ex, ErrorMessageTemplates.Messages.MessageReadFailed, remoteAddress);
-                    throw new MessageException(ex, "Failed to read message", remoteAddress);
+                    throw new MessageException(ex, "Failed to read incoming message", remoteAddress);
                 }
             }
 
-            throw new MessageException("Retry limit reached", remoteAddress);
+            throw new MessageException("Retry limit reached while trying to read incoming message", remoteAddress);
         }
 
         public async Task SendCloseConnectionAsync(TcpClient client, CancellationToken cancellationToken = default)
@@ -167,6 +167,22 @@ namespace NeuralJourney.Infrastructure.Services
         {
 
             return ((IPEndPoint?) stream.Socket.RemoteEndPoint)?.Address?.ToString()?.Replace("::ffff:", "") ?? "N/A";
+        }
+
+        public void DisplayConsoleMessage(string message)
+        {
+            Console.SetCursorPosition(0, Console.CursorTop);
+
+            Console.Write("> ");
+            WriteColoredMessage(message, ConsoleColor.Blue);
+            Console.Write("> ");
+        }
+
+        private void WriteColoredMessage(string message, ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+            Console.WriteLine($"{message}\n");
+            Console.ResetColor();
         }
     }
 }

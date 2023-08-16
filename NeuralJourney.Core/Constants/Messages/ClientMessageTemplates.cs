@@ -9,6 +9,8 @@
 
         public const string ConnectionFailed = "Failed to connect to the server";
 
+        public const string ConnectionFailedTimeout = "Connection to the server timed out";
+
         public const string ConnectionInitialize = "Connecting to the server...";
 
         public const string StartingGame = "Started the game";

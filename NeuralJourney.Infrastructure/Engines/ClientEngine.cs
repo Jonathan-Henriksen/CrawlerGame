@@ -22,6 +22,7 @@ namespace NeuralJourney.Infrastructure.Engines
 
         private CancellationToken _token;
 
+
         public ClientEngine(IInputHandler<TextReader> consoleInputHandler, IInputHandler<TcpClient> networkInputHandler, IMessageService messageService, ILogger logger, ClientOptions options)
         {
             _consoleInputHandler = consoleInputHandler;
@@ -43,32 +44,34 @@ namespace NeuralJourney.Infrastructure.Engines
 
         public async Task Run(CancellationToken cancellationToken = default)
         {
-            _logger.Information(ClientMessageTemplates.StartingGame);
+            LogInfoAndDisplayInConsole(ClientMessageTemplates.StartingGame);
 
             _token = cancellationToken;
-
-            _logger.Information(ClientMessageTemplates.ConnectionInitialize);
 
             var timeoutCts = CancellationTokenSource.CreateLinkedTokenSource(_token);
             timeoutCts.CancelAfter(TimeSpan.FromSeconds(10));
 
             try
             {
+                LogInfoAndDisplayInConsole(ClientMessageTemplates.ConnectionInitialize);
+
                 await _client.ConnectAsync(_serverIp, _serverPort, timeoutCts.Token);
-                _logger.Information(ClientMessageTemplates.ConnectionEstablished);
+
+                LogInfoAndDisplayInConsole(ClientMessageTemplates.ConnectionEstablished);
             }
-            catch (OperationCanceledException) when (timeoutCts.IsCancellationRequested)
+            catch (OperationCanceledException ex) when (timeoutCts.IsCancellationRequested)
             {
-                if (timeoutCts.IsCancellationRequested)
-                    _logger.Information(ClientMessageTemplates.ConnectionFailed);
+                _messageService.DisplayConsoleMessage(ClientMessageTemplates.ConnectionFailedTimeout);
+                _logger.Error(ex, ClientMessageTemplates.ConnectionFailedTimeout);
 
                 await Stop();
+
                 return;
             }
             catch (SocketException ex)
             {
+                _messageService.DisplayConsoleMessage(ClientMessageTemplates.ConnectionFailed);
                 _logger.Error(ex, ClientMessageTemplates.ConnectionFailed);
-                _logger.Information(ClientMessageTemplates.ConnectionFailed);
 
                 await Stop();
 
@@ -76,18 +79,6 @@ namespace NeuralJourney.Infrastructure.Engines
             }
 
             await StartInputHandlersAsync();
-        }
-
-        public async Task Stop()
-        {
-            _logger.Information(ClientMessageTemplates.StoppingGame);
-
-            if (!_client.Connected)
-                return;
-
-            await _messageService.SendCloseConnectionAsync(_client, _token);
-
-            _client.Close();
         }
 
         private async Task StartInputHandlersAsync()
@@ -101,7 +92,9 @@ namespace NeuralJourney.Infrastructure.Engines
             }
             catch (OperationCanceledException)
             {
-                // Stopped from cancellation event
+                await Stop();
+
+                throw;
             }
             catch (Exception ex)
             {
@@ -110,14 +103,33 @@ namespace NeuralJourney.Infrastructure.Engines
             }
         }
 
+        public async Task Stop()
+        {
+            LogInfoAndDisplayInConsole(ClientMessageTemplates.StoppingGame);
+
+            if (!_client.Connected)
+                return;
+
+            await _messageService.SendCloseConnectionAsync(_client, _token);
+        }
+
         private async void HandleConsoleInputReceived(string input, TextReader reader) => await _messageService.SendMessageAsync(_client, input, _token);
 
-        private void HandleNetworkInputReceived(string message, TcpClient sender) => _logger.Information(message);
+        private void HandleNetworkInputReceived(string message, TcpClient sender) => _messageService.DisplayConsoleMessage(message);
 
-        private void HandleClosedConnection(TcpClient sender)
+        private void HandleClosedConnection(TcpClient client)
         {
-            _logger.Information(ClientMessageTemplates.ConnectionClosed);
+            LogInfoAndDisplayInConsole(ClientMessageTemplates.ConnectionClosed);
+
+            client.Close();
+
             _ = Stop();
+        }
+
+        private void LogInfoAndDisplayInConsole(string message)
+        {
+            _messageService.DisplayConsoleMessage(message);
+            _logger.Information(message);
         }
 
         public void Dispose()
@@ -132,5 +144,6 @@ namespace NeuralJourney.Infrastructure.Engines
 
             _logger.Debug(DebugMessageTemplates.DispoedOfType, GetType().Name);
         }
+
     }
 }
