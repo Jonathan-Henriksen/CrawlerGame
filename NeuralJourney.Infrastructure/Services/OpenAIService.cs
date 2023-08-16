@@ -35,52 +35,42 @@ namespace NeuralJourney.Infrastructure.Services
         public async Task<string> GetCommandCompletionTextAsync(CommandContext context)
         {
             var retryCount = 0;
-            object? completionData = null;
 
             while (retryCount < _maxRetryAttempts)
             {
+                var retryLogger = _logger.ForContext("RetryCount", retryCount++);
+
                 try
                 {
                     var promptText = $"{_availableCommands}\n\n{context.RawInput}\n\n###\n\n";
 
-                    _logger.Debug("Requesting completion from OpenAI {@CompletionRequest}", new { context.RawInput, promptText });
+                    retryLogger.Debug("Requesting completion from OpenAI '{PromptText}'", promptText.Replace("\n", "\\n"));
 
                     var completionResponse = await _openApi.Completions.CreateCompletionAsync(promptText);
-                    var completionText = completionResponse?.Completions.FirstOrDefault()?.Text;
+                    var completionText = completionResponse?.Completions.FirstOrDefault()?.Text.TrimStart();
 
-                    completionData = new
-                    {
-                        completionResponse?.Id,
-                        completionResponse?.RequestId,
-                        TokenUsage = completionResponse?.Usage.TotalTokens,
-                        completionResponse?.ProcessingTime,
-                        Completion = completionResponse?.Completions.FirstOrDefault(),
-                        RetryCount = retryCount
-                    };
-
-                    _logger.Debug("Received completion from OpenAI {@CompletionResponse}", completionData);
+                    retryLogger.ForContext("CompletionResponse", completionResponse, true)
+                        .Debug("Received completion from OpenAI '{CompletionText}'", completionText);
 
                     if (string.IsNullOrEmpty(completionText))
-                        throw new CommandMappingException("Completion text was empty", "The server experienced an error with the OpenAI API. Please try agian");
+                        throw new CommandMappingException("Completion text was empty", "The game encountered an error with the OpenAI API. Please try agian");
 
                     return completionText;
                 }
                 catch (WebException webEx) when (webEx.Status == WebExceptionStatus.Timeout || webEx.Status == WebExceptionStatus.ConnectFailure)
                 {
-                    var retryData = completionData ?? new { Reason = webEx.Status, RetryCount = retryCount };
-                    _logger.Warning(webEx, "Network error while requesting OpenAI completion {@CompletionRetryData}", completionData);
-
-                    retryCount++;
+                    retryLogger.Warning(webEx, "Network error while requesting OpenAI completion");
 
                     await Task.Delay(1000 * retryCount);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    retryLogger.Error(ex, "Unexpected error while requestion OpenAI completion");
                     throw;
                 }
             }
 
-            throw new CommandMappingException("Retry limit exceeded", "The server could not connect to the OpenAI API. Please try agian.");
+            throw new CommandMappingException("Failed to retrieve OpenAI completion", "The server could not connect to the OpenAI API. Please try agian.");
         }
     }
 }

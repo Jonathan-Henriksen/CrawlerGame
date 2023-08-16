@@ -1,5 +1,6 @@
 ﻿using NeuralJourney.Core.Enums.Commands;
 using NeuralJourney.Core.Models.Commands;
+using Serilog;
 
 namespace NeuralJourney.Core.Extensions
 {

@@ -1,9 +1,11 @@
-﻿namespace NeuralJourney.Core.Exceptions
+﻿using NeuralJourney.Core.Constants.Messages;
+
+namespace NeuralJourney.Core.Exceptions
 {
     [Serializable]
     public class CommandMappingException : CommandException
     {
-        private const string _defaultPlayerMessage = "Could not match the input to any command. Please try rephrasing it";
+        private const string _defaultPlayerMessage = PlayerMessageTemplates.Command.NoMatch;
 
         public CommandMappingException() { }
         public CommandMappingException(string message) : base(message, _defaultPlayerMessage) { }

@@ -1,5 +1,4 @@
 ﻿using NeuralJourney.Core.Constants.Messages;
-using NeuralJourney.Core.Extensions;
 using NeuralJourney.Core.Interfaces.Commands;
 using NeuralJourney.Core.Interfaces.Handlers;
 using NeuralJourney.Core.Interfaces.Services;
@@ -36,12 +35,9 @@ namespace NeuralJourney.Infrastructure.Handlers
         {
             var player = new Player(playerClient);
 
-            _players.Add(player);
-
-
-            using (LogContext.PushProperty("Player", player.Name))
+            using (LogContext.PushProperty("Player", player, true))
             {
-                _logger.Information("Added player {@Player}", new { PlayerId = player.ID, PlayerName = player.Name });
+                _logger.Information("Added player {PlayerName}", player.Name);
 
                 _ = _inputHandler.HandleInputAsync(player, cancellationToken); // Start background task to notify about new input
             }
@@ -51,7 +47,7 @@ namespace NeuralJourney.Infrastructure.Handlers
         {
             var context = new CommandContext(input, player);
 
-            _logger.Debug(DebugMessageTemplates.PlayerDispatchedCommand, context.ToSimplified());
+            _logger.Debug(DebugMessageTemplates.PlayerDispatchedCommand, player.Name);
 
             _commandDispatcher.DispatchCommand(context);
         }
@@ -74,6 +70,7 @@ namespace NeuralJourney.Infrastructure.Handlers
             _inputHandler.OnInputReceived -= DispatchCommand;
             _inputHandler.OnClosedConnection -= RemovePlayer;
 
+            // Gracefully disconnect players
             foreach (var player in _players)
             {
                 _messageService.SendCloseConnectionAsync(player.GetClient());

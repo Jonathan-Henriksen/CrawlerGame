@@ -20,7 +20,7 @@ namespace NeuralJourney.Core.Commands.Players.Commands
 
         internal MoveCommand(CommandContext context, GameOptions gameOptions)
         {
-            if (context.Params is null || context.Params.Length < 1)
+            if (!context.Params.Any())
                 throw new CommandExecutionException("Missing required parameter 'Direction'", "Could not determine which direction to move");
 
             if (!Enum.TryParse(context.Params[0], out DirectionEnum direction))

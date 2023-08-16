@@ -41,7 +41,7 @@ namespace NeuralJourney.Core.Commands
                 .Select(kvp => kvp.Key.Identifier.ToString())
                 .ToList();
 
-            return string.Join(", ", commands);
+            return string.Join(",", commands);
         }
     }
 }

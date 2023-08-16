@@ -60,7 +60,7 @@ namespace NeuralJourney.Infrastructure.Engines
             catch (OperationCanceledException) when (timeoutCts.IsCancellationRequested)
             {
                 if (timeoutCts.IsCancellationRequested)
-                    _logger.Information(ClientMessageTemplates.ConnectionFailed, "Timeout");
+                    _logger.Information(ClientMessageTemplates.ConnectionFailed);
 
                 await Stop();
                 return;
@@ -68,8 +68,10 @@ namespace NeuralJourney.Infrastructure.Engines
             catch (SocketException ex)
             {
                 _logger.Error(ex, ex.Message);
-                _logger.Information(ClientMessageTemplates.ConnectionFailed, ex.Message);
+                _logger.Information(ClientMessageTemplates.ConnectionFailed);
+
                 await Stop();
+
                 return;
             }
 
@@ -99,18 +101,18 @@ namespace NeuralJourney.Infrastructure.Engines
             }
             catch (OperationCanceledException)
             {
-                // Just stop via 'finally' clause
+                // Stopped from cancellation event
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "An unexpected error occured. Message: {ErrorMessage}", ex.Message);
+                _logger.Error(ex, "An unexpected error occured");
                 await Stop();
             }
         }
 
         private async void HandleConsoleInputReceived(string input, TextReader reader) => await _messageService.SendMessageAsync(_client, input, _token);
 
-        private void HandleNetworkInputReceived(string message, TcpClient sender) => _logger.Information("{Message}", message);
+        private void HandleNetworkInputReceived(string message, TcpClient sender) => _logger.Information(message);
 
         private void HandleClosedConnection(TcpClient sender)
         {

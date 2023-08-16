@@ -31,9 +31,9 @@ namespace NeuralJourney.Infrastructure.Engines
 
             _token = cancellationToken;
 
-            _clock.Start();
-
             _logger.Information(InfoMessageTemplates.GameStarted);
+
+            _clock.Start();
 
             try
             {

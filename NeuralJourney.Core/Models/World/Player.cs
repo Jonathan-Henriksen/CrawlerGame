@@ -8,14 +8,14 @@ namespace NeuralJourney.Core.Models.World
         private readonly string _ip;
         private readonly TcpClient _client;
 
-        public readonly Guid ID;
+        public readonly Guid Id;
 
         public Player(TcpClient client)
         {
             _client = client;
             _ip = ((IPEndPoint?) client.Client.RemoteEndPoint)?.Address.ToString() ?? string.Empty;
 
-            ID = Guid.NewGuid();
+            Id = Guid.NewGuid();
 
             IsConnected = true;
             Name = $"Player({_ip})";

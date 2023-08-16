@@ -11,6 +11,9 @@ namespace NeuralJourney.Core.Models.Commands
             RawInput = rawInput;
             Player = player;
 
+            CompletionText = "N/A";
+            Params = Array.Empty<string>();
+
             var commandType = player is not null ? CommandTypeEnum.Player : CommandTypeEnum.Admin;
             CommandKey = new CommandKey(commandType);
         }
@@ -24,11 +27,11 @@ namespace NeuralJourney.Core.Models.Commands
 
         public CommandKey CommandKey { get; set; }
 
-        public string? CompletionText { get; set; }
+        public string CompletionText { get; set; }
 
         public string? ExecutionMessage { get; set; }
 
-        public string[]? Params { get; set; }
+        public string[] Params { get; set; }
 
         public CommandResult? Result { get; set; }
     }

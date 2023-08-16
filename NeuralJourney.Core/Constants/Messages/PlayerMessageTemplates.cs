@@ -2,15 +2,11 @@
 {
     public static class PlayerMessageTemplates
     {
+
+        public const string SomethingWentWrong = "Something went wrong. Please try again";
         public static class Command
         {
-            public const string InvalidCommand = "The command '{CommandIdentifier}' is not recognized. Please check the command and try again.";
-
-            public const string InvalidParameter = "The value '{ParameterValue}' is not valid for paramter {ParameterName} the command '{CommandIdentifier}'. Expected: {ExpectedValue}'.";
-
-            public const string MissingParameter = "The parameter '{ParameterName}' is required for the command '{CommandIdentifier}'. Please provide the necessary information and try again.";
-
-            public const string InvalidCompletionText = "An error occurred while processing your request. Please try again.";
+            public const string NoMatch = "Could not match the input to any command. Please try rephrasing it";
         }
 
         public static class Message

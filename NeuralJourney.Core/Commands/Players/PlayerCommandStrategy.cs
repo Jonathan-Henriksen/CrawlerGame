@@ -19,7 +19,7 @@ namespace NeuralJourney.Core.Commands.Players
 
             _messageService = messageService;
 
-            _logger = logger.ForContext("Source", typeof(PlayerCommandStrategy).FullName);
+            _logger = logger.ForContext<PlayerCommandStrategy>();
         }
 
         public async Task ExecuteAsync(CommandContext context, CancellationToken cancellationToken = default)
@@ -43,12 +43,12 @@ namespace NeuralJourney.Core.Commands.Players
             }
             catch (CommandMappingException ex)
             {
-                _logger.Error(ex, "Failed to create command {@CommandContext}", context.ToSimplified());
+                _logger.Error(ex, "Failed to create command");
                 errorMessage = ex.PlayerMessage;
             }
             catch (CommandExecutionException ex)
             {
-                _logger.Error(ex, "Error while executing command {@CommandContext}", context.ToSimplified());
+                _logger.Error(ex, "Error while executing command");
                 errorMessage = ex.PlayerMessage;
             }
             catch (OperationCanceledException)
@@ -57,7 +57,7 @@ namespace NeuralJourney.Core.Commands.Players
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Unexpected error while processing the command {@CommandContext}", context.ToSimplified());
+                _logger.Error(ex, "Unexpected error while processing the command");
                 errorMessage = "An unexpected error occured. Please try again";
             }
             finally

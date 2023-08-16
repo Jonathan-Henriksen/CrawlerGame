@@ -2,9 +2,9 @@
 {
     public static class InfoMessageTemplates
     {
-        public const string ClientConnected = "Client connected from {0}";
+        public const string ClientConnected = "Client connected from {Address}";
 
-        public const string ClientDisconnected = "Client disconnected from {0}";
+        public const string ClientDisconnected = "Client disconnected from {Address}";
 
         public const string ExecutedCommand = "Executed {0} command {1}";
 

@@ -48,7 +48,7 @@ catch (OperationCanceledException)
 catch (Exception ex)
 {
     cts.Cancel();
-    logger.Fatal(ex, ex.Message); // Unexpected error that crashed the application
+    logger.Fatal(ex, "Game crashed unexpectedly"); // Unexpected error that crashed the application
 }
 finally
 {

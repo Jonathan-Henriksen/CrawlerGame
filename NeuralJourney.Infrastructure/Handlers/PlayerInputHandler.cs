@@ -27,13 +27,14 @@ namespace NeuralJourney.Infrastructure.Handlers
         {
             var client = player.GetClient();
 
-            var reconnectionAttempts = 0;
-
+            var retryCount = 0;
             while (!cancellationToken.IsCancellationRequested)
             {
                 try
                 {
                     var input = await _messageService.ReadMessageAsync(client, cancellationToken);
+
+                    retryCount = 0; // Reset after reading a message successfully
 
                     if (_messageService.IsCloseConnectionMessage(input))
                     {
@@ -46,7 +47,7 @@ namespace NeuralJourney.Infrastructure.Handlers
 
                     OnInputReceived?.Invoke(input, player);
 
-                    reconnectionAttempts = 0; // Reset reconnection attempts on successful input
+
                 }
                 catch (IOException ex)
                 {
@@ -56,24 +57,32 @@ namespace NeuralJourney.Infrastructure.Handlers
                         return;
                     }
 
-                    _logger.Warning("Lost connection to ({PlayerName}). Waiting for reconnect: {ErrorMessage}", player.Name, ex.Message);
-                    reconnectionAttempts++;
+                    _logger.Warning(ex, "Lost connection to player");
 
-                    if (reconnectionAttempts >= MaxReconnectionAttempts)
-                    {
-                        _logger.Error("({PlayerName}) reached the reconnection attempt limit({Limit}) and was removed from the game", player.Name, MaxReconnectionAttempts);
-                        return;
-                    }
-
-                    await Task.Delay(3000, cancellationToken);
+                    return;
                 }
                 catch (OperationCanceledException)
                 {
-                    throw; // Thorw back to player handler
+                    return;
                 }
                 catch (Exception ex)
                 {
-                    _logger.Error(ex, "Unexpected error while reading the stream of ({PlayerName}): {ErrorMessage}", player.Name, ex.Message);
+                    _logger.Error(ex, "Unexpected error while reading from player stream {Address}. Retries: {RetryCount}/3", client.Client.RemoteEndPoint, retryCount);
+
+                    if (retryCount < 3)
+                    {
+                        retryCount++;
+
+                        if (client.Connected)
+                            await _messageService.SendMessageAsync(client, $"Unexpected error while processing your message. Please try again ({retryCount + 1}/3)", cancellationToken);
+
+                        continue;
+                    }
+
+                    await _messageService.SendMessageAsync(client, "Retry limit exceeded", cancellationToken);
+                    await _messageService.SendCloseConnectionAsync(client, cancellationToken);
+
+                    return;
                 }
             }
         }

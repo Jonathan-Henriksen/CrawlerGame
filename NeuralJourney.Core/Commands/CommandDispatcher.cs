@@ -1,23 +1,54 @@
-﻿using NeuralJourney.Core.Interfaces.Commands;
+﻿using NeuralJourney.Core.Constants.Messages;
+using NeuralJourney.Core.Interfaces.Commands;
+using NeuralJourney.Core.Interfaces.Services;
 using NeuralJourney.Core.Models.Commands;
+using Serilog;
+using Serilog.Context;
 
 namespace NeuralJourney.Core.Commands
 {
     public class CommandDispatcher : ICommandDispatcher
     {
         private readonly ICommandStrategyFactory _commandStrategyFactory;
+        private readonly IMessageService _messageService;
+        private readonly ILogger _logger;
 
-        public CommandDispatcher(ICommandStrategyFactory commandStrategyFactory)
+        public CommandDispatcher(ICommandStrategyFactory commandStrategyFactory, IMessageService messageService, ILogger logger)
         {
             _commandStrategyFactory = commandStrategyFactory;
+            _messageService = messageService;
+            _logger = logger;
         }
 
         public void DispatchCommand(CommandContext context)
         {
-            var strategy = _commandStrategyFactory.CreateCommandStrategy(context.CommandKey.Type)
-                ?? throw new InvalidOperationException("Failed to dispatch command. Reason: No strategy was available for the provided command type");
+            using (LogContext.PushProperty("CommandContext", context, true))
+            {
+                try
+                {
+                    var strategy = _commandStrategyFactory.CreateCommandStrategy(context.CommandKey.Type);
 
-            _ = strategy.ExecuteAsync(context);
+                    if (strategy is null)
+                    {
+                        _logger.ForContext("Reason", "No strategy was found for the command type")
+                            .Error(ErrorMessageTemplates.CommandDispatchFailed, context.CommandKey.Type);
+
+                        if (context.Player is not null)
+                            _messageService.SendMessageAsync(context.Player.GetClient(), PlayerMessageTemplates.Command.NoMatch);
+
+                        return;
+                    }
+
+                    _ = strategy.ExecuteAsync(context);
+                }
+                catch (Exception ex)
+                {
+                    _logger.Error(ex, ErrorMessageTemplates.CommandDispatchFailed, context.CommandKey.Type);
+
+                    if (context.Player is not null)
+                        _messageService.SendMessageAsync(context.Player.GetClient(), PlayerMessageTemplates.SomethingWentWrong);
+                }
+            }
         }
     }
 }
