@@ -1,4 +1,5 @@
 ﻿using NeuralJourney.Core.Constants.Messages;
+using NeuralJourney.Core.Exceptions;
 using NeuralJourney.Core.Interfaces.Services;
 using Serilog;
 using System.Net;
@@ -32,10 +33,11 @@ namespace NeuralJourney.Infrastructure.Services
             var semaphore = GetSemaphore(client);
 
             var retryCount = 0;
+
+            var retryLogger = _logger.ForContext("MessageText", message).ForContext("RetryCount", retryCount);
+
             while (retryCount < 3)
             {
-                var messageLogger = _logger.ForContext("MessageText", message).ForContext("RetryCount", retryCount);
-
                 try
                 {
                     await semaphore.WaitAsync(cancellationToken);
@@ -45,13 +47,13 @@ namespace NeuralJourney.Infrastructure.Services
                     await stream.WriteAsync(lengthBytes, cancellationToken);
                     await stream.WriteAsync(messageBytes, cancellationToken);
 
-                    messageLogger.Debug(DebugMessageTemplates.Messages.MessageSent, destinationAddress);
+                    retryLogger.Debug(DebugMessageTemplates.Messages.MessageSent, destinationAddress);
 
                     return;
                 }
                 catch (OperationCanceledException ex)
                 {
-                    messageLogger.Debug(ex, DebugMessageTemplates.Messages.MessageCancelled, "sending", destinationAddress);
+                    retryLogger.Debug(ex, DebugMessageTemplates.Messages.MessageSendCancelled, destinationAddress);
                     return;
                 }
                 catch (IOException ex)
@@ -60,19 +62,19 @@ namespace NeuralJourney.Infrastructure.Services
                     {
                         retryCount++;
 
-                        messageLogger.Warning(ex, "Error writing to the stream");
+                        retryLogger.Warning(ex, ErrorMessageTemplates.Messages.MessageSendWarning, destinationAddress);
 
                         continue;
                     }
 
-                    messageLogger.Error(ex, ErrorMessageTemplates.Messages.MessageSendFailed, destinationAddress);
+                    retryLogger.Error(ex, ErrorMessageTemplates.Messages.MessageSendFailed, destinationAddress);
 
-                    throw;
+                    throw new MessageException(ex, "Failed to send message", destinationAddress, message);
                 }
                 catch (Exception ex)
                 {
-                    messageLogger.Error(ex, ErrorMessageTemplates.Messages.MessageSendFailed, destinationAddress);
-                    throw;
+                    retryLogger.Error(ex, ErrorMessageTemplates.Messages.MessageSendFailed, destinationAddress);
+                    throw new MessageException(ex, "Failed to send message", destinationAddress, message);
                 }
                 finally
                 {
@@ -86,37 +88,56 @@ namespace NeuralJourney.Infrastructure.Services
             var stream = client.GetStream();
 
             var remoteAddress = GetStreamIp(stream);
+            var retryCount = 0;
 
-            try
+            var retryLogger = _logger.ForContext("RetryCount", retryCount);
+
+            while (retryCount < 3)
             {
-                var lengthBytes = new byte[4];
-                await stream.ReadAsync(lengthBytes, cancellationToken);
+                try
+                {
+                    var lengthBytes = new byte[4];
+                    await stream.ReadAsync(lengthBytes, cancellationToken);
 
-                var messageLength = BitConverter.ToInt32(lengthBytes, 0);
-                var messageBytes = new byte[messageLength];
-                await stream.ReadAsync(messageBytes.AsMemory(0, messageLength), cancellationToken);
+                    var messageLength = BitConverter.ToInt32(lengthBytes, 0);
+                    var messageBytes = new byte[messageLength];
+                    await stream.ReadAsync(messageBytes.AsMemory(0, messageLength), cancellationToken);
 
-                var message = _encoding.GetString(messageBytes);
+                    var message = _encoding.GetString(messageBytes);
 
-                _logger.ForContext("MessageText", message).Debug(DebugMessageTemplates.Messages.MessageRead, remoteAddress);
+                    retryLogger.ForContext("MessageText", message)
+                        .Debug(DebugMessageTemplates.Messages.MessageRead, remoteAddress);
 
-                return message;
+                    return message;
+                }
+                catch (OperationCanceledException)
+                {
+                    retryLogger.Debug(DebugMessageTemplates.Messages.MessageReadCancalled, remoteAddress);
+                    throw;
+                }
+                catch (IOException ex)
+                {
+                    if (ex.InnerException is SocketException socketEx && socketEx.SocketErrorCode == SocketError.ConnectionReset)
+                    {
+                        retryCount++;
+
+                        retryLogger.Warning(ex, ErrorMessageTemplates.Messages.MessageReadWarning, remoteAddress);
+
+                        continue;
+                    }
+
+                    retryLogger.Error(ex, ErrorMessageTemplates.Messages.MessageReadFailed, remoteAddress);
+
+                    throw new MessageException(ex, "Failed to read message", remoteAddress);
+                }
+                catch (Exception ex)
+                {
+                    retryLogger.Error(ex, ErrorMessageTemplates.Messages.MessageReadFailed, remoteAddress);
+                    throw new MessageException(ex, "Failed to read message", remoteAddress);
+                }
             }
-            catch (OperationCanceledException)
-            {
-                _logger.Debug(DebugMessageTemplates.Messages.MessageCancelled, "reading", remoteAddress);
-                throw;
-            }
-            catch (IOException ex)
-            {
-                _logger.Error(ex, "Error reading from the stream");
-                throw; // TODO: Add retry logic
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex, ErrorMessageTemplates.Messages.MessageReadFailed, remoteAddress);
-                throw;
-            }
+
+            throw new MessageException("Retry limit reached", remoteAddress);
         }
 
         public async Task SendCloseConnectionAsync(TcpClient client, CancellationToken cancellationToken = default)

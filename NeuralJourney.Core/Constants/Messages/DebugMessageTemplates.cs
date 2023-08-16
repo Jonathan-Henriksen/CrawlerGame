@@ -12,7 +12,9 @@
 
             public const string MessageRead = "Received message from {Address}";
 
-            public const string MessageCancelled = "Cancelled {MessageOperation} message from {Address}";
+            public const string MessageSendCancelled = "Cancelled sending message to {Address}";
+
+            public const string MessageReadCancalled = "Cancelled reading message from {Address}";
         }
     }
 }

@@ -67,7 +67,7 @@ namespace NeuralJourney.Infrastructure.Engines
             }
             catch (SocketException ex)
             {
-                _logger.Error(ex, ex.Message);
+                _logger.Error(ex, ClientMessageTemplates.ConnectionFailed);
                 _logger.Information(ClientMessageTemplates.ConnectionFailed);
 
                 await Stop();

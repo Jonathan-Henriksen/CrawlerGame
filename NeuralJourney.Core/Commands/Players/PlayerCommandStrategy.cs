@@ -1,5 +1,4 @@
 ﻿using NeuralJourney.Core.Exceptions;
-using NeuralJourney.Core.Extensions;
 using NeuralJourney.Core.Interfaces.Commands;
 using NeuralJourney.Core.Interfaces.Services;
 using NeuralJourney.Core.Models.Commands;
