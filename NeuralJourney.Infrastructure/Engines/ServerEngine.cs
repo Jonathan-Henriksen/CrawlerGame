@@ -41,7 +41,7 @@ namespace NeuralJourney.Infrastructure.Engines
             }
             catch (OperationCanceledException)
             {
-                await StopAsync();
+                return; // Engine is stopped before cancelling token to ensure players connections are closed
             }
             catch (Exception ex)
             {
@@ -53,7 +53,7 @@ namespace NeuralJourney.Infrastructure.Engines
         {
             _logger.Information(ServerLogTemplates.Info.ServerStopped);
 
-            await _playerHandler.StopAsync();
+            await _playerHandler.RemoveAllPlayers();
 
             _clock.Reset();
         }

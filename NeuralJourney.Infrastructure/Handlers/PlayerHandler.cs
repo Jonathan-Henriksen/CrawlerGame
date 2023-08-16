@@ -67,7 +67,7 @@ namespace NeuralJourney.Infrastructure.Handlers
         {
             var client = player.GetClient();
 
-            _logger.Information(ServerLogTemplates.Info.PlayerRemoved, client.Client.RemoteEndPoint);
+            _logger.Information(ServerLogTemplates.Info.PlayerRemoved, player.Name);
 
             client.Close();
             client.Dispose();
@@ -75,7 +75,7 @@ namespace NeuralJourney.Infrastructure.Handlers
             _players.Remove(player);
         }
 
-        public async Task StopAsync()
+        public async Task RemoveAllPlayers()
         {
             foreach (var player in _players)
             {

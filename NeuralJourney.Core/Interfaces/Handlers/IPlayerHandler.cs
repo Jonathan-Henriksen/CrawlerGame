@@ -6,6 +6,6 @@ namespace NeuralJourney.Core.Interfaces.Handlers
     {
         void AddPlayer(TcpClient playerClient, CancellationToken cancellation = default);
 
-        Task StopAsync();
+        Task RemoveAllPlayers();
     }
 }
