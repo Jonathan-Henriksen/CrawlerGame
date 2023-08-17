@@ -1,9 +1,12 @@
 ﻿using NeuralJourney.Core.Constants;
+using NeuralJourney.Core.Extensions;
 using NeuralJourney.Core.Interfaces.Engines;
 using NeuralJourney.Core.Interfaces.Handlers;
 using NeuralJourney.Core.Interfaces.Services;
+using NeuralJourney.Core.Models.LogProperties;
 using NeuralJourney.Core.Options;
 using Serilog;
+using Serilog.Context;
 using System.Net.Sockets;
 
 namespace NeuralJourney.Infrastructure.Engines
@@ -22,6 +25,8 @@ namespace NeuralJourney.Infrastructure.Engines
 
         private CancellationToken _token;
 
+        private IDisposable? _loggerContext;
+        private PlayerContext? _playerContext;
 
         public ClientEngine(IInputHandler<TextReader> consoleInputHandler, IInputHandler<TcpClient> networkInputHandler, IMessageService messageService, ILogger logger, ClientOptions options)
         {
@@ -29,12 +34,13 @@ namespace NeuralJourney.Infrastructure.Engines
             _networkInputHandler = networkInputHandler;
 
             _messageService = messageService;
-            _logger = logger.ForContext<ClientEngine>();
 
             _client = new TcpClient();
 
             _serverIp = options.ServerIp;
             _serverPort = options.ServerPort;
+
+            _logger = logger.ForContext<ClientEngine>();
 
             _networkInputHandler.OnInputReceived += HandleNetworkInputReceived;
             _networkInputHandler.OnClosedConnection += HandleClosedConnection;
@@ -44,6 +50,11 @@ namespace NeuralJourney.Infrastructure.Engines
 
         public async Task Run(CancellationToken cancellationToken = default)
         {
+            InitPlayer();
+
+            if (_playerContext is null)
+                throw new InvalidOperationException("Client have not been initialize");
+
             LogInfoAndDisplayInConsole(ClientLogMessages.Info.StartingGame);
 
             _token = cancellationToken;
@@ -56,6 +67,8 @@ namespace NeuralJourney.Infrastructure.Engines
                 LogInfoAndDisplayInConsole(ClientLogMessages.Info.ConnectionInitialize);
 
                 await _client.ConnectAsync(_serverIp, _serverPort, timeoutCts.Token);
+
+                await ServerHandshake();
 
                 LogInfoAndDisplayInConsole(ClientLogMessages.Info.ConnectionEstablished);
             }
@@ -89,6 +102,7 @@ namespace NeuralJourney.Infrastructure.Engines
             try
             {
                 await Task.WhenAny(consoleInputTask, networkInputTask);
+
             }
             catch (OperationCanceledException)
             {
@@ -113,9 +127,41 @@ namespace NeuralJourney.Infrastructure.Engines
             await _messageService.SendCloseConnectionAsync(_client, _token);
         }
 
-        private async void HandleConsoleInputReceived(string input, TextReader reader) => await _messageService.SendMessageAsync(_client, input, _token);
+        private void InitPlayer()
+        {
+            Console.Write("Please enter your name: ");
+            var name = Console.ReadLine() ?? "Anonymouse";
 
-        private void HandleNetworkInputReceived(string message, TcpClient sender) => _messageService.DisplayConsoleMessage(message);
+            _playerContext = new PlayerContext(name, Guid.NewGuid(), _client.GetLocalIp());
+
+            _loggerContext = LogContext.PushProperty("PlayerContext", _playerContext, true);
+        }
+
+        private async Task ServerHandshake()
+        {
+            if (_playerContext is null)
+                throw new InvalidOperationException();
+
+            await _messageService.SendHandshake(_client, _playerContext.Name, _playerContext.Id);
+
+            var handshakeCompleted = false;
+            while (!handshakeCompleted)
+            {
+                var response = await _messageService.ReadMessageAsync(_client, _token);
+                if (!_messageService.IsHandshake(response, out var handshakeName, out var handshakeId))
+                    continue;
+
+                if (_playerContext.Name == handshakeName && _playerContext.Id == handshakeId)
+                    handshakeCompleted = true;
+            }
+        }
+
+        private async void HandleConsoleInputReceived(string input, TextReader reader)
+        {
+            await _messageService.SendMessageAsync(_client, input, _token);
+        }
+
+        private void HandleNetworkInputReceived(string message, TcpClient client) => _messageService.DisplayConsoleMessage(message);
 
         private void HandleClosedConnection(TcpClient client)
         {
@@ -143,7 +189,8 @@ namespace NeuralJourney.Infrastructure.Engines
             _client.Dispose();
 
             _logger.Debug(SystemMessages.DispoedOfType, GetType().Name);
-        }
 
+            _loggerContext.Dispose();
+        }
     }
 }

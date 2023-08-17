@@ -14,6 +14,7 @@ using NeuralJourney.Core.Models.World;
 using NeuralJourney.Core.Options;
 using NeuralJourney.Infrastructure.Engines;
 using NeuralJourney.Infrastructure.Handlers;
+using NeuralJourney.Infrastructure.Logging;
 using NeuralJourney.Infrastructure.Services;
 using Serilog;
 using Serilog.Events;
@@ -85,6 +86,8 @@ static IHostBuilder CreateHostBuilder(string[] strings)
                     .Enrich.FromLogContext()
                     .Enrich.WithExceptionDetails(new DestructuringOptionsBuilder().WithDefaultDestructurers().WithFilter(new IgnorePropertyByNameExceptionFilter("HResult", "StackTrace", "$type")))
                     .Enrich.WithProperty("Application", "Server")
+                    .Enrich.With(new IgnoreNullPropertiesEnricher("Player"))
+                    .Destructure.With(new CommandContextDestructuringPolicy())
                     .WriteTo.Seq(serverUrl: "http://localhost:5341/", restrictedToMinimumLevel: logLevel)
                     .WriteTo.Console(formatter: consoleTemplate);
         })

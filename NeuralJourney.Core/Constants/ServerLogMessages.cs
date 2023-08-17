@@ -4,7 +4,7 @@
     {
         public static class Debug
         {
-            public const string DispatchedPlayerCommand = "Dispatching command for {PlayerName}";
+            public const string DispatchedPlayerCommand = "Dispatched command for {PlayerName}";
         }
 
         public static class Info

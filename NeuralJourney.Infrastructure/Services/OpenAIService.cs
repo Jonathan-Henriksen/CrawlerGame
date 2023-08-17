@@ -32,7 +32,7 @@ namespace NeuralJourney.Infrastructure.Services
             _availableCommands = CommandRegistry.GetCommands(CommandTypeEnum.Player);
         }
 
-        public async Task<string> GetCommandCompletionTextAsync(CommandContext context)
+        public async Task SetCommandCompletionTextAsync(CommandContext context)
         {
             var retryCount = 0;
 
@@ -42,20 +42,17 @@ namespace NeuralJourney.Infrastructure.Services
 
                 try
                 {
-                    var promptText = $"{_availableCommands}\n\n{context.RawInput}\n\n###\n\n";
+                    var promptText = $"{_availableCommands}\n\n{context.InputText}\n\n###\n\n";
 
-                    retryLogger.Debug("Requesting completion from OpenAI '{PromptText}'", promptText.Replace("\n", "\\n"));
+                    retryLogger.Debug("Requesting OpenAI Completion for input '{InputText}'", context.InputText);
 
                     var completionResponse = await _openApi.Completions.CreateCompletionAsync(promptText);
-                    var completionText = completionResponse?.Completions.FirstOrDefault()?.Text.TrimStart();
+                    context.CompletionText = completionResponse?.Completions.FirstOrDefault()?.Text.TrimStart();
 
                     retryLogger.ForContext("CompletionResponse", completionResponse, true)
-                        .Debug("Received completion from OpenAI '{CompletionText}'", completionText);
+                        .Debug("Received completion from OpenAI '{CompletionText}'", context.CompletionText);
 
-                    if (string.IsNullOrEmpty(completionText))
-                        throw new CommandMappingException("Completion text was empty", "The game encountered an error with the OpenAI API. Please try agian");
-
-                    return completionText;
+                    return;
                 }
                 catch (WebException webEx) when (webEx.Status == WebExceptionStatus.Timeout || webEx.Status == WebExceptionStatus.ConnectFailure)
                 {

@@ -20,9 +20,9 @@
 
         public static class WelcomeFlow
         {
-            public const string WelcomeMessage = "Welcome to Neural Journey! x½Please enter your name";
+            public const string WelcomeMessage = "Welcome to Neural Journey! Please enter your name";
 
-            public const string WelcomeNameMessage = "Hi {0}! Let's get started";
+            public const string WelcomeNameMessage = "Hi {0}! Welcome to Neural Journey. Let's get started";
 
             public const string NameAlreadyTaken = "Sorry that name is already taken. Please choose another";
 

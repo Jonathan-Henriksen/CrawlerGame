@@ -8,7 +8,7 @@ namespace NeuralJourney.Core.Commands.Players.Middleware
     {
         public async Task InvokeAsync(CommandContext context, Func<Task> next, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(context.RawInput))
+            if (string.IsNullOrEmpty(context.InputText))
                 throw new CommandMappingException("Input was blank");
 
             await next();

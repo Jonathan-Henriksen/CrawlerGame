@@ -10,12 +10,12 @@ namespace NeuralJourney.Core.Models.World
 
         public readonly Guid Id;
 
-        public Player(TcpClient client, string name)
+        public Player(TcpClient client, string name, Guid id)
         {
             _client = client;
             _ip = ((IPEndPoint?) client.Client.RemoteEndPoint)?.Address.ToString() ?? string.Empty;
 
-            Id = Guid.NewGuid();
+            Id = id;
 
             IsConnected = true;
             Name = name;

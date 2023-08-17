@@ -12,6 +12,10 @@ namespace NeuralJourney.Core.Interfaces.Services
 
         bool IsCloseConnectionMessage(string message);
 
+        Task SendHandshake(TcpClient client, string name, Guid id, CancellationToken cancellationToken = default);
+
+        bool IsHandshake(string message, out string? name, out Guid? id);
+
         void DisplayConsoleMessage(string message);
     }
 }

@@ -1,20 +1,24 @@
 ﻿using NeuralJourney.Core.Constants;
 using NeuralJourney.Core.Exceptions;
+using NeuralJourney.Core.Extensions;
 using NeuralJourney.Core.Interfaces.Services;
+using NeuralJourney.Core.Models.LogProperties;
 using Serilog;
-using System.Net;
+using Serilog.Context;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace NeuralJourney.Infrastructure.Services
 {
-    public class MessageService : IMessageService
+    public partial class MessageService : IMessageService
     {
         private readonly Dictionary<TcpClient, SemaphoreSlim> _streamSemaphores = new();
         private readonly Encoding _encoding = Encoding.UTF8;
         private readonly ILogger _logger;
 
         public const string CloseConnectionMessage = "__CLOSE_CONNECTION__";
+        public const string NameVerificationMessage = "_NAME_{0}_NAME__ID__{1}__ID_";
 
         public MessageService(ILogger logger)
         {
@@ -25,18 +29,16 @@ namespace NeuralJourney.Infrastructure.Services
         {
             var stream = client.GetStream();
 
-            var destinationAddress = GetStreamIp(stream);
+            var messageContext = new MessageContext(message, 0, client.GetRemoteIp());
 
             var messageBytes = _encoding.GetBytes(message);
             var lengthBytes = BitConverter.GetBytes(messageBytes.Length);
 
             var semaphore = GetSemaphore(client);
 
-            var retryCount = 0;
+            var messageLogger = _logger.ForContext("MessageContext", messageContext, true);
 
-            var retryLogger = _logger.ForContext("MessageText", message).ForContext("RetryCount", retryCount);
-
-            while (retryCount < 3)
+            while (messageContext.RetryCount < 3)
             {
                 try
                 {
@@ -47,14 +49,14 @@ namespace NeuralJourney.Infrastructure.Services
                     await stream.WriteAsync(lengthBytes, cancellationToken);
                     await stream.WriteAsync(messageBytes, cancellationToken);
 
-                    retryLogger.Debug(MessageLogMessages.Debug.MessageSent, destinationAddress);
+                    messageLogger.Debug(MessageLogMessages.Debug.MessageSent, messageContext.IpAddress);
 
                     return;
                 }
                 catch (OperationCanceledException ex)
                 {
                     if (stream.DataAvailable)
-                        retryLogger.Debug(ex, MessageLogMessages.Debug.MessageSendCancelled, destinationAddress);
+                        messageLogger.Debug(ex, MessageLogMessages.Debug.MessageSendCancelled, messageContext.IpAddress);
 
                     return;
                 }
@@ -62,21 +64,21 @@ namespace NeuralJourney.Infrastructure.Services
                 {
                     if (ex.InnerException is SocketException socketEx && socketEx.SocketErrorCode == SocketError.ConnectionReset)
                     {
-                        retryCount++;
+                        messageContext.RetryCount++;
 
-                        retryLogger.Warning(ex, MessageLogMessages.Warning.StreamWriteFailed, destinationAddress);
+                        messageLogger.Warning(ex, MessageLogMessages.Warning.StreamWriteFailed, messageContext.IpAddress);
 
                         continue;
                     }
 
-                    retryLogger.Error(ex, MessageLogMessages.Error.MessageSendFailed, destinationAddress);
+                    messageLogger.Error(ex, MessageLogMessages.Error.MessageSendFailed, messageContext.IpAddress);
 
-                    throw new MessageException(ex, "Failed to send message", destinationAddress, message);
+                    throw new MessageException(ex, "Failed to send message", messageContext);
                 }
                 catch (Exception ex)
                 {
-                    retryLogger.Error(ex, MessageLogMessages.Error.MessageSendFailed, destinationAddress);
-                    throw new MessageException(ex, "Failed to send message", destinationAddress, message);
+                    messageLogger.Error(ex, MessageLogMessages.Error.MessageSendFailed, messageContext.IpAddress);
+                    throw new MessageException(ex, "Failed to send message", messageContext);
                 }
                 finally
                 {
@@ -89,65 +91,62 @@ namespace NeuralJourney.Infrastructure.Services
         {
             var stream = client.GetStream();
 
-            var remoteAddress = GetStreamIp(stream);
-            var retryCount = 0;
+            var messageContext = new MessageContext("N/A", 0, client.GetRemoteIp());
 
-            var retryLogger = _logger.ForContext("RetryCount", retryCount);
-
-            while (retryCount < 3)
+            using (LogContext.PushProperty("MessageContext", messageContext, true))
             {
-                try
+                while (messageContext.RetryCount < 3)
                 {
-                    var lengthBytes = new byte[4];
-                    await stream.ReadAsync(lengthBytes, cancellationToken);
-
-                    var messageLength = BitConverter.ToInt32(lengthBytes, 0);
-                    var messageBytes = new byte[messageLength];
-                    await stream.ReadAsync(messageBytes.AsMemory(0, messageLength), cancellationToken);
-
-                    var message = _encoding.GetString(messageBytes);
-
-                    retryLogger.ForContext("MessageText", message)
-                        .Debug(MessageLogMessages.Debug.MessageRead, remoteAddress);
-
-                    return message;
-                }
-                catch (OperationCanceledException)
-                {
-                    if (stream.DataAvailable)
-                        retryLogger.Debug(MessageLogMessages.Debug.MessageReadCancelled, remoteAddress);
-
-                    throw;
-                }
-                catch (IOException ex) when (ex.InnerException is SocketException socketEx)
-                {
-                    if (socketEx.SocketErrorCode == SocketError.ConnectionReset)
+                    try
                     {
-                        retryCount++;
+                        var lengthBytes = new byte[4];
+                        await stream.ReadAsync(lengthBytes, cancellationToken);
 
-                        retryLogger.Warning(ex, MessageLogMessages.Warning.StreamReadFailed, remoteAddress);
+                        var messageLength = BitConverter.ToInt32(lengthBytes, 0);
+                        var messageBytes = new byte[messageLength];
+                        await stream.ReadAsync(messageBytes.AsMemory(0, messageLength), cancellationToken);
 
-                        continue;
+                        messageContext.MessageText = _encoding.GetString(messageBytes);
+
+                        _logger.Debug(MessageLogMessages.Debug.MessageRead, messageContext.IpAddress);
+
+                        return messageContext.MessageText;
                     }
-
-                    // Handle clienet being closed before token is cancelled
-                    if (socketEx.SocketErrorCode == SocketError.OperationAborted)
+                    catch (OperationCanceledException)
                     {
-                        throw new OperationCanceledException();
+                        if (stream.DataAvailable)
+                            _logger.Debug(MessageLogMessages.Debug.MessageReadCancelled, messageContext.IpAddress);
+
+                        throw;
                     }
+                    catch (IOException ex) when (ex.InnerException is SocketException socketEx)
+                    {
+                        if (socketEx.SocketErrorCode == SocketError.ConnectionReset)
+                        {
+                            messageContext.RetryCount++;
 
-                    retryLogger.Error(ex, MessageLogMessages.Error.MessageReadFailed, remoteAddress);
+                            _logger.Warning(ex, MessageLogMessages.Warning.StreamReadFailed, messageContext.IpAddress);
 
-                    throw new MessageException(ex, "Failed to read incoming message", remoteAddress);
-                }
-                catch (Exception ex)
-                {
-                    retryLogger.Error(ex, MessageLogMessages.Error.MessageReadFailed, remoteAddress);
-                    throw new MessageException(ex, "Failed to read incoming message", remoteAddress);
+                            continue;
+                        }
+
+                        // Handle clienet being closed before token is cancelled
+                        if (socketEx.SocketErrorCode == SocketError.OperationAborted)
+                            throw new OperationCanceledException();
+
+                        _logger.Error(ex, MessageLogMessages.Error.MessageReadFailed, messageContext.IpAddress);
+
+                        throw new MessageException(ex, "Failed to read incoming message", messageContext);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.Error(ex, MessageLogMessages.Error.MessageReadFailed, messageContext.IpAddress);
+                        throw new MessageException(ex, "Failed to read incoming message", messageContext);
+                    }
                 }
             }
 
-            throw new MessageException("Retry limit reached while reading", remoteAddress);
+            throw new MessageException("Retry limit reached while reading", messageContext);
         }
 
         public async Task SendCloseConnectionAsync(TcpClient client, CancellationToken cancellationToken = default)
@@ -158,6 +157,39 @@ namespace NeuralJourney.Infrastructure.Services
         public bool IsCloseConnectionMessage(string message)
         {
             return message == CloseConnectionMessage;
+        }
+
+        public async Task SendHandshake(TcpClient client, string name, Guid id, CancellationToken cancellationToken = default)
+        {
+            await SendMessageAsync(client, string.Format(NameVerificationMessage, name, id), cancellationToken);
+        }
+
+        public bool IsHandshake(string message, out string? name, out Guid? id)
+        {
+            name = null;
+            id = null;
+
+            var match = ValidateNameVerificationMessage().Match(message);
+
+            if (!match.Success)
+                return false;
+
+            name = match.Groups[1].Value;
+
+            if (!Guid.TryParse(match.Groups[2].Value, out var guid))
+                return false;
+
+            id = guid;
+            return true;
+        }
+
+        public void DisplayConsoleMessage(string message)
+        {
+            Console.SetCursorPosition(0, Console.CursorTop);
+
+            Console.Write("> ");
+            WriteColoredMessage(message, ConsoleColor.Blue);
+            Console.Write("> ");
         }
 
         private SemaphoreSlim GetSemaphore(TcpClient client)
@@ -173,26 +205,14 @@ namespace NeuralJourney.Infrastructure.Services
             }
         }
 
-        private static string GetStreamIp(NetworkStream stream)
-        {
-
-            return ((IPEndPoint?) stream.Socket.RemoteEndPoint)?.Address?.ToString()?.Replace("::ffff:", "") ?? "N/A";
-        }
-
-        public void DisplayConsoleMessage(string message)
-        {
-            Console.SetCursorPosition(0, Console.CursorTop);
-
-            Console.Write("> ");
-            WriteColoredMessage(message, ConsoleColor.Blue);
-            Console.Write("> ");
-        }
-
         private void WriteColoredMessage(string message, ConsoleColor color)
         {
             Console.ForegroundColor = color;
             Console.WriteLine($"{message}\n");
             Console.ResetColor();
         }
+
+        [GeneratedRegex(@"_NAME_(.*?)_NAME__ID__([a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12})__ID_")]
+        private static partial Regex ValidateNameVerificationMessage();
     }
 }

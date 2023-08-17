@@ -1,27 +1,25 @@
-﻿namespace NeuralJourney.Core.Exceptions
+﻿using NeuralJourney.Core.Models.LogProperties;
+
+namespace NeuralJourney.Core.Exceptions
 {
 
     [Serializable]
     public class MessageException : Exception
     {
-        public string? MessageText { get; set; }
-
-        public string? Address { get; set; }
+        public MessageContext? Context { get; set; }
 
         public MessageException() { }
         public MessageException(string message) : base(message) { }
         public MessageException(string message, Exception inner) : base(message, inner) { }
 
-        public MessageException(string message, string? address, string? messageText = null) : this(message)
+        public MessageException(string message, MessageContext context) : this(message)
         {
-            Address = address;
-            MessageText = messageText;
+            Context = context;
         }
 
-        public MessageException(Exception ex, string message, string? address, string? messageText = null) : this(message, ex)
+        public MessageException(Exception ex, string message, MessageContext context) : this(message, ex)
         {
-            Address = address;
-            MessageText = messageText;
+            Context = context;
         }
 
         protected MessageException(

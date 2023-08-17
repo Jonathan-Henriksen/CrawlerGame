@@ -1,8 +1,10 @@
 ﻿using NeuralJourney.Core.Constants;
+using NeuralJourney.Core.Extensions;
 using NeuralJourney.Core.Interfaces.Commands;
 using NeuralJourney.Core.Interfaces.Handlers;
 using NeuralJourney.Core.Interfaces.Services;
 using NeuralJourney.Core.Models.Commands;
+using NeuralJourney.Core.Models.LogProperties;
 using NeuralJourney.Core.Models.World;
 using Serilog;
 using Serilog.Context;
@@ -36,33 +38,36 @@ namespace NeuralJourney.Infrastructure.Handlers
         {
             Player? player = null;
 
-            var addressLogger = _logger.ForContext("Address", playerClient.Client.RemoteEndPoint);
-
+            var addressLogger = LogContext.PushProperty("Address", playerClient.Client.RemoteEndPoint);
             try
             {
-                var playerName = await RequestPlayerNameAsync(playerClient, cancellationToken);
-
-                player = new Player(playerClient, playerName);
+                player = await InitPlayerAsync(playerClient, cancellationToken);
 
                 _players.Add(player);
             }
-            catch (OperationCanceledException) // Cancelled when player sends 'Close Connection' during name request
+            catch (OperationCanceledException) // Cancelled when player sends 'Close Connection' during initialization
             {
-                addressLogger.Warning(ServerLogMessages.Warning.PlayerLeftEarly);
+                _logger.Warning(ServerLogMessages.Warning.PlayerLeftEarly);
 
                 playerClient.Close();
                 return;
             }
             catch (Exception ex)
             {
-                addressLogger.Error(ex, ServerLogMessages.Error.PlayerAddFailed);
+                _logger.Error(ex, ServerLogMessages.Error.PlayerAddFailed);
 
                 playerClient.Close();
                 return;
             }
+            finally
+            {
+                addressLogger.Dispose();
+            }
+
+            var playerContext = new PlayerContext(player.Name, player.Id, playerClient.GetRemoteIp());
 
             // Start background task to notify about new input
-            using (LogContext.PushProperty("Player", player, true))
+            using (LogContext.PushProperty("PlayerContext", playerContext, true))
             {
                 _logger.Information(ServerLogMessages.Info.PlayerAdded, player.Name);
 
@@ -82,9 +87,8 @@ namespace NeuralJourney.Infrastructure.Handlers
         {
             var context = new CommandContext(input, player);
 
-            _logger.Debug(ServerLogMessages.Debug.DispatchedPlayerCommand, player.Name);
-
-            _commandDispatcher.DispatchCommand(context);
+            using (LogContext.PushProperty("CommandContext", context, true))
+                _commandDispatcher.DispatchCommand(context);
         }
 
         private void RemovePlayer(Player player)
@@ -99,43 +103,57 @@ namespace NeuralJourney.Infrastructure.Handlers
             _players.Remove(player);
         }
 
-        private async Task<string> RequestPlayerNameAsync(TcpClient client, CancellationToken cancellationToken)
+        private async Task<Player> InitPlayerAsync(TcpClient client, CancellationToken cancellationToken)
         {
-            await _messageService.SendMessageAsync(client, PlayerMessages.WelcomeFlow.WelcomeMessage, cancellationToken);
-
             while (!cancellationToken.IsCancellationRequested)
             {
-                var playerName = await _messageService.ReadMessageAsync(client, cancellationToken);
+                var message = await _messageService.ReadMessageAsync(client, cancellationToken);
 
-                if (_messageService.IsCloseConnectionMessage(playerName))
+                // Check if connection was closed instead
+                if (_messageService.IsCloseConnectionMessage(message))
                     throw new OperationCanceledException();
 
-                if (!_players.Any(p => p.Name == playerName) && !string.IsNullOrEmpty(playerName) && PlayerNameValidation().IsMatch(playerName))
-                {
-                    await _messageService.SendMessageAsync(client, string.Format(PlayerMessages.WelcomeFlow.WelcomeNameMessage, playerName));
+                if (!_messageService.IsHandshake(message, out var name, out var id) || string.IsNullOrEmpty(name) || !id.HasValue)
+                    continue;
 
-                    return playerName;
-                }
-
-                if (_players.Any(p => p.Name == playerName))
+                // Validate that name is not in use
+                if (_players.Any(p => p.Name == name))
                 {
                     await _messageService.SendMessageAsync(client, PlayerMessages.WelcomeFlow.NameAlreadyTaken, cancellationToken);
+                    continue;
                 }
-                else
+
+                // Validate the name format
+                if (string.IsNullOrEmpty(name) || !PlayerNameValidation().IsMatch(name))
                 {
                     await _messageService.SendMessageAsync(client, PlayerMessages.WelcomeFlow.InvalidNameFormat, cancellationToken);
+                    continue;
                 }
+
+                // Notify player that name and id have been verified
+                var player = new Player(client, name, id.Value);
+
+                await _messageService.SendHandshake(client, player.Name, player.Id, cancellationToken);
+
+                await _messageService.SendMessageAsync(client, string.Format(PlayerMessages.WelcomeFlow.WelcomeNameMessage, player.Name), cancellationToken);
+
+                return player;
             }
 
-            return $"Player({client.Client.RemoteEndPoint})";
+            return new Player(client, $"Player({client.GetRemoteIp()})", default);
         }
 
         public async Task RemoveAllPlayers()
         {
             foreach (var player in _players)
             {
-                await _messageService.SendCloseConnectionAsync(player.GetClient());
-                RemovePlayer(player);
+                var client = player.GetClient();
+
+                using (LogContext.PushProperty("PlayerContext", new PlayerContext(player.Name, player.Id, client.GetRemoteIp())))
+                {
+                    await _messageService.SendCloseConnectionAsync(player.GetClient());
+                    RemovePlayer(player);
+                }
             }
         }
 
