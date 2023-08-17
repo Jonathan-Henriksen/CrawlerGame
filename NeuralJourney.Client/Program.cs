@@ -8,7 +8,6 @@ using NeuralJourney.Core.Interfaces.Services;
 using NeuralJourney.Core.Options;
 using NeuralJourney.Infrastructure.Engines;
 using NeuralJourney.Infrastructure.Handlers;
-using NeuralJourney.Infrastructure.Logging;
 using NeuralJourney.Infrastructure.Services;
 using Serilog;
 using Serilog.Events;
@@ -41,19 +40,19 @@ try
 }
 catch (OperationCanceledException)
 {
-    // Do nothing on expected cancellation. Engine is handling shutdown itself
+    // Handling and logging is handled in the engine on intended cancellation
 }
 catch (Exception ex)
 {
     cts.Cancel();
-    logger.Fatal(ex, "Game crashed unexpectedly"); // Unexpected error that crashed the application
+    logger.Fatal(ex, "Client engine crashed unexpectedly"); // Unexpected error that crashed the engine
 }
 finally
 {
     cts.Dispose();
 
     logger.Information("Shutting down");
-    await Task.Delay(2000); // Let the message hang for 2 seconds before closing the window.
+    await Task.Delay(2000); // Let the message hang for 2 seconds before closing the window
 }
 
 // Configure Application
@@ -69,16 +68,17 @@ static IHostBuilder CreateHostBuilder(string[] strings)
             var options = hostingContext.Configuration.GetRequiredSection("Client:Serilog").Get<SerilogOptions>()
                 ?? throw new InvalidOperationException("Serilog configuration is missing");
 
+            if (string.IsNullOrEmpty(options.SeqUrl))
+                throw new InvalidOperationException("Serilog configuration is missing Seq URL");
+
             var logLevel = Enum.TryParse(options.LogLevel, out LogEventLevel level) ? level : LogEventLevel.Information;
-            var logFilePath = options.LogFilePath ?? "Logs/";
 
             loggerConfiguration
                 .MinimumLevel.Is(logLevel)
                 .Enrich.FromLogContext()
                 .Enrich.WithExceptionDetails(new DestructuringOptionsBuilder().WithDefaultDestructurers().WithFilter(new IgnorePropertyByNameExceptionFilter("HResult", "StackTrace")))
                 .Enrich.WithProperty("Application", "Client")
-                .Enrich.With(new IgnoreNullPropertiesEnricher("Player"))
-                .WriteTo.Seq(serverUrl: "http://localhost:5341/", restrictedToMinimumLevel: logLevel
+                .WriteTo.Seq(serverUrl: options.SeqUrl, restrictedToMinimumLevel: logLevel
             );
         })
         .ConfigureServices((_, services) =>

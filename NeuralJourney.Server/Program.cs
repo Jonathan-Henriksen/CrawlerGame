@@ -46,12 +46,12 @@ try
 }
 catch (OperationCanceledException)
 {
-    // Intended cancellation. Handling and logging is handled in the engine
+    // Handling and logging is handled in the engine on intended cancellation
 }
 catch (Exception ex)
 {
     cts.Cancel();
-    logger.Fatal(ex, "Unexpected error crashed the application");
+    logger.Fatal(ex, "Server engine crashed unexpectedly"); // Unexpected error that crashed the engine
 }
 finally
 {
@@ -73,22 +73,20 @@ static IHostBuilder CreateHostBuilder(string[] strings)
             var options = hostingContext.Configuration.GetRequiredSection("Server:Serilog").Get<SerilogOptions>()
                 ?? throw new InvalidOperationException("Serilog configuration is missing");
 
+            if (string.IsNullOrEmpty(options.SeqUrl))
+                throw new InvalidOperationException("Serilog configuration is missing Seq URL");
+
             var logLevel = Enum.TryParse(options.LogLevel, out LogEventLevel level) ? level : LogEventLevel.Information;
-            var logFilePath = options.LogFilePath ?? "Logs/";
 
             var consoleTemplate = new ExpressionTemplate(options.ConsoleOutputTemplate ?? "{@m}", theme: TemplateTheme.Code);
-
-            var nonErrorLogEventCondition = new Func<LogEvent, bool>(e => e.Level != LogEventLevel.Error && e.Level != LogEventLevel.Fatal);
-            var errorLogEventCondition = new Func<LogEvent, bool>(e => !nonErrorLogEventCondition(e));
 
             loggerConfiguration
                     .MinimumLevel.Is(logLevel)
                     .Enrich.FromLogContext()
                     .Enrich.WithExceptionDetails(new DestructuringOptionsBuilder().WithDefaultDestructurers().WithFilter(new IgnorePropertyByNameExceptionFilter("HResult", "StackTrace", "$type")))
                     .Enrich.WithProperty("Application", "Server")
-                    .Enrich.With(new IgnoreNullPropertiesEnricher("Player"))
                     .Destructure.With(new CommandContextDestructuringPolicy())
-                    .WriteTo.Seq(serverUrl: "http://localhost:5341/", restrictedToMinimumLevel: logLevel)
+                    .WriteTo.Seq(serverUrl: options.SeqUrl, restrictedToMinimumLevel: logLevel)
                     .WriteTo.Console(formatter: consoleTemplate);
         })
         .ConfigureServices((_, services) =>
