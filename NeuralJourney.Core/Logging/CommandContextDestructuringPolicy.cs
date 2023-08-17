@@ -14,8 +14,8 @@ namespace NeuralJourney.Core.Logging
 
                 var properties = new List<LogEventProperty>
                 {
-                    new LogEventProperty("CommandKey", propertyValueFactory.CreatePropertyValue(commandKey, true)),
-                    new LogEventProperty("InputText", new ScalarValue(context.InputText))
+                    new LogEventProperty(nameof(CommandKey), propertyValueFactory.CreatePropertyValue(commandKey, true)),
+                    new LogEventProperty(nameof(context.InputText), new ScalarValue(context.InputText))
                 };
 
                 if (context.Params?.Any() ?? false)
@@ -23,17 +23,17 @@ namespace NeuralJourney.Core.Logging
                     var @params = context.Params.Select(item => propertyValueFactory.CreatePropertyValue(item, true)).ToArray();
                     var paramsProperty = new SequenceValue(@params);
 
-                    properties.Add(new LogEventProperty("Params", paramsProperty));
+                    properties.Add(new LogEventProperty(nameof(context.Params), paramsProperty));
                 }
 
                 if (context.CompletionText is not null)
-                    properties.Add(new LogEventProperty("CompletionText", new ScalarValue(context.CompletionText)));
+                    properties.Add(new LogEventProperty(nameof(context.CompletionText), new ScalarValue(context.CompletionText)));
 
                 if (context.ExecutionMessage is not null)
-                    properties.Add(new LogEventProperty("ExecutionMessage", new ScalarValue(context.ExecutionMessage)));
+                    properties.Add(new LogEventProperty(nameof(context.ExecutionMessage), new ScalarValue(context.ExecutionMessage)));
 
-                if (context.Result is not null && context.Result.HasValue)
-                    properties.Add(new LogEventProperty("AdditionalMessage", new ScalarValue(context.Result.Value)));
+                if (context.Result is not null && context.Result.HasValue && context.Result.Value.AdditionalMessage is not null)
+                    properties.Add(new LogEventProperty(nameof(context.Result.Value.AdditionalMessage), new ScalarValue(context.Result.Value.AdditionalMessage)));
 
                 var structure = new StructureValue(properties);
 
