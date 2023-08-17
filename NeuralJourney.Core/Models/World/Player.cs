@@ -10,7 +10,7 @@ namespace NeuralJourney.Core.Models.World
 
         public readonly Guid Id;
 
-        public Player(TcpClient client)
+        public Player(TcpClient client, string name)
         {
             _client = client;
             _ip = ((IPEndPoint?) client.Client.RemoteEndPoint)?.Address.ToString() ?? string.Empty;
@@ -18,7 +18,7 @@ namespace NeuralJourney.Core.Models.World
             Id = Guid.NewGuid();
 
             IsConnected = true;
-            Name = $"Player({_ip})";
+            Name = name;
             Health = 100;
             Thirst = 100;
             Location = new Coordinates();

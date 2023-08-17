@@ -28,7 +28,7 @@ namespace NeuralJourney.Infrastructure.Handlers
 
             var retryCount = 0;
 
-            _logger.Debug(NetworkLogTemplates.Debug.TcpListenerStarted);
+            _logger.Debug(NetworkLogMessages.Debug.TcpListenerStarted);
 
             while (!cancellationToken.IsCancellationRequested)
             {
@@ -39,7 +39,7 @@ namespace NeuralJourney.Infrastructure.Handlers
                     if (client is null)
                         continue;
 
-                    _logger.Information(NetworkLogTemplates.Info.ClientConnected, client.Client.RemoteEndPoint);
+                    _logger.Debug(NetworkLogMessages.Debug.ClientConnected, client.Client.RemoteEndPoint);
                     OnConnected?.Invoke(client);
 
                     retryCount = 0; // Reset retry count on successful connection
@@ -52,11 +52,11 @@ namespace NeuralJourney.Infrastructure.Handlers
                 {
                     if (++retryCount > _maxRetryAttempts)
                     {
-                        _logger.Error(ex, NetworkLogTemplates.Error.SocketFailure);
+                        _logger.Error(ex, NetworkLogMessages.Error.SocketFailure);
                         throw new OperationCanceledException();
                     }
 
-                    _logger.Warning(ex, NetworkLogTemplates.Warning.SocketFailureRetry, retryCount, _maxRetryAttempts);
+                    _logger.Warning(ex, NetworkLogMessages.Warning.SocketFailureRetry, retryCount, _maxRetryAttempts);
 
                     await Task.Delay(5000, cancellationToken); // Give connection some time to recover
 
@@ -64,7 +64,7 @@ namespace NeuralJourney.Infrastructure.Handlers
                 }
                 catch (Exception ex)
                 {
-                    _logger.Error(ex, NetworkLogTemplates.Error.UnexpectedError);
+                    _logger.Error(ex, NetworkLogMessages.Error.UnexpectedError);
 
                     throw;
                 }
@@ -76,7 +76,7 @@ namespace NeuralJourney.Infrastructure.Handlers
             _tcpListener.Stop();
             _tcpListener.Server.Dispose();
 
-            _logger.Debug(SystemMessageTemplates.DispoedOfType, GetType().Name);
+            _logger.Debug(SystemMessages.DispoedOfType, GetType().Name);
         }
     }
 }

@@ -27,7 +27,7 @@ namespace NeuralJourney.Core.Commands.Admin
 
                 await context.Command.ExecuteAsync();
 
-                _logger.Information(CommandLogTemplates.Info.ExecutedCommand, context.CommandKey.Identifier);
+                _logger.Information(CommandLogMessages.Info.ExecutedCommand, context.CommandKey.Identifier);
             }
             catch (Exception)
             {

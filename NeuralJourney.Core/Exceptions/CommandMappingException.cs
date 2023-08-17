@@ -5,7 +5,7 @@ namespace NeuralJourney.Core.Exceptions
     [Serializable]
     public class CommandMappingException : CommandException
     {
-        private const string _defaultPlayerMessage = PlayerMessageTemplates.Command.NoMatch;
+        private const string _defaultPlayerMessage = PlayerMessages.Command.NoMatch;
 
         public CommandMappingException() { }
         public CommandMappingException(string message) : base(message, _defaultPlayerMessage) { }

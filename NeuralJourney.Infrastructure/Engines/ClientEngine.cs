@@ -44,7 +44,7 @@ namespace NeuralJourney.Infrastructure.Engines
 
         public async Task Run(CancellationToken cancellationToken = default)
         {
-            LogInfoAndDisplayInConsole(ClientLogTemplates.Info.StartingGame);
+            LogInfoAndDisplayInConsole(ClientLogMessages.Info.StartingGame);
 
             _token = cancellationToken;
 
@@ -53,16 +53,16 @@ namespace NeuralJourney.Infrastructure.Engines
 
             try
             {
-                LogInfoAndDisplayInConsole(ClientLogTemplates.Info.ConnectionInitialize);
+                LogInfoAndDisplayInConsole(ClientLogMessages.Info.ConnectionInitialize);
 
                 await _client.ConnectAsync(_serverIp, _serverPort, timeoutCts.Token);
 
-                LogInfoAndDisplayInConsole(ClientLogTemplates.Info.ConnectionEstablished);
+                LogInfoAndDisplayInConsole(ClientLogMessages.Info.ConnectionEstablished);
             }
             catch (OperationCanceledException ex) when (timeoutCts.IsCancellationRequested)
             {
-                _messageService.DisplayConsoleMessage(ClientLogTemplates.Error.ConnectionFailedTimeout);
-                _logger.Error(ex, ClientLogTemplates.Error.ConnectionFailedTimeout);
+                _messageService.DisplayConsoleMessage(ClientLogMessages.Error.ConnectionFailedTimeout);
+                _logger.Error(ex, ClientLogMessages.Error.ConnectionFailedTimeout);
 
                 await StopAsync();
 
@@ -70,8 +70,8 @@ namespace NeuralJourney.Infrastructure.Engines
             }
             catch (SocketException ex)
             {
-                _messageService.DisplayConsoleMessage(ClientLogTemplates.Error.ConnectionFailed);
-                _logger.Error(ex, ClientLogTemplates.Error.ConnectionFailed);
+                _messageService.DisplayConsoleMessage(ClientLogMessages.Error.ConnectionFailed);
+                _logger.Error(ex, ClientLogMessages.Error.ConnectionFailed);
 
                 await StopAsync();
 
@@ -105,7 +105,7 @@ namespace NeuralJourney.Infrastructure.Engines
 
         public async Task StopAsync()
         {
-            LogInfoAndDisplayInConsole(ClientLogTemplates.Info.StoppingGame);
+            LogInfoAndDisplayInConsole(ClientLogMessages.Info.StoppingGame);
 
             if (!_client.Connected)
                 return;
@@ -119,7 +119,7 @@ namespace NeuralJourney.Infrastructure.Engines
 
         private void HandleClosedConnection(TcpClient client)
         {
-            LogInfoAndDisplayInConsole(ClientLogTemplates.Info.ConnectionClosed);
+            LogInfoAndDisplayInConsole(ClientLogMessages.Info.ConnectionClosed);
 
             client.Close();
 
@@ -142,7 +142,7 @@ namespace NeuralJourney.Infrastructure.Engines
             _client.Close();
             _client.Dispose();
 
-            _logger.Debug(SystemMessageTemplates.DispoedOfType, GetType().Name);
+            _logger.Debug(SystemMessages.DispoedOfType, GetType().Name);
         }
 
     }

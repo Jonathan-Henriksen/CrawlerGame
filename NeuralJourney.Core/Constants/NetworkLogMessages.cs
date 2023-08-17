@@ -1,19 +1,12 @@
 ﻿namespace NeuralJourney.Core.Constants
 {
-    public static class NetworkLogTemplates
+    public static class NetworkLogMessages
     {
         public static class Debug
         {
-            public const string TcpListenerStarted = "TCP Listener was started and is now listening for incoming connections";
-        }
-
-        public static class Info
-        {
             public const string ClientConnected = "Client connected from {Address}";
 
-            public const string ClientDisconnected = "Client disconnected from {Address}";
-
-            public const string ConnectionEstablished = "ConnectionEstablished";
+            public const string TcpListenerStarted = "TCP Listener was started and is now listening for incoming connections";
         }
 
         public static class Warning

@@ -1,15 +1,15 @@
 ﻿namespace NeuralJourney.Core.Constants
 {
-    public static class ServerLogTemplates
+    public static class ServerLogMessages
     {
         public static class Debug
         {
-            public const string DispatchedPlayerCommand = "Dispatching a command for {PlayerName}";
+            public const string DispatchedPlayerCommand = "Dispatching command for {PlayerName}";
         }
 
         public static class Info
         {
-            public const string PlayerAdded = "Added player {PlayerName} to the game";
+            public const string PlayerAdded = "Player {PlayerName} connected";
 
             public const string PlayerRemoved = "Player {PlayerName} disconnected";
 
@@ -18,9 +18,16 @@
             public const string ServerStopped = "The server was stopped";
         }
 
+        public static class Warning
+        {
+            public const string PlayerLeftEarly = "Player disconnected before providing a name";
+        }
+
         public static class Error
         {
             public const string PlayerInputFailed = "Failed to handle player input";
+
+            public const string PlayerAddFailed = "Failed to add player";
 
             public const string UnexpectedError = "The server encountered an unexpected error";
         }

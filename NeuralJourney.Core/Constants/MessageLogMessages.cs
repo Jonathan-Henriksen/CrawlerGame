@@ -1,6 +1,6 @@
 ﻿namespace NeuralJourney.Core.Constants
 {
-    public static class MessageLogTemplates
+    public static class MessageLogMessages
     {
         public static class Debug
         {

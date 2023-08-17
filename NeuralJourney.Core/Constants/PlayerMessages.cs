@@ -1,6 +1,6 @@
 ﻿namespace NeuralJourney.Core.Constants
 {
-    public static class PlayerMessageTemplates
+    public static class PlayerMessages
     {
 
         public const string SomethingWentWrong = "Something went wrong. Please try again";
@@ -16,6 +16,17 @@
             public const string TooSmall = "The provided message is too short. Please provide more details and try again.";
 
             public const string InvalidFormat = "The format of your message is not valid. Please check and resend.";
+        }
+
+        public static class WelcomeFlow
+        {
+            public const string WelcomeMessage = "Welcome to Neural Journey! x½Please enter your name";
+
+            public const string WelcomeNameMessage = "Hi {0}! Let's get started";
+
+            public const string NameAlreadyTaken = "Sorry that name is already taken. Please choose another";
+
+            public const string InvalidNameFormat = "Invalid name. Use only letters, numbers, underscores, and hyphens. Length should be between 3 to 16 characters.";
         }
 
         public static class Map

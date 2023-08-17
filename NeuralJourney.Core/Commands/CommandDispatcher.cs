@@ -31,10 +31,10 @@ namespace NeuralJourney.Core.Commands
                     if (strategy is null)
                     {
                         _logger.ForContext("Reason", "No strategy was found for the command type")
-                            .Error(CommandLogTemplates.Error.CommandDispatchFailed, context.CommandKey.Type);
+                            .Error(CommandLogMessages.Error.CommandDispatchFailed, context.CommandKey.Type);
 
                         if (context.Player is not null)
-                            _messageService.SendMessageAsync(context.Player.GetClient(), PlayerMessageTemplates.Command.NoMatch);
+                            _messageService.SendMessageAsync(context.Player.GetClient(), PlayerMessages.Command.NoMatch);
 
                         return;
                     }
@@ -43,10 +43,10 @@ namespace NeuralJourney.Core.Commands
                 }
                 catch (Exception ex)
                 {
-                    _logger.Error(ex, CommandLogTemplates.Error.CommandDispatchFailed, context.CommandKey.Type);
+                    _logger.Error(ex, CommandLogMessages.Error.CommandDispatchFailed, context.CommandKey.Type);
 
                     if (context.Player is not null)
-                        _messageService.SendMessageAsync(context.Player.GetClient(), PlayerMessageTemplates.SomethingWentWrong);
+                        _messageService.SendMessageAsync(context.Player.GetClient(), PlayerMessages.SomethingWentWrong);
                 }
             }
         }

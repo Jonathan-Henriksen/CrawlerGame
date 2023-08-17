@@ -47,14 +47,14 @@ namespace NeuralJourney.Infrastructure.Services
                     await stream.WriteAsync(lengthBytes, cancellationToken);
                     await stream.WriteAsync(messageBytes, cancellationToken);
 
-                    retryLogger.Debug(MessageLogTemplates.Debug.MessageSent, destinationAddress);
+                    retryLogger.Debug(MessageLogMessages.Debug.MessageSent, destinationAddress);
 
                     return;
                 }
                 catch (OperationCanceledException ex)
                 {
                     if (stream.DataAvailable)
-                        retryLogger.Debug(ex, MessageLogTemplates.Debug.MessageSendCancelled, destinationAddress);
+                        retryLogger.Debug(ex, MessageLogMessages.Debug.MessageSendCancelled, destinationAddress);
 
                     return;
                 }
@@ -64,18 +64,18 @@ namespace NeuralJourney.Infrastructure.Services
                     {
                         retryCount++;
 
-                        retryLogger.Warning(ex, MessageLogTemplates.Warning.StreamWriteFailed, destinationAddress);
+                        retryLogger.Warning(ex, MessageLogMessages.Warning.StreamWriteFailed, destinationAddress);
 
                         continue;
                     }
 
-                    retryLogger.Error(ex, MessageLogTemplates.Error.MessageSendFailed, destinationAddress);
+                    retryLogger.Error(ex, MessageLogMessages.Error.MessageSendFailed, destinationAddress);
 
                     throw new MessageException(ex, "Failed to send message", destinationAddress, message);
                 }
                 catch (Exception ex)
                 {
-                    retryLogger.Error(ex, MessageLogTemplates.Error.MessageSendFailed, destinationAddress);
+                    retryLogger.Error(ex, MessageLogMessages.Error.MessageSendFailed, destinationAddress);
                     throw new MessageException(ex, "Failed to send message", destinationAddress, message);
                 }
                 finally
@@ -108,14 +108,14 @@ namespace NeuralJourney.Infrastructure.Services
                     var message = _encoding.GetString(messageBytes);
 
                     retryLogger.ForContext("MessageText", message)
-                        .Debug(MessageLogTemplates.Debug.MessageRead, remoteAddress);
+                        .Debug(MessageLogMessages.Debug.MessageRead, remoteAddress);
 
                     return message;
                 }
                 catch (OperationCanceledException)
                 {
                     if (stream.DataAvailable)
-                        retryLogger.Debug(MessageLogTemplates.Debug.MessageReadCancelled, remoteAddress);
+                        retryLogger.Debug(MessageLogMessages.Debug.MessageReadCancelled, remoteAddress);
 
                     throw;
                 }
@@ -125,7 +125,7 @@ namespace NeuralJourney.Infrastructure.Services
                     {
                         retryCount++;
 
-                        retryLogger.Warning(ex, MessageLogTemplates.Warning.StreamReadFailed, remoteAddress);
+                        retryLogger.Warning(ex, MessageLogMessages.Warning.StreamReadFailed, remoteAddress);
 
                         continue;
                     }
@@ -136,13 +136,13 @@ namespace NeuralJourney.Infrastructure.Services
                         throw new OperationCanceledException();
                     }
 
-                    retryLogger.Error(ex, MessageLogTemplates.Error.MessageReadFailed, remoteAddress);
+                    retryLogger.Error(ex, MessageLogMessages.Error.MessageReadFailed, remoteAddress);
 
                     throw new MessageException(ex, "Failed to read incoming message", remoteAddress);
                 }
                 catch (Exception ex)
                 {
-                    retryLogger.Error(ex, MessageLogTemplates.Error.MessageReadFailed, remoteAddress);
+                    retryLogger.Error(ex, MessageLogMessages.Error.MessageReadFailed, remoteAddress);
                     throw new MessageException(ex, "Failed to read incoming message", remoteAddress);
                 }
             }

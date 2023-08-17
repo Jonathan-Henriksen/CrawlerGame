@@ -1,6 +1,6 @@
 ﻿namespace NeuralJourney.Core.Constants
 {
-    public static class CommandLogTemplates
+    public static class CommandLogMessages
     {
         public static class Debug
         {

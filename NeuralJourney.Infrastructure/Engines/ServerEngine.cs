@@ -31,7 +31,7 @@ namespace NeuralJourney.Infrastructure.Engines
 
             _token = cancellationToken;
 
-            _logger.Information(ServerLogTemplates.Info.ServerStarted);
+            _logger.Information(ServerLogMessages.Info.ServerStarted);
 
             _clock.Start();
 
@@ -45,13 +45,13 @@ namespace NeuralJourney.Infrastructure.Engines
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, ServerLogTemplates.Error.UnexpectedError);
+                _logger.Error(ex, ServerLogMessages.Error.UnexpectedError);
             }
         }
 
         public async Task StopAsync()
         {
-            _logger.Information(ServerLogTemplates.Info.ServerStopped);
+            _logger.Information(ServerLogMessages.Info.ServerStopped);
 
             await _playerHandler.RemoveAllPlayers();
 
@@ -65,7 +65,7 @@ namespace NeuralJourney.Infrastructure.Engines
 
         public void Dispose()
         {
-            _logger.Debug(SystemMessageTemplates.DispoedOfType, GetType().Name);
+            _logger.Debug(SystemMessages.DispoedOfType, GetType().Name);
         }
     }
 }
