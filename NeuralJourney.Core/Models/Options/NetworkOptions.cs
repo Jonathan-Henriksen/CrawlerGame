@@ -1,4 +1,4 @@
-﻿namespace NeuralJourney.Core.Options
+﻿namespace NeuralJourney.Core.Models.Options
 {
     public sealed class NetworkOptions
     {

@@ -25,6 +25,8 @@
             public const string ConnectionFailed = "Failed to connect to the server";
 
             public const string ConnectionFailedTimeout = "Connection to the server timed out";
+
+            public const string ConnectionFailedUnexpectedly = "Unexpected error while connecting to the server";
         }
     }
 

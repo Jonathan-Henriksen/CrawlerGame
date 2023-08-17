@@ -36,7 +36,7 @@ namespace NeuralJourney.Infrastructure.Services
 
             var semaphore = GetSemaphore(client);
 
-            var messageLogger = _logger.ForContext("MessageContext", messageContext, true);
+            var messageLogger = _logger.ForContext(nameof(MessageContext), messageContext, true);
 
             while (messageContext.RetryCount < 3)
             {
@@ -49,14 +49,14 @@ namespace NeuralJourney.Infrastructure.Services
                     await stream.WriteAsync(lengthBytes, cancellationToken);
                     await stream.WriteAsync(messageBytes, cancellationToken);
 
-                    messageLogger.Debug(MessageLogMessages.Debug.MessageSent, messageContext.IpAddress);
+                    messageLogger.Debug(MessageLogMessages.Debug.Sent, messageContext.IpAddress);
 
                     return;
                 }
                 catch (OperationCanceledException ex)
                 {
                     if (stream.DataAvailable)
-                        messageLogger.Debug(ex, MessageLogMessages.Debug.MessageSendCancelled, messageContext.IpAddress);
+                        messageLogger.Debug(ex, MessageLogMessages.Debug.SendCancelled, messageContext.IpAddress);
 
                     return;
                 }
@@ -71,14 +71,14 @@ namespace NeuralJourney.Infrastructure.Services
                         continue;
                     }
 
-                    messageLogger.Error(ex, MessageLogMessages.Error.MessageSendFailed, messageContext.IpAddress);
+                    messageLogger.Error(ex, MessageLogMessages.Error.SendFailed, messageContext.IpAddress);
 
-                    throw new MessageException(ex, "Failed to send message", messageContext);
+                    throw new MessageException(ex, string.Format(MessageLogMessages.Error.SendFailed, messageContext.IpAddress), messageContext);
                 }
                 catch (Exception ex)
                 {
-                    messageLogger.Error(ex, MessageLogMessages.Error.MessageSendFailed, messageContext.IpAddress);
-                    throw new MessageException(ex, "Failed to send message", messageContext);
+                    messageLogger.Error(ex, MessageLogMessages.Error.SendFailed, messageContext.IpAddress);
+                    throw new MessageException(ex, string.Format(MessageLogMessages.Error.SendFailed, messageContext.IpAddress), messageContext);
                 }
                 finally
                 {
@@ -93,7 +93,7 @@ namespace NeuralJourney.Infrastructure.Services
 
             var messageContext = new MessageContext("N/A", 0, client.GetRemoteIp());
 
-            using (LogContext.PushProperty("MessageContext", messageContext, true))
+            using (LogContext.PushProperty(nameof(MessageContext), messageContext, true))
             {
                 while (messageContext.RetryCount < 3)
                 {
@@ -108,14 +108,14 @@ namespace NeuralJourney.Infrastructure.Services
 
                         messageContext.MessageText = _encoding.GetString(messageBytes);
 
-                        _logger.Debug(MessageLogMessages.Debug.MessageRead, messageContext.IpAddress);
+                        _logger.Debug(MessageLogMessages.Debug.Read, messageContext.IpAddress);
 
                         return messageContext.MessageText;
                     }
                     catch (OperationCanceledException)
                     {
                         if (stream.DataAvailable)
-                            _logger.Debug(MessageLogMessages.Debug.MessageReadCancelled, messageContext.IpAddress);
+                            _logger.Debug(MessageLogMessages.Debug.ReadCancelled, messageContext.IpAddress);
 
                         throw;
                     }
@@ -134,19 +134,19 @@ namespace NeuralJourney.Infrastructure.Services
                         if (socketEx.SocketErrorCode == SocketError.OperationAborted)
                             throw new OperationCanceledException();
 
-                        _logger.Error(ex, MessageLogMessages.Error.MessageReadFailed, messageContext.IpAddress);
+                        _logger.Error(ex, MessageLogMessages.Error.ReadFailed, messageContext.IpAddress);
 
-                        throw new MessageException(ex, "Failed to read incoming message", messageContext);
+                        throw new MessageException(ex, string.Format(MessageLogMessages.Error.ReadFailed, messageContext.IpAddress), messageContext);
                     }
                     catch (Exception ex)
                     {
-                        _logger.Error(ex, MessageLogMessages.Error.MessageReadFailed, messageContext.IpAddress);
-                        throw new MessageException(ex, "Failed to read incoming message", messageContext);
+                        _logger.Error(ex, MessageLogMessages.Error.ReadFailed, messageContext.IpAddress);
+                        throw new MessageException(ex, string.Format(MessageLogMessages.Error.ReadFailed, messageContext.IpAddress), messageContext);
                     }
                 }
             }
 
-            throw new MessageException("Retry limit reached while reading", messageContext);
+            throw new MessageException(MessageLogMessages.Error.ReadRetryLimitReach, messageContext);
         }
 
         public async Task SendCloseConnectionAsync(TcpClient client, CancellationToken cancellationToken = default)
@@ -205,7 +205,7 @@ namespace NeuralJourney.Infrastructure.Services
             }
         }
 
-        private void WriteColoredMessage(string message, ConsoleColor color)
+        private static void WriteColoredMessage(string message, ConsoleColor color)
         {
             Console.ForegroundColor = color;
             Console.WriteLine($"{message}\n");

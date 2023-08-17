@@ -16,9 +16,7 @@ namespace NeuralJourney.Core.Commands.Players.Middleware
 
         public async Task InvokeAsync(CommandContext context, Func<Task> next, CancellationToken cancellationToken = default)
         {
-            await _openAIService.SetCommandCompletionTextAsync(context);
-
-            if (string.IsNullOrEmpty(context.CompletionText))
+            if (!await _openAIService.SetCommandCompletionTextAsync(context) || string.IsNullOrEmpty(context.CompletionText))
                 throw new CommandMappingException("Completion text was empty", "The game encountered an error with the OpenAI API. Please try agian");
 
             await next();

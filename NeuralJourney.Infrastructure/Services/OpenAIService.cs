@@ -1,9 +1,9 @@
 ﻿using NeuralJourney.Core.Commands;
+using NeuralJourney.Core.Constants;
 using NeuralJourney.Core.Enums.Commands;
-using NeuralJourney.Core.Exceptions;
 using NeuralJourney.Core.Interfaces.Services;
 using NeuralJourney.Core.Models.Commands;
-using NeuralJourney.Core.Options;
+using NeuralJourney.Core.Models.Options;
 using OpenAI_API;
 using Serilog;
 using System.Net;
@@ -18,6 +18,7 @@ namespace NeuralJourney.Infrastructure.Services
         private readonly string _availableCommands;
 
         private const int _maxRetryAttempts = 3;
+        private int RetryCount = 0;
 
         public OpenAIService(OpenAIOptions options, ILogger logger)
         {
@@ -32,42 +33,40 @@ namespace NeuralJourney.Infrastructure.Services
             _availableCommands = CommandRegistry.GetCommands(CommandTypeEnum.Player);
         }
 
-        public async Task SetCommandCompletionTextAsync(CommandContext context)
+        public async Task<bool> SetCommandCompletionTextAsync(CommandContext context)
         {
-            var retryCount = 0;
-
-            while (retryCount < _maxRetryAttempts)
+            while (RetryCount < _maxRetryAttempts)
             {
-                var retryLogger = _logger.ForContext("RetryCount", retryCount++);
+                var retryLogger = _logger.ForContext("RetryCount", RetryCount++);
 
                 try
                 {
                     var promptText = $"{_availableCommands}\n\n{context.InputText}\n\n###\n\n";
 
-                    retryLogger.Debug("Requesting OpenAI Completion for input '{InputText}'", context.InputText);
+                    retryLogger.Debug(CommandLogMessages.Debug.CompletionTextRequested, context.InputText);
 
                     var completionResponse = await _openApi.Completions.CreateCompletionAsync(promptText);
                     context.CompletionText = completionResponse?.Completions.FirstOrDefault()?.Text.TrimStart();
 
                     retryLogger.ForContext("CompletionResponse", completionResponse, true)
-                        .Debug("Received completion from OpenAI '{CompletionText}'", context.CompletionText);
+                        .Debug(CommandLogMessages.Debug.CompletionTextReceived, context.CompletionText);
 
-                    return;
+                    return true;
                 }
                 catch (WebException webEx) when (webEx.Status == WebExceptionStatus.Timeout || webEx.Status == WebExceptionStatus.ConnectFailure)
                 {
-                    retryLogger.Warning(webEx, "Network error while requesting OpenAI completion");
+                    retryLogger.Warning(webEx, NetworkLogMessages.Warning.OpenAIRequestTimeout);
 
-                    await Task.Delay(1000 * retryCount);
+                    await Task.Delay(1000 * RetryCount);
                 }
                 catch (Exception ex)
                 {
-                    retryLogger.Error(ex, "Unexpected error while requestion OpenAI completion");
+                    retryLogger.Error(ex, CommandLogMessages.Error.CompletionTextRequstFailed);
                     throw;
                 }
             }
 
-            throw new CommandMappingException("Failed to retrieve OpenAI completion", "The server could not connect to the OpenAI API. Please try agian.");
+            return false;
         }
     }
 }

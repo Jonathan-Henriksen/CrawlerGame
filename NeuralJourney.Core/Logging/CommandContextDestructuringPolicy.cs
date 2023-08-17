@@ -2,7 +2,7 @@
 using Serilog.Core;
 using Serilog.Events;
 
-namespace NeuralJourney.Infrastructure.Logging
+namespace NeuralJourney.Core.Logging
 {
     public class CommandContextDestructuringPolicy : IDestructuringPolicy
     {
@@ -27,19 +27,13 @@ namespace NeuralJourney.Infrastructure.Logging
                 }
 
                 if (context.CompletionText is not null)
-                {
                     properties.Add(new LogEventProperty("CompletionText", new ScalarValue(context.CompletionText)));
-                }
 
                 if (context.ExecutionMessage is not null)
-                {
                     properties.Add(new LogEventProperty("ExecutionMessage", new ScalarValue(context.ExecutionMessage)));
-                }
 
                 if (context.Result is not null && context.Result.HasValue)
-                {
                     properties.Add(new LogEventProperty("AdditionalMessage", new ScalarValue(context.Result.Value)));
-                }
 
                 var structure = new StructureValue(properties);
 

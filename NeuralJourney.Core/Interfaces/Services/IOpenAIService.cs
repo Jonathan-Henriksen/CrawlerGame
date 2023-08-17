@@ -4,6 +4,6 @@ namespace NeuralJourney.Core.Interfaces.Services
 {
     public interface IOpenAIService
     {
-        public Task SetCommandCompletionTextAsync(CommandContext context);
+        public Task<bool> SetCommandCompletionTextAsync(CommandContext context);
     }
 }

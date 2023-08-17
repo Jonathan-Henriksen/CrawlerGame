@@ -7,3 +7,4 @@ using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("CodeQuality", "Serilog004:Constant MessageTemplate verifier", Justification = "<Pending>", Scope = "member", Target = "~M:NeuralJourney.Infrastructure.Engines.ClientEngine.HandleNetworkInputReceived(System.String,System.Net.Sockets.TcpClient)")]
 [assembly: SuppressMessage("CodeQuality", "Serilog004:Constant MessageTemplate verifier", Justification = "Function is only used for templates without properties", Scope = "member", Target = "~M:NeuralJourney.Infrastructure.Engines.ClientEngine.LogInfoAndDisplayInConsole(System.String)")]
+[assembly: SuppressMessage("CodeQuality", "Serilog004:Constant MessageTemplate verifier", Justification = "Statement is only used for templates without properties", Scope = "member", Target = "~M:NeuralJourney.Infrastructure.Engines.ClientEngine.Run(System.Threading.CancellationToken)~System.Threading.Tasks.Task")]

@@ -1,6 +1,6 @@
 ﻿using NeuralJourney.Core.Enums.Commands;
 
-namespace NeuralJourney.Core.Attributes
+namespace NeuralJourney.Core.Commands
 {
     [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
     public class CommandAttribute : Attribute

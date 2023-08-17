@@ -1,6 +1,7 @@
 ﻿using NeuralJourney.Core.Constants;
+using NeuralJourney.Core.Extensions;
 using NeuralJourney.Core.Interfaces.Handlers;
-using NeuralJourney.Core.Options;
+using NeuralJourney.Core.Models.Options;
 using Serilog;
 using System.Net;
 using System.Net.Sockets;
@@ -39,7 +40,7 @@ namespace NeuralJourney.Infrastructure.Handlers
                     if (client is null)
                         continue;
 
-                    _logger.Debug(NetworkLogMessages.Debug.ClientConnected, client.Client.RemoteEndPoint);
+                    _logger.Debug(NetworkLogMessages.Debug.ClientConnected, client.GetRemoteIp());
                     OnConnected?.Invoke(client);
 
                     retryCount = 0; // Reset retry count on successful connection

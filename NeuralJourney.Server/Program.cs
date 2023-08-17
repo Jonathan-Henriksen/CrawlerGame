@@ -10,17 +10,16 @@ using NeuralJourney.Core.Interfaces.Commands;
 using NeuralJourney.Core.Interfaces.Engines;
 using NeuralJourney.Core.Interfaces.Handlers;
 using NeuralJourney.Core.Interfaces.Services;
+using NeuralJourney.Core.Logging;
+using NeuralJourney.Core.Models.Options;
 using NeuralJourney.Core.Models.World;
-using NeuralJourney.Core.Options;
 using NeuralJourney.Infrastructure.Engines;
 using NeuralJourney.Infrastructure.Handlers;
-using NeuralJourney.Infrastructure.Logging;
 using NeuralJourney.Infrastructure.Services;
 using Serilog;
 using Serilog.Events;
 using Serilog.Exceptions;
 using Serilog.Exceptions.Core;
-using Serilog.Exceptions.Filters;
 using Serilog.Templates;
 using Serilog.Templates.Themes;
 
@@ -83,7 +82,7 @@ static IHostBuilder CreateHostBuilder(string[] strings)
             loggerConfiguration
                     .MinimumLevel.Is(logLevel)
                     .Enrich.FromLogContext()
-                    .Enrich.WithExceptionDetails(new DestructuringOptionsBuilder().WithDefaultDestructurers().WithFilter(new IgnorePropertyByNameExceptionFilter("HResult", "StackTrace", "$type")))
+                    .Enrich.WithExceptionDetails(new DestructuringOptionsBuilder().WithDefaultDestructurers().WithIgnoreStackTraceAndTargetSiteExceptionFilter())
                     .Enrich.WithProperty("Application", "Server")
                     .Destructure.With(new CommandContextDestructuringPolicy())
                     .WriteTo.Seq(serverUrl: options.SeqUrl, restrictedToMinimumLevel: logLevel)
@@ -101,7 +100,7 @@ static IHostBuilder CreateHostBuilder(string[] strings)
             // Register Services
             services.AddSingleton<IClockService, ClockService>();
             services.AddTransient<IMessageService, MessageService>();
-            services.AddSingleton<IOpenAIService, OpenAIService>();
+            services.AddTransient<IOpenAIService, OpenAIService>();
 
             services.AddSingleton<IEngine, ServerEngine>();
 

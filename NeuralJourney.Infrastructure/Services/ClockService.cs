@@ -1,5 +1,5 @@
 ﻿using NeuralJourney.Core.Interfaces.Services;
-using NeuralJourney.Core.Options;
+using NeuralJourney.Core.Models.Options;
 using System.Timers;
 using Timer = System.Timers.Timer;
 

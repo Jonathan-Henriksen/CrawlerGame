@@ -4,7 +4,7 @@ using NeuralJourney.Core.Interfaces.Engines;
 using NeuralJourney.Core.Interfaces.Handlers;
 using NeuralJourney.Core.Interfaces.Services;
 using NeuralJourney.Core.Models.LogProperties;
-using NeuralJourney.Core.Options;
+using NeuralJourney.Core.Models.Options;
 using Serilog;
 using Serilog.Context;
 using System.Net.Sockets;
@@ -53,44 +53,36 @@ namespace NeuralJourney.Infrastructure.Engines
             InitPlayer();
 
             if (_playerContext is null)
-                throw new InvalidOperationException("Client have not been initialize");
+                throw new InvalidOperationException(SystemMessages.ClientNotInitialized);
 
             LogInfoAndDisplayInConsole(ClientLogMessages.Info.StartingGame);
 
             _token = cancellationToken;
 
-            var timeoutCts = CancellationTokenSource.CreateLinkedTokenSource(_token);
-            timeoutCts.CancelAfter(TimeSpan.FromSeconds(10));
-
             try
             {
                 LogInfoAndDisplayInConsole(ClientLogMessages.Info.ConnectionInitialize);
-
-                await _client.ConnectAsync(_serverIp, _serverPort, timeoutCts.Token);
-
-                _playerContext.IpAddress = _client.GetLocalIp();
-
-                await ServerHandshake();
-
+                await _client.ConnectAsync(_serverIp, _serverPort);
+                await PerformServerHandshake();
                 LogInfoAndDisplayInConsole(ClientLogMessages.Info.ConnectionEstablished);
             }
-            catch (OperationCanceledException ex) when (timeoutCts.IsCancellationRequested)
+            catch (OperationCanceledException)
             {
-                _messageService.DisplayConsoleMessage(ClientLogMessages.Error.ConnectionFailedTimeout);
-                _logger.Error(ex, ClientLogMessages.Error.ConnectionFailedTimeout);
-
-                await StopAsync();
-
-                return;
+                throw; // Engine is stopped before token is cancelled
             }
             catch (SocketException ex)
             {
-                _messageService.DisplayConsoleMessage(ClientLogMessages.Error.ConnectionFailed);
-                _logger.Error(ex, ClientLogMessages.Error.ConnectionFailed);
+                if (ex.SocketErrorCode is SocketError.TimedOut)
+                    _logger.Error(ex, ClientLogMessages.Error.ConnectionFailedTimeout);
+                else
+                    _logger.Error(ex, ClientLogMessages.Error.ConnectionFailed);
 
                 await StopAsync();
-
                 return;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, ClientLogMessages.Error.ConnectionFailedUnexpectedly);
             }
 
             await StartInputHandlersAsync();
@@ -108,20 +100,18 @@ namespace NeuralJourney.Infrastructure.Engines
             }
             catch (OperationCanceledException)
             {
-                await StopAsync();
-
                 throw;
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "An unexpected error occured");
+                _logger.Error(ex, PlayerMessages.UnexpectedError);
                 await StopAsync();
             }
         }
 
         public async Task StopAsync()
         {
-            _loggerContext = LogContext.PushProperty("PlayerContext", _playerContext, true);
+            _loggerContext = LogContext.PushProperty(nameof(PlayerContext), _playerContext, true);
 
             LogInfoAndDisplayInConsole(ClientLogMessages.Info.StoppingGame);
 
@@ -133,19 +123,21 @@ namespace NeuralJourney.Infrastructure.Engines
 
         private void InitPlayer()
         {
-            _messageService.DisplayConsoleMessage("Please enter your name");
+            _messageService.DisplayConsoleMessage(PlayerMessages.WelcomeFlow.EnterName);
 
             var name = Console.ReadLine() ?? "Anonymous";
 
             _playerContext = new PlayerContext(name, Guid.NewGuid(), _client.GetLocalIp());
 
-            _loggerContext = LogContext.PushProperty("PlayerContext", _playerContext, true);
+            _loggerContext = LogContext.PushProperty(nameof(PlayerContext), _playerContext, true);
         }
 
-        private async Task ServerHandshake()
+        private async Task PerformServerHandshake()
         {
             if (_playerContext is null)
                 throw new InvalidOperationException();
+
+            _playerContext.IpAddress = _client.GetLocalIp();
 
             await _messageService.SendHandshake(_client, _playerContext.Name, _playerContext.Id);
 

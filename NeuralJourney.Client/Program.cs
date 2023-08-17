@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 using NeuralJourney.Core.Interfaces.Engines;
 using NeuralJourney.Core.Interfaces.Handlers;
 using NeuralJourney.Core.Interfaces.Services;
-using NeuralJourney.Core.Options;
+using NeuralJourney.Core.Models.Options;
 using NeuralJourney.Infrastructure.Engines;
 using NeuralJourney.Infrastructure.Handlers;
 using NeuralJourney.Infrastructure.Services;
@@ -13,7 +13,6 @@ using Serilog;
 using Serilog.Events;
 using Serilog.Exceptions;
 using Serilog.Exceptions.Core;
-using Serilog.Exceptions.Filters;
 using System.Net.Sockets;
 
 using var host = CreateHostBuilder(args).Build();
@@ -32,6 +31,7 @@ try
         logger.Debug("Client initializd shutdown");
 
         e.Cancel = true;
+
         engine.StopAsync();
         cts.Cancel();
     };
@@ -76,7 +76,7 @@ static IHostBuilder CreateHostBuilder(string[] strings)
             loggerConfiguration
                 .MinimumLevel.Is(logLevel)
                 .Enrich.FromLogContext()
-                .Enrich.WithExceptionDetails(new DestructuringOptionsBuilder().WithDefaultDestructurers().WithFilter(new IgnorePropertyByNameExceptionFilter("HResult", "StackTrace")))
+                .Enrich.WithExceptionDetails(new DestructuringOptionsBuilder().WithDefaultDestructurers().WithIgnoreStackTraceAndTargetSiteExceptionFilter())
                 .Enrich.WithProperty("Application", "Client")
                 .WriteTo.Seq(serverUrl: options.SeqUrl, restrictedToMinimumLevel: logLevel
             );

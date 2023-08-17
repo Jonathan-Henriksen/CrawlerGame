@@ -1,9 +1,8 @@
-﻿using NeuralJourney.Core.Attributes;
-using NeuralJourney.Core.Enums.Commands;
+﻿using NeuralJourney.Core.Enums.Commands;
 using NeuralJourney.Core.Exceptions;
 using NeuralJourney.Core.Interfaces.Commands;
 using NeuralJourney.Core.Models.Commands;
-using NeuralJourney.Core.Options;
+using NeuralJourney.Core.Models.Options;
 using System.Text;
 
 namespace NeuralJourney.Core.Commands.Players.Commands
@@ -35,13 +34,13 @@ namespace NeuralJourney.Core.Commands.Players.Commands
                 mapBuilder.AppendLine(new string('#', _worldWidth + 2));
                 for (var y = 0; y < _worldHeight; y++)
                 {
-                    mapBuilder.Append("#");
+                    mapBuilder.Append('#');
                     for (var x = 0; x < _worldWidth; x++)
                     {
                         if (x == _context.Player.Location.X && y == _context.Player.Location.Y)
-                            mapBuilder.Append("P");
+                            mapBuilder.Append('#');
                         else
-                            mapBuilder.Append(".");
+                            mapBuilder.Append('#');
                     }
                     mapBuilder.AppendLine("#");
                 }

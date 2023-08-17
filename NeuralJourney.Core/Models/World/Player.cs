@@ -1,11 +1,9 @@
-﻿using System.Net;
-using System.Net.Sockets;
+﻿using System.Net.Sockets;
 
 namespace NeuralJourney.Core.Models.World
 {
     public class Player
     {
-        private readonly string _ip;
         private readonly TcpClient _client;
 
         public readonly Guid Id;
@@ -13,7 +11,6 @@ namespace NeuralJourney.Core.Models.World
         public Player(TcpClient client, string name, Guid id)
         {
             _client = client;
-            _ip = ((IPEndPoint?) client.Client.RemoteEndPoint)?.Address.ToString() ?? string.Empty;
 
             Id = id;
 

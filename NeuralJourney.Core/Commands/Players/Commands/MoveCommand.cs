@@ -1,10 +1,9 @@
-﻿using NeuralJourney.Core.Attributes;
-using NeuralJourney.Core.Enums.Commands;
+﻿using NeuralJourney.Core.Enums.Commands;
 using NeuralJourney.Core.Enums.Parameters;
 using NeuralJourney.Core.Exceptions;
 using NeuralJourney.Core.Interfaces.Commands;
 using NeuralJourney.Core.Models.Commands;
-using NeuralJourney.Core.Options;
+using NeuralJourney.Core.Models.Options;
 
 namespace NeuralJourney.Core.Commands.Players.Commands
 {

@@ -4,6 +4,10 @@
     {
         public static class Debug
         {
+            public const string CompletionTextRequested = "Requesting OpenAI Completion for input '{InputText}'";
+
+            public const string CompletionTextReceived = "Received completion from OpenAI '{CompletionText}'";
+
             public const string PlayerWasNull = "Player was null";
             public const string CommandKeyWasNull = "CommandKey was null";
             public const string CommandWasNull = "Command was null";
@@ -23,7 +27,7 @@
         {
             public const string CommandDispatchFailed = "Failed to dispatch {CommandType} command";
 
-
+            public const string CompletionTextRequstFailed = "Unexpected error while requestion OpenAI completion";
 
             public const string FailedToCreateInstance = "Failed to create an instance of the command";
             public const string NoMatchingConstructor = "No matching constructor found";

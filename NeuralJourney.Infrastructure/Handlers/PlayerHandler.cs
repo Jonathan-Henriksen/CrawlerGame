@@ -67,7 +67,7 @@ namespace NeuralJourney.Infrastructure.Handlers
             var playerContext = new PlayerContext(player.Name, player.Id, playerClient.GetRemoteIp());
 
             // Start background task to notify about new input
-            using (LogContext.PushProperty("PlayerContext", playerContext, true))
+            using (LogContext.PushProperty(nameof(PlayerContext), playerContext, true))
             {
                 _logger.Information(ServerLogMessages.Info.PlayerAdded, player.Name);
 
@@ -87,7 +87,7 @@ namespace NeuralJourney.Infrastructure.Handlers
         {
             var context = new CommandContext(input, player);
 
-            using (LogContext.PushProperty("CommandContext", context, true))
+            using (LogContext.PushProperty(nameof(CommandContext), context, true))
                 _commandDispatcher.DispatchCommand(context);
         }
 
@@ -134,7 +134,7 @@ namespace NeuralJourney.Infrastructure.Handlers
                 var player = new Player(client, name, id.Value);
                 var playerContext = new PlayerContext(player.Name, player.Id, client.GetRemoteIp());
 
-                using (LogContext.PushProperty("PlayerContext", playerContext, true))
+                using (LogContext.PushProperty(nameof(PlayerContext), playerContext, true))
                 {
                     await _messageService.SendHandshake(client, player.Name, player.Id, cancellationToken);
 
@@ -153,7 +153,7 @@ namespace NeuralJourney.Infrastructure.Handlers
             {
                 var client = player.GetClient();
 
-                using (LogContext.PushProperty("PlayerContext", new PlayerContext(player.Name, player.Id, client.GetRemoteIp())))
+                using (LogContext.PushProperty(nameof(PlayerContext), new PlayerContext(player.Name, player.Id, client.GetRemoteIp())))
                 {
                     await _messageService.SendCloseConnectionAsync(player.GetClient());
                     RemovePlayer(player);
