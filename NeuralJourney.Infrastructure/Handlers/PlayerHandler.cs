@@ -132,10 +132,14 @@ namespace NeuralJourney.Infrastructure.Handlers
 
                 // Notify player that name and id have been verified
                 var player = new Player(client, name, id.Value);
+                var playerContext = new PlayerContext(player.Name, player.Id, client.GetRemoteIp());
 
-                await _messageService.SendHandshake(client, player.Name, player.Id, cancellationToken);
+                using (LogContext.PushProperty("PlayerContext", playerContext, true))
+                {
+                    await _messageService.SendHandshake(client, player.Name, player.Id, cancellationToken);
 
-                await _messageService.SendMessageAsync(client, string.Format(PlayerMessages.WelcomeFlow.WelcomeNameMessage, player.Name), cancellationToken);
+                    await _messageService.SendMessageAsync(client, string.Format(PlayerMessages.WelcomeFlow.WelcomeNameMessage, player.Name), cancellationToken);
+                };
 
                 return player;
             }

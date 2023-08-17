@@ -3,7 +3,6 @@ using NeuralJourney.Core.Interfaces.Engines;
 using NeuralJourney.Core.Interfaces.Handlers;
 using NeuralJourney.Core.Interfaces.Services;
 using Serilog;
-using Serilog.Context;
 using System.Net.Sockets;
 
 namespace NeuralJourney.Infrastructure.Engines
@@ -61,8 +60,7 @@ namespace NeuralJourney.Infrastructure.Engines
 
         private void AcceptConnections(TcpClient client)
         {
-            using (LogContext.PushProperty("SessionId", Guid.NewGuid()))
-                _playerHandler.AddPlayer(client, _token);
+            _playerHandler.AddPlayer(client, _token);
         }
 
         public void Dispose()

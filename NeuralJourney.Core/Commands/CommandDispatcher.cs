@@ -35,11 +35,11 @@ namespace NeuralJourney.Core.Commands
 
                     return;
                 }
-                _ = strategy.ExecuteAsync(context);
 
                 if (context.Player is not null)
                     _logger.Debug(ServerLogMessages.Debug.DispatchedPlayerCommand, context.Player.Name);
 
+                _ = strategy.ExecuteAsync(context);
             }
             catch (Exception ex)
             {

@@ -57,7 +57,7 @@ finally
 {
     cts.Dispose();
 
-    logger.Information("Shutting down");
+    logger.Debug("Shutting down server engine");
     await Task.Delay(2000); // Let the message hang for 2 seconds before closing the window
 }
 

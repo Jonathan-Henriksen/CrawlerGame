@@ -68,6 +68,8 @@ namespace NeuralJourney.Infrastructure.Engines
 
                 await _client.ConnectAsync(_serverIp, _serverPort, timeoutCts.Token);
 
+                _playerContext.IpAddress = _client.GetLocalIp();
+
                 await ServerHandshake();
 
                 LogInfoAndDisplayInConsole(ClientLogMessages.Info.ConnectionEstablished);
@@ -119,6 +121,8 @@ namespace NeuralJourney.Infrastructure.Engines
 
         public async Task StopAsync()
         {
+            _loggerContext = LogContext.PushProperty("PlayerContext", _playerContext, true);
+
             LogInfoAndDisplayInConsole(ClientLogMessages.Info.StoppingGame);
 
             if (!_client.Connected)
@@ -129,8 +133,9 @@ namespace NeuralJourney.Infrastructure.Engines
 
         private void InitPlayer()
         {
-            Console.Write("Please enter your name: ");
-            var name = Console.ReadLine() ?? "Anonymouse";
+            _messageService.DisplayConsoleMessage("Please enter your name");
+
+            var name = Console.ReadLine() ?? "Anonymous";
 
             _playerContext = new PlayerContext(name, Guid.NewGuid(), _client.GetLocalIp());
 
@@ -190,7 +195,7 @@ namespace NeuralJourney.Infrastructure.Engines
 
             _logger.Debug(SystemMessages.DispoedOfType, GetType().Name);
 
-            _loggerContext.Dispose();
+            _loggerContext?.Dispose();
         }
     }
 }
