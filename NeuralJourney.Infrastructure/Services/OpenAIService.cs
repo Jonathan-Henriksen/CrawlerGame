@@ -57,7 +57,7 @@ namespace NeuralJourney.Infrastructure.Services
                 {
                     retryLogger.Warning(webEx, NetworkLogMessages.Warning.OpenAIRequestTimeout);
 
-                    await Task.Delay(1000 * RetryCount);
+                    await Task.Delay(TimeSpan.FromSeconds(Math.Pow(2, RetryCount))); // Exponential back-off
                 }
                 catch (Exception ex)
                 {

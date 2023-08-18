@@ -19,7 +19,7 @@ namespace NeuralJourney.Core.Commands.Players.Middleware
             if (context.Result is null || string.IsNullOrEmpty(context.ExecutionMessage))
                 throw new CommandExecutionException("No execution message generated");
 
-            var client = context.Player?.GetClient();
+            var client = context.Player?.Client;
 
             if (client is null)
                 return;

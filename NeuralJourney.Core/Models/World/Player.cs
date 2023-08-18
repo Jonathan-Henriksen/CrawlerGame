@@ -4,38 +4,20 @@ namespace NeuralJourney.Core.Models.World
 {
     public class Player
     {
-        private readonly TcpClient _client;
+        public TcpClient Client { get; }
+        public Guid Id { get; }
+        public string Name { get; }
 
-        public readonly Guid Id;
+        public int Health { get; set; } = 100;
+        public int Hunger { get; set; } = 100;
+        public int Thirst { get; set; } = 100;
+        public Coordinates Location { get; set; } = new Coordinates();
 
         public Player(TcpClient client, string name, Guid id)
         {
-            _client = client;
-
+            Client = client;
             Id = id;
-
-            IsConnected = true;
             Name = name;
-            Health = 100;
-            Thirst = 100;
-            Location = new Coordinates();
-        }
-
-        public bool IsConnected { get; private set; }
-
-        public string Name { get; set; }
-
-        public Coordinates Location { get; set; }
-
-        public int Health { get; set; }
-
-        public int Hunger { get; set; }
-
-        public int Thirst { get; set; }
-
-        public TcpClient GetClient()
-        {
-            return _client;
         }
     }
 }

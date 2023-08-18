@@ -30,7 +30,7 @@ namespace NeuralJourney.Core.Commands
                     _logger.Error(CommandLogMessages.Error.CommandDispatchFailed, context.CommandKey.Type);
 
                     if (context.Player is not null)
-                        await _messageService.SendMessageAsync(context.Player.GetClient(), PlayerMessages.Command.NoMatch);
+                        await _messageService.SendMessageAsync(context.Player.Client, PlayerMessages.Command.NoMatch);
 
                     return;
                 }
@@ -45,7 +45,7 @@ namespace NeuralJourney.Core.Commands
                 _logger.Error(ex, CommandLogMessages.Error.CommandDispatchFailed, context.CommandKey.Type);
 
                 if (context.Player is not null)
-                    await _messageService.SendMessageAsync(context.Player.GetClient(), PlayerMessages.SomethingWentWrong);
+                    await _messageService.SendMessageAsync(context.Player.Client, PlayerMessages.SomethingWentWrong);
             }
         }
     }

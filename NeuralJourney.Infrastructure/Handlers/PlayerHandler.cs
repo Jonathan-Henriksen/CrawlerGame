@@ -8,6 +8,7 @@ using NeuralJourney.Core.Models.LogProperties;
 using NeuralJourney.Core.Models.World;
 using Serilog;
 using Serilog.Context;
+using System.Collections.Concurrent;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
 
@@ -20,7 +21,7 @@ namespace NeuralJourney.Infrastructure.Handlers
         private readonly IMessageService _messageService;
         private readonly ILogger _logger;
 
-        private readonly List<Player> _players = new();
+        private readonly ConcurrentDictionary<Guid, Player> _players = new();
 
         public PlayerHandler(ICommandDispatcher commandDispatcher, IInputHandler<Player> inputHandler, IMessageService messageService, ILogger logger)
         {
@@ -38,12 +39,12 @@ namespace NeuralJourney.Infrastructure.Handlers
         {
             Player? player = null;
 
-            var addressLogger = LogContext.PushProperty("Address", playerClient.Client.RemoteEndPoint);
+            var addressLogger = LogContext.PushProperty("IpAddress", playerClient.GetRemoteIp());
             try
             {
                 player = await InitPlayerAsync(playerClient, cancellationToken);
 
-                _players.Add(player);
+                _players.TryAdd(player.Id, player);
             }
             catch (OperationCanceledException) // Cancelled when player sends 'Close Connection' during initialization
             {
@@ -93,14 +94,14 @@ namespace NeuralJourney.Infrastructure.Handlers
 
         private void RemovePlayer(Player player)
         {
-            var client = player.GetClient();
+            var client = player.Client;
 
             _logger.Information(ServerLogMessages.Info.PlayerRemoved, player.Name);
 
             client.Close();
             client.Dispose();
 
-            _players.Remove(player);
+            _players.Remove(player.Id, out var _);
         }
 
         private async Task<Player> InitPlayerAsync(TcpClient client, CancellationToken cancellationToken)
@@ -117,7 +118,7 @@ namespace NeuralJourney.Infrastructure.Handlers
                     continue;
 
                 // Validate that name is not in use
-                if (_players.Any(p => p.Name == name))
+                if (_players.Any(p => p.Value.Name == name))
                 {
                     await _messageService.SendMessageAsync(client, PlayerMessages.WelcomeFlow.NameAlreadyTaken, cancellationToken);
                     continue;
@@ -149,13 +150,14 @@ namespace NeuralJourney.Infrastructure.Handlers
 
         public async Task RemoveAllPlayers()
         {
-            foreach (var player in _players)
+            foreach (var player in _players.Values)
             {
-                var client = player.GetClient();
+                var client = player.Client;
 
                 using (LogContext.PushProperty(nameof(PlayerContext), new PlayerContext(player.Name, player.Id, client.GetRemoteIp())))
                 {
-                    await _messageService.SendCloseConnectionAsync(player.GetClient());
+                    await _messageService.SendCloseConnectionAsync(client);
+
                     RemovePlayer(player);
                 }
             }
@@ -166,11 +168,10 @@ namespace NeuralJourney.Infrastructure.Handlers
             // Ubsubscribe from events
             _inputHandler.OnInputReceived -= DispatchCommand;
             _inputHandler.OnClosedConnection -= RemovePlayer;
-
             // Gracefully disconnect players
-            foreach (var player in _players)
+            foreach (var player in _players.Values)
             {
-                _messageService.SendCloseConnectionAsync(player.GetClient());
+                _messageService.SendCloseConnectionAsync(player.Client);
             }
 
             _players.Clear();

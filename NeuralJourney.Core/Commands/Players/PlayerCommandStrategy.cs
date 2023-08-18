@@ -62,7 +62,7 @@ namespace NeuralJourney.Core.Commands.Players
             finally
             {
                 if (!string.IsNullOrEmpty(errorMessage) && context.Player is not null)
-                    await _messageService.SendMessageAsync(context.Player.GetClient(), errorMessage, cancellationToken);
+                    await _messageService.SendMessageAsync(context.Player.Client, errorMessage, cancellationToken);
             }
         }
     }

@@ -22,7 +22,7 @@ namespace NeuralJourney.Infrastructure.Handlers
 
         public async Task HandleInputAsync(Player player, CancellationToken cancellationToken)
         {
-            var client = player.GetClient();
+            var client = player.Client;
 
             while (!cancellationToken.IsCancellationRequested)
             {
