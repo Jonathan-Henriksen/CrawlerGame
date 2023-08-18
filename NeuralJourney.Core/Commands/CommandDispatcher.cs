@@ -27,8 +27,7 @@ namespace NeuralJourney.Core.Commands
 
                 if (strategy is null)
                 {
-                    _logger.ForContext("Reason", "No strategy was found for the command type")
-                        .Error(CommandLogMessages.Error.CommandDispatchFailed, context.CommandKey.Type);
+                    _logger.Error(CommandLogMessages.Error.CommandDispatchFailed, context.CommandKey.Type);
 
                     if (context.Player is not null)
                         _messageService.SendMessageAsync(context.Player.GetClient(), PlayerMessages.Command.NoMatch);
@@ -37,7 +36,7 @@ namespace NeuralJourney.Core.Commands
                 }
 
                 if (context.Player is not null)
-                    _logger.Debug(ServerLogMessages.Debug.DispatchedPlayerCommand, context.Player.Name);
+                    _logger.Debug(CommandLogMessages.Debug.DispatchedPlayerCommand, context.Player.Name);
 
                 _ = strategy.ExecuteAsync(context);
             }

@@ -2,11 +2,6 @@
 {
     public static class ServerLogMessages
     {
-        public static class Debug
-        {
-            public const string DispatchedPlayerCommand = "Dispatched command for {PlayerName}";
-        }
-
         public static class Info
         {
             public const string PlayerAdded = "Player {PlayerName} connected";
