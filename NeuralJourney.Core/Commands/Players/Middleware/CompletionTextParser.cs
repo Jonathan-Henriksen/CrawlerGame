@@ -6,14 +6,13 @@ using System.Text.RegularExpressions;
 
 namespace NeuralJourney.Core.Commands.Players.Middleware
 {
-    public class CompletionTextParser : ICommandMiddleware
+    public partial class CompletionTextParser : ICommandMiddleware
     {
         public async Task InvokeAsync(CommandContext context, Func<Task> next, CancellationToken cancellationToken = default)
         {
             var completionText = context.CompletionText ?? throw new CommandMappingException("Completion text was blank");
 
-            var regexPattern = @"^(?<commandIdentifier>\w+)\((?<params>[^\)]+)\)\|(?<successMessage>.+?)$";
-            var match = Regex.Match(completionText, regexPattern);
+            var match = CompletionTextMatcher().Match(completionText);
 
             if (!match.Success)
                 throw new CommandMappingException("Completion text did not match the expected format");
@@ -33,5 +32,8 @@ namespace NeuralJourney.Core.Commands.Players.Middleware
 
             await next();
         }
+
+        [GeneratedRegex(@"^(?<commandIdentifier>\w+)\((?<params>[^\)]+)\)\|(?<successMessage>.+?)$")]
+        private static partial Regex CompletionTextMatcher();
     }
 }

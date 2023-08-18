@@ -88,7 +88,7 @@ namespace NeuralJourney.Infrastructure.Handlers
             var context = new CommandContext(input, player);
 
             using (LogContext.PushProperty(nameof(CommandContext), context, true))
-                _commandDispatcher.DispatchCommand(context);
+                _commandDispatcher.DispatchCommandAsync(context);
         }
 
         private void RemovePlayer(Player player)
