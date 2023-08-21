@@ -27,20 +27,20 @@ namespace NeuralJourney.Core.Commands
 
         public static Type GetCommandType(CommandKey key)
         {
-            if (!_commandMappings.TryGetValue(key, out var commandType))
+            var commandType = _commandMappings.FirstOrDefault(entry => entry.Key.Type == key.Type && entry.Key.Identifier == key.Identifier).Value;
+
+            if (commandType is null)
                 throw new CommandMappingException("Command not found", "Could not match the input to any available commands. Please try rephrasing");
+
 
             return commandType;
         }
 
-        public static string GetCommands(CommandTypeEnum type)
+        public static IEnumerable<string> GetCommands(CommandTypeEnum type)
         {
-            var commands = _commandMappings
+            return _commandMappings
                 .Where(kvp => kvp.Key.Type == type)
-                .Select(kvp => kvp.Key.Identifier.ToString())
-                .ToList();
-
-            return string.Join(",", commands);
+                .Select(kvp => kvp.Key.Identifier.ToString());
         }
     }
 }

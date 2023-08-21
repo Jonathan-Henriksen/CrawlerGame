@@ -1,18 +1,26 @@
 ﻿using NeuralJourney.Core.Exceptions;
 using NeuralJourney.Core.Interfaces.Commands;
-using NeuralJourney.Core.Models.Commands;
+using NeuralJourney.Core.Models.LogProperties;
+using NeuralJourney.Core.Models.Options;
 using System.Reflection;
 
 namespace NeuralJourney.Core.Commands
 {
     public class CommandFactory : ICommandFactory
     {
-        public ICommand CreateCommand(CommandKey key, string[]? parameters)
+        private readonly GameOptions _gameOptions;
+
+        public CommandFactory(GameOptions gameOptions)
+        {
+            _gameOptions = gameOptions;
+        }
+
+        public ICommand CreateCommand(CommandContext context)
         {
             try
             {
-                var commandType = CommandRegistry.GetCommandType(key);
-                var command = (ICommand?) Activator.CreateInstance(commandType, parameters);
+                var commandType = CommandRegistry.GetCommandType(context.CommandKey);
+                var command = (ICommand?) Activator.CreateInstance(commandType, context, _gameOptions);
 
                 return command ?? throw new CommandMappingException("Failed to create an instance of the coomand");
             }

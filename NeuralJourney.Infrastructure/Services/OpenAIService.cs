@@ -2,7 +2,7 @@
 using NeuralJourney.Core.Constants;
 using NeuralJourney.Core.Enums.Commands;
 using NeuralJourney.Core.Interfaces.Services;
-using NeuralJourney.Core.Models.Commands;
+using NeuralJourney.Core.Models.LogProperties;
 using NeuralJourney.Core.Models.Options;
 using OpenAI_API;
 using Serilog;
@@ -15,14 +15,14 @@ namespace NeuralJourney.Infrastructure.Services
         private readonly ILogger _logger;
         private readonly OpenAIAPI _openApi;
 
-        private readonly string _availableCommands;
+        private readonly IEnumerable<string> _availableCommands;
 
         private const int _maxRetryAttempts = 3;
-        private int RetryCount = 0;
 
         public OpenAIService(OpenAIOptions options, ILogger logger)
         {
             _logger = logger.ForContext<OpenAIService>();
+
             _openApi = new OpenAIAPI(new APIAuthentication(options.ApiKey));
 
             _openApi.Completions.DefaultCompletionRequestArgs.Model = options.Model;
@@ -35,15 +35,17 @@ namespace NeuralJourney.Infrastructure.Services
 
         public async Task<bool> SetCommandCompletionTextAsync(CommandContext context)
         {
-            while (RetryCount < _maxRetryAttempts)
+            var retryAttempts = 0;
+
+            while (retryAttempts < _maxRetryAttempts)
             {
-                var retryLogger = _logger.ForContext("RetryCount", RetryCount++);
+                var retryLogger = _logger.ForContext("RetryCount", retryAttempts++);
 
                 try
                 {
-                    var promptText = $"{_availableCommands}\n\n{context.InputText}\n\n###\n\n";
+                    var promptText = GeneratePrompt(context.InputText, context.Params.Length);
 
-                    retryLogger.Debug(CommandLogMessages.Debug.CompletionTextRequested, context.InputText);
+                    retryLogger.ForContext("PromptText", promptText.Replace("\n", "\\n")).Debug(CommandLogMessages.Debug.CompletionTextRequested, context.InputText);
 
                     var completionResponse = await _openApi.Completions.CreateCompletionAsync(promptText);
                     context.CompletionText = completionResponse?.Completions.FirstOrDefault()?.Text.TrimStart();
@@ -57,7 +59,7 @@ namespace NeuralJourney.Infrastructure.Services
                 {
                     retryLogger.Warning(webEx, NetworkLogMessages.Warning.OpenAIRequestTimeout);
 
-                    await Task.Delay(TimeSpan.FromSeconds(Math.Pow(2, RetryCount))); // Exponential back-off
+                    await Task.Delay(TimeSpan.FromSeconds(Math.Pow(2, retryAttempts))); // Exponential back-off
                 }
                 catch (Exception ex)
                 {
@@ -67,6 +69,22 @@ namespace NeuralJourney.Infrastructure.Services
             }
 
             return false;
+        }
+
+        private string GeneratePrompt(string inputText, int parameterCount)
+        {
+            var formattedCommands = string.Join(",", _availableCommands.Select(command =>
+            {
+                if (parameterCount < 1)
+                    return command;
+
+                var parameters = string.Join("", Enumerable.Range(0, parameterCount).Select(i => $"{{{i}}}"));
+
+                return $"{command}{parameters}";
+
+            }));
+
+            return $"{formattedCommands}\n\n{inputText}\n\n###\n\n";
         }
     }
 }

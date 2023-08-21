@@ -1,6 +1,6 @@
 ﻿using NeuralJourney.Core.Exceptions;
 using NeuralJourney.Core.Interfaces.Commands;
-using NeuralJourney.Core.Models.Commands;
+using NeuralJourney.Core.Models.LogProperties;
 
 namespace NeuralJourney.Core.Commands.Players.Middleware
 {

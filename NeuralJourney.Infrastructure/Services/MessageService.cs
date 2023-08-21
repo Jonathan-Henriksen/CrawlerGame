@@ -205,7 +205,7 @@ namespace NeuralJourney.Infrastructure.Services
             }
         }
 
-        private static void WriteColoredMessage(string message, ConsoleColor color)
+        private void WriteColoredMessage(string message, ConsoleColor color)
         {
             Console.ForegroundColor = color;
             Console.WriteLine($"{message}\n");

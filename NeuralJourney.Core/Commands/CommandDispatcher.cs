@@ -1,7 +1,7 @@
 ﻿using NeuralJourney.Core.Constants;
 using NeuralJourney.Core.Interfaces.Commands;
 using NeuralJourney.Core.Interfaces.Services;
-using NeuralJourney.Core.Models.Commands;
+using NeuralJourney.Core.Models.LogProperties;
 using Serilog;
 
 namespace NeuralJourney.Core.Commands

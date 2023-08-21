@@ -1,9 +1,9 @@
-﻿using NeuralJourney.Core.Models.Commands;
+﻿using NeuralJourney.Core.Models.LogProperties;
 
 namespace NeuralJourney.Core.Interfaces.Commands
 {
     public interface ICommandFactory
     {
-        ICommand CreateCommand(CommandKey commandKey, string[]? parameters);
+        ICommand CreateCommand(CommandContext context);
     }
 }

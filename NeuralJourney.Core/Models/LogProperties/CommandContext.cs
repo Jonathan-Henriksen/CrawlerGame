@@ -1,8 +1,9 @@
 ﻿using NeuralJourney.Core.Enums.Commands;
 using NeuralJourney.Core.Interfaces.Commands;
+using NeuralJourney.Core.Models.Commands;
 using NeuralJourney.Core.Models.World;
 
-namespace NeuralJourney.Core.Models.Commands
+namespace NeuralJourney.Core.Models.LogProperties
 {
     public class CommandContext
     {

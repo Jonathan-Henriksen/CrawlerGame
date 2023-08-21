@@ -11,6 +11,7 @@ namespace NeuralJourney.Infrastructure.Handlers
     public class NetworkConnectionHandler : IConnectionHandler
     {
         private const int _maxRetryAttempts = 10;
+        private int RetryAttempts = 0;
 
         private readonly TcpListener _tcpListener;
         private readonly ILogger _logger;
@@ -27,8 +28,6 @@ namespace NeuralJourney.Infrastructure.Handlers
         {
             _tcpListener.Start();
 
-            var retryCount = 0;
-
             _logger.Debug(NetworkLogMessages.Debug.TcpListenerStarted);
 
             while (!cancellationToken.IsCancellationRequested)
@@ -43,7 +42,7 @@ namespace NeuralJourney.Infrastructure.Handlers
                     _logger.Debug(NetworkLogMessages.Debug.ClientConnected, client.GetRemoteIp());
                     OnConnected?.Invoke(client);
 
-                    retryCount = 0; // Reset retry count on successful connection
+                    RetryAttempts = 0; // Reset retry count on successful connection
                 }
                 catch (OperationCanceledException)
                 {
@@ -51,15 +50,15 @@ namespace NeuralJourney.Infrastructure.Handlers
                 }
                 catch (SocketException ex)
                 {
-                    if (++retryCount > _maxRetryAttempts)
+                    if (++RetryAttempts > _maxRetryAttempts)
                     {
                         _logger.Error(ex, NetworkLogMessages.Error.SocketFailure);
                         throw new OperationCanceledException();
                     }
 
-                    _logger.Warning(ex, NetworkLogMessages.Warning.SocketFailureRetry, retryCount, _maxRetryAttempts);
+                    _logger.Warning(ex, NetworkLogMessages.Warning.SocketFailureRetry, RetryAttempts, _maxRetryAttempts);
 
-                    await Task.Delay(5000, cancellationToken); // Give connection some time to recover
+                    await Task.Delay(TimeSpan.FromSeconds(Math.Pow(2, RetryAttempts)), cancellationToken); // Exponential back-off
 
                     continue;
                 }

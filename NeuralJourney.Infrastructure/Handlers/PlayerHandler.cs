@@ -3,7 +3,6 @@ using NeuralJourney.Core.Extensions;
 using NeuralJourney.Core.Interfaces.Commands;
 using NeuralJourney.Core.Interfaces.Handlers;
 using NeuralJourney.Core.Interfaces.Services;
-using NeuralJourney.Core.Models.Commands;
 using NeuralJourney.Core.Models.LogProperties;
 using NeuralJourney.Core.Models.World;
 using Serilog;

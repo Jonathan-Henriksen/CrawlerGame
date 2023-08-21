@@ -1,7 +1,7 @@
 ﻿using NeuralJourney.Core.Exceptions;
 using NeuralJourney.Core.Interfaces.Commands;
 using NeuralJourney.Core.Interfaces.Services;
-using NeuralJourney.Core.Models.Commands;
+using NeuralJourney.Core.Models.LogProperties;
 using Serilog;
 
 namespace NeuralJourney.Core.Commands.Players
@@ -63,6 +63,8 @@ namespace NeuralJourney.Core.Commands.Players
             {
                 if (!string.IsNullOrEmpty(errorMessage) && context.Player is not null)
                     await _messageService.SendMessageAsync(context.Player.Client, errorMessage, cancellationToken);
+                else
+                    _logger.Debug("Successfully executed command {CommandIdentifier} for player {PlayerName}", context.CommandKey.Identifier, context.Player?.Name);
             }
         }
     }

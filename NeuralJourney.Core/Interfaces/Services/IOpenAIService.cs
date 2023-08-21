@@ -1,4 +1,4 @@
-﻿using NeuralJourney.Core.Models.Commands;
+﻿using NeuralJourney.Core.Models.LogProperties;
 
 namespace NeuralJourney.Core.Interfaces.Services
 {

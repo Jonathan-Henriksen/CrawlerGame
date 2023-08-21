@@ -1,6 +1,6 @@
 ﻿using NeuralJourney.Core.Constants;
 using NeuralJourney.Core.Interfaces.Commands;
-using NeuralJourney.Core.Models.Commands;
+using NeuralJourney.Core.Models.LogProperties;
 using Serilog;
 
 namespace NeuralJourney.Core.Commands.Admin
@@ -20,7 +20,7 @@ namespace NeuralJourney.Core.Commands.Admin
         {
             try
             {
-                context.Command = _commandFactory.CreateCommand(context.CommandKey, context.Params);
+                context.Command = _commandFactory.CreateCommand(context);
 
                 if (context.Command is null)
                     return;

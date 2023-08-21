@@ -1,4 +1,5 @@
 ﻿using NeuralJourney.Core.Models.Commands;
+using NeuralJourney.Core.Models.LogProperties;
 using Serilog.Core;
 using Serilog.Events;
 

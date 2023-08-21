@@ -1,7 +1,7 @@
 ﻿using NeuralJourney.Core.Enums.Commands;
 using NeuralJourney.Core.Exceptions;
 using NeuralJourney.Core.Interfaces.Commands;
-using NeuralJourney.Core.Models.Commands;
+using NeuralJourney.Core.Models.LogProperties;
 using System.Text.RegularExpressions;
 
 namespace NeuralJourney.Core.Commands.Players.Middleware
@@ -33,7 +33,7 @@ namespace NeuralJourney.Core.Commands.Players.Middleware
             await next();
         }
 
-        [GeneratedRegex(@"^(?<commandIdentifier>\w+)\((?<params>[^\)]+)\)\|(?<successMessage>.+?)$")]
+        [GeneratedRegex(@"^(?<commandIdentifier>\w+)(\((?<params>[^\)]*)\))?(\|(?<successMessage>.+?))?$")]
         private static partial Regex CompletionTextMatcher();
     }
 }

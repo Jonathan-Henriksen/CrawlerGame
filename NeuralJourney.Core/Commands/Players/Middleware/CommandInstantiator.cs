@@ -1,6 +1,6 @@
 ﻿using NeuralJourney.Core.Exceptions;
 using NeuralJourney.Core.Interfaces.Commands;
-using NeuralJourney.Core.Models.Commands;
+using NeuralJourney.Core.Models.LogProperties;
 
 namespace NeuralJourney.Core.Commands.Players.Middleware
 {
@@ -17,7 +17,7 @@ namespace NeuralJourney.Core.Commands.Players.Middleware
         {
             var commandKey = context.CommandKey ?? throw new CommandMappingException("CommandKey was null");
 
-            context.Command = _commandFactory.CreateCommand(commandKey, context.Params);
+            context.Command = _commandFactory.CreateCommand(context);
 
             await next();
         }

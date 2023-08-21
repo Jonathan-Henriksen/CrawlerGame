@@ -1,7 +1,7 @@
 ﻿using NeuralJourney.Core.Exceptions;
 using NeuralJourney.Core.Interfaces.Commands;
 using NeuralJourney.Core.Interfaces.Services;
-using NeuralJourney.Core.Models.Commands;
+using NeuralJourney.Core.Models.LogProperties;
 
 namespace NeuralJourney.Core.Commands.Players.Middleware
 {
@@ -26,10 +26,8 @@ namespace NeuralJourney.Core.Commands.Players.Middleware
 
             await _messageService.SendMessageAsync(client, context.ExecutionMessage, cancellationToken);
 
-            if (context.Result.HasValue && string.IsNullOrEmpty(context.Result.Value.AdditionalMessage))
-                return;
-
-            await _messageService.SendMessageAsync(client, context.ExecutionMessage, cancellationToken);
+            if (context.Result.HasValue && !string.IsNullOrEmpty(context.Result.Value.AdditionalMessage))
+                await _messageService.SendMessageAsync(client, context.Result.Value.AdditionalMessage, cancellationToken);
 
             await next();
         }

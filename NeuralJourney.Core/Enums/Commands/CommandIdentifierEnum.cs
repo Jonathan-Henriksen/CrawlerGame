@@ -7,6 +7,7 @@ namespace NeuralJourney.Core.Enums.Commands
         [EnumMember(Value = "N/A")]
         NotAvailable,
         CheckMap,
+        Eat,
         Move,
     }
 }

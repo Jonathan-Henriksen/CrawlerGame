@@ -3,12 +3,13 @@ using NeuralJourney.Core.Enums.Parameters;
 using NeuralJourney.Core.Exceptions;
 using NeuralJourney.Core.Interfaces.Commands;
 using NeuralJourney.Core.Models.Commands;
+using NeuralJourney.Core.Models.LogProperties;
 using NeuralJourney.Core.Models.Options;
 
 namespace NeuralJourney.Core.Commands.Players.Commands
 {
     [Command(CommandTypeEnum.Player, CommandIdentifierEnum.Move)]
-    internal class MoveCommand : ICommand
+    public class MoveCommand : ICommand
     {
         private readonly CommandContext _context;
 
@@ -17,12 +18,12 @@ namespace NeuralJourney.Core.Commands.Players.Commands
         private readonly int _worldHeight;
         private readonly int WorldWidth;
 
-        internal MoveCommand(CommandContext context, GameOptions gameOptions)
+        public MoveCommand(CommandContext context, GameOptions gameOptions)
         {
             if (!context.Params.Any())
                 throw new CommandExecutionException("Missing required parameter 'Direction'", "Could not determine which direction to move");
 
-            if (!Enum.TryParse(context.Params[0], out DirectionEnum direction))
+            if (!Enum.TryParse(context.Params[0], true, out DirectionEnum direction))
                 throw new CommandExecutionException("Could not parse 'Direction' parameter to DirectionEnum", "Could not determine which direction to move");
 
             _context = context;
