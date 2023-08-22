@@ -6,7 +6,7 @@ namespace NeuralJourney.Core.Enums.Commands
     {
         [EnumMember(Value = "N/A")]
         NotAvailable,
-        CheckMap,
+        Map,
         Eat,
         Move,
     }

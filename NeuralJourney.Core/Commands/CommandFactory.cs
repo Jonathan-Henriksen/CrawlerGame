@@ -21,7 +21,15 @@ namespace NeuralJourney.Core.Commands
             {
                 var commandType = CommandRegistry.GetCommandType(context.CommandKey);
                 var parameters = new object?[] { context, _gameOptions };
-                parameters = parameters.Concat(context.Params).ToArray();
+
+                if (context.Params.Any())
+                    parameters = parameters.Concat(context.Params).ToArray();
+
+                var constructorParams = commandType.GetConstructors()?.FirstOrDefault()?.GetParameters();
+                if ((constructorParams?.Length ?? 0) < parameters.Length)
+                {
+                    throw new CommandParameterException("Required parameter was missing", "N/A");
+                }
 
                 var command = (ICommand?) Activator.CreateInstance(commandType, parameters);
 

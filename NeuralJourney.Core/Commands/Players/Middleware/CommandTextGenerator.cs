@@ -2,16 +2,19 @@
 using NeuralJourney.Core.Interfaces.Commands;
 using NeuralJourney.Core.Interfaces.Services;
 using NeuralJourney.Core.Models.LogProperties;
+using Serilog;
 
 namespace NeuralJourney.Core.Commands.Players.Middleware
 {
-    public class CompletionTextRequester : ICommandMiddleware
+    public class CommandTextGenerator : ICommandMiddleware
     {
         private readonly IOpenAIService _openAIService;
+        private readonly ILogger _logger;
 
-        public CompletionTextRequester(IOpenAIService openAIService)
+        public CommandTextGenerator(IOpenAIService openAIService, ILogger logger)
         {
             _openAIService = openAIService;
+            _logger = logger;
         }
 
         public async Task InvokeAsync(CommandContext context, Func<Task> next, CancellationToken cancellationToken = default)

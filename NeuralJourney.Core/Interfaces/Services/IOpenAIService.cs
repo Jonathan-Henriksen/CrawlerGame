@@ -1,9 +1,12 @@
-﻿using NeuralJourney.Core.Models.LogProperties;
+﻿using NeuralJourney.Core.Enums.Commands;
+using NeuralJourney.Core.Models.LogProperties;
 
 namespace NeuralJourney.Core.Interfaces.Services
 {
     public interface IOpenAIService
     {
-        public Task<bool> SetCommandCompletionTextAsync(CommandContext context);
+        Task<CommandIdentifierEnum> GetCommandClassificationAsync(string inputText);
+
+        Task<bool> SetCommandCompletionTextAsync(CommandContext context);
     }
 }

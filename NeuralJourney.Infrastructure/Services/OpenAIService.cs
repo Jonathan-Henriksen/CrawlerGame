@@ -1,10 +1,12 @@
 ﻿using NeuralJourney.Core.Commands;
 using NeuralJourney.Core.Constants;
 using NeuralJourney.Core.Enums.Commands;
+using NeuralJourney.Core.Exceptions;
 using NeuralJourney.Core.Interfaces.Services;
 using NeuralJourney.Core.Models.LogProperties;
 using NeuralJourney.Core.Models.Options;
 using OpenAI_API;
+using OpenAI_API.Completions;
 using Serilog;
 using System.Net;
 
@@ -14,6 +16,7 @@ namespace NeuralJourney.Infrastructure.Services
     {
         private readonly ILogger _logger;
         private readonly OpenAIAPI _openApi;
+        private readonly OpenAIOptions _options;
 
         private readonly Dictionary<string, int> _availableCommands;
 
@@ -21,16 +24,39 @@ namespace NeuralJourney.Infrastructure.Services
 
         public OpenAIService(OpenAIOptions options, ILogger logger)
         {
+            _options = options;
             _logger = logger.ForContext<OpenAIService>();
 
             _openApi = new OpenAIAPI(new APIAuthentication(options.ApiKey));
 
-            _openApi.Completions.DefaultCompletionRequestArgs.Model = options.Model;
+            _openApi.Completions.DefaultCompletionRequestArgs.Model = options.ParameterExtractionModel;
             _openApi.Completions.DefaultCompletionRequestArgs.MaxTokens = options.MaxTokens;
             _openApi.Completions.DefaultCompletionRequestArgs.StopSequence = options.StopSequence;
             _openApi.Completions.DefaultCompletionRequestArgs.Temperature = options.Temperature;
 
             _availableCommands = CommandRegistry.GetCommands(CommandTypeEnum.Player);
+        }
+
+        public async Task<CommandIdentifierEnum> GetCommandClassificationAsync(string inputText)
+        {
+            var request = new CompletionRequest(prompt: $"{inputText}\n\n###\n\n", max_tokens: 1, model: _options.CommandClassificationModel);
+
+            var completionResult = await _openApi.Completions.CreateCompletionAsync(request);
+
+            if (completionResult is null)
+                throw new CommandMappingException("Command classification result was null");
+
+            if (!completionResult.Completions.Any())
+                throw new CommandMappingException("Command classification did not contain any completions");
+
+            var completionText = completionResult.Completions.First().Text;
+
+            _logger.Debug("Received completion text {CompletionText} for classification", completionText);
+
+            if (!Enum.TryParse<CommandIdentifierEnum>(completionText, true, out var commandIndentifier))
+                throw new CommandMappingException("Command classification was invalid");
+
+            return commandIndentifier;
         }
 
         public async Task<bool> SetCommandCompletionTextAsync(CommandContext context)
@@ -43,14 +69,14 @@ namespace NeuralJourney.Infrastructure.Services
 
                 try
                 {
-                    var promptText = GeneratePrompt(context.InputText);
+                    var promptText = $"{context.CommandKey.Identifier}|{context.InputText}\n\n###\n\n";
 
                     retryLogger.ForContext("PromptText", promptText.Replace("\n", "\\n")).Debug(CommandLogMessages.Debug.CompletionTextRequested, context.InputText);
 
-                    var completionResponse = await _openApi.Completions.CreateCompletionAsync(promptText);
-                    context.CompletionText = completionResponse?.Completions.FirstOrDefault()?.Text.TrimStart();
+                    var completionResult = await _openApi.Completions.CreateCompletionAsync(promptText);
+                    context.CompletionText = completionResult?.Completions.FirstOrDefault()?.Text.TrimStart();
 
-                    retryLogger.ForContext("CompletionResponse", completionResponse, true)
+                    retryLogger.ForContext("CompletionResult", completionResult, true)
                         .Debug(CommandLogMessages.Debug.CompletionTextReceived, context.CompletionText);
 
                     return true;
@@ -69,22 +95,6 @@ namespace NeuralJourney.Infrastructure.Services
             }
 
             return false;
-        }
-
-        private string GeneratePrompt(string inputText)
-        {
-            var formattedCommands = string.Join(",", _availableCommands.Select(command =>
-            {
-                if (command.Value < 1)
-                    return command.Key;
-
-                var parameters = string.Join("", Enumerable.Range(0, command.Value).Select(i => $"{{{i}}}"));
-
-                return $"{command.Key}{parameters}";
-
-            }));
-
-            return $"{formattedCommands}\n\n{inputText}\n\n###\n\n";
         }
     }
 }

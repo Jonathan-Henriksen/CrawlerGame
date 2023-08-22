@@ -133,7 +133,8 @@ static IServiceCollection RegisterCommandMiddleware(IServiceCollection services)
 {
     return services
         .AddTransient<ICommandMiddleware, InputValidation>()
-        .AddTransient<ICommandMiddleware, CompletionTextRequester>()
+        .AddTransient<ICommandMiddleware, CommandClassifier>()
+        .AddTransient<ICommandMiddleware, CommandTextGenerator>()
         .AddTransient<ICommandMiddleware, CompletionTextParser>()
         .AddTransient<ICommandMiddleware, CommandInstantiator>()
         .AddTransient<ICommandMiddleware, CommandExecutor>()

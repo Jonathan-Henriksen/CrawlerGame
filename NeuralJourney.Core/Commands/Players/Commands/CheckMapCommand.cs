@@ -7,7 +7,7 @@ using System.Text;
 
 namespace NeuralJourney.Core.Commands.Players.Commands
 {
-    [Command(CommandTypeEnum.Player, CommandIdentifierEnum.CheckMap)]
+    [Command(CommandTypeEnum.Player, CommandIdentifierEnum.Map)]
     public class CheckMapCommand : CommandBase
     {
         private readonly int _worldWidth;
@@ -30,11 +30,11 @@ namespace NeuralJourney.Core.Commands.Players.Commands
                 if (Context.Player is null)
                     throw new CommandExecutionException("The player was null", "Something went wrong. Please try again");
 
-                var mapBuilder = new StringBuilder();
+                var mapBuilder = new StringBuilder("\t");
                 mapBuilder.AppendLine(new string(_wallChar, _worldWidth + 2));
                 for (var y = 0; y < _worldHeight; y++)
                 {
-                    mapBuilder.Append(_wallChar);
+                    mapBuilder.Append($"\t{_wallChar}");
                     for (var x = 0; x < _worldWidth; x++)
                     {
                         if (x == Context.Player.Location.X && y == Context.Player.Location.Y)
@@ -44,7 +44,7 @@ namespace NeuralJourney.Core.Commands.Players.Commands
                     }
                     mapBuilder.AppendLine($"{_wallChar}");
                 }
-                mapBuilder.Append(new string(_wallChar, _worldWidth + 2));
+                mapBuilder.Append("\t").Append(new string(_wallChar, _worldWidth + 2));
                 return new CommandResult(mapBuilder.ToString());
             });
         }

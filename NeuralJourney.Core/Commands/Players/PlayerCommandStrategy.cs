@@ -40,6 +40,13 @@ namespace NeuralJourney.Core.Commands.Players
 
                 await Next();
             }
+            catch (CommandParameterException ex)
+            {
+                if (context.Player is not null)
+                    context.Player.HasIncompleteCommand = true;
+
+                _logger.Debug(ex, "Player failed to execute command due to missing parameter {Parameter}", ex.ParameterName);
+            }
             catch (CommandMappingException ex)
             {
                 _logger.Error(ex, "Failed to map input to command");

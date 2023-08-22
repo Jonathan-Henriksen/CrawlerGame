@@ -1,5 +1,4 @@
-﻿using NeuralJourney.Core.Enums.Commands;
-using NeuralJourney.Core.Exceptions;
+﻿using NeuralJourney.Core.Exceptions;
 using NeuralJourney.Core.Interfaces.Commands;
 using NeuralJourney.Core.Models.LogProperties;
 using System.Text.RegularExpressions;
@@ -17,14 +16,7 @@ namespace NeuralJourney.Core.Commands.Players.Middleware
             if (!match.Success)
                 throw new CommandMappingException("Completion text did not match the expected format");
 
-            var commandIdentifierText = match.Groups["commandIdentifier"].Value;
-            if (!Enum.TryParse(commandIdentifierText, true, out CommandIdentifierEnum commandIdentifier))
-                throw new CommandMappingException("Failed to parse commandIdentifier to enum");
-
-            context.CommandKey.Identifier = commandIdentifier;
-
             context.Params = match.Groups["params"].Value.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-
             context.ExecutionMessage = match.Groups["successMessage"].Value;
 
             if (string.IsNullOrEmpty(context.ExecutionMessage))
@@ -33,7 +25,7 @@ namespace NeuralJourney.Core.Commands.Players.Middleware
             await next();
         }
 
-        [GeneratedRegex(@"^(?<commandIdentifier>\w+)(\((?<params>[^\)]*)\))?(\|(?<successMessage>.+?))?$")]
+        [GeneratedRegex(@"^(?<commandIdentifier>\w+)(?:\((?<params>[^\)]*)\))?\|(?<successMessage>.+)$")]
         private static partial Regex CompletionTextMatcher();
     }
 }

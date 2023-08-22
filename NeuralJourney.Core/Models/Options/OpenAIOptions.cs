@@ -4,7 +4,9 @@
     {
         public string ApiKey { get; set; } = string.Empty;
 
-        public string? Model { get; set; }
+        public string? ParameterExtractionModel { get; set; }
+
+        public string? CommandClassificationModel { get; set; }
 
         public string? StopSequence { get; set; }
 
