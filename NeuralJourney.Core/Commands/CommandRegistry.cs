@@ -36,11 +36,11 @@ namespace NeuralJourney.Core.Commands
             return commandType;
         }
 
-        public static IEnumerable<string> GetCommands(CommandTypeEnum type)
+        public static Dictionary<string, int> GetCommands(CommandTypeEnum type)
         {
             return _commandMappings
                 .Where(kvp => kvp.Key.Type == type)
-                .Select(kvp => kvp.Key.Identifier.ToString());
+                .ToDictionary(kvp => kvp.Key.Identifier.ToString(), kvp => (kvp.Value.GetConstructors().FirstOrDefault()?.GetParameters()?.Length ?? 0) - 2);
         }
     }
 }

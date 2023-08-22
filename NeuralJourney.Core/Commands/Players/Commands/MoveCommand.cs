@@ -1,7 +1,6 @@
 ﻿using NeuralJourney.Core.Enums.Commands;
 using NeuralJourney.Core.Enums.Parameters;
 using NeuralJourney.Core.Exceptions;
-using NeuralJourney.Core.Interfaces.Commands;
 using NeuralJourney.Core.Models.Commands;
 using NeuralJourney.Core.Models.LogProperties;
 using NeuralJourney.Core.Models.Options;
@@ -9,39 +8,35 @@ using NeuralJourney.Core.Models.Options;
 namespace NeuralJourney.Core.Commands.Players.Commands
 {
     [Command(CommandTypeEnum.Player, CommandIdentifierEnum.Move)]
-    public class MoveCommand : ICommand
+    public class MoveCommand : CommandBase
     {
-        private readonly CommandContext _context;
-
         private readonly DirectionEnum _direction;
 
         private readonly int _worldHeight;
         private readonly int WorldWidth;
 
-        public MoveCommand(CommandContext context, GameOptions gameOptions)
+        public MoveCommand(CommandContext context, GameOptions gameOptions, string direction) : base(context, gameOptions)
         {
             if (!context.Params.Any())
                 throw new CommandExecutionException("Missing required parameter 'Direction'", "Could not determine which direction to move");
 
-            if (!Enum.TryParse(context.Params[0], true, out DirectionEnum direction))
+            if (!Enum.TryParse(direction, true, out DirectionEnum directionEnum))
                 throw new CommandExecutionException("Could not parse 'Direction' parameter to DirectionEnum", "Could not determine which direction to move");
 
-            _context = context;
-
-            _direction = direction;
+            _direction = directionEnum;
 
             _worldHeight = gameOptions.WorldHeight;
             WorldWidth = gameOptions.WorldWidth;
         }
 
-        public Task<CommandResult> ExecuteAsync()
+        public override Task<CommandResult> ExecuteAsync()
         {
-            if (_context.Player is null)
+            if (Context.Player is null)
                 throw new CommandExecutionException("The player was null", "Something went wrong. Please try again");
 
             return Task.Run(() =>
             {
-                var playerLocation = _context.Player.Location;
+                var playerLocation = Context.Player.Location;
 
                 switch (_direction)
                 {

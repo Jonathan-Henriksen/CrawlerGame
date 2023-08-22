@@ -1,5 +1,4 @@
 ﻿using NeuralJourney.Core.Enums.Commands;
-using NeuralJourney.Core.Interfaces.Commands;
 using NeuralJourney.Core.Models.Commands;
 using NeuralJourney.Core.Models.LogProperties;
 using NeuralJourney.Core.Models.Options;
@@ -7,17 +6,16 @@ using NeuralJourney.Core.Models.Options;
 namespace NeuralJourney.Core.Commands.Players.Commands
 {
     [Command(CommandTypeEnum.Player, CommandIdentifierEnum.Eat)]
-    public class EatCommand : ICommand
+    public class EatCommand : CommandBase
     {
-        private readonly CommandContext _context;
-
-        public EatCommand(CommandContext context, GameOptions gameOptions)
+        private readonly string _foodItem;
+        public EatCommand(CommandContext context, GameOptions gameOptions, string foodItem) : base(context, gameOptions)
         {
-            _context = context;
+            _foodItem = foodItem;
         }
-        public Task<CommandResult> ExecuteAsync()
+        public override Task<CommandResult> ExecuteAsync()
         {
-            return Task.FromResult<CommandResult>(new CommandResult("Not implemented yet"));
+            return Task.FromResult(new CommandResult($"No action is implemented for eating {_foodItem}"));
         }
     }
 }

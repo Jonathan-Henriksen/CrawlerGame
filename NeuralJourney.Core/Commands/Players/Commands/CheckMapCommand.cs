@@ -1,6 +1,5 @@
 ﻿using NeuralJourney.Core.Enums.Commands;
 using NeuralJourney.Core.Exceptions;
-using NeuralJourney.Core.Interfaces.Commands;
 using NeuralJourney.Core.Models.Commands;
 using NeuralJourney.Core.Models.LogProperties;
 using NeuralJourney.Core.Models.Options;
@@ -9,10 +8,8 @@ using System.Text;
 namespace NeuralJourney.Core.Commands.Players.Commands
 {
     [Command(CommandTypeEnum.Player, CommandIdentifierEnum.CheckMap)]
-    public class CheckMapCommand : ICommand
+    public class CheckMapCommand : CommandBase
     {
-        private readonly CommandContext _context;
-
         private readonly int _worldWidth;
         private readonly int _worldHeight;
 
@@ -20,19 +17,17 @@ namespace NeuralJourney.Core.Commands.Players.Commands
         private const char _floorChar = '-';
         private const char _playerChar = 'p';
 
-        public CheckMapCommand(CommandContext context, GameOptions gameOptions)
+        public CheckMapCommand(CommandContext context, GameOptions gameOptions) : base(context, gameOptions)
         {
-            _context = context;
-
             _worldWidth = gameOptions.WorldWidth;
             _worldHeight = gameOptions.WorldHeight;
         }
 
-        public Task<CommandResult> ExecuteAsync()
+        public override Task<CommandResult> ExecuteAsync()
         {
             return Task.Run(() =>
             {
-                if (_context.Player is null)
+                if (Context.Player is null)
                     throw new CommandExecutionException("The player was null", "Something went wrong. Please try again");
 
                 var mapBuilder = new StringBuilder();
@@ -42,7 +37,7 @@ namespace NeuralJourney.Core.Commands.Players.Commands
                     mapBuilder.Append(_wallChar);
                     for (var x = 0; x < _worldWidth; x++)
                     {
-                        if (x == _context.Player.Location.X && y == _context.Player.Location.Y)
+                        if (x == Context.Player.Location.X && y == Context.Player.Location.Y)
                             mapBuilder.Append(_playerChar);
                         else
                             mapBuilder.Append(_floorChar);

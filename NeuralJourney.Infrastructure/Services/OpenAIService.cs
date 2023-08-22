@@ -15,7 +15,7 @@ namespace NeuralJourney.Infrastructure.Services
         private readonly ILogger _logger;
         private readonly OpenAIAPI _openApi;
 
-        private readonly IEnumerable<string> _availableCommands;
+        private readonly Dictionary<string, int> _availableCommands;
 
         private const int _maxRetryAttempts = 3;
 
@@ -43,7 +43,7 @@ namespace NeuralJourney.Infrastructure.Services
 
                 try
                 {
-                    var promptText = GeneratePrompt(context.InputText, context.Params.Length);
+                    var promptText = GeneratePrompt(context.InputText);
 
                     retryLogger.ForContext("PromptText", promptText.Replace("\n", "\\n")).Debug(CommandLogMessages.Debug.CompletionTextRequested, context.InputText);
 
@@ -71,16 +71,16 @@ namespace NeuralJourney.Infrastructure.Services
             return false;
         }
 
-        private string GeneratePrompt(string inputText, int parameterCount)
+        private string GeneratePrompt(string inputText)
         {
             var formattedCommands = string.Join(",", _availableCommands.Select(command =>
             {
-                if (parameterCount < 1)
-                    return command;
+                if (command.Value < 1)
+                    return command.Key;
 
-                var parameters = string.Join("", Enumerable.Range(0, parameterCount).Select(i => $"{{{i}}}"));
+                var parameters = string.Join("", Enumerable.Range(0, command.Value).Select(i => $"{{{i}}}"));
 
-                return $"{command}{parameters}";
+                return $"{command.Key}{parameters}";
 
             }));
 
