@@ -1,5 +1,4 @@
-﻿using NeuralJourney.Core.Exceptions;
-using NeuralJourney.Core.Interfaces.Commands;
+﻿using NeuralJourney.Core.Interfaces.Commands;
 using NeuralJourney.Core.Models.LogProperties;
 
 namespace NeuralJourney.Core.Commands.Players.Middleware
@@ -9,7 +8,7 @@ namespace NeuralJourney.Core.Commands.Players.Middleware
         public async Task InvokeAsync(CommandContext context, Func<Task> next, CancellationToken cancellationToken = default)
         {
             if (context.Command is null)
-                throw new CommandExecutionException("Command was null");
+                throw new InvalidOperationException("Could not execute command");
 
             context.Result = await context.Command.ExecuteAsync();
 

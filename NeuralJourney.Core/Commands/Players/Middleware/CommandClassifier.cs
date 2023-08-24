@@ -18,10 +18,18 @@ namespace NeuralJourney.Core.Commands.Players.Middleware
 
         public async Task InvokeAsync(CommandContext context, Func<Task> next, CancellationToken cancellationToken = default)
         {
-            var commandIdentifier = await _openAIService.GetCommandClassificationAsync(context.InputText);
-            context.CommandKey.Identifier = commandIdentifier;
+            if ((context.Player?.HasIncompleteCommand ?? false) && (context.Player?.PreviousCommands.TryPeek(out var previousCommand) ?? false))
+            {
+                context.CommandKey.Identifier = previousCommand.CommandKey.Identifier;
 
-            _logger.Debug("Input was classified as the command {CommandIdentifier}", commandIdentifier);
+                _logger.Debug("Continuing from previous incomplete command {CommandIdentifier}", context.CommandKey.Identifier);
+            }
+            else
+            {
+                context.CommandKey.Identifier = await _openAIService.GetCommandClassificationAsync(context.InputText);
+
+                _logger.Debug("Input was classified as {CommandIdentifier} command", context.CommandKey.Identifier);
+            }
 
             await next();
         }

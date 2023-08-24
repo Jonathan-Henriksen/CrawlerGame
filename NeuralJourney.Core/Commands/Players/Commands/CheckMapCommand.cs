@@ -1,5 +1,4 @@
 ﻿using NeuralJourney.Core.Enums.Commands;
-using NeuralJourney.Core.Exceptions;
 using NeuralJourney.Core.Models.Commands;
 using NeuralJourney.Core.Models.LogProperties;
 using NeuralJourney.Core.Models.Options;
@@ -28,7 +27,7 @@ namespace NeuralJourney.Core.Commands.Players.Commands
             return Task.Run(() =>
             {
                 if (Context.Player is null)
-                    throw new CommandExecutionException("The player was null", "Something went wrong. Please try again");
+                    throw new InvalidOperationException("Player was null");
 
                 var mapBuilder = new StringBuilder("\t");
                 mapBuilder.AppendLine(new string(_wallChar, _worldWidth + 2));
@@ -45,9 +44,8 @@ namespace NeuralJourney.Core.Commands.Players.Commands
                     mapBuilder.AppendLine($"{_wallChar}");
                 }
                 mapBuilder.Append("\t").Append(new string(_wallChar, _worldWidth + 2));
-                return new CommandResult(mapBuilder.ToString());
+                return new CommandResult(true, Context.ExecutionMessage, mapBuilder.ToString());
             });
         }
-
     }
 }

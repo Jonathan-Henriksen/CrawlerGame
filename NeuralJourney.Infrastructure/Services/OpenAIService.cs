@@ -69,7 +69,16 @@ namespace NeuralJourney.Infrastructure.Services
 
                 try
                 {
-                    var promptText = $"{context.CommandKey.Identifier}|{context.InputText}\n\n###\n\n";
+                    CommandContext? previousCommand = null;
+                    context.Player?.PreviousCommands.TryPeek(out previousCommand);
+
+                    var previousInput = string.Empty;
+
+                    if (previousCommand is not null && (context.Player?.HasIncompleteCommand ?? false))
+                        previousInput = $"{previousCommand.InputText}\n\n{previousCommand.CompletionText?.Split('|').LastOrDefault()}\n\n";
+
+                    var promptText = $"{context.CommandKey.Identifier}|{previousInput}{context.InputText}\n\n###\n\n";
+
 
                     retryLogger.ForContext("PromptText", promptText.Replace("\n", "\\n")).Debug(CommandLogMessages.Debug.CompletionTextRequested, context.InputText);
 

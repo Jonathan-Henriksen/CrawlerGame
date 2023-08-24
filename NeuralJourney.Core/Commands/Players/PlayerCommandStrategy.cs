@@ -28,7 +28,7 @@ namespace NeuralJourney.Core.Commands.Players
             try
             {
                 if (context.Player is null)
-                    throw new CommandExecutionException("Player was null");
+                    throw new InvalidOperationException("Player was null");
 
                 var index = -1;
 
@@ -39,23 +39,23 @@ namespace NeuralJourney.Core.Commands.Players
                 }
 
                 await Next();
-            }
-            catch (CommandParameterException ex)
-            {
-                if (context.Player is not null)
-                    context.Player.HasIncompleteCommand = true;
 
-                _logger.Debug(ex, "Player failed to execute command due to missing parameter {Parameter}", ex.ParameterName);
+                if (context.Result.HasValue && context.Result.Value.Success)
+                    context.Player.HasIncompleteCommand = false;
             }
-            catch (CommandMappingException ex)
+            catch (Exception ex) when (ex is CommandMappingException || ex.InnerException is CommandMappingException)
             {
-                _logger.Error(ex, "Failed to map input to command");
-                errorMessage = ex.PlayerMessage;
+                var mappingEx = ex as CommandMappingException ?? ex.InnerException as CommandMappingException;
+
+                _logger.Error(mappingEx, "Failed to map input to command");
+                errorMessage = mappingEx?.PlayerMessage;
             }
-            catch (CommandExecutionException ex)
+            catch (Exception ex) when (ex is CommandExecutionException || ex.InnerException is CommandExecutionException)
             {
-                _logger.Error(ex, "Error while executing command");
-                errorMessage = ex.PlayerMessage;
+                var executiionEx = ex as CommandExecutionException ?? ex.InnerException as CommandExecutionException;
+
+                _logger.Error(executiionEx, "Error while executing command");
+                errorMessage = executiionEx?.PlayerMessage;
             }
             catch (OperationCanceledException)
             {
@@ -72,6 +72,8 @@ namespace NeuralJourney.Core.Commands.Players
                     await _messageService.SendMessageAsync(context.Player.Client, errorMessage, cancellationToken);
                 else
                     _logger.Debug("Successfully executed command {CommandIdentifier} for player {PlayerName}", context.CommandKey.Identifier, context.Player?.Name);
+
+                context.Player?.PreviousCommands.Push(context);
             }
         }
     }

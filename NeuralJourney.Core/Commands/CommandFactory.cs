@@ -20,18 +20,9 @@ namespace NeuralJourney.Core.Commands
             try
             {
                 var commandType = CommandRegistry.GetCommandType(context.CommandKey);
-                var parameters = new object?[] { context, _gameOptions };
+                var commandParams = new object?[] { context, _gameOptions };
 
-                if (context.Params.Any())
-                    parameters = parameters.Concat(context.Params).ToArray();
-
-                var constructorParams = commandType.GetConstructors()?.FirstOrDefault()?.GetParameters();
-                if ((constructorParams?.Length ?? 0) < parameters.Length)
-                {
-                    throw new CommandParameterException("Required parameter was missing", "N/A");
-                }
-
-                var command = (ICommand?) Activator.CreateInstance(commandType, parameters);
+                var command = (ICommand?) Activator.CreateInstance(commandType, commandParams);
 
                 return command ?? throw new CommandMappingException("Failed to create an instance of the coomand");
             }

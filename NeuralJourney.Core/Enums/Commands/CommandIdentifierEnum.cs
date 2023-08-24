@@ -4,10 +4,10 @@ namespace NeuralJourney.Core.Enums.Commands
 {
     public enum CommandIdentifierEnum
     {
-        [EnumMember(Value = "N/A")]
-        NotAvailable,
+        Unknown,
         Map,
         Eat,
         Move,
+        Repeat
     }
 }

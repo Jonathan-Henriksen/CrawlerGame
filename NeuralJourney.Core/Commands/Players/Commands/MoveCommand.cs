@@ -10,54 +10,62 @@ namespace NeuralJourney.Core.Commands.Players.Commands
     [Command(CommandTypeEnum.Player, CommandIdentifierEnum.Move)]
     public class MoveCommand : CommandBase
     {
-        private readonly DirectionEnum _direction;
+        private readonly DirectionEnum? _direction;
 
         private readonly int _worldHeight;
-        private readonly int WorldWidth;
+        private readonly int _worldWidth;
 
-        public MoveCommand(CommandContext context, GameOptions gameOptions, string direction) : base(context, gameOptions)
+        public MoveCommand(CommandContext context, GameOptions gameOptions) : base(context, gameOptions)
         {
-            if (!context.Params.Any())
-                throw new CommandExecutionException("Missing required parameter 'Direction'", "Could not determine which direction to move");
-
-            if (!Enum.TryParse(direction, true, out DirectionEnum directionEnum))
-                throw new CommandExecutionException("Could not parse 'Direction' parameter to DirectionEnum", "Could not determine which direction to move");
-
-            _direction = directionEnum;
+            if (context.Params.Any() && Enum.TryParse(context.Params.First(), true, out DirectionEnum directionEnum))
+                _direction = directionEnum;
 
             _worldHeight = gameOptions.WorldHeight;
-            WorldWidth = gameOptions.WorldWidth;
+            _worldWidth = gameOptions.WorldWidth;
         }
 
         public override Task<CommandResult> ExecuteAsync()
         {
             if (Context.Player is null)
-                throw new CommandExecutionException("The player was null", "Something went wrong. Please try again");
+                throw new InvalidOperationException("Player was null");
+
+            if (_direction is null)
+            {
+                Context.Player.HasIncompleteCommand = true;
+                return Task.FromResult(new CommandResult(false, Context.ExecutionMessage));
+            }
 
             return Task.Run(() =>
             {
                 var playerLocation = Context.Player.Location;
 
-                switch (_direction)
+                try
                 {
-                    case DirectionEnum.North:
-                        playerLocation.Y = Move(playerLocation.Y, _worldHeight, 1);
-                        break;
+                    switch (_direction)
+                    {
+                        case DirectionEnum.North:
+                            playerLocation.Y = Move(playerLocation.Y, _worldHeight, 1);
+                            break;
 
-                    case DirectionEnum.South:
-                        playerLocation.Y = Move(playerLocation.Y, _worldHeight, -1);
-                        break;
+                        case DirectionEnum.South:
+                            playerLocation.Y = Move(playerLocation.Y, _worldHeight, -1);
+                            break;
 
-                    case DirectionEnum.East:
-                        playerLocation.X = Move(playerLocation.X, WorldWidth, 1);
-                        break;
+                        case DirectionEnum.East:
+                            playerLocation.X = Move(playerLocation.X, _worldWidth, 1);
+                            break;
 
-                    case DirectionEnum.West:
-                        playerLocation.X = Move(playerLocation.X, WorldWidth, -1);
-                        break;
+                        case DirectionEnum.West:
+                            playerLocation.X = Move(playerLocation.X, _worldWidth, -1);
+                            break;
+                    }
+                }
+                catch (CommandExecutionException ex)
+                {
+                    return new CommandResult(true, ex.PlayerMessage);
                 }
 
-                return new CommandResult();
+                return new CommandResult(true, Context.ExecutionMessage);
             });
         }
 
@@ -66,7 +74,7 @@ namespace NeuralJourney.Core.Commands.Players.Commands
             if (increment > 0 && coordinate < boundary - 1 || increment < 0 && coordinate > 0)
                 return coordinate + increment;
             else
-                throw new CommandExecutionException("Player tried to move beyond map boundriesl", $"You cannot go any further {_direction}");
+                throw new CommandExecutionException("Player tried to move beyond map boundries", $"You cannot go any further {_direction}");
         }
     }
 }

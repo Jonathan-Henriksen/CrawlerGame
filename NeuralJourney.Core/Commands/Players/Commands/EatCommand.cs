@@ -8,14 +8,18 @@ namespace NeuralJourney.Core.Commands.Players.Commands
     [Command(CommandTypeEnum.Player, CommandIdentifierEnum.Eat)]
     public class EatCommand : CommandBase
     {
-        private readonly string _foodItem;
-        public EatCommand(CommandContext context, GameOptions gameOptions, string foodItem) : base(context, gameOptions)
+        private readonly string? _foodItem;
+
+        public EatCommand(CommandContext context, GameOptions gameOptions) : base(context, gameOptions)
         {
-            _foodItem = foodItem;
+            _foodItem = context.Params.FirstOrDefault();
         }
         public override Task<CommandResult> ExecuteAsync()
         {
-            return Task.FromResult(new CommandResult($"No action is implemented for eating {_foodItem}"));
+            if (_foodItem is null)
+                return Task.FromResult(new CommandResult(false, Context.ExecutionMessage));
+
+            return Task.FromResult(new CommandResult(true, $"No action is implemented for eating {_foodItem}"));
         }
     }
 }

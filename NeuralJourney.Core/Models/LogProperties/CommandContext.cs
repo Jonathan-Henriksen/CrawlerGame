@@ -13,7 +13,15 @@ namespace NeuralJourney.Core.Models.LogProperties
         public ICommand? Command { get; set; }
         public CommandKey CommandKey { get; set; }
         public string? CompletionText { get; set; }
-        public string? ExecutionMessage { get; set; }
+
+        private string? _executionMessage;
+
+        public string ExecutionMessage
+        {
+            get { return _executionMessage ?? string.Empty; }
+            set { _executionMessage = value; }
+        }
+
         public string[] Params { get; set; }
         public CommandResult? Result { get; set; }
 

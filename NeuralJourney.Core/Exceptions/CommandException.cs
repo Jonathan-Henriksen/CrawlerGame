@@ -4,7 +4,13 @@
     [Serializable]
     public class CommandException : Exception
     {
-        public readonly string? PlayerMessage;
+        private string? _playerMessage;
+
+        public string PlayerMessage
+        {
+            get { return _playerMessage ?? string.Empty; }
+            set { _playerMessage = value; }
+        }
 
         public CommandException() { }
         public CommandException(string message) : base(message) { }
@@ -15,7 +21,7 @@
 
         public CommandException(string message, string playerMessage) : base(message)
         {
-            PlayerMessage = playerMessage;
+            _playerMessage = playerMessage;
         }
 
         public CommandException(string message, string playerMessage, Exception inner) : base(message, inner)

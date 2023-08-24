@@ -2,12 +2,16 @@
 {
     public readonly struct CommandResult
     {
-        public CommandResult() { }
-
-        public CommandResult(string? additionalMessage = null)
+        public CommandResult(bool success, string playerMessage, string? additionalPlayerMessage = null)
         {
-            AdditionalMessage = additionalMessage;
+            Success = success;
+            AdditionalMessage = additionalPlayerMessage;
+            PlayerMessage = playerMessage;
         }
+
+        public bool Success { get; }
+
+        public string PlayerMessage { get; }
 
         public string? AdditionalMessage { get; }
     }
