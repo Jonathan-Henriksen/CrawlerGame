@@ -63,13 +63,13 @@ When you need to isolate logs for debugging or analytics, the structured data ca
 Here's a simple Seq query example that filters logs related to a specific player:
 
 ```sql
-select * from stream where PlayerId = 'player123'
+PlayerContext.Id = '98966c05-96d9-40ac-92c0-acebddee65a7'
 ```
 
-And another that counts the occurrences of each command type:
+And another that filters logs related to a specific command
 
 ```sql
-select CommandType, count(*) from stream group by CommandType
+CommandContext.CommandKey.Identifier = 'Move'
 ```
 
 Seq not only makes it easy to find the logs you are interested in but also allows you to create dashboards, set up alerts, and even integrate with other tools, making it a powerful tool for in-depth analysis and monitoring.
