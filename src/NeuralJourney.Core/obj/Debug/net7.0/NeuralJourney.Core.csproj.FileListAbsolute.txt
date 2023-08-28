@@ -1,0 +1,12 @@
+D:\Projects\NeuralJourney\NeuralJourney.Core\obj\Debug\net7.0\NeuralJourney.Core.csproj.AssemblyReference.cache
+D:\Projects\NeuralJourney\NeuralJourney.Core\obj\Debug\net7.0\NeuralJourney.Core.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\NeuralJourney\NeuralJourney.Core\obj\Debug\net7.0\NeuralJourney.Core.AssemblyInfoInputs.cache
+D:\Projects\NeuralJourney\NeuralJourney.Core\obj\Debug\net7.0\NeuralJourney.Core.AssemblyInfo.cs
+D:\Projects\NeuralJourney\NeuralJourney.Core\obj\Debug\net7.0\NeuralJourney.Core.csproj.CoreCompileInputs.cache
+D:\Projects\NeuralJourney\NeuralJourney.Core\bin\Debug\net7.0\NeuralJourney.Core.deps.json
+D:\Projects\NeuralJourney\NeuralJourney.Core\bin\Debug\net7.0\NeuralJourney.Core.dll
+D:\Projects\NeuralJourney\NeuralJourney.Core\bin\Debug\net7.0\NeuralJourney.Core.pdb
+D:\Projects\NeuralJourney\NeuralJourney.Core\obj\Debug\net7.0\NeuralJourney.Core.dll
+D:\Projects\NeuralJourney\NeuralJourney.Core\obj\Debug\net7.0\refint\NeuralJourney.Core.dll
+D:\Projects\NeuralJourney\NeuralJourney.Core\obj\Debug\net7.0\NeuralJourney.Core.pdb
+D:\Projects\NeuralJourney\NeuralJourney.Core\obj\Debug\net7.0\ref\NeuralJourney.Core.dll

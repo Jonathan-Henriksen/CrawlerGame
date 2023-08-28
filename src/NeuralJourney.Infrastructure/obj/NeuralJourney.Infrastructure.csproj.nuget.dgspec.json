@@ -1,0 +1,140 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\Projects\\NeuralJourney\\NeuralJourney.Infrastructure\\NeuralJourney.Infrastructure.csproj": {}
+  },
+  "projects": {
+    "D:\\Projects\\NeuralJourney\\NeuralJourney.Core\\NeuralJourney.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Projects\\NeuralJourney\\NeuralJourney.Core\\NeuralJourney.Core.csproj",
+        "projectName": "NeuralJourney.Core",
+        "projectPath": "D:\\Projects\\NeuralJourney\\NeuralJourney.Core\\NeuralJourney.Core.csproj",
+        "packagesPath": "C:\\Users\\jonathan.henriksen\\.nuget\\packages\\",
+        "outputPath": "D:\\Projects\\NeuralJourney\\NeuralJourney.Core\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\jonathan.henriksen\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://sitecore.myget.org/F/sc-packages/api/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "OpenAI": {
+              "target": "Package",
+              "version": "[1.7.2, )"
+            },
+            "Serilog": {
+              "target": "Package",
+              "version": "[3.0.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Projects\\NeuralJourney\\NeuralJourney.Infrastructure\\NeuralJourney.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Projects\\NeuralJourney\\NeuralJourney.Infrastructure\\NeuralJourney.Infrastructure.csproj",
+        "projectName": "NeuralJourney.Infrastructure",
+        "projectPath": "D:\\Projects\\NeuralJourney\\NeuralJourney.Infrastructure\\NeuralJourney.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\jonathan.henriksen\\.nuget\\packages\\",
+        "outputPath": "D:\\Projects\\NeuralJourney\\NeuralJourney.Infrastructure\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\jonathan.henriksen\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://sitecore.myget.org/F/sc-packages/api/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "D:\\Projects\\NeuralJourney\\NeuralJourney.Core\\NeuralJourney.Core.csproj": {
+                "projectPath": "D:\\Projects\\NeuralJourney\\NeuralJourney.Core\\NeuralJourney.Core.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Serilog": {
+              "target": "Package",
+              "version": "[3.0.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

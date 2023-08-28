@@ -21,21 +21,21 @@ While the project leverages tools like OpenAI and Serilog, its core strength lie
 
 ### Core Technologies:
 
-- [OpenAI API](./Documentation/OpenAI.md): Powering the game with AI-driven interactions, making gameplay dynamic and engaging.
-- [Serilog and Seq](./Documentation/Serilog.md): Advanced logging techniques combined with powerful visualization.
+- [OpenAI API](./doc/OpenAI.md): Powering the game with AI-driven interactions, making gameplay dynamic and engaging.
+- [Serilog and Seq](./doc/Serilog.md): Advanced logging techniques combined with powerful visualization.
 
 ### Programming Patterns:
 
-- [Command Pattern](./Documentation/Command_Pattern.md): Efficiently encapsulating player commands, ensuring modularity and scalability.
-- [Dispatcher Pattern](./Documentation/Dispatcher_Pattern.md): Streamlining command handling, making the game's logic flow smoothly.
-- [Factory Pattern](./Documentation/Factory_Pattern.md): Demonstrating best practices in object creation, ensuring the game remains extensible.
-- [Middleware Pattern](./Documentation/Middleware_Pattern.md): Orchestrating the command processing flow, allowing for modular additions and modifications.
-- [Options Pattern](./Documentation/Options_Pattern.md): Offering flexibility in game configuration, catering to diverse gameplay scenarios.
-- [Solution and Code Structure](./Documentation/Code_Structure.md): Organizing the codebase in a logical and developer-friendly manner.
+- [Command Pattern](./doc/Command_Pattern.md): Efficiently encapsulating player commands, ensuring modularity and scalability.
+- [Dispatcher Pattern](./doc/Dispatcher_Pattern.md): Streamlining command handling, making the game's logic flow smoothly.
+- [Factory Pattern](./doc/Factory_Pattern.md): Demonstrating best practices in object creation, ensuring the game remains extensible.
+- [Middleware Pattern](./doc/Middleware_Pattern.md): Orchestrating the command processing flow, allowing for modular additions and modifications.
+- [Options Pattern](./doc/Options_Pattern.md): Offering flexibility in game configuration, catering to diverse gameplay scenarios.
+- [Solution and Code Structure](./doc/Code_Structure.md): Organizing the codebase in a logical and developer-friendly manner.
 
 ### Advanced Concepts:
 
-- [Exception Handling](./Documentation/Exception_Handling.md): Ensuring players enjoy a smooth gameplay experience, even when unexpected scenarios arise.
-- [Cancellation Tokens](./Documentation/Cancellation_Tokens.md): A testament to the project's commitment to responsive software design, allowing operations to be canceled gracefully.
-- [Async/Await](./Documentation/Asynchronous_Programming.md): Ensuring the game remains responsive, providing players with a seamless experience.
-- [Reflection and Attributes](./Documentation/Reflection_and_Attributes.md): Showcasing dynamic command management, making the game adaptable and extensible.
+- [Exception Handling](./doc/Exception_Handling.md): Ensuring players enjoy a smooth gameplay experience, even when unexpected scenarios arise.
+- [Cancellation Tokens](./doc/Cancellation_Tokens.md): A testament to the project's commitment to responsive software design, allowing operations to be canceled gracefully.
+- [Async/Await](./doc/Asynchronous_Programming.md): Ensuring the game remains responsive, providing players with a seamless experience.
+- [Reflection and Attributes](./doc/Reflection_and_Attributes.md): Showcasing dynamic command management, making the game adaptable and extensible.

@@ -1,0 +1,880 @@
+{"prompt":"move|travel west\n\n###\n\n","completion":" move(west)|you travelled west##END##"}
+{"prompt":"move|travel to the north\n\n###\n\n","completion":" move(north)|you travelled north##END##"}
+{"prompt":"move|go south\n\n###\n\n","completion":" move(south)|you went south##END##"}
+{"prompt":"move|go to the south\n\n###\n\n","completion":" move(south)|you went south##END##"}
+{"prompt":"move|head west\n\n###\n\n","completion":" move(west)|you headed west##END##"}
+{"prompt":"move|advance east\n\n###\n\n","completion":" move(east)|you advanced east##END##"}
+{"prompt":"move|proceed to the north\n\n###\n\n","completion":" move(north)|you proceeded north##END##"}
+{"prompt":"move|go southwards\n\n###\n\n","completion":" move(south)|you went southwards##END##"}
+{"prompt":"move|go towards the south\n\n###\n\n","completion":" move(south)|you went towards the south##END##"}
+{"prompt":"move|travel south\n\n###\n\n","completion":" move(south)|you traveled south##END##"}
+{"prompt":"move|go north\n\n###\n\n","completion":" move(north)|you went north##END##"}
+{"prompt":"move|head north\n\n###\n\n","completion":" move(north)|you headed north##END##"}
+{"prompt":"move|advance west\n\n###\n\n","completion":" move(west)|you advanced west##END##"}
+{"prompt":"move|travel north\n\n###\n\n","completion":" move(north)|you traveled north##END##"}
+{"prompt":"move|go east\n\n###\n\n","completion":" move(east)|you went east##END##"}
+{"prompt":"move|head south\n\n###\n\n","completion":" move(south)|you headed south##END##"}
+{"prompt":"move|advance north\n\n###\n\n","completion":" move(north)|you advanced north##END##"}
+{"prompt":"move|proceed east\n\n###\n\n","completion":" move(east)|you proceeded east##END##"}
+{"prompt":"move|go west\n\n###\n\n","completion":" move(west)|you went west##END##"}
+{"prompt":"move|head east\n\n###\n\n","completion":" move(east)|you headed east##END##"}
+{"prompt":"move|advance south\n\n###\n\n","completion":" move(south)|you advanced south##END##"}
+{"prompt":"move|proceed west\n\n###\n\n","completion":" move(west)|you proceeded west##END##"}
+{"prompt":"move|walk northwards\n\n###\n\n","completion":" move(north)|you walked northwards##END##"}
+{"prompt":"move|proceed south\n\n###\n\n","completion":" move(south)|you proceeded south##END##"}
+{"prompt":"move|go eastward\n\n###\n\n","completion":" move(east)|you went eastward##END##"}
+{"prompt":"move|travel towards the west\n\n###\n\n","completion":" move(west)|you traveled towards the west##END##"}
+{"prompt":"move|head northward\n\n###\n\n","completion":" move(north)|you headed northward##END##"}
+{"prompt":"move|go to the east\n\n###\n\n","completion":" move(east)|you went to the east##END##"}
+{"prompt":"move|travel westward\n\n###\n\n","completion":" move(west)|you traveled westward##END##"}
+{"prompt":"move|walk north\n\n###\n\n","completion":" move(north)|you walked north##END##"}
+{"prompt":"move|proceed southward\n\n###\n\n","completion":" move(south)|you proceeded southward##END##"}
+{"prompt":"move|travel west\n\n###\n\n","completion":" move(west)|you traveled west##END##"}
+{"prompt":"move|head to the north\n\n###\n\n","completion":" move(north)|you headed to the north##END##"}
+{"prompt":"move|advance towards the south\n\n###\n\n","completion":" move(south)|you advanced towards the south##END##"}
+{"prompt":"move|go eastwards\n\n###\n\n","completion":" move(east)|you went eastwards##END##"}
+{"prompt":"move|travel to the west\n\n###\n\n","completion":" move(west)|you traveled to the west##END##"}
+{"prompt":"move|walk towards the north\n\n###\n\n","completion":" move(north)|you walked towards the north##END##"}
+{"prompt":"move|proceed southwards\n\n###\n\n","completion":" move(south)|you proceeded southwards##END##"}
+{"prompt":"move|walk towards the west\n\n###\n\n","completion":" move(west)|you walked towards the west##END##"}
+{"prompt":"move|proceed to the south\n\n###\n\n","completion":" move(south)|you proceeded to the south##END##"}
+{"prompt":"move|travel southwards\n\n###\n\n","completion":" move(south)|you traveled southwards##END##"}
+{"prompt":"move|walk south\n\n###\n\n","completion":" move(south)|you walked south##END##"}
+{"prompt":"move|go westwards\n\n###\n\n","completion":" move(west)|you went westwards##END##"}
+{"prompt":"move|proceed north\n\n###\n\n","completion":" move(north)|you proceeded north##END##"}
+{"prompt":"move|travel east\n\n###\n\n","completion":" move(east)|you traveled east##END##"}
+{"prompt":"move|go east towards the tavern\n\n###\n\n","completion":" move(east)|you went west towards the tavern##END##"}
+{"prompt":"move|travel west to the fountain\n\n###\n\n","completion":" move(west)|you travelled west towards the fountain##END##"}
+{"prompt":"move|advance north to the castle\n\n###\n\n","completion":" move(north)|you advanced north to the castle##END##"}
+{"prompt":"move|proceed east towards the cave\n\n###\n\n","completion":" move(east)|you proceeded east towards the cave##END##"}
+{"prompt":"move|walk south to the forest\n\n###\n\n","completion":" move(south)|you walked south to the forest##END##"}
+{"prompt":"move|go westwards towards the house\n\n###\n\n","completion":" move(west)|you went westwards towards the house##END##"}
+{"prompt":"move|head south to find some food\n\n###\n\n","completion":" move(south)|you headed south to find some food##END##"}
+{"prompt":"move|flee west\n\n###\n\n","completion":" move(west)|you flee to the west##END##"}
+{"prompt":"move|run north for some water\n\n###\n\n","completion":" move(north)|you ran north to get some water##END##"}
+{"prompt":"move|head north towards the hill\n\n###\n\n","completion":" move(north)|you headed north towards the hill##END##"}
+{"prompt":"move|go south to the riverbank\n\n###\n\n","completion":" move(south)|you went south to the riverbank##END##"}
+{"prompt":"move|walk east to the marketplace\n\n###\n\n","completion":" move(east)|you walked east to the marketplace##END##"}
+{"prompt":"move|travel west towards the mountains\n\n###\n\n","completion":" move(west)|you travelled west towards the mountains##END##"}
+{"prompt":"move|proceed north to the village\n\n###\n\n","completion":" move(north)|you proceeded north to the village##END##"}
+{"prompt":"move|go westwards to explore the forest\n\n###\n\n","completion":" move(west)|you went westwards to explore the forest##END##"}
+{"prompt":"move|advance south to the beach\n\n###\n\n","completion":" move(south)|you advanced south to the beach##END##"}
+{"prompt":"move|flee east to escape danger\n\n###\n\n","completion":" move(east)|you fled east to escape danger##END##"}
+{"prompt":"move|run north for safety\n\n###\n\n","completion":" move(north)|you ran north to find safety##END##"}
+{"prompt":"move|walk southwards to the meadow\n\n###\n\n","completion":" move(south)|you walked southwards to the meadow##END##"}
+{"prompt":"move|go east to reach the village\n\n###\n\n","completion":" move(east)|you went east to reach the village##END##"}
+{"prompt":"move|proceed west to investigate the noise\n\n###\n\n","completion":" move(west)|you proceeded west to investigate the noise##END##"}
+{"prompt":"move|head north to explore the cave\n\n###\n\n","completion":" move(north)|you headed north to explore the cave##END##"}
+{"prompt":"move|run south towards safety\n\n###\n\n","completion":" move(south)|you ran south towards safety##END##"}
+{"prompt":"move|travel east to find shelter\n\n###\n\n","completion":" move(east)|you travelled east to find shelter##END##"}
+{"prompt":"move|go west to find help\n\n###\n\n","completion":" move(west)|you went west to find help##END##"}
+{"prompt":"move|advance north to investigate\n\n###\n\n","completion":" move(north)|you advanced north to investigate##END##"}
+{"prompt":"move|walk south to the river\n\n###\n\n","completion":" move(south)|you walked south to the river##END##"}
+{"prompt":"move|flee eastwards from danger\n\n###\n\n","completion":" move(east)|you fled eastwards from danger##END##"}
+{"prompt":"move|run west towards the sunset\n\n###\n\n","completion":" move(west)|you ran west towards the sunset##END##"}
+{"prompt":"move|go south to the canyon\n\n###\n\n","completion":" move(south)|you went south towards the canyon##END##"}
+{"prompt":"move|travel east to the river\n\n###\n\n","completion":" move(east)|you travelled east to the river##END##"}
+{"prompt":"move|advance north towards the mountains\n\n###\n\n","completion":" move(north)|you advanced north towards the mountains##END##"}
+{"prompt":"move|proceed west to the village\n\n###\n\n","completion":" move(west)|you proceeded west to the village##END##"}
+{"prompt":"move|walk southwards to the cave\n\n###\n\n","completion":" move(south)|you walked southwards to the cave##END##"}
+{"prompt":"move|go east to the waterfall\n\n###\n\n","completion":" move(east)|you went east to the waterfall##END##"}
+{"prompt":"move|head north to explore the forest\n\n###\n\n","completion":" move(north)|you headed north to explore the forest##END##"}
+{"prompt":"move|flee westwards from danger\n\n###\n\n","completion":" move(west)|you fled westwards from danger##END##"}
+{"prompt":"move|run south to reach the camp\n\n###\n\n","completion":" move(south)|you ran south to reach the camp##END##"}
+{"prompt":"move|walk eastwards to the desert\n\n###\n\n","completion":" move(east)|you walked eastwards to the desert##END##"}
+{"prompt":"move|travel north to the hills\n\n###\n\n","completion":" move(north)|you travelled north to the hills##END##"}
+{"prompt":"move|proceed west towards the riverbank\n\n###\n\n","completion":" move(west)|you proceeded west towards the riverbank##END##"}
+{"prompt":"move|go south to find a shelter\n\n###\n\n","completion":" move(south)|you went south to find a shelter##END##"}
+{"prompt":"move|advance east towards the cave entrance\n\n###\n\n","completion":" move(east)|you advanced east towards the cave entrance##END##"}
+{"prompt":"move|head north to discover the ruins\n\n###\n\n","completion":" move(north)|you headed north to discover the ruins##END##"}
+{"prompt":"move|flee west to evade the danger\n\n###\n\n","completion":" move(west)|you fled west to evade the danger##END##"}
+{"prompt":"move|run south towards the village\n\n###\n\n","completion":" move(south)|you ran south towards the village##END##"}
+{"prompt":"move|walk east to explore the forest\n\n###\n\n","completion":" move(east)|you walked east to explore the forest##END##"}
+{"prompt":"move|travel north to find supplies\n\n###\n\n","completion":" move(north)|you travelled north to find supplies##END##"}
+{"prompt":"move|proceed west to locate the source\n\n###\n\n","completion":" move(west)|you proceeded west to locate the source##END##"}
+{"prompt":"move|go south to the clearing\n\n###\n\n","completion":" move(south)|you went south to the clearing##END##"}
+{"prompt":"move|advance east towards the river\n\n###\n\n","completion":" move(east)|you advanced east towards the river##END##"}
+{"prompt":"move|walk northwards to the valley\n\n###\n\n","completion":" move(north)|you walked northwards to the valley##END##"}
+{"prompt":"move|travel west to the mountainside\n\n###\n\n","completion":" move(west)|you travelled west to the mountainside##END##"}
+{"prompt":"move|proceed south to the cave entrance\n\n###\n\n","completion":" move(south)|you proceeded south to the cave entrance##END##"}
+{"prompt":"move|go east to explore the woods\n\n###\n\n","completion":" move(east)|you went east to explore the woods##END##"}
+{"prompt":"move|head north to reach the summit\n\n###\n\n","completion":" move(north)|you headed north to reach the summit##END##"}
+{"prompt":"move|flee west to escape the threat\n\n###\n\n","completion":" move(west)|you fled west to escape the threat##END##"}
+{"prompt":"move|run south to find shelter\n\n###\n\n","completion":" move(south)|you ran south to find shelter##END##"}
+{"prompt":"move|walk eastwards to the campfire\n\n###\n\n","completion":" move(east)|you walked eastwards to the campfire##END##"}
+{"prompt":"move|travel north to explore the valley\n\n###\n\n","completion":" move(north)|you travelled north to explore the valley##END##"}
+{"prompt":"move|proceed west to the riverbank\n\n###\n\n","completion":" move(west)|you proceeded west to the riverbank##END##"}
+{"prompt":"move|go south to investigate the noise\n\n###\n\n","completion":" move(south)|you went south to investigate the noise##END##"}
+{"prompt":"move|advance east towards the village\n\n###\n\n","completion":" move(east)|you advanced east towards the village##END##"}
+{"prompt":"move|walk northwards to the cave entrance\n\n###\n\n","completion":" move(north)|you walked northwards to the cave entrance##END##"}
+{"prompt":"move|travel west to the clearing\n\n###\n\n","completion":" move(west)|you travelled west to the clearing##END##"}
+{"prompt":"move|proceed south to the riverbank\n\n###\n\n","completion":" move(south)|you proceeded south to the riverbank##END##"}
+{"prompt":"move|go east to find a shortcut\n\n###\n\n","completion":" move(east)|you went east to find a shortcut##END##"}
+{"prompt":"move|head north to search for clues\n\n###\n\n","completion":" move(north)|you headed north to search for clues##END##"}
+{"prompt":"move|flee west to avoid danger\n\n###\n\n","completion":" move(west)|you fled west to avoid danger##END##"}
+{"prompt":"move|go south towards the river\n\n###\n\n","completion":" move(south)|you went south towards the river##END##"}
+{"prompt":"move|advance north to the mountain\n\n###\n\n","completion":" move(north)|you advanced north to the mountain##END##"}
+{"prompt":"move|walk eastwards to the lake\n\n###\n\n","completion":" move(east)|you walked eastwards to the lake##END##"}
+{"prompt":"move|travel west to the desert\n\n###\n\n","completion":" move(west)|you travelled west to the desert##END##"}
+{"prompt":"move|proceed north to the valley\n\n###\n\n","completion":" move(north)|you proceeded north to the valley##END##"}
+{"prompt":"move|go south towards the campfire\n\n###\n\n","completion":" move(south)|you went south towards the campfire##END##"}
+{"prompt":"move|advance east to the cave entrance\n\n###\n\n","completion":" move(east)|you advanced east to the cave entrance##END##"}
+{"prompt":"move|walk west to the riverbank\n\n###\n\n","completion":" move(west)|you walked west to the riverbank##END##"}
+{"prompt":"move|travel north to explore the forest\n\n###\n\n","completion":" move(north)|you travelled north to explore the forest##END##"}
+{"prompt":"move|proceed south to the village\n\n###\n\n","completion":" move(south)|you proceeded south to the village##END##"}
+{"prompt":"move|go east towards the waterfall\n\n###\n\n","completion":" move(east)|you went east towards the waterfall##END##"}
+{"prompt":"move|advance west to the hill\n\n###\n\n","completion":" move(west)|you advanced west to the hill##END##"}
+{"prompt":"move|walk northwards to the plains\n\n###\n\n","completion":" move(north)|you walked northwards to the plains##END##"}
+{"prompt":"move|travel south to the cave\n\n###\n\n","completion":" move(south)|you travelled south to the cave##END##"}
+{"prompt":"move|proceed east to reach the village\n\n###\n\n","completion":" move(east)|you proceeded east to reach the village##END##"}
+{"prompt":"move|go west towards the forest\n\n###\n\n","completion":" move(west)|you went west towards the forest##END##"}
+{"prompt":"move|advance north to the riverbank\n\n###\n\n","completion":" move(north)|you advanced north to the riverbank##END##"}
+{"prompt":"move|walk south to the hillside\n\n###\n\n","completion":" move(south)|you walked south to the hillside##END##"}
+{"prompt":"move|travel east to the meadow\n\n###\n\n","completion":" move(east)|you travelled east to the meadow##END##"}
+{"prompt":"move|proceed west to the river\n\n###\n\n","completion":" move(west)|you proceeded west to the river##END##"}
+{"prompt":"move|go north towards the river\n\n###\n\n","completion":" move(north)|you went north towards the river##END##"}
+{"prompt":"move|travel south to the village\n\n###\n\n","completion":" move(south)|you travelled south to the village##END##"}
+{"prompt":"move|advance east to explore\n\n###\n\n","completion":" move(east)|you advanced east to explore##END##"}
+{"prompt":"move|proceed westwards to the cave\n\n###\n\n","completion":" move(west)|you proceeded westwards to the cave##END##"}
+{"prompt":"move|walk north towards the hills\n\n###\n\n","completion":" move(north)|you walked north towards the hills##END##"}
+{"prompt":"move|go south to the camp\n\n###\n\n","completion":" move(south)|you went south to the camp##END##"}
+{"prompt":"move|travel east to the riverbank\n\n###\n\n","completion":" move(east)|you travelled east to the riverbank##END##"}
+{"prompt":"move|advance west to investigate\n\n###\n\n","completion":" move(west)|you advanced west to investigate##END##"}
+{"prompt":"move|proceed north to the waterfall\n\n###\n\n","completion":" move(north)|you proceeded north to the waterfall##END##"}
+{"prompt":"move|walk southwards to the mountain\n\n###\n\n","completion":" move(south)|you walked southwards to the mountain##END##"}
+{"prompt":"move|go east to explore the forest\n\n###\n\n","completion":" move(east)|you went east to explore the forest##END##"}
+{"prompt":"move|travel west towards the lake\n\n###\n\n","completion":" move(west)|you travelled west towards the lake##END##"}
+{"prompt":"move|advance north to the desert\n\n###\n\n","completion":" move(north)|you advanced north to the desert##END##"}
+{"prompt":"move|proceed south to the ruins\n\n###\n\n","completion":" move(south)|you proceeded south to the ruins##END##"}
+{"prompt":"move|walk eastwards to the meadow\n\n###\n\n","completion":" move(east)|you walked eastwards to the meadow##END##"}
+{"prompt":"move|go west to find a path\n\n###\n\n","completion":" move(west)|you went west to find a path##END##"}
+{"prompt":"move|travel north to the forest\n\n###\n\n","completion":" move(north)|you travelled north to the forest##END##"}
+{"prompt":"move|advance west to reach the beach\n\n###\n\n","completion":" move(west)|you advanced west to reach the beach##END##"}
+{"prompt":"move|proceed south to find shelter\n\n###\n\n","completion":" move(south)|you proceeded south to find shelter##END##"}
+{"prompt":"move|walk eastwards to the canyon\n\n###\n\n","completion":" move(east)|you walked eastwards to the canyon##END##"}
+{"prompt":"move|proceed to the village\n\n###\n\n","completion":" move()|What direction is that?##END##"}
+{"prompt":"move|go to explore the forest\n\n###\n\n","completion":" move()|Which way is the forest?##END##"}
+{"prompt":"move|advance to the beach\n\n###\n\n","completion":" move()|What direction is the beach?##END##"}
+{"prompt":"move|flee to escape danger\n\n###\n\n","completion":" move()|In what direction would you like to flee?##END##"}
+{"prompt":"move|run to safety\n\n###\n\n","completion":" move()|In what direction?##END##"}
+{"prompt":"move|walk to the meadow\n\n###\n\n","completion":" move()|What direction is the meadows?##END##"}
+{"prompt":"move|travel to the village\n\n###\n\n","completion":" move()|In what direction is the village?##END##"}
+{"prompt":"move|head towards the town\n\n###\n\n","completion":" move()|Which direction leads to the town?##END##"}
+{"prompt":"move|proceed to the riverbank\n\n###\n\n","completion":" move()|What way is the riverbank?##END##"}
+{"prompt":"move|go forward to the hills\n\n###\n\n","completion":" move()|Which direction are the hills?##END##"}
+{"prompt":"move|advance towards the mountains\n\n###\n\n","completion":" move()|In what direction are the mountains?##END##"}
+{"prompt":"move|retreat to a safer spot\n\n###\n\n","completion":" move()|Which way is a safer spot?##END##"}
+{"prompt":"move|dash to a hiding place\n\n###\n\n","completion":" move()|What direction is the hiding place?##END##"}
+{"prompt":"move|make your way to the ruins\n\n###\n\n","completion":" move()|In what direction are the ruins?##END##"}
+{"prompt":"move|walk towards the waterfall\n\n###\n\n","completion":" move()|Which direction leads to the waterfall?##END##"}
+{"prompt":"move|journey to the cave entrance\n\n###\n\n","completion":" move()|What way is the entrance to the cave?##END##"}
+{"prompt":"move|sprint to higher ground\n\n###\n\n","completion":" move()|In what direction should you go for higher ground?##END##"}
+{"prompt":"move|proceed to the marketplace\n\n###\n\n","completion":" move()|Which direction is the marketplace?##END##"}
+{"prompt":"move|go to find shelter\n\n###\n\n","completion":" move()|What direction should you head for shelter?##END##"}
+{"prompt":"move|advance to the canyon\n\n###\n\n","completion":" move()|In what direction is the canyon?##END##"}
+{"prompt":"move|flee to evade danger\n\n###\n\n","completion":" move()|Which way should you flee to avoid danger?##END##"}
+{"prompt":"move|run to escape\n\n###\n\n","completion":" move()|In what direction should you run?##END##"}
+{"prompt":"move|walk to the stream\n\n###\n\n","completion":" move()|What direction is the stream?##END##"}
+{"prompt":"move|travel to the city\n\n###\n\n","completion":" move()|In what direction is the city?##END##"}
+{"prompt":"move|head towards the ocean\n\n###\n\n","completion":" move()|Which direction leads to the ocean?##END##"}
+{"prompt":"move|proceed to the bridge\n\n###\n\n","completion":" move()|What way is the bridge?##END##"}
+{"prompt":"move|go forward to the desert\n\n###\n\n","completion":" move()|Which direction is the desert?##END##"}
+{"prompt":"move|advance towards the valley\n\n###\n\n","completion":" move()|In what direction is the valley?##END##"}
+{"prompt":"move|retreat to a hidden spot\n\n###\n\n","completion":" move()|Which way is a hidden spot?##END##"}
+{"prompt":"move|dash to a vantage point\n\n###\n\n","completion":" move()|What direction is the vantage point?##END##"}
+{"prompt":"move|make your way to the tower\n\n###\n\n","completion":" move()|In what direction are the tower?##END##"}
+{"prompt":"move|walk towards the oasis\n\n###\n\n","completion":" move()|Which direction leads to the oasis?##END##"}
+{"prompt":"move|journey to the cavern entrance\n\n###\n\n","completion":" move()|What way is the entrance to the cavern?##END##"}
+{"prompt":"move|sprint to lower ground\n\n###\n\n","completion":" move()|In what direction should you go for lower ground?##END##"}
+{"prompt":"move|head to the market\n\n###\n\n","completion":" move()|Where is the market?##END##"}
+{"prompt":"move|go to the garden\n\n###\n\n","completion":" move()|Which way is the garden?##END##"}
+{"prompt":"move|advance to the castle\n\n###\n\n","completion":" move()|In what direction is the castle?##END##"}
+{"prompt":"move|walk to the lake\n\n###\n\n","completion":" move()|What direction is the lake?##END##"}
+{"prompt":"move|travel to the forest\n\n###\n\n","completion":" move()|In what direction is the forest?##END##"}
+{"prompt":"move|proceed to the bridge\n\n###\n\n","completion":" move()|Which way is the bridge?##END##"}
+{"prompt":"move|go to the museum\n\n###\n\n","completion":" move()|What direction is the museum?##END##"}
+{"prompt":"move|advance to the mountain\n\n###\n\n","completion":" move()|In what direction is the mountain?##END##"}
+{"prompt":"move|walk to the park\n\n###\n\n","completion":" move()|Which direction is the park?##END##"}
+{"prompt":"move|travel to the island\n\n###\n\n","completion":" move()|In what direction is the island?##END##"}
+{"prompt":"move|head towards the forest\n\n###\n\n","completion":" move()|What way leads to the forest?##END##"}
+{"prompt":"move|go to the river\n\n###\n\n","completion":" move()|Which direction is the river?##END##"}
+{"prompt":"move|advance to the cave\n\n###\n\n","completion":" move()|In what direction is the cave?##END##"}
+{"prompt":"move|walk to the beach\n\n###\n\n","completion":" move()|What direction is the beach?##END##"}
+{"prompt":"move|travel to the town\n\n###\n\n","completion":" move()|In what direction is the town?##END##"}
+{"prompt":"move|proceed to the hill\n\n###\n\n","completion":" move()|Which way is the hill?##END##"}
+{"prompt":"move|go to the library\n\n###\n\n","completion":" move()|What direction is the library?##END##"}
+{"prompt":"move|advance to the riverbank\n\n###\n\n","completion":" move()|In what direction is the riverbank?##END##"}
+{"prompt":"move|walk to the woods\n\n###\n\n","completion":" move()|Which direction is the woods?##END##"}
+{"prompt":"move|head towards the beach\n\n###\n\n","completion":" move()|What way leads to the beach?##END##"}
+{"prompt":"move|go to the mountain\n\n###\n\n","completion":" move()|Which direction is the mountain?##END##"}
+{"prompt":"move|advance to the lake\n\n###\n\n","completion":" move()|In what direction is the lake?##END##"}
+{"prompt":"move|walk to the city\n\n###\n\n","completion":" move()|What direction is the city?##END##"}
+{"prompt":"move|travel to the park\n\n###\n\n","completion":" move()|In what direction is the park?##END##"}
+{"prompt":"move|proceed to the museum\n\n###\n\n","completion":" move()|Which way is the museum?##END##"}
+{"prompt":"move|go to the castle\n\n###\n\n","completion":" move()|What direction is the castle?##END##"}
+{"prompt":"move|advance to the garden\n\n###\n\n","completion":" move()|In what direction is the garden?##END##"}
+{"prompt":"move|walk to the bridge\n\n###\n\n","completion":" move()|Which direction is the bridge?##END##"}
+{"prompt":"move|head towards the lake\n\n###\n\n","completion":" move()|What way leads to the lake?##END##"}
+{"prompt":"move|go to the park\n\n###\n\n","completion":" move()|Which direction is the park?##END##"}
+{"prompt":"move|advance to the island\n\n###\n\n","completion":" move()|In what direction is the island?##END##"}
+{"prompt":"move|walk to the forest\n\n###\n\n","completion":" move()|What direction is the forest?##END##"}
+{"prompt":"move|travel to the river\n\n###\n\n","completion":" move()|In what direction is the river?##END##"}
+{"prompt":"move|proceed to the mountain\n\n###\n\n","completion":" move()|Which way is the mountain?##END##"}
+{"prompt":"move|go to the cave\n\n###\n\n","completion":" move()|What direction is the cave?##END##"}
+{"prompt":"move|advance to the beach\n\n###\n\n","completion":" move()|In what direction is the beach?##END##"}
+{"prompt":"move|walk to the town\n\n###\n\n","completion":" move()|Which direction is the town?##END##"}
+{"prompt":"move|travel to the hill\n\n###\n\n","completion":" move()|In what direction is the hill?##END##"}
+{"prompt":"move|head to the waterfall\n\n###\n\n","completion":" move()|What direction is the waterfall?##END##"}
+{"prompt":"move|proceed to the marketplace\n\n###\n\n","completion":" move()|Which way is the marketplace?##END##"}
+{"prompt":"move|walk to the garden\n\n###\n\n","completion":" move()|What direction should you head for the garden?##END##"}
+{"prompt":"move|travel to the castle\n\n###\n\n","completion":" move()|In what direction is the castle?##END##"}
+{"prompt":"move|go to the stream\n\n###\n\n","completion":" move()|Which direction is the stream?##END##"}
+{"prompt":"move|advance to the forest\n\n###\n\n","completion":" move()|In what direction is the forest?##END##"}
+{"prompt":"move|walk to the river\n\n###\n\n","completion":" move()|What way leads to the river?##END##"}
+{"prompt":"move|head towards the hills\n\n###\n\n","completion":" move()|Which direction leads to the hills?##END##"}
+{"prompt":"move|proceed to the desert\n\n###\n\n","completion":" move()|What way is the desert?##END##"}
+{"prompt":"move|walk to the valley\n\n###\n\n","completion":" move()|In what direction is the valley?##END##"}
+{"prompt":"move|travel to the cavern entrance\n\n###\n\n","completion":" move()|Which direction is the entrance to the cavern?##END##"}
+{"prompt":"move|go to the tower\n\n###\n\n","completion":" move()|What direction is the tower?##END##"}
+{"prompt":"move|advance to the oasis\n\n###\n\n","completion":" move()|In what direction is the oasis?##END##"}
+{"prompt":"move|walk to the cavern\n\n###\n\n","completion":" move()|What direction is the cavern?##END##"}
+{"prompt":"move|travel to the beach\n\n###\n\n","completion":" move()|In what direction is the beach?##END##"}
+{"prompt":"move|head to the town\n\n###\n\n","completion":" move()|Which way is the town?##END##"}
+{"prompt":"move|proceed to the hill\n\n###\n\n","completion":" move()|What direction is the hill?##END##"}
+{"prompt":"move|walk to the library\n\n###\n\n","completion":" move()|In what direction is the library?##END##"}
+{"prompt":"move|travel to the riverbank\n\n###\n\n","completion":" move()|Which way is the riverbank?##END##"}
+{"prompt":"move|go to the woods\n\n###\n\n","completion":" move()|What direction is the woods?##END##"}
+{"prompt":"move|advance to the city\n\n###\n\n","completion":" move()|In what direction is the city?##END##"}
+{"prompt":"move|walk to the ocean\n\n###\n\n","completion":" move()|Which direction leads to the ocean?##END##"}
+{"prompt":"move|travel to the bridge\n\n###\n\n","completion":" move()|What way is the bridge?##END##"}
+{"prompt":"move|head towards the desert\n\n###\n\n","completion":" move()|In what direction is the desert?##END##"}
+{"prompt":"move|proceed to the mountains\n\n###\n\n","completion":" move()|Which direction is the mountains?##END##"}
+{"prompt":"move|walk to the valley\n\n###\n\n","completion":" move()|What direction is the valley?##END##"}
+{"prompt":"move|go to the forest\n\n###\n\n","completion":" move()|Which way is the forest?##END##"}
+{"prompt":"move|advance to the river\n\n###\n\n","completion":" move()|In what direction is the river?##END##"}
+{"prompt":"move|walk to the mountain\n\n###\n\n","completion":" move()|What direction is the mountain?##END##"}
+{"prompt":"move|travel to the lake\n\n###\n\n","completion":" move()|In what direction is the lake?##END##"}
+{"prompt":"move|head towards the city\n\n###\n\n","completion":" move()|Which way leads to the city?##END##"}
+{"prompt":"move|proceed to the park\n\n###\n\n","completion":" move()|What direction is the park?##END##"}
+{"prompt":"move|walk to the museum\n\n###\n\n","completion":" move()|In what direction is the museum?##END##"}
+{"prompt":"move|travel to the castle\n\n###\n\n","completion":" move()|Which direction is the castle?##END##"}
+{"prompt":"move|go to the garden\n\n###\n\n","completion":" move()|What way is the garden?##END##"}
+{"prompt":"move|advance to the bridge\n\n###\n\n","completion":" move()|In what direction is the bridge?##END##"}
+{"prompt":"move|walk to the forest\n\n###\n\n","completion":" move()|Which direction is the forest?##END##"}
+{"prompt":"move|travel to the lake\n\n###\n\n","completion":" move()|What direction is the lake?##END##"}
+{"prompt":"move|head towards the island\n\n###\n\n","completion":" move()|In what direction is the island?##END##"}
+{"prompt":"move|proceed to the hills\n\n###\n\n","completion":" move()|Which way is the hills?##END##"}
+{"prompt":"move|walk to the desert\n\n###\n\n","completion":" move()|What direction is the desert?##END##"}
+{"prompt":"move|travel to the valley\n\n###\n\n","completion":" move()|In what direction is the valley?##END##"}
+{"prompt":"move|go to the cavern entrance\n\n###\n\n","completion":" move()|Which direction is the entrance to the cavern?##END##"}
+{"prompt":"move|advance to the tower\n\n###\n\n","completion":" move()|What way is the tower?##END##"}
+{"prompt":"move|walk to the oasis\n\n###\n\n","completion":" move()|In what direction is the oasis?##END##"}
+{"prompt":"move|travel to the cavern\n\n###\n\n","completion":" move()|Which direction is the cavern?##END##"}
+{"prompt":"move|head to the beach\n\n###\n\n","completion":" move()|What direction is the beach?##END##"}
+{"prompt":"move|proceed to the town\n\n###\n\n","completion":" move()|In what direction is the town?##END##"}
+{"prompt":"move|walk to the hill\n\n###\n\n","completion":" move()|Which way is the hill?##END##"}
+{"prompt":"move|travel to the library\n\n###\n\n","completion":" move()|What direction is the library?##END##"}
+{"prompt":"move|go to the riverbank\n\n###\n\n","completion":" move()|In what direction is the riverbank?##END##"}
+{"prompt":"move|advance to the woods\n\n###\n\n","completion":" move()|Which direction is the woods?##END##"}
+{"prompt":"move|walk to the city\n\n###\n\n","completion":" move()|In what direction is the city?##END##"}
+{"prompt":"move|travel to the ocean\n\n###\n\n","completion":" move()|What way leads to the ocean?##END##"}
+{"prompt":"move|head towards the bridge\n\n###\n\n","completion":" move()|In what direction is the bridge?##END##"}
+{"prompt":"move|proceed to the desert\n\n###\n\n","completion":" move()|Which direction is the desert?##END##"}
+{"prompt":"move|walk to the mountains\n\n###\n\n","completion":" move()|What direction is the mountains?##END##"}
+{"prompt":"move|go to the island\n\n###\n\n","completion":" move()|Which direction is the island?##END##"}
+{"prompt":"move|advance to the forest\n\n###\n\n","completion":" move()|What way is the forest?##END##"}
+{"prompt":"move|walk to the river\n\n###\n\n","completion":" move()|In what direction is the river?##END##"}
+{"prompt":"move|travel to the mountain\n\n###\n\n","completion":" move()|Which direction is the mountain?##END##"}
+{"prompt":"move|head to the lake\n\n###\n\n","completion":" move()|In what direction is the lake?##END##"}
+{"prompt":"move|proceed to the city\n\n###\n\n","completion":" move()|What direction is the city?##END##"}
+{"prompt":"move|walk to the park\n\n###\n\n","completion":" move()|In what direction is the park?##END##"}
+{"prompt":"move|travel to the museum\n\n###\n\n","completion":" move()|Which way is the museum?##END##"}
+{"prompt":"move|proceed to the island\n\n###\n\n","completion":" move()|In what direction is the island?##END##"}
+{"prompt":"move|walk to the hills\n\n###\n\n","completion":" move()|Which direction is the hills?##END##"}
+{"prompt":"move|travel to the desert\n\n###\n\n","completion":" move()|What direction is the desert?##END##"}
+{"prompt":"move|advance to the mountains\n\n###\n\n","completion":" move()|In what direction are the mountains?##END##"}
+{"prompt":"move|travel to the cavern entrance\n\n###\n\n","completion":" move()|Which way is the entrance to the cavern?##END##"}
+{"prompt":"move|walk to the cavern\n\n###\n\n","completion":" move()|Which direction is the cavern?##END##"}
+{"prompt":"move|travel to the beach\n\n###\n\n","completion":" move()|What direction is the beach?##END##"}
+{"prompt":"move|head to the town\n\n###\n\n","completion":" move()|In what direction is the town?##END##"}
+{"prompt":"move|go left\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|go right\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|go to the left\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|go to the right\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|travel left\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|travel right\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|travel to the left\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|travel to the right\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|move left\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|move right\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|move to the left\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|move to the right\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|go up\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|move up\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|travel up\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|advance upwards\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|run back\n\n###\n\n","completion":" move()|What direction is back?##END##"}
+{"prompt":"move|go back\n\n###\n\n","completion":" move()|What direction is back?##END##"}
+{"prompt":"move|move back\n\n###\n\n","completion":" move()|What direction is back?##END##"}
+{"prompt":"move|travel back\n\n###\n\n","completion":" move()|What direction is back?##END##"}
+{"prompt":"move|run backwards\n\n###\n\n","completion":" move()|What direction is backwards?##END##"}
+{"prompt":"move|go backwards\n\n###\n\n","completion":" move()|What direction is backwards?##END##"}
+{"prompt":"move|move backwards\n\n###\n\n","completion":" move()|What direction is backwards?##END##"}
+{"prompt":"move|travel backwards\n\n###\n\n","completion":" move()|What direction is backwards?##END##"}
+{"prompt":"move|run forward\n\n###\n\n","completion":" move()|What direction is forward?##END##"}
+{"prompt":"move|go forward\n\n###\n\n","completion":" move()|What direction is forward?##END##"}
+{"prompt":"move|move forward\n\n###\n\n","completion":" move()|What direction is forward?##END##"}
+{"prompt":"move|travel forward\n\n###\n\n","completion":" move()|What direction is forward?##END##"}
+{"prompt":"move|run forwards\n\n###\n\n","completion":" move()|What direction is forwards?##END##"}
+{"prompt":"move|go forwards\n\n###\n\n","completion":" move()|What direction is forwards?##END##"}
+{"prompt":"move|move forwards\n\n###\n\n","completion":" move()|What direction is forwards?##END##"}
+{"prompt":"move|travel forwards\n\n###\n\n","completion":" move()|What direction is forwards?##END##"}
+{"prompt":"move|head diagonally\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|go downward\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|travel inward\n\n###\n\n","completion":" move()|What direction is inward?##END##"}
+{"prompt":"move|move outward\n\n###\n\n","completion":" move()|What direction is outward?##END##"}
+{"prompt":"move|run northeast\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|go southwest\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|travel sideways\n\n###\n\n","completion":" move()|What direction is sideways?##END##"}
+{"prompt":"move|advance down\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|walk clockwise\n\n###\n\n","completion":" move()|What direction is clockwise?##END##"}
+{"prompt":"move|run counterclockwise\n\n###\n\n","completion":" move()|What direction is counterclockwise?##END##"}
+{"prompt":"move|go around\n\n###\n\n","completion":" move()|What direction is around?##END##"}
+{"prompt":"move|move above\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|travel below\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|advance sideways\n\n###\n\n","completion":" move()|What direction is sideways?##END##"}
+{"prompt":"move|travel away\n\n###\n\n","completion":" move()|What direction is away?##END##"}
+{"prompt":"move|run across\n\n###\n\n","completion":" move()|What direction is across?##END##"}
+{"prompt":"move|go between\n\n###\n\n","completion":" move()|What direction is between?##END##"}
+{"prompt":"move|move diagonally right\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|travel diagonally left\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|head straight\n\n###\n\n","completion":" move()|What direction is straight?##END##"}
+{"prompt":"move|advance left\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|move to the side\n\n###\n\n","completion":" move()|What direction is to the side?##END##"}
+{"prompt":"move|go downwards\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|travel inwards\n\n###\n\n","completion":" move()|What direction is inwards?##END##"}
+{"prompt":"move|head southeast\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|go northwest\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|move beneath\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|travel upwards\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|advance to the side\n\n###\n\n","completion":" move()|What direction is to the side?##END##"}
+{"prompt":"move|walk counter-clockwise\n\n###\n\n","completion":" move()|What direction is counter-clockwise?##END##"}
+{"prompt":"move|run clockwise\n\n###\n\n","completion":" move()|What direction is clockwise?##END##"}
+{"prompt":"move|go around the corner\n\n###\n\n","completion":" move()|What direction is around the corner?##END##"}
+{"prompt":"move|move below\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|travel beneath\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|travel away from here\n\n###\n\n","completion":" move()|What direction is away from here?##END##"}
+{"prompt":"move|run across the field\n\n###\n\n","completion":" move()|What direction is across the field?##END##"}
+{"prompt":"move|go between the trees\n\n###\n\n","completion":" move()|What direction is between the trees?##END##"}
+{"prompt":"move|move diagonally to the right\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|travel diagonally to the left\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|head straight ahead\n\n###\n\n","completion":" move()|What direction is straight ahead?##END##"}
+{"prompt":"move|proceed left\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|advance right\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|head leftwards\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|progress to the right\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|move upward\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|descend downward\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|shift diagonally\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|head southeastwards\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|proceed northwest\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|advance diagonally\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|head downward\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|proceed southeast\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|shift to the left\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|move towards the sky\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|travel beneath the surface\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|proceed inwards\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|shift clockwise\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|go counterclockwise\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|run through the field\n\n###\n\n","completion":" move()|What direction is through the field?##END##"}
+{"prompt":"move|go amidst the trees\n\n###\n\n","completion":" move()|What direction is amidst the trees?##END##"}
+{"prompt":"move|move diagonally rightward\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|travel diagonally leftward\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|head in a straight line\n\n###\n\n","completion":" move()|What direction is in a straight line?##END##"}
+{"prompt":"move|advance to the left\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|move downwards\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|go northwestward\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|advance sideward\n\n###\n\n","completion":" move()|What direction is sideward?##END##"}
+{"prompt":"move|run in a clockwise direction\n\n###\n\n","completion":" move()|What direction is in a clockwise direction?##END##"}
+{"prompt":"move|travel away from this spot\n\n###\n\n","completion":" move()|What direction away from this spot?##END##"}
+{"prompt":"move|run across the open space\n\n###\n\n","completion":" move()|What direction is across the open space?##END##"}
+{"prompt":"move|go between the two buildings\n\n###\n\n","completion":" move()|What direction is between the two buildings?##END##"}
+{"prompt":"move|move diagonally towards the right\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|travel diagonally towards the left\n\n###\n\n","completion":" move()|direction must be north, south, east or west##END##"}
+{"prompt":"move|move to the tavern\n\n###\n\n","completion":" move()|in which direction is the tavern located?##END##"}
+{"prompt":"move|move to the tavern\n\nwhich direction is the tavern?\n\nnorth###\n\n","completion":" move(north)|you moved north to the tavern##END##"}
+{"prompt":"move|head towards the forest\n\n###\n\n","completion":" move()|What direction is the forest?##END##"}
+{"prompt":"move|head towards the forest\n\nWhat direction is the forest?\n\nto the east\n\n###\n\n","completion":" move(east)|you are heading east towards the forest##END##"}
+{"prompt":"move|proceed to the castle\n\n###\n\n","completion":" move()|What direction is the castle?##END##"}
+{"prompt":"move|proceed to the castle\n\nWhat direction is the castle?\n\nwest\n\n###\n\n","completion":" move(west)|you proceed west to the castle##END##"}
+{"prompt":"move|flee\n\n###\n\n","completion":" move()|in which direction?##END##"}
+{"prompt":"move|flee\n\nin which direction?\n\nnorth###\n\n","completion":" move(north)|you flee to the north##END##"}
+{"prompt":"move|run away\n\n###\n\n","completion":" move()|in what direction?##END##"}
+{"prompt":"move|run away\n\nin what direction?\n\nsouth###\n\n","completion":" move(south)|you run away to the south##END##"}
+{"prompt":"move|escape\n\n###\n\n","completion":" move()|in which direction?##END##"}
+{"prompt":"move|escape\n\nin which direction?\n\nwest###\n\n","completion":" move(west)|you escape to the west##END##"}
+{"prompt":"move|retreat\n\n###\n\n","completion":" move()|in what direction?##END##"}
+{"prompt":"move|retreat\n\nin what direction?\n\neast###\n\n","completion":" move(east)|you retreat to the east##END##"}
+{"prompt":"move|run\n\n###\n\n","completion":" move()|in which direction?##END##"}
+{"prompt":"move|run\n\nin which direction?\n\nnorth###\n\n","completion":" move(north)|you run to the north##END##"}
+{"prompt":"move|sprint away\n\n###\n\n","completion":" move()|in what direction?##END##"}
+{"prompt":"move|sprint away\n\nin what direction?\n\neast###\n\n","completion":" move(east)|you sprint away to the east##END##"}
+{"prompt":"move|advance to the mountains\n\n###\n\n","completion":" move()|Which direction are the mountains?##END##"}
+{"prompt":"move|advance to the mountains\n\nWhich direction are the mountains?\n\nsouth\n\n###\n\n","completion":" move(south)|you advance south to the mountains##END##"}
+{"prompt":"move|go to the village\n\n###\n\n","completion":" move()|In which direction is the village?##END##"}
+{"prompt":"move|go to the village\n\nIn which direction is the village?\n\nwest\n\n###\n\n","completion":" move(west)|you head west to the village##END##"}
+{"prompt":"move|travel to the beach\n\nWhat direction is the beach?\n\neast\n\n###\n\n","completion":" move(east)|you travel east to the beach##END##"}
+{"prompt":"move|journey to the desert\n\n###\n\n","completion":" move()|Which direction is the desert?##END##"}
+{"prompt":"move|journey to the desert\n\nWhich direction is the desert?\n\nnorth\n\n###\n\n","completion":" move(north)|you journey north to the desert##END##"}
+{"prompt":"move|find the lake\n\n###\n\n","completion":" move()|What direction is the lake?##END##"}
+{"prompt":"move|find the lake\n\nWhat direction is the lake?\n\nsouth\n\n###\n\n","completion":" move(south)|you find the lake to the south##END##"}
+{"prompt":"move|explore the cave\n\n###\n\n","completion":" move()|In which direction is the cave?##END##"}
+{"prompt":"move|explore the cave\n\nIn which direction is the cave?\n\neast\n\n###\n\n","completion":" move(east)|you explore east to the cave##END##"}
+{"prompt":"move|seek the waterfall\n\n###\n\n","completion":" move()|What direction is the waterfall?##END##"}
+{"prompt":"move|seek the waterfall\n\nWhat direction is the waterfall?\n\nwest\n\n###\n\n","completion":" move(west)|you seek the waterfall to the west##END##"}
+{"prompt":"move|approach the bridge\n\n###\n\n","completion":" move()|Which direction is the bridge?##END##"}
+{"prompt":"move|approach the bridge\n\nWhich direction is the bridge?\n\nnorth\n\n###\n\n","completion":" move(north)|you approach the bridge to the north##END##"}
+{"prompt":"move|head to the plains\n\n###\n\n","completion":" move()|In what direction are the plains?##END##"}
+{"prompt":"move|head to the plains\n\nIn what direction are the plains?\n\nsouth\n\n###\n\n","completion":" move(south)|you head south to the plains##END##"}
+{"prompt":"move|venture to the volcano\n\n###\n\n","completion":" move()|Which direction is the volcano?##END##"}
+{"prompt":"move|venture to the volcano\n\nWhich direction is the volcano?\n\neast\n\n###\n\n","completion":" move(east)|you venture east to the volcano##END##"}
+{"prompt":"move|navigate to the swamp\n\n###\n\n","completion":" move()|What direction is the swamp?##END##"}
+{"prompt":"move|navigate to the swamp\n\nWhat direction is the swamp?\n\nwest\n\n###\n\n","completion":" move(west)|you navigate west to the swamp##END##"}
+{"prompt":"move|pursue the path to the river\n\n###\n\n","completion":" move()|In which direction is the path to the river?##END##"}
+{"prompt":"move|pursue the path to the river\n\nIn which direction is the path to the river?\n\nnorth\n\n###\n\n","completion":" move(north)|you pursue the path north to the river##END##"}
+{"prompt":"move|go to the city\n\n###\n\n","completion":" move()|Which direction is the city?##END##"}
+{"prompt":"move|go to the city\n\nWhich direction is the city?\n\nsouth\n\n###\n\n","completion":" move(south)|you head south to the city##END##"}
+{"prompt":"move|walk to the ruins\n\n###\n\n","completion":" move()|What direction are the ruins?##END##"}
+{"prompt":"move|walk to the ruins\n\nWhat direction are the ruins?\n\nwest\n\n###\n\n","completion":" move(west)|you walk west to the ruins##END##"}
+{"prompt":"move|race to the cliffs\n\n###\n\n","completion":" move()|Which direction are the cliffs?##END##"}
+{"prompt":"move|race to the cliffs\n\nWhich direction are the cliffs?\n\neast\n\n###\n\n","completion":" move(east)|you race east to the cliffs##END##"}
+{"prompt":"move|stroll to the meadow\n\n###\n\n","completion":" move()|In which direction is the meadow?##END##"}
+{"prompt":"move|stroll to the meadow\n\nIn which direction is the meadow?\n\nsouth\n\n###\n\n","completion":" move(south)|you stroll south to the meadow##END##"}
+{"prompt":"move|sprint to the hills\n\n###\n\n","completion":" move()|What direction are the hills?##END##"}
+{"prompt":"move|sprint to the hills\n\nWhat direction are the hills?\n\nnorth\n\n###\n\n","completion":" move(north)|you sprint north to the hills##END##"}
+{"prompt":"move|trek to the canyon\n\n###\n\n","completion":" move()|Which direction is the canyon?##END##"}
+{"prompt":"move|trek to the canyon\n\nWhich direction is the canyon?\n\nwest\n\n###\n\n","completion":" move(west)|you trek west to the canyon##END##"}
+{"prompt":"move|crawl to the cavern\n\n###\n\n","completion":" move()|In what direction is the cavern?##END##"}
+{"prompt":"move|crawl to the cavern\n\nIn what direction is the cavern?\n\neast\n\n###\n\n","completion":" move(east)|you crawl east to the cavern##END##"}
+{"prompt":"move|dash to the fortress\n\n###\n\n","completion":" move()|What direction is the fortress?##END##"}
+{"prompt":"move|dash to the fortress\n\nWhat direction is the fortress?\n\nnorth\n\n###\n\n","completion":" move(north)|you dash north to the fortress##END##"}
+{"prompt":"move|amble to the quarry\n\n###\n\n","completion":" move()|Which direction is the quarry?##END##"}
+{"prompt":"move|amble to the quarry\n\nWhich direction is the quarry?\n\nsouth\n\n###\n\n","completion":" move(south)|you amble south to the quarry##END##"}
+{"prompt":"move|go to the hill\n\n###\n\n","completion":" move()|Which direction is the hill?##END##"}
+{"prompt":"move|go to the hill\n\nWhich direction is the hill?\n\nnorth\n\n###\n\n","completion":" move(north)|you go north to the hill##END##"}
+{"prompt":"move|journey to the river\n\n###\n\n","completion":" move()|In what direction is the river?##END##"}
+{"prompt":"move|journey to the river\n\nIn what direction is the river?\n\nsouth\n\n###\n\n","completion":" move(south)|you journey south to the river##END##"}
+{"prompt":"move|walk to the forest\n\nWhat direction is the forest?\n\neast\n\n###\n\n","completion":" move(east)|you walk east to the forest##END##"}
+{"prompt":"move|explore the cave\n\n###\n\n","completion":" move()|Which direction is the cave?##END##"}
+{"prompt":"move|explore the cave\n\nWhich direction is the cave?\n\nwest\n\n###\n\n","completion":" move(west)|you explore west to the cave##END##"}
+{"prompt":"move|advance to the mountain\n\nIn what direction is the mountain?\n\nnorth\n\n###\n\n","completion":" move(north)|you advance north to the mountain##END##"}
+{"prompt":"move|head to the lake\n\n###\n\n","completion":" move()|What direction is the lake?##END##"}
+{"prompt":"move|head to the lake\n\nWhat direction is the lake?\n\nsouth\n\n###\n\n","completion":" move(south)|you head south to the lake##END##"}
+{"prompt":"move|proceed to the city\n\n###\n\n","completion":" move()|Which direction is the city?##END##"}
+{"prompt":"move|proceed to the city\n\nWhich direction is the city?\n\neast\n\n###\n\n","completion":" move(east)|you proceed east to the city##END##"}
+{"prompt":"move|travel to the beach\n\nWhat direction is the beach?\n\nwest\n\n###\n\n","completion":" move(west)|you travel west to the beach##END##"}
+{"prompt":"move|journey to the canyon\n\n###\n\n","completion":" move()|Which direction is the canyon?##END##"}
+{"prompt":"move|journey to the canyon\n\nWhich direction is the canyon?\n\nnorth\n\n###\n\n","completion":" move(north)|you journey north to the canyon##END##"}
+{"prompt":"move|walk to the village\n\n###\n\n","completion":" move()|What direction is the village?##END##"}
+{"prompt":"move|walk to the village\n\nWhat direction is the village?\n\nsouth\n\n###\n\n","completion":" move(south)|you walk south to the village##END##"}
+{"prompt":"move|explore the island\n\n###\n\n","completion":" move()|Which direction is the island?##END##"}
+{"prompt":"move|explore the island\n\nWhich direction is the island?\n\nwest\n\n###\n\n","completion":" move(west)|you explore west to the island##END##"}
+{"prompt":"move|venture to the desert\n\n###\n\n","completion":" move()|What direction is the desert?##END##"}
+{"prompt":"move|venture to the desert\n\nWhat direction is the desert?\n\neast\n\n###\n\n","completion":" move(east)|you venture east to the desert##END##"}
+{"prompt":"move|head to the castle\n\n###\n\n","completion":" move()|Which direction is the castle?##END##"}
+{"prompt":"move|head to the castle\n\nWhich direction is the castle?\n\nsouth\n\n###\n\n","completion":" move(south)|you head south to the castle##END##"}
+{"prompt":"move|travel to the valley\n\n###\n\n","completion":" move()|What direction is the valley?##END##"}
+{"prompt":"move|travel to the valley\n\nWhat direction is the valley?\n\nwest\n\n###\n\n","completion":" move(west)|you travel west to the valley##END##"}
+{"prompt":"move|go to the forest\n\n###\n\n","completion":" move()|Which direction is the forest?##END##"}
+{"prompt":"move|go to the forest\n\nWhich direction is the forest?\n\nnorth\n\n###\n\n","completion":" move(north)|you go north to the forest##END##"}
+{"prompt":"move|advance to the river\n\nIn what direction is the river?\n\nsouth\n\n###\n\n","completion":" move(south)|you advance south to the river##END##"}
+{"prompt":"move|walk to the hill\n\n###\n\n","completion":" move()|What direction is the hill?##END##"}
+{"prompt":"move|walk to the hill\n\nWhat direction is the hill?\n\neast\n\n###\n\n","completion":" move(east)|you walk east to the hill##END##"}
+{"prompt":"move|travel to the mountain\n\n###\n\n","completion":" move()|In what direction is the mountain?##END##"}
+{"prompt":"move|travel to the mountain\n\nIn what direction is the mountain?\n\nnorth\n\n###\n\n","completion":" move(north)|you travel north to the mountain##END##"}
+{"prompt":"move|journey to the lake\n\n###\n\n","completion":" move()|What direction is the lake?##END##"}
+{"prompt":"move|journey to the lake\n\nWhat direction is the lake?\n\nsouth\n\n###\n\n","completion":" move(south)|you journey south to the lake##END##"}
+{"prompt":"move|head to the city\n\n###\n\n","completion":" move()|Which direction is the city?##END##"}
+{"prompt":"move|head to the city\n\nWhich direction is the city?\n\neast\n\n###\n\n","completion":" move(east)|you head east to the city##END##"}
+{"prompt":"move|go to the beach\n\n###\n\n","completion":" move()|What direction is the beach?##END##"}
+{"prompt":"move|go to the beach\n\nWhat direction is the beach?\n\nwest\n\n###\n\n","completion":" move(west)|you go west to the beach##END##"}
+{"prompt":"move|venture to the canyon\n\n###\n\n","completion":" move()|Which direction is the canyon?##END##"}
+{"prompt":"move|venture to the canyon\n\nWhich direction is the canyon?\n\nnorth\n\n###\n\n","completion":" move(north)|you venture north to the canyon##END##"}
+{"prompt":"move|walk to the village\n\nWhich direction is the village?\n\nsouth\n\n###\n\n","completion":" move(south)|you walk south to the village##END##"}
+{"prompt":"move|advance to the desert\n\n###\n\n","completion":" move()|What direction is the desert?##END##"}
+{"prompt":"move|advance to the desert\n\nWhat direction is the desert?\n\neast\n\n###\n\n","completion":" move(east)|you advance east to the desert##END##"}
+{"prompt":"map|check map\n\n###\n\n","completion":" map|you checked the map##END##"}
+{"prompt":"map|check the map\n\n###\n\n","completion":" map|you checked the map##END##"}
+{"prompt":"map|check the map out\n\n###\n\n","completion":" map|you checked the map##END##"}
+{"prompt":"map|look at the map\n\n###\n\n","completion":" map|you looked at the map##END##"}
+{"prompt":"map|Peek at map\n\n###\n\n","completion":" map|you peeked at the map##END##"}
+{"prompt":"map|Peek at the map\n\n###\n\n","completion":" map|you peeked at the map##END##"}
+{"prompt":"map|view map\n\n###\n\n","completion":" map|you viewed the map##END##"}
+{"prompt":"map|examine the map\n\n###\n\n","completion":" map|you examined the map##END##"}
+{"prompt":"map|inspect the map\n\n###\n\n","completion":" map|you inspected the map##END##"}
+{"prompt":"map|Study the map\n\n###\n\n","completion":" map|you studied the map##END##"}
+{"prompt":"map|Take a look at the map\n\n###\n\n","completion":" map|you took a look at the map##END##"}
+{"prompt":"map|observe the map\n\n###\n\n","completion":" map|you observed the map##END##"}
+{"prompt":"map|glance at map\n\n###\n\n","completion":" map|you glanced at the map##END##"}
+{"prompt":"map|review the map\n\n###\n\n","completion":" map|you reviewed the map##END##"}
+{"prompt":"map|examine map\n\n###\n\n","completion":" map|you examined the map##END##"}
+{"prompt":"map|study the map\n\n###\n\n","completion":" map|you studied the map##END##"}
+{"prompt":"map|peek at the map\n\n###\n\n","completion":" map|you peeked at the map##END##"}
+{"prompt":"map|look over the map\n\n###\n\n","completion":" map|you looked over the map##END##"}
+{"prompt":"map|gaze at the map\n\n###\n\n","completion":" map|you gazed at the map##END##"}
+{"prompt":"map|inspect map\n\n###\n\n","completion":" map|you inspected the map##END##"}
+{"prompt":"map|view the world map\n\n###\n\n","completion":" map|you viewed the world map##END##"}
+{"prompt":"map|observe the world map\n\n###\n\n","completion":" map|you observed the world map##END##"}
+{"prompt":"map|look at the global map\n\n###\n\n","completion":" map|you looked at the global map##END##"}
+{"prompt":"map|examine the world map\n\n###\n\n","completion":" map|you examined the world map##END##"}
+{"prompt":"map|check the entire map\n\n###\n\n","completion":" map|you checked the entire map##END##"}
+{"prompt":"map|study the world map\n\n###\n\n","completion":" map|you studied the world map##END##"}
+{"prompt":"map|check global map\n\n###\n\n","completion":" map|you checked the global map##END##"}
+{"prompt":"map|observe the entire map\n\n###\n\n","completion":" map|you observed the entire map##END##"}
+{"prompt":"map|gaze at the world map\n\n###\n\n","completion":" map|you gazed at the world map##END##"}
+{"prompt":"map|view the detailed map\n\n###\n\n","completion":" map|you viewed the detailed map##END##"}
+{"prompt":"map|inspect the global map\n\n###\n\n","completion":" map|you inspected the global map##END##"}
+{"prompt":"map|look at the full map\n\n###\n\n","completion":" map|you looked at the full map##END##"}
+{"prompt":"map|peek at the world map\n\n###\n\n","completion":" map|you peeked at the world map##END##"}
+{"prompt":"map|view the map of the area\n\n###\n\n","completion":" map|you viewed the map of the area##END##"}
+{"prompt":"map|observe the map\n\n###\n\n","completion":" map|you observed the region map##END##"}
+{"prompt":"map|gaze at the map\n\n###\n\n","completion":" map|you gazed at the area map##END##"}
+{"prompt":"map|view the territory map\n\n###\n\n","completion":" map|you viewed the territory map##END##"}
+{"prompt":"map|inspect the map\n\n###\n\n","completion":" map|you inspected the locale map##END##"}
+{"prompt":"map|check the city map\n\n###\n\n","completion":" map|you checked the city map##END##"}
+{"prompt":"map|look over the province map\n\n###\n\n","completion":" map|you looked over the province map##END##"}
+{"prompt":"map|peek at the map\n\n###\n\n","completion":" map|you peeked at the district map##END##"}
+{"prompt":"map|view the state map\n\n###\n\n","completion":" map|you viewed the state map##END##"}
+{"prompt":"map|examine the zone map\n\n###\n\n","completion":" map|you examined the zone map##END##"}
+{"prompt":"map|observe the map\n\n###\n\n","completion":" map|you observed the country map##END##"}
+{"prompt":"map|glance at the world map\n\n###\n\n","completion":" map|you glanced at the world map##END##"}
+{"prompt":"map|review the global map\n\n###\n\n","completion":" map|you reviewed the global map##END##"}
+{"prompt":"map|examine the planet map\n\n###\n\n","completion":" map|you examined the planet map##END##"}
+{"prompt":"map|study the universe map\n\n###\n\n","completion":" map|you studied the universe map##END##"}
+{"prompt":"map|check the map\n\n###\n\n","completion":" map|you checked the galaxy map##END##"}
+{"prompt":"map|look at the solar system map\n\n###\n\n","completion":" map|you looked at the solar system map##END##"}
+{"prompt":"map|observe the constellation map\n\n###\n\n","completion":" map|you observed the constellation map##END##"}
+{"prompt":"map|gaze at the celestial map\n\n###\n\n","completion":" map|you gazed at the celestial map##END##"}
+{"prompt":"map|view the star map\n\n###\n\n","completion":" map|you viewed the star map##END##"}
+{"prompt":"map|examine the nebula map\n\n###\n\n","completion":" map|you examined the nebula map##END##"}
+{"prompt":"map|observe the galaxy cluster map\n\n###\n\n","completion":" map|you observed the galaxy cluster map##END##"}
+{"prompt":"map|glance at the black hole map\n\n###\n\n","completion":" map|you glanced at the black hole map##END##"}
+{"prompt":"map|review the quasar map\n\n###\n\n","completion":" map|you reviewed the quasar map##END##"}
+{"prompt":"map|examine the pulsar map\n\n###\n\n","completion":" map|you examined the pulsar map##END##"}
+{"prompt":"map|study the cosmic map\n\n###\n\n","completion":" map|you studied the cosmic map##END##"}
+{"prompt":"map|check the map\n\n###\n\n","completion":" map|you checked the interstellar map##END##"}
+{"prompt":"map|look at the intergalactic map\n\n###\n\n","completion":" map|you looked at the intergalactic map##END##"}
+{"prompt":"map|observe the multiverse map\n\n###\n\n","completion":" map|you observed the multiverse map##END##"}
+{"prompt":"map|gaze at the map\n\n###\n\n","completion":" map|you gazed at the alternate reality map##END##"}
+{"prompt":"map|view the parallel universe map\n\n###\n\n","completion":" map|you viewed the parallel universe map##END##"}
+{"prompt":"map|examine the quantum realm map\n\n###\n\n","completion":" map|you examined the quantum realm map##END##"}
+{"prompt":"map|observe the time-space map\n\n###\n\n","completion":" map|you observed the time-space map##END##"}
+{"prompt":"map|check the global map\n\n###\n\n","completion":" map|you checked the global map##END##"}
+{"prompt":"map|look at the detailed map\n\n###\n\n","completion":" map|you looked at the detailed map##END##"}
+{"prompt":"map|glance at the map\n\n###\n\n","completion":" map|you glanced at the map##END##"}
+{"prompt":"map|examine the entire map\n\n###\n\n","completion":" map|you examined the entire map##END##"}
+{"prompt":"map|study the global map\n\n###\n\n","completion":" map|you studied the global map##END##"}
+{"prompt":"map|check the full map\n\n###\n\n","completion":" map|you checked the full map##END##"}
+{"prompt":"map|observe the map of the area\n\n###\n\n","completion":" map|you observed the map of the area##END##"}
+{"prompt":"map|gaze at the detailed map\n\n###\n\n","completion":" map|you gazed at the detailed map##END##"}
+{"prompt":"map|view the entire map\n\n###\n\n","completion":" map|you viewed the entire map##END##"}
+{"prompt":"map|observe the global map\n\n###\n\n","completion":" map|you observed the global map##END##"}
+{"prompt":"map|examine the map of the area\n\n###\n\n","completion":" map|you examined the map of the area##END##"}
+{"prompt":"map|check out the map\n\n###\n\n","completion":" map|you checked out the map##END##"}
+{"prompt":"map|observe the full map\n\n###\n\n","completion":" map|you observed the full map##END##"}
+{"prompt":"map|gaze at the global map\n\n###\n\n","completion":" map|you gazed at the global map##END##"}
+{"prompt":"map|view the entire world map\n\n###\n\n","completion":" map|you viewed the entire world map##END##"}
+{"prompt":"map|look at the world map\n\n###\n\n","completion":" map|you looked at the world map##END##"}
+{"prompt":"map|examine the detailed map\n\n###\n\n","completion":" map|you examined the detailed map##END##"}
+{"prompt":"map|look at the city map\n\n###\n\n","completion":" map|you looked at the city map##END##"}
+{"prompt":"map|study the province map\n\n###\n\n","completion":" map|you studied the province map##END##"}
+{"prompt":"map|check out the district map\n\n###\n\n","completion":" map|you checked out the district map##END##"}
+{"prompt":"map|observe the state map\n\n###\n\n","completion":" map|you observed the state map##END##"}
+{"prompt":"map|gaze at the zone map\n\n###\n\n","completion":" map|you gazed at the zone map##END##"}
+{"prompt":"map|view the country map\n\n###\n\n","completion":" map|you viewed the country map##END##"}
+{"prompt":"map|study the city map\n\n###\n\n","completion":" map|you studied the city map##END##"}
+{"prompt":"map|check out the province map\n\n###\n\n","completion":" map|you checked out the province map##END##"}
+{"prompt":"map|observe the district map\n\n###\n\n","completion":" map|you observed the district map##END##"}
+{"prompt":"map|look at the state map\n\n###\n\n","completion":" map|you looked at the state map##END##"}
+{"prompt":"map|study the country map\n\n###\n\n","completion":" map|you studied the country map##END##"}
+{"prompt":"map|inspect the entire map\n\n###\n\n","completion":" map|you inspected the entire map##END##"}
+{"prompt":"map|view the city map\n\n###\n\n","completion":" map|you viewed the city map##END##"}
+{"prompt":"map|examine the district map\n\n###\n\n","completion":" map|you examined the district map##END##"}
+{"prompt":"map|study the state map\n\n###\n\n","completion":" map|you studied the state map##END##"}
+{"prompt":"map|check the territory map\n\n###\n\n","completion":" map|you checked the territory map##END##"}
+{"prompt":"map|observe the province map\n\n###\n\n","completion":" map|you observed the province map##END##"}
+{"prompt":"map|look at the region map\n\n###\n\n","completion":" map|you looked at the region map##END##"}
+{"prompt":"map|peek at the country map\n\n###\n\n","completion":" map|you peeked at the country map##END##"}
+{"prompt":"map|view the locale map\n\n###\n\n","completion":" map|you viewed the locale map##END##"}
+{"prompt":"map|observe the area map\n\n###\n\n","completion":" map|you observed the area map##END##"}
+{"prompt":"map|gaze at the city map\n\n###\n\n","completion":" map|you gazed at the city map##END##"}
+{"prompt":"map|observe the detailed map\n\n###\n\n","completion":" map|you observed the detailed map##END##"}
+{"prompt":"map|look at the country map\n\n###\n\n","completion":" map|you looked at the country map##END##"}
+{"prompt":"map|peek at the region map\n\n###\n\n","completion":" map|you peeked at the region map##END##"}
+{"prompt":"map|view the district map\n\n###\n\n","completion":" map|you viewed the district map##END##"}
+{"prompt":"map|gaze at the territory map\n\n###\n\n","completion":" map|you gazed at the territory map##END##"}
+{"prompt":"map|examine the province map\n\n###\n\n","completion":" map|you examined the province map##END##"}
+{"prompt":"eat|eat burger\n\n###\n\n","completion":" eat(burger)|you ate a burger##END##"}
+{"prompt":"eat|eat the burger\n\n###\n\n","completion":" eat(burger)|you ate the burger##END##"}
+{"prompt":"eat|eat a burger\n\n###\n\n","completion":" eat(burger)|you ate a burger##END##"}
+{"prompt":"eat|eat my burger\n\n###\n\n","completion":" eat(burger)|you ate your burger##END##"}
+{"prompt":"eat|eat some burger\n\n###\n\n","completion":" eat(burger)|you ate some burger##END##"}
+{"prompt":"eat|consume pizza\n\n###\n\n","completion":" eat(pizza)|you consumed a pizza##END##"}
+{"prompt":"eat|devour the sandwich\n\n###\n\n","completion":" eat(sandwich)|you devoured the sandwich##END##"}
+{"prompt":"eat|have a snack\n\n###\n\n","completion":" eat(snkack)|you had a snack##END##"}
+{"prompt":"eat|ingest fries\n\n###\n\n","completion":" eat(fries)|you ingested some fries##END##"}
+{"prompt":"eat|take a bite of the cake\n\n###\n\n","completion":" eat(cake)|you took a bite of the cake##END##"}
+{"prompt":"eat|consume the pizza\n\n###\n\n","completion":" eat(pizza)|you consumed the pizza##END##"}
+{"prompt":"eat|devour my sandwich\n\n###\n\n","completion":" eat(sandwich)|you devoured your sandwich##END##"}
+{"prompt":"eat|have some fries\n\n###\n\n","completion":" eat(fries)|you had some fries##END##"}
+{"prompt":"eat|take a bite of the apple\n\n###\n\n","completion":" eat(apple)|you took a bite of the apple##END##"}
+{"prompt":"eat|enjoy the ice cream\n\n###\n\n","completion":" eat(ice cream)|you enjoyed the ice cream##END##"}
+{"prompt":"eat|snack on the chips\n\n###\n\n","completion":" eat(chips)|you snacked on the chips##END##"}
+{"prompt":"eat|consume the chocolate\n\n###\n\n","completion":" eat(chocolate)|you consumed the chocolate##END##"}
+{"prompt":"eat|savor the cake\n\n###\n\n","completion":" eat(cake)|you savored the cake##END##"}
+{"prompt":"eat|try the pie\n\n###\n\n","completion":" eat(pie)|you tried the pie##END##"}
+{"prompt":"eat|take a nibble of the cookie\n\n###\n\n","completion":" eat(cookie)|you took a nibble of the cookie##END##"}
+{"prompt":"eat|try the burger\n\n###\n\n","completion":" eat(burger)|you tried the burger##END##"}
+{"prompt":"eat|taste the pizza\n\n###\n\n","completion":" eat(pizza)|you tasted the pizza##END##"}
+{"prompt":"eat|consume burger\n\n###\n\n","completion":" eat(burger)|you consumed a burger##END##"}
+{"prompt":"eat|devour the pizza\n\n###\n\n","completion":" eat(pizza)|you devoured the pizza##END##"}
+{"prompt":"eat|have a sandwich\n\n###\n\n","completion":" eat(sandwich)|you had some sandwich##END##"}
+{"prompt":"eat|ingest the fries\n\n###\n\n","completion":" eat(fries)|you ingested the fries##END##"}
+{"prompt":"eat|consume the apple\n\n###\n\n","completion":" eat(apple)|you consumed the apple##END##"}
+{"prompt":"eat|devour my ice cream\n\n###\n\n","completion":" eat(ice cream)|you devoured your ice cream##END##"}
+{"prompt":"eat|try the chocolate\n\n###\n\n","completion":" eat(chocolate)|you tried the chocolate##END##"}
+{"prompt":"eat|savor the pie\n\n###\n\n","completion":" eat(pie)|you savored the pie##END##"}
+{"prompt":"eat|bite into the burger\n\n###\n\n","completion":" eat(burger)|you bit into the burger##END##"}
+{"prompt":"eat|consume the sandwich\n\n###\n\n","completion":" eat(sandwich)|you consumed the sandwich##END##"}
+{"prompt":"eat|devour my pizza\n\n###\n\n","completion":" eat(pizza)|you devoured your pizza##END##"}
+{"prompt":"eat|ingest the apple\n\n###\n\n","completion":" eat(apple)|you ingested the apple##END##"}
+{"prompt":"eat|take a bite of the ice cream\n\n###\n\n","completion":" eat(ice cream)|you took a bite of the ice cream##END##"}
+{"prompt":"eat|devour the cake\n\n###\n\n","completion":" eat(cake)|you devoured the cake##END##"}
+{"prompt":"eat|ingest the chips\n\n###\n\n","completion":" eat(chips)|you ingested the chips##END##"}
+{"prompt":"eat|take a bite of the pie\n\n###\n\n","completion":" eat(pie)|you took a bite of the pie##END##"}
+{"prompt":"eat|consume the burger\n\n###\n\n","completion":" eat(burger)|you consumed the burger##END##"}
+{"prompt":"eat|devour the ice cream\n\n###\n\n","completion":" eat(ice cream)|you devoured the ice cream##END##"}
+{"prompt":"eat|consume the hotdog\n\n###\n\n","completion":" eat(hotdog)|you consumed the hotdog##END##"}
+{"prompt":"eat|try the sandwich\n\n###\n\n","completion":" eat(sandwich)|you tried the sandwich##END##"}
+{"prompt":"eat|enjoy the salad\n\n###\n\n","completion":" eat(salad)|you enjoyed the salad##END##"}
+{"prompt":"eat|savor the pasta\n\n###\n\n","completion":" eat(pasta)|you savored the pasta##END##"}
+{"prompt":"eat|consume the muffin\n\n###\n\n","completion":" eat(muffin)|you consumed the muffin##END##"}
+{"prompt":"eat|taste the burger\n\n###\n\n","completion":" eat(burger)|you tasted the burger##END##"}
+{"prompt":"eat|try the fries\n\n###\n\n","completion":" eat(fries)|you tried the fries##END##"}
+{"prompt":"eat|ingest the cookie\n\n###\n\n","completion":" eat(cookie)|you ingested the cookie##END##"}
+{"prompt":"eat|bite into the apple\n\n###\n\n","completion":" eat(apple)|you bit into the apple##END##"}
+{"prompt":"eat|consume the pie\n\n###\n\n","completion":" eat(pie)|you consumed the pie##END##"}
+{"prompt":"eat|have some pizza\n\n###\n\n","completion":" eat(pizza)|you had some pizza##END##"}
+{"prompt":"eat|take a bite of the burger\n\n###\n\n","completion":" eat(burger)|you took a bite of the burger##END##"}
+{"prompt":"eat|enjoy the sandwich\n\n###\n\n","completion":" eat(sandwich)|you enjoyed the sandwich##END##"}
+{"prompt":"eat|savor the salad\n\n###\n\n","completion":" eat(salad)|you savored the salad##END##"}
+{"prompt":"eat|snack on the pasta\n\n###\n\n","completion":" eat(pasta)|you snacked on the pasta##END##"}
+{"prompt":"eat|consume the chips\n\n###\n\n","completion":" eat(chips)|you consumed the chips##END##"}
+{"prompt":"eat|bite into the muffin\n\n###\n\n","completion":" eat(muffin)|you bit into the muffin##END##"}
+{"prompt":"eat|enjoy a burger\n\n###\n\n","completion":" eat(burger)|you enjoyed a burger##END##"}
+{"prompt":"eat|savor the sandwich\n\n###\n\n","completion":" eat(sandwich)|you savored the sandwich##END##"}
+{"prompt":"eat|try a snack\n\n###\n\n","completion":" eat(snkack)|you tried a snack##END##"}
+{"prompt":"eat|ingest some fries\n\n###\n\n","completion":" eat(fries)|you ingested some fries##END##"}
+{"prompt":"eat|take a nibble of the cake\n\n###\n\n","completion":" eat(cake)|you took a nibble of the cake##END##"}
+{"prompt":"eat|bite into the cake\n\n###\n\n","completion":" eat(cake)|you bit into the cake##END##"}
+{"prompt":"eat|bite into the sandwich\n\n###\n\n","completion":" eat(sandwich)|you bit into the sandwich##END##"}
+{"prompt":"eat|consume the popcorn\n\n###\n\n","completion":" eat(popcorn)|you consumed the popcorn##END##"}
+{"prompt":"eat|devour my cake\n\n###\n\n","completion":" eat(cake)|you devoured your cake##END##"}
+{"prompt":"eat|have some pie\n\n###\n\n","completion":" eat(pie)|you had some pie##END##"}
+{"prompt":"eat|ingest the candy\n\n###\n\n","completion":" eat(candy)|you ingested the candy##END##"}
+{"prompt":"eat|take a bite of the muffin\n\n###\n\n","completion":" eat(muffin)|you took a bite of the muffin##END##"}
+{"prompt":"eat|consume the cookie\n\n###\n\n","completion":" eat(cookie)|you consumed the cookie##END##"}
+{"prompt":"eat|devour the pasta\n\n###\n\n","completion":" eat(pasta)|you devoured the pasta##END##"}
+{"prompt":"eat|try a snack\n\n###\n\n","completion":" eat(snack)|you tried a snack##END##"}
+{"prompt":"eat|bite into the salad\n\n###\n\n","completion":" eat(salad)|you bit into the salad##END##"}
+{"prompt":"eat|consume the pasta\n\n###\n\n","completion":" eat(pasta)|you consumed the pasta##END##"}
+{"prompt":"eat|have a bite of the muffin\n\n###\n\n","completion":" eat(muffin)|you had a bite of the muffin##END##"}
+{"prompt":"eat|devour the candy\n\n###\n\n","completion":" eat(candy)|you devoured the candy##END##"}
+{"prompt":"eat|enjoy the cake\n\n###\n\n","completion":" eat(cake)|you enjoyed the cake##END##"}
+{"prompt":"eat|snack on the salad\n\n###\n\n","completion":" eat(salad)|you snacked on the salad##END##"}
+{"prompt":"eat|have a bite\n\n###\n\n","completion":" eat(bite)|you had a bite##END##"}
+{"prompt":"eat|enjoy the pie\n\n###\n\n","completion":" eat(pie)|you enjoyed the pie##END##"}
+{"prompt":"eat|savor the pizza\n\n###\n\n","completion":" eat(pizza)|you savored the pizza##END##"}
+{"prompt":"eat|bite into the ice cream\n\n###\n\n","completion":" eat(ice cream)|you bit into the ice cream##END##"}
+{"prompt":"eat|try the muffin\n\n###\n\n","completion":" eat(muffin)|you tried the muffin##END##"}
+{"prompt":"eat|enjoy the candy\n\n###\n\n","completion":" eat(candy)|you enjoyed the candy##END##"}
+{"prompt":"eat|savor the chocolate\n\n###\n\n","completion":" eat(chocolate)|you savored the chocolate##END##"}
+{"prompt":"eat|bite into the pizza\n\n###\n\n","completion":" eat(pizza)|you bit into the pizza##END##"}
+{"prompt":"eat|devour the fries\n\n###\n\n","completion":" eat(fries)|you devoured the fries##END##"}
+{"prompt":"eat|have a bite of the salad\n\n###\n\n","completion":" eat(salad)|you had a bite of the salad##END##"}
+{"prompt":"eat|try the candy\n\n###\n\n","completion":" eat(candy)|you tried the candy##END##"}
+{"prompt":"eat|enjoy the burger\n\n###\n\n","completion":" eat(burger)|you enjoyed the burger##END##"}
+{"prompt":"eat|savor the fries\n\n###\n\n","completion":" eat(fries)|you savored the fries##END##"}
+{"prompt":"eat|bite a morsel\n\n###\n\n","completion":" eat(morsel)|you bit a morsel##END##"}
+{"prompt":"eat|chew the food\n\n###\n\n","completion":" eat(food)|you chewed the food##END##"}
+{"prompt":"eat|munch on the snack\n\n###\n\n","completion":" eat(snack)|you munched on the snack##END##"}
+{"prompt":"eat|swallow the bite\n\n###\n\n","completion":" eat(bite)|you swallowed the bite##END##"}
+{"prompt":"eat|savor the dish\n\n###\n\n","completion":" eat(dish)|you savored the dish##END##"}
+{"prompt":"eat|consume a piece\n\n###\n\n","completion":" eat(piece)|you consumed a piece##END##"}
+{"prompt":"eat|try a treat\n\n###\n\n","completion":" eat(treat)|you tried a treat##END##"}
+{"prompt":"eat|nibble the delicacy\n\n###\n\n","completion":" eat(delicacy)|you nibbled the delicacy##END##"}
+{"prompt":"eat|gulp down the meal\n\n###\n\n","completion":" eat(meal)|you gulped down the meal##END##"}
+{"prompt":"eat|ingest a portion\n\n###\n\n","completion":" eat(portion)|you ingested a portion##END##"}
+{"prompt":"eat|take a bite of the dish\n\n###\n\n","completion":" eat(dish)|you took a bite of the dish##END##"}
+{"prompt":"eat|devour the snack\n\n###\n\n","completion":" eat(snack)|you devoured the snack##END##"}
+{"prompt":"eat|have some food\n\n###\n\n","completion":" eat(food)|you had some food##END##"}
+{"prompt":"eat|munch on the meal\n\n###\n\n","completion":" eat(meal)|you munched on the meal##END##"}
+{"prompt":"eat|swallow the morsel\n\n###\n\n","completion":" eat(morsel)|you swallowed the morsel##END##"}
+{"prompt":"eat|savor the snack\n\n###\n\n","completion":" eat(snack)|you savored the snack##END##"}
+{"prompt":"eat|consume the treat\n\n###\n\n","completion":" eat(treat)|you consumed the treat##END##"}
+{"prompt":"eat|try the dish\n\n###\n\n","completion":" eat(dish)|you tried the dish##END##"}
+{"prompt":"eat|nibble the meal\n\n###\n\n","completion":" eat(meal)|you nibbled the meal##END##"}
+{"prompt":"eat|gulp the portion\n\n###\n\n","completion":" eat(portion)|you gulped the portion##END##"}
+{"prompt":"eat|take a bite of the snack\n\n###\n\n","completion":" eat(snack)|you took a bite of the snack##END##"}
+{"prompt":"eat|devour the food\n\n###\n\n","completion":" eat(food)|you devoured the food##END##"}
+{"prompt":"eat|have a taste\n\n###\n\n","completion":" eat(taste)|you had a taste##END##"}
+{"prompt":"eat|munch on the delicacy\n\n###\n\n","completion":" eat(delicacy)|you munched on the delicacy##END##"}
+{"prompt":"eat|swallow the dish\n\n###\n\n","completion":" eat(dish)|you swallowed the dish##END##"}
+{"prompt":"eat|savor the meal\n\n###\n\n","completion":" eat(meal)|you savored the meal##END##"}
+{"prompt":"eat|consume a bite\n\n###\n\n","completion":" eat(bite)|you consumed a bite##END##"}
+{"prompt":"eat|try the snack\n\n###\n\n","completion":" eat(snack)|you tried the snack##END##"}
+{"prompt":"eat|nibble the treat\n\n###\n\n","completion":" eat(treat)|you nibbled the treat##END##"}
+{"prompt":"eat|gulp the delicacy\n\n###\n\n","completion":" eat(delicacy)|you gulped the delicacy##END##"}
+{"prompt":"eat|take a bite of the meal\n\n###\n\n","completion":" eat(meal)|you took a bite of the meal##END##"}
+{"prompt":"eat|devour the portion\n\n###\n\n","completion":" eat(portion)|you devoured the portion##END##"}
+{"prompt":"eat|have some dish\n\n###\n\n","completion":" eat(dish)|you had some dish##END##"}
+{"prompt":"eat|swallow the snack\n\n###\n\n","completion":" eat(snack)|you swallowed the snack##END##"}
+{"prompt":"eat|savor the treat\n\n###\n\n","completion":" eat(treat)|you savored the treat##END##"}
+{"prompt":"eat|consume the delicacy\n\n###\n\n","completion":" eat(delicacy)|you consumed the delicacy##END##"}
+{"prompt":"eat|try a bite\n\n###\n\n","completion":" eat(bite)|you tried a bite##END##"}
+{"prompt":"eat|ingest the treat\n\n###\n\n","completion":" eat(treat)|you ingested the treat##END##"}
+{"prompt":"eat|devour the meal\n\n###\n\n","completion":" eat(meal)|you devoured the meal##END##"}
+{"prompt":"eat|have some snack\n\n###\n\n","completion":" eat(snack)|you had some snack##END##"}
+{"prompt":"eat|munch on the dish\n\n###\n\n","completion":" eat(dish)|you munched on the dish##END##"}
+{"prompt":"eat|swallow the treat\n\n###\n\n","completion":" eat(treat)|you swallowed the treat##END##"}
+{"prompt":"eat|savor the delicacy\n\n###\n\n","completion":" eat(delicacy)|you savored the delicacy##END##"}
+{"prompt":"eat|nibble the snack\n\n###\n\n","completion":" eat(snack)|you nibbled the snack##END##"}
+{"prompt":"eat|gulp the dish\n\n###\n\n","completion":" eat(dish)|you gulped the dish##END##"}
+{"prompt":"eat|take a bite of the treat\n\n###\n\n","completion":" eat(treat)|you took a bite of the treat##END##"}
+{"prompt":"eat|devour the delicacy\n\n###\n\n","completion":" eat(delicacy)|you devoured the delicacy##END##"}
+{"prompt":"eat|have a nibble\n\n###\n\n","completion":" eat(nibble)|you had a nibble##END##"}
+{"prompt":"eat|munch on the treat\n\n###\n\n","completion":" eat(treat)|you munched on the treat##END##"}
+{"prompt":"eat|swallow the meal\n\n###\n\n","completion":" eat(meal)|you swallowed the meal##END##"}
+{"prompt":"eat|consume the dish\n\n###\n\n","completion":" eat(dish)|you consumed the dish##END##"}
+{"prompt":"eat|try the delicacy\n\n###\n\n","completion":" eat(delicacy)|you tried the delicacy##END##"}
+{"prompt":"eat|nibble the portion\n\n###\n\n","completion":" eat(portion)|you nibbled the portion##END##"}
+{"prompt":"eat|ingest the meal\n\n###\n\n","completion":" eat(meal)|you ingested the meal##END##"}
+{"prompt":"eat|devour the dish\n\n###\n\n","completion":" eat(dish)|you devoured the dish##END##"}
+{"prompt":"eat|have some treat\n\n###\n\n","completion":" eat(treat)|you had some treat##END##"}
+{"prompt":"eat|eat some food\n\n###\n\n","completion":" eat()|What food would you like to eat?##END##"}
+{"prompt":"eat|ingest some food\n\n###\n\n","completion":" eat()|What food would you like to ingest?##END##"}
+{"prompt":"eat|eat it with a spoon\n\n###\n\n","completion":" eat()|What would you like to eat with a spoon?##END##"}
+{"prompt":"eat|eat something\n\n###\n\n","completion":" eat()|What would you like to eat?##END##"}
+{"prompt":"eat|consume a meal\n\n###\n\n","completion":" eat()|What meal do you want to consume?##END##"}
+{"prompt":"eat|grab a bite\n\n###\n\n","completion":" eat()|What would you like to grab a bite of?##END##"}
+{"prompt":"eat|have a snack\n\n###\n\n","completion":" eat()|What snack would you like to have?##END##"}
+{"prompt":"eat|chow down\n\n###\n\n","completion":" eat()|What would you like to chow down on?##END##"}
+{"prompt":"eat|munch on something\n\n###\n\n","completion":" eat()|What do you want to munch on?##END##"}
+{"prompt":"eat|devour a dish\n\n###\n\n","completion":" eat()|What dish would you like to devour?##END##"}
+{"prompt":"eat|enjoy a meal\n\n###\n\n","completion":" eat()|What delicious meal would you like to enjoy?##END##"}
+{"prompt":"eat|savor a dish\n\n###\n\n","completion":" eat()|What mouthwatering dish would you like to savor?##END##"}
+{"prompt":"eat|indulge in some food\n\n###\n\n","completion":" eat()|What delectable food would you like to indulge in?##END##"}
+{"prompt":"eat|consume a snack\n\n###\n\n","completion":" eat()|What satisfying snack would you like to consume?##END##"}
+{"prompt":"eat|munch on a dish\n\n###\n\n","completion":" eat()|What dish would you like to munch on?##END##"}
+{"prompt":"eat|sample a delicacy\n\n###\n\n","completion":" eat()|What mouthwatering delicacy would you like to sample?##END##"}
+{"prompt":"eat|take a bite\n\n###\n\n","completion":" eat()|What would you like to take a bite of?##END##"}
+{"prompt":"eat|enjoy some cuisine\n\n###\n\n","completion":" eat()|What type of cuisine would you like to enjoy?##END##"}
+{"prompt":"eat|savor a treat\n\n###\n\n","completion":" eat()|What delicious treat would you like to savor?##END##"}
+{"prompt":"eat|indulge in a dish\n\n###\n\n","completion":" eat()|What dish would you like to indulge in?##END##"}
+{"prompt":"eat|taste a dish\n\n###\n\n","completion":" eat()|What dish would you like to taste?##END##"}
+{"prompt":"eat|try some food\n\n###\n\n","completion":" eat()|What food would you like to try?##END##"}
+{"prompt":"eat|have a bite\n\n###\n\n","completion":" eat()|What would you like to have a bite of?##END##"}
+{"prompt":"eat|grab a snack\n\n###\n\n","completion":" eat()|What snack would you like to grab?##END##"}
+{"prompt":"eat|eat some food\n\n###\n\n","completion":" eat()|What eats would you like to enjoy?##END##"}
+{"prompt":"eat|sample some food\n\n###\n\n","completion":" eat()|What food would you like to sample?##END##"}
+{"prompt":"eat|devour something\n\n###\n\n","completion":" eat()|What would you like to devour?##END##"}
+{"prompt":"eat|indulge in a snack\n\n###\n\n","completion":" eat()|What snack would you like to indulge in?##END##"}
+{"prompt":"eat|taste some cuisine\n\n###\n\n","completion":" eat()|What type of cuisine would you like to taste?##END##"}
+{"prompt":"eat|enjoy a treat\n\n###\n\n","completion":" eat()|What treat would you like to enjoy?##END##"}
+{"prompt":"eat|try a dish\n\n###\n\n","completion":" eat()|What dish would you like to try?##END##"}
+{"prompt":"eat|have a meal\n\n###\n\n","completion":" eat()|What meal would you like to have?##END##"}
+{"prompt":"eat|consume some eats\n\n###\n\n","completion":" eat()|What eats would you like to consume?##END##"}
+{"prompt":"eat|grab some food\n\n###\n\n","completion":" eat()|What food would you like to grab?##END##"}
+{"prompt":"eat|enjoy a dish\n\n###\n\n","completion":" eat()|What dish would you like to enjoy?##END##"}
+{"prompt":"eat|sample a snack\n\n###\n\n","completion":" eat()|What snack would you like to sample?##END##"}
+{"prompt":"drink|sip the tea\n\n###\n\n","completion":" drink(tea)|you sipped the tea##END##"}
+{"prompt":"drink|gulp the water\n\n###\n\n","completion":" drink(water)|you gulped the water##END##"}
+{"prompt":"drink|imbibe the juice\n\n###\n\n","completion":" drink(juice)|you imbibed the juice##END##"}
+{"prompt":"drink|have some coffee\n\n###\n\n","completion":" drink(coffee)|you had some coffee##END##"}
+{"prompt":"drink|ingest the milk\n\n###\n\n","completion":" drink(milk)|you ingested the milk##END##"}
+{"prompt":"drink|take a sip of the soda\n\n###\n\n","completion":" drink(soda)|you took a sip of the soda##END##"}
+{"prompt":"drink|consume the smoothie\n\n###\n\n","completion":" drink(smoothie)|you consumed the smoothie##END##"}
+{"prompt":"drink|quaff the lemonade\n\n###\n\n","completion":" drink(lemonade)|you quaffed the lemonade##END##"}
+{"prompt":"drink|ingest the iced tea\n\n###\n\n","completion":" drink(iced tea)|you ingested the iced tea##END##"}
+{"prompt":"drink|take a sip of the latte\n\n###\n\n","completion":" drink(latte)|you took a sip of the latte##END##"}
+{"prompt":"drink|consume the soda\n\n###\n\n","completion":" drink(soda)|you consumed the soda##END##"}
+{"prompt":"drink|have some juice\n\n###\n\n","completion":" drink(juice)|you had some juice##END##"}
+{"prompt":"drink|sip the water\n\n###\n\n","completion":" drink(water)|you sipped the water##END##"}
+{"prompt":"drink|enjoy the smoothie\n\n###\n\n","completion":" drink(smoothie)|you enjoyed the smoothie##END##"}
+{"prompt":"drink|gulp the lemonade\n\n###\n\n","completion":" drink(lemonade)|you gulped the lemonade##END##"}
+{"prompt":"drink|imbibe the coffee\n\n###\n\n","completion":" drink(coffee)|you imbibed the coffee##END##"}
+{"prompt":"drink|consume the milk\n\n###\n\n","completion":" drink(milk)|you consumed the milk##END##"}
+{"prompt":"drink|take a sip of the tea\n\n###\n\n","completion":" drink(tea)|you took a sip of the tea##END##"}
+{"prompt":"drink|quaff the juice\n\n###\n\n","completion":" drink(juice)|you quaffed the juice##END##"}
+{"prompt":"drink|savor the soda\n\n###\n\n","completion":" drink(soda)|you savored the soda##END##"}
+{"prompt":"drink|drink the iced tea\n\n###\n\n","completion":" drink(iced tea)|you imbibed the iced tea##END##"}
+{"prompt":"drink|sip the coffee\n\n###\n\n","completion":" drink(coffee)|you sipped the coffee##END##"}
+{"prompt":"drink|quench your thirst\n\n###\n\n","completion":" drink(water)|you quenched your thirst##END##"}
+{"prompt":"drink|imbibe the soda\n\n###\n\n","completion":" drink(soda)|you imbibed the soda##END##"}
+{"prompt":"drink|ingest the iced coffee\n\n###\n\n","completion":" drink(iced coffee)|you ingested the iced coffee##END##"}
+{"prompt":"drink|have a drink\n\n###\n\n","completion":" drink(drink)|you had a drink##END##"}
+{"prompt":"drink|ingest some water\n\n###\n\n","completion":" drink(water)|you ingested some water##END##"}
+{"prompt":"drink|take a sip of the juice\n\n###\n\n","completion":" drink(juice)|you took a sip of the juice##END##"}
+{"prompt":"drink|imbibe the tea\n\n###\n\n","completion":" drink(tea)|you imbibed the tea##END##"}
+{"prompt":"drink|enjoy the beverage\n\n###\n\n","completion":" drink(beverage)|you enjoyed the beverage##END##"}
+{"prompt":"drink|gulp the coffee\n\n###\n\n","completion":" drink(coffee)|you gulped the coffee##END##"}
+{"prompt":"drink|consume the drink\n\n###\n\n","completion":" drink(drink)|you consumed the drink##END##"}
+{"prompt":"drink|take a sip of the lemonade\n\n###\n\n","completion":" drink(lemonade)|you took a sip of the lemonade##END##"}
+{"prompt":"drink|quaff the tea\n\n###\n\n","completion":" drink(tea)|you quaffed the tea##END##"}
+{"prompt":"drink|drink the iced coffee\n\n###\n\n","completion":" drink(iced coffee)|you imbibed the iced coffee##END##"}
+{"prompt":"drink|sip the smoothie\n\n###\n\n","completion":" drink(smoothie)|you sipped the smoothie##END##"}
+{"prompt":"drink|gulp the latte\n\n###\n\n","completion":" drink(latte)|you gulped the latte##END##"}
+{"prompt":"drink|have a soda\n\n###\n\n","completion":" drink(soda)|you had a soda##END##"}
+{"prompt":"drink|ingest the juice\n\n###\n\n","completion":" drink(juice)|you ingested the juice##END##"}
+{"prompt":"drink|take a sip of the water\n\n###\n\n","completion":" drink(water)|you took a sip of the water##END##"}
+{"prompt":"drink|consume the lemonade\n\n###\n\n","completion":" drink(lemonade)|you consumed the lemonade##END##"}
+{"prompt":"drink|quaff the coffee\n\n###\n\n","completion":" drink(coffee)|you quaffed the coffee##END##"}
+{"prompt":"drink|have some tea\n\n###\n\n","completion":" drink(tea)|you had some tea##END##"}
+{"prompt":"drink|sip the milk\n\n###\n\n","completion":" drink(milk)|you sipped the milk##END##"}
+{"prompt":"drink|sip a beverage\n\n###\n\n","completion":" drink(beverage)|you sipped a beverage##END##"}
+{"prompt":"drink|gulp down the liquid\n\n###\n\n","completion":" drink(liquid)|you gulped down the liquid##END##"}
+{"prompt":"drink|imbibe the potion\n\n###\n\n","completion":" drink(potion)|you imbibed the potion##END##"}
+{"prompt":"drink|ingest the elixir\n\n###\n\n","completion":" drink(elixir)|you ingested the elixir##END##"}
+{"prompt":"drink|take a sip of the coffee\n\n###\n\n","completion":" drink(coffee)|you took a sip of the coffee##END##"}
+{"prompt":"drink|consume the shake\n\n###\n\n","completion":" drink(shake)|you consumed the shake##END##"}
+{"prompt":"drink|quaff the beverage\n\n###\n\n","completion":" drink(beverage)|you quaffed the beverage##END##"}
+{"prompt":"drink|take a sip of the smoothie\n\n###\n\n","completion":" drink(smoothie)|you took a sip of the smoothie##END##"}
+{"prompt":"drink|consume the water\n\n###\n\n","completion":" drink(water)|you consumed the water##END##"}
+{"prompt":"drink|have some milk\n\n###\n\n","completion":" drink(milk)|you had some milk##END##"}
+{"prompt":"drink|sip the beverage\n\n###\n\n","completion":" drink(beverage)|you sipped the beverage##END##"}
+{"prompt":"drink|enjoy the elixir\n\n###\n\n","completion":" drink(elixir)|you enjoyed the elixir##END##"}
+{"prompt":"drink|gulp the potion\n\n###\n\n","completion":" drink(potion)|you gulped the potion##END##"}
+{"prompt":"drink|imbibe the drink\n\n###\n\n","completion":" drink(drink)|you imbibed the drink##END##"}
+{"prompt":"drink|consume the tea\n\n###\n\n","completion":" drink(tea)|you consumed the tea##END##"}
+{"prompt":"drink|quaff the liquid\n\n###\n\n","completion":" drink(liquid)|you quaffed the liquid##END##"}
+{"prompt":"drink|savor the smoothie\n\n###\n\n","completion":" drink(smoothie)|you savored the smoothie##END##"}
+{"prompt":"drink|drink the water\n\n###\n\n","completion":" drink(water)|you drank the water##END##"}
+{"prompt":"drink|sip the juice\n\n###\n\n","completion":" drink(juice)|you sipped the juice##END##"}
+{"prompt":"drink|enjoy the shake\n\n###\n\n","completion":" drink(shake)|you enjoyed the shake##END##"}
+{"prompt":"drink|gulp the milk\n\n###\n\n","completion":" drink(milk)|you gulped the milk##END##"}
+{"prompt":"drink|consume the potion\n\n###\n\n","completion":" drink(potion)|you consumed the potion##END##"}
+{"prompt":"drink|take a sip of the elixir\n\n###\n\n","completion":" drink(elixir)|you took a sip of the elixir##END##"}
+{"prompt":"drink|savor the beverage\n\n###\n\n","completion":" drink(beverage)|you savored the beverage##END##"}
+{"prompt":"drink|drink the drink\n\n###\n\n","completion":" drink(drink)|you drank the drink##END##"}
+{"prompt":"drink|enjoy the potion\n\n###\n\n","completion":" drink(potion)|you enjoyed the potion##END##"}
+{"prompt":"drink|gulp the elixir\n\n###\n\n","completion":" drink(elixir)|you gulped the elixir##END##"}
+{"prompt":"drink|imbibe the shake\n\n###\n\n","completion":" drink(shake)|you imbibed the shake##END##"}
+{"prompt":"drink|consume the beverage\n\n###\n\n","completion":" drink(beverage)|you consumed the beverage##END##"}
+{"prompt":"drink|savor the potion\n\n###\n\n","completion":" drink(potion)|you savored the potion##END##"}
+{"prompt":"drink|drink the milk\n\n###\n\n","completion":" drink(milk)|you drank the milk##END##"}
+{"prompt":"drink|gulp the shake\n\n###\n\n","completion":" drink(shake)|you gulped the shake##END##"}
+{"prompt":"drink|imbibe the beverage\n\n###\n\n","completion":" drink(beverage)|you imbibed the beverage##END##"}
+{"prompt":"drink|consume the coffee\n\n###\n\n","completion":" drink(coffee)|you consumed the coffee##END##"}
+{"prompt":"drink|take a sip of the shake\n\n###\n\n","completion":" drink(shake)|you took a sip of the shake##END##"}
+{"prompt":"drink|quaff the smoothie\n\n###\n\n","completion":" drink(smoothie)|you quaffed the smoothie##END##"}

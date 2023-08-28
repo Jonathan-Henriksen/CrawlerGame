@@ -1,0 +1,1836 @@
+{"prompt":"amble south\n\n###\n\n","completion":" move"}
+{"prompt":"lock the vault\n\n###\n\n","completion":" lock"}
+{"prompt":"sample the gummy bears\n\n###\n\n","completion":" eat"}
+{"prompt":"strike at the opponent\n\n###\n\n","completion":" attack"}
+{"prompt":"battle the wight with your silver sword\n\n###\n\n","completion":" attack"}
+{"prompt":"take a sip of the elixir\n\n###\n\n","completion":" drink"}
+{"prompt":"seal the barn with the padlock\n\n###\n\n","completion":" lock"}
+{"prompt":"engage the orc with your axe\n\n###\n\n","completion":" attack"}
+{"prompt":"snag the feather\n\n###\n\n","completion":" pickup"}
+{"prompt":"combat the sorceress with your dispel magic\n\n###\n\n","completion":" attack"}
+{"prompt":"place down the sword\n\n###\n\n","completion":" drop"}
+{"prompt":"travel west\n\n###\n\n","completion":" move"}
+{"prompt":"enter the code and pull the lever\n\n###\n\n","completion":" unlock"}
+{"prompt":"chew the burrito\n\n###\n\n","completion":" eat"}
+{"prompt":"conquer the astral titan\n\n###\n\n","completion":" attack"}
+{"prompt":"shut and secure the chamber\n\n###\n\n","completion":" lock"}
+{"prompt":"sip from the chalice\n\n###\n\n","completion":" drink"}
+{"prompt":"go towards west\n\n###\n\n","completion":" move"}
+{"prompt":"lock the chest\n\n###\n\n","completion":" lock"}
+{"prompt":"place down the book\n\n###\n\n","completion":" drop"}
+{"prompt":"snack on the marshmallow\n\n###\n\n","completion":" eat"}
+{"prompt":"quench your thirst with a mouthful of water\n\n###\n\n","completion":" drink"}
+{"prompt":"fight the primordial beast\n\n###\n\n","completion":" attack"}
+{"prompt":"unlatch the magical entrance\n\n###\n\n","completion":" unlock"}
+{"prompt":"release hold of the wand\n\n###\n\n","completion":" drop"}
+{"prompt":"fasten the cabinet with the lock\n\n###\n\n","completion":" lock"}
+{"prompt":"jog to the west\n\n###\n\n","completion":" move"}
+{"prompt":"engage the witch with your fireball\n\n###\n\n","completion":" attack"}
+{"prompt":"drop the cursed amulet\n\n###\n\n","completion":" drop"}
+{"prompt":"drink the content\n\n###\n\n","completion":" drink"}
+{"prompt":"open with the forbidden code\n\n###\n\n","completion":" unlock"}
+{"prompt":"secure the room with the padlock\n\n###\n\n","completion":" lock"}
+{"prompt":"proceed to the north\n\n###\n\n","completion":" move"}
+{"prompt":"savor the peppermint\n\n###\n\n","completion":" eat"}
+{"prompt":"lock the gateway\n\n###\n\n","completion":" lock"}
+{"prompt":"combat the ogre with your warhammer\n\n###\n\n","completion":" attack"}
+{"prompt":"seal the entrance with the lock\n\n###\n\n","completion":" lock"}
+{"prompt":"view the map once more\n\n###\n\n","completion":" map"}
+{"prompt":"battle the witch with your enchanted arrow\n\n###\n\n","completion":" attack"}
+{"prompt":"take a drink\n\n###\n\n","completion":" drink"}
+{"prompt":"insert the special gem to reveal the passage\n\n###\n\n","completion":" unlock"}
+{"prompt":"release with the sacred key\n\n###\n\n","completion":" unlock"}
+{"prompt":"peruse my stored possessions\n\n###\n\n","completion":" inventory"}
+{"prompt":"release hold of the charm\n\n###\n\n","completion":" drop"}
+{"prompt":"use the sacred key\n\n###\n\n","completion":" unlock"}
+{"prompt":"inspect my equipment\n\n###\n\n","completion":" inventory"}
+{"prompt":"retrieve the gemstone\n\n###\n\n","completion":" pickup"}
+{"prompt":"take a gulp from the can\n\n###\n\n","completion":" drink"}
+{"prompt":"set down the bow of the elven archer\n\n###\n\n","completion":" drop"}
+{"prompt":"take a look at my gear\n\n###\n\n","completion":" inventory"}
+{"prompt":"engage the serpent with a fireball\n\n###\n\n","completion":" attack"}
+{"prompt":"devour the candy bar\n\n###\n\n","completion":" eat"}
+{"prompt":"place down the stone\n\n###\n\n","completion":" drop"}
+{"prompt":"look at the map\n\n###\n\n","completion":" map"}
+{"prompt":"unlock the secret compartment\n\n###\n\n","completion":" unlock"}
+{"prompt":"close the vault with the code\n\n###\n\n","completion":" lock"}
+{"prompt":"fight the wyvern\n\n###\n\n","completion":" attack"}
+{"prompt":"lock the cabinet with the code\n\n###\n\n","completion":" lock"}
+{"prompt":"consume the content\n\n###\n\n","completion":" drink"}
+{"prompt":"unseal the time-travel passage\n\n###\n\n","completion":" unlock"}
+{"prompt":"release grip on the sword\n\n###\n\n","completion":" drop"}
+{"prompt":"challenge the eldritch abomination\n\n###\n\n","completion":" attack"}
+{"prompt":"discover my equipment\n\n###\n\n","completion":" inventory"}
+{"prompt":"end\n\n###\n\n","completion":" quit"}
+{"prompt":"inspect my items\n\n###\n\n","completion":" inventory"}
+{"prompt":"unbolt the sealed portal\n\n###\n\n","completion":" unlock"}
+{"prompt":"bolt the gateway\n\n###\n\n","completion":" lock"}
+{"prompt":"seal the gate with the password\n\n###\n\n","completion":" lock"}
+{"prompt":"unlatch the time-travel portal\n\n###\n\n","completion":" unlock"}
+{"prompt":"release the rope\n\n###\n\n","completion":" drop"}
+{"prompt":"quench your thirst with the refreshment\n\n###\n\n","completion":" drink"}
+{"prompt":"use the ancient amulet to open the gate\n\n###\n\n","completion":" unlock"}
+{"prompt":"retrieve the key\n\n###\n\n","completion":" pickup"}
+{"prompt":"stroll southward\n\n###\n\n","completion":" move"}
+{"prompt":"fight off the basilisk with your shield\n\n###\n\n","completion":" attack"}
+{"prompt":"feast on the buffet\n\n###\n\n","completion":" eat"}
+{"prompt":"enjoy a gulp from the cup\n\n###\n\n","completion":" drink"}
+{"prompt":"fight off the minotaur with a potion\n\n###\n\n","completion":" attack"}
+{"prompt":"lock the door with the combination\n\n###\n\n","completion":" lock"}
+{"prompt":"retrieve the mask\n\n###\n\n","completion":" pickup"}
+{"prompt":"travel north\n\n###\n\n","completion":" move"}
+{"prompt":"lock the box\n\n###\n\n","completion":" lock"}
+{"prompt":"sip from the glass\n\n###\n\n","completion":" drink"}
+{"prompt":"eat an apple\n\n###\n\n","completion":" eat"}
+{"prompt":"check my stored possessions\n\n###\n\n","completion":" inventory"}
+{"prompt":"grasp the crystal\n\n###\n\n","completion":" pickup"}
+{"prompt":"unlock the sacred artifact\n\n###\n\n","completion":" unlock"}
+{"prompt":"unlock the gate with the ancient key\n\n###\n\n","completion":" unlock"}
+{"prompt":"fasten the gate with the lock\n\n###\n\n","completion":" lock"}
+{"prompt":"seal the chamber with the padlock\n\n###\n\n","completion":" lock"}
+{"prompt":"munch on the candy cane\n\n###\n\n","completion":" eat"}
+{"prompt":"bolt the container with the padlock\n\n###\n\n","completion":" lock"}
+{"prompt":"lock the entrance\n\n###\n\n","completion":" lock"}
+{"prompt":"access with the hidden key\n\n###\n\n","completion":" unlock"}
+{"prompt":"take a gulp from the goblet\n\n###\n\n","completion":" drink"}
+{"prompt":"discard the scroll\n\n###\n\n","completion":" drop"}
+{"prompt":"unlatch the sacred door\n\n###\n\n","completion":" unlock"}
+{"prompt":"inspect my stuff\n\n###\n\n","completion":" inventory"}
+{"prompt":"secure the container with the lock\n\n###\n\n","completion":" lock"}
+{"prompt":"gobble up the burger\n\n###\n\n","completion":" eat"}
+{"prompt":"unbolt the hidden door\n\n###\n\n","completion":" unlock"}
+{"prompt":"unlock the enchanted door with the amulet\n\n###\n\n","completion":" unlock"}
+{"prompt":"snag the dagger\n\n###\n\n","completion":" pickup"}
+{"prompt":"open with the mystical seal\n\n###\n\n","completion":" unlock"}
+{"prompt":"consume the liquid content\n\n###\n\n","completion":" drink"}
+{"prompt":"shut the gate\n\n###\n\n","completion":" lock"}
+{"prompt":"dash towards the south\n\n###\n\n","completion":" move"}
+{"prompt":"bite into the caramel\n\n###\n\n","completion":" eat"}
+{"prompt":"walk east\n\n###\n\n","completion":" move"}
+{"prompt":"secure the chamber with the padlock\n\n###\n\n","completion":" lock"}
+{"prompt":"strike the demon with your blessed mace\n\n###\n\n","completion":" attack"}
+{"prompt":"consume it\n\n###\n\n","completion":" eat"}
+{"prompt":"unseal the chamber\n\n###\n\n","completion":" unlock"}
+{"prompt":"review the map layout\n\n###\n\n","completion":" map"}
+{"prompt":"savor the taste\n\n###\n\n","completion":" drink"}
+{"prompt":"take the wand\n\n###\n\n","completion":" pickup"}
+{"prompt":"go towards the west\n\n###\n\n","completion":" move"}
+{"prompt":"confront the chimera with your magical sword\n\n###\n\n","completion":" attack"}
+{"prompt":"discard the gem\n\n###\n\n","completion":" drop"}
+{"prompt":"fight the ogre with your dagger\n\n###\n\n","completion":" attack"}
+{"prompt":"assault the fortress\n\n###\n\n","completion":" attack"}
+{"prompt":"savor the drink\n\n###\n\n","completion":" drink"}
+{"prompt":"grab the lantern\n\n###\n\n","completion":" pickup"}
+{"prompt":"walk to the west\n\n###\n\n","completion":" move"}
+{"prompt":"reveal the map\n\n###\n\n","completion":" map"}
+{"prompt":"let go of the amulet\n\n###\n\n","completion":" drop"}
+{"prompt":"study the map closely\n\n###\n\n","completion":" map"}
+{"prompt":"lock the enchanted gate\n\n###\n\n","completion":" lock"}
+{"prompt":"run south\n\n###\n\n","completion":" move"}
+{"prompt":"eat\n\n###\n\n","completion":" eat"}
+{"prompt":"fasten the gate with the key\n\n###\n\n","completion":" lock"}
+{"prompt":"use the key to access\n\n###\n\n","completion":" unlock"}
+{"prompt":"enter the password to reveal the hidden door\n\n###\n\n","completion":" unlock"}
+{"prompt":"strike the vampire with your sunlight amulet\n\n###\n\n","completion":" attack"}
+{"prompt":"retrieve the artifact\n\n###\n\n","completion":" pickup"}
+{"prompt":"sprint northward\n\n###\n\n","completion":" move"}
+{"prompt":"proceed southward\n\n###\n\n","completion":" move"}
+{"prompt":"travel to the north\n\n###\n\n","completion":" move"}
+{"prompt":"release the latch\n\n###\n\n","completion":" unlock"}
+{"prompt":"grab the flute\n\n###\n\n","completion":" pickup"}
+{"prompt":"fasten the vault with the combination\n\n###\n\n","completion":" lock"}
+{"prompt":"fasten the chamber with the encryption\n\n###\n\n","completion":" lock"}
+{"prompt":"take a gulp of the drink\n\n###\n\n","completion":" drink"}
+{"prompt":"lock the container with the code\n\n###\n\n","completion":" lock"}
+{"prompt":"view map\n\n###\n\n","completion":" map"}
+{"prompt":"eat my apple\n\n###\n\n","completion":" eat"}
+{"prompt":"undo the seal\n\n###\n\n","completion":" unlock"}
+{"prompt":"munch on the sandwich\n\n###\n\n","completion":" eat"}
+{"prompt":"quench your thirst with the water\n\n###\n\n","completion":" drink"}
+{"prompt":"examine the map information\n\n###\n\n","completion":" map"}
+{"prompt":"unbolt the gate\n\n###\n\n","completion":" unlock"}
+{"prompt":"explore the map\n\n###\n\n","completion":" map"}
+{"prompt":"collect the dagger\n\n###\n\n","completion":" pickup"}
+{"prompt":"stride west\n\n###\n\n","completion":" move"}
+{"prompt":"undo the latch\n\n###\n\n","completion":" unlock"}
+{"prompt":"check my stored gear\n\n###\n\n","completion":" inventory"}
+{"prompt":"set down the necklace\n\n###\n\n","completion":" drop"}
+{"prompt":"seal the cabinet with the key\n\n###\n\n","completion":" lock"}
+{"prompt":"seal the container with the key\n\n###\n\n","completion":" lock"}
+{"prompt":"end the playtime\n\n###\n\n","completion":" quit"}
+{"prompt":"discard the staff\n\n###\n\n","completion":" drop"}
+{"prompt":"attack the banshee with your holy water\n\n###\n\n","completion":" attack"}
+{"prompt":"lock the magical chest\n\n###\n\n","completion":" lock"}
+{"prompt":"run towards the west\n\n###\n\n","completion":" move"}
+{"prompt":"look into my inventory\n\n###\n\n","completion":" inventory"}
+{"prompt":"enter the password to gain access\n\n###\n\n","completion":" unlock"}
+{"prompt":"investigate my stored items\n\n###\n\n","completion":" inventory"}
+{"prompt":"feast on the chocolate bar\n\n###\n\n","completion":" eat"}
+{"prompt":"battle the specter with your silver arrow\n\n###\n\n","completion":" attack"}
+{"prompt":"go east another time\n\n###\n\n","completion":" move"}
+{"prompt":"unfasten the door\n\n###\n\n","completion":" unlock"}
+{"prompt":"view what's in my storage\n\n###\n\n","completion":" inventory"}
+{"prompt":"quench your thirst with a gulp of the liquid\n\n###\n\n","completion":" drink"}
+{"prompt":"move towards north\n\n###\n\n","completion":" move"}
+{"prompt":"savor the cheesecake\n\n###\n\n","completion":" eat"}
+{"prompt":"combat the shadow lord\n\n###\n\n","completion":" attack"}
+{"prompt":"head to the south\n\n###\n\n","completion":" move"}
+{"prompt":"savor the ribs\n\n###\n\n","completion":" eat"}
+{"prompt":"peruse my inventory\n\n###\n\n","completion":" inventory"}
+{"prompt":"consume the beverage\n\n###\n\n","completion":" drink"}
+{"prompt":"lock the entrance with the code\n\n###\n\n","completion":" lock"}
+{"prompt":"eat the pie\n\n###\n\n","completion":" eat"}
+{"prompt":"battle the voidspawn\n\n###\n\n","completion":" attack"}
+{"prompt":"enter the secret code\n\n###\n\n","completion":" unlock"}
+{"prompt":"drink up\n\n###\n\n","completion":" drink"}
+{"prompt":"amble north\n\n###\n\n","completion":" move"}
+{"prompt":"inspect map again\n\n###\n\n","completion":" map"}
+{"prompt":"analyze the map information\n\n###\n\n","completion":" map"}
+{"prompt":"move eastward\n\n###\n\n","completion":" move"}
+{"prompt":"battle the chimera with your lance\n\n###\n\n","completion":" attack"}
+{"prompt":"enjoy the taste of the liquid\n\n###\n\n","completion":" drink"}
+{"prompt":"quench your thirst with a gulp\n\n###\n\n","completion":" drink"}
+{"prompt":"enjoy a sip of the beverage\n\n###\n\n","completion":" drink"}
+{"prompt":"take potion\n\n###\n\n","completion":" pickup"}
+{"prompt":"confront the ghoul with your staff\n\n###\n\n","completion":" attack"}
+{"prompt":"hydrate with a cool beverage\n\n###\n\n","completion":" drink"}
+{"prompt":"check the map details\n\n###\n\n","completion":" map"}
+{"prompt":"turn the key to unlock\n\n###\n\n","completion":" unlock"}
+{"prompt":"seal the chamber with the code\n\n###\n\n","completion":" lock"}
+{"prompt":"quench your thirst with a swig\n\n###\n\n","completion":" drink"}
+{"prompt":"review my possessions\n\n###\n\n","completion":" inventory"}
+{"prompt":"lock the chamber of secrets\n\n###\n\n","completion":" lock"}
+{"prompt":"battle the ghoul with your dagger\n\n###\n\n","completion":" attack"}
+{"prompt":"go towards the north\n\n###\n\n","completion":" move"}
+{"prompt":"let go of the staff\n\n###\n\n","completion":" drop"}
+{"prompt":"halt\n\n###\n\n","completion":" quit"}
+{"prompt":"nibble on the cookie\n\n###\n\n","completion":" eat"}
+{"prompt":"lock the chest with the code\n\n###\n\n","completion":" lock"}
+{"prompt":"move west\n\n###\n\n","completion":" move"}
+{"prompt":"hydrate with a gulp of the beverage\n\n###\n\n","completion":" drink"}
+{"prompt":"quench your thirst with the swig\n\n###\n\n","completion":" drink"}
+{"prompt":"lock the chamber\n\n###\n\n","completion":" lock"}
+{"prompt":"move towards west\n\n###\n\n","completion":" move"}
+{"prompt":"check the map again\n\n###\n\n","completion":" map"}
+{"prompt":"have one more sip of the potion\n\n###\n\n","completion":" drink"}
+{"prompt":"confront the zombie with your axe\n\n###\n\n","completion":" attack"}
+{"prompt":"open the secured portal\n\n###\n\n","completion":" unlock"}
+{"prompt":"assail the giant\n\n###\n\n","completion":" attack"}
+{"prompt":"conquer the necrotic beast\n\n###\n\n","completion":" attack"}
+{"prompt":"march towards the east\n\n###\n\n","completion":" move"}
+{"prompt":"feast on the seafood\n\n###\n\n","completion":" eat"}
+{"prompt":"hydrate with a mouthful of water\n\n###\n\n","completion":" drink"}
+{"prompt":"lock the crypt\n\n###\n\n","completion":" lock"}
+{"prompt":"enjoy the feast\n\n###\n\n","completion":" eat"}
+{"prompt":"bolt the gate with the encryption\n\n###\n\n","completion":" lock"}
+{"prompt":"make my way to the east\n\n###\n\n","completion":" move"}
+{"prompt":"bite into the kebab\n\n###\n\n","completion":" eat"}
+{"prompt":"devour now\n\n###\n\n","completion":" eat"}
+{"prompt":"fetch the amulet\n\n###\n\n","completion":" pickup"}
+{"prompt":"release hold of the amulet\n\n###\n\n","completion":" drop"}
+{"prompt":"amble towards the north\n\n###\n\n","completion":" move"}
+{"prompt":"hike towards the south\n\n###\n\n","completion":" move"}
+{"prompt":"collect the potion\n\n###\n\n","completion":" pickup"}
+{"prompt":"shut the barn with the code\n\n###\n\n","completion":" lock"}
+{"prompt":"indulge in the chocolate\n\n###\n\n","completion":" eat"}
+{"prompt":"discover what's in my possession\n\n###\n\n","completion":" inventory"}
+{"prompt":"consume the dish\n\n###\n\n","completion":" eat"}
+{"prompt":"take a swig\n\n###\n\n","completion":" drink"}
+{"prompt":"secure the entrance with the code\n\n###\n\n","completion":" lock"}
+{"prompt":"observe my equipment\n\n###\n\n","completion":" inventory"}
+{"prompt":"shut the gate with the combination\n\n###\n\n","completion":" lock"}
+{"prompt":"unfasten the locked entrance\n\n###\n\n","completion":" unlock"}
+{"prompt":"fasten the box with the key\n\n###\n\n","completion":" lock"}
+{"prompt":"battle the harpy with your bow\n\n###\n\n","completion":" attack"}
+{"prompt":"consume the bonbon\n\n###\n\n","completion":" eat"}
+{"prompt":"battle the dark knight\n\n###\n\n","completion":" attack"}
+{"prompt":"view the map layout\n\n###\n\n","completion":" map"}
+{"prompt":"sample the crepe\n\n###\n\n","completion":" eat"}
+{"prompt":"lock the door with the encryption\n\n###\n\n","completion":" lock"}
+{"prompt":"jog towards the south\n\n###\n\n","completion":" move"}
+{"prompt":"jog north\n\n###\n\n","completion":" move"}
+{"prompt":"acquire the coin\n\n###\n\n","completion":" pickup"}
+{"prompt":"release the door\n\n###\n\n","completion":" unlock"}
+{"prompt":"observe my stuff\n\n###\n\n","completion":" inventory"}
+{"prompt":"head westward\n\n###\n\n","completion":" move"}
+{"prompt":"chew the vegetables\n\n###\n\n","completion":" eat"}
+{"prompt":"take the journal\n\n###\n\n","completion":" pickup"}
+{"prompt":"vanquish the interdimensional entity\n\n###\n\n","completion":" attack"}
+{"prompt":"drop the map\n\n###\n\n","completion":" drop"}
+{"prompt":"take a drink from the goblet\n\n###\n\n","completion":" drink"}
+{"prompt":"turn the handle to release the latch\n\n###\n\n","completion":" unlock"}
+{"prompt":"assault the frost behemoth\n\n###\n\n","completion":" attack"}
+{"prompt":"glance at the map details\n\n###\n\n","completion":" map"}
+{"prompt":"let go of the gem\n\n###\n\n","completion":" drop"}
+{"prompt":"let go of the magical potion\n\n###\n\n","completion":" drop"}
+{"prompt":"take a gulp from the bottle\n\n###\n\n","completion":" drink"}
+{"prompt":"move to the south\n\n###\n\n","completion":" move"}
+{"prompt":"discard the gloves\n\n###\n\n","completion":" drop"}
+{"prompt":"unseal the enchanted passage\n\n###\n\n","completion":" unlock"}
+{"prompt":"attack the specter again\n\n###\n\n","completion":" attack"}
+{"prompt":"conquer the stone colossus\n\n###\n\n","completion":" attack"}
+{"prompt":"release grip on the wand\n\n###\n\n","completion":" drop"}
+{"prompt":"hydrate with a gulp of water\n\n###\n\n","completion":" drink"}
+{"prompt":"take a sip from the glass container\n\n###\n\n","completion":" drink"}
+{"prompt":"hydrate with a swig of water\n\n###\n\n","completion":" drink"}
+{"prompt":"snatch the parchment\n\n###\n\n","completion":" pickup"}
+{"prompt":"examine the map layout\n\n###\n\n","completion":" map"}
+{"prompt":"discard the feather\n\n###\n\n","completion":" drop"}
+{"prompt":"let go of the sword\n\n###\n\n","completion":" drop"}
+{"prompt":"review my items list\n\n###\n\n","completion":" inventory"}
+{"prompt":"conclude the session\n\n###\n\n","completion":" quit"}
+{"prompt":"fight the spectral warlord\n\n###\n\n","completion":" attack"}
+{"prompt":"collect the scroll\n\n###\n\n","completion":" pickup"}
+{"prompt":"retrieve the goblet\n\n###\n\n","completion":" pickup"}
+{"prompt":"munch on the popcorn\n\n###\n\n","completion":" eat"}
+{"prompt":"move to the north\n\n###\n\n","completion":" move"}
+{"prompt":"enjoy the gelato\n\n###\n\n","completion":" eat"}
+{"prompt":"battle the cursed knight\n\n###\n\n","completion":" attack"}
+{"prompt":"unlock the crypt with the key\n\n###\n\n","completion":" unlock"}
+{"prompt":"inspect my gear list\n\n###\n\n","completion":" inventory"}
+{"prompt":"explore the map layout\n\n###\n\n","completion":" map"}
+{"prompt":"end the gameplay\n\n###\n\n","completion":" quit"}
+{"prompt":"proceed north\n\n###\n\n","completion":" move"}
+{"prompt":"discard the mask\n\n###\n\n","completion":" drop"}
+{"prompt":"examine the map details\n\n###\n\n","completion":" map"}
+{"prompt":"sample the sushi\n\n###\n\n","completion":" eat"}
+{"prompt":"inspect the map closely\n\n###\n\n","completion":" map"}
+{"prompt":"close the cabinet with the combination\n\n###\n\n","completion":" lock"}
+{"prompt":"vanquish the shadow creature\n\n###\n\n","completion":" attack"}
+{"prompt":"set down the amulet\n\n###\n\n","completion":" drop"}
+{"prompt":"enjoy the barbecue\n\n###\n\n","completion":" eat"}
+{"prompt":"explore the map information\n\n###\n\n","completion":" map"}
+{"prompt":"engage the thunderbird\n\n###\n\n","completion":" attack"}
+{"prompt":"unfasten the barrier\n\n###\n\n","completion":" unlock"}
+{"prompt":"browse through my items\n\n###\n\n","completion":" inventory"}
+{"prompt":"fasten the briefcase with the code\n\n###\n\n","completion":" lock"}
+{"prompt":"chew the sandwich\n\n###\n\n","completion":" eat"}
+{"prompt":"travel to the east\n\n###\n\n","completion":" move"}
+{"prompt":"savor the pasta\n\n###\n\n","completion":" eat"}
+{"prompt":"stroll to the south\n\n###\n\n","completion":" move"}
+{"prompt":"view my possessions\n\n###\n\n","completion":" inventory"}
+{"prompt":"hydrate with a sip from the flask\n\n###\n\n","completion":" drink"}
+{"prompt":"walk towards the west\n\n###\n\n","completion":" move"}
+{"prompt":"exit\n\n###\n\n","completion":" quit"}
+{"prompt":"take the orb\n\n###\n\n","completion":" pickup"}
+{"prompt":"seal the vault with the combination\n\n###\n\n","completion":" lock"}
+{"prompt":"take a look at the map details\n\n###\n\n","completion":" map"}
+{"prompt":"check my equipment\n\n###\n\n","completion":" inventory"}
+{"prompt":"let go of the potion\n\n###\n\n","completion":" drop"}
+{"prompt":"attack the ogre chieftain\n\n###\n\n","completion":" attack"}
+{"prompt":"vanquish the omniversal destroyer\n\n###\n\n","completion":" attack"}
+{"prompt":"consume the liquid sustenance\n\n###\n\n","completion":" drink"}
+{"prompt":"release with the special key\n\n###\n\n","completion":" unlock"}
+{"prompt":"grab the feather\n\n###\n\n","completion":" pickup"}
+{"prompt":"enjoy a gulp of the liquid\n\n###\n\n","completion":" drink"}
+{"prompt":"examine map again\n\n###\n\n","completion":" map"}
+{"prompt":"seal the barn with the lock\n\n###\n\n","completion":" lock"}
+{"prompt":"place down the enchanted rose\n\n###\n\n","completion":" drop"}
+{"prompt":"fasten the gate with the combination\n\n###\n\n","completion":" lock"}
+{"prompt":"assault the enemy base\n\n###\n\n","completion":" attack"}
+{"prompt":"undo the mechanism\n\n###\n\n","completion":" unlock"}
+{"prompt":"move towards the south once more\n\n###\n\n","completion":" move"}
+{"prompt":"nibble on the pretzel\n\n###\n\n","completion":" eat"}
+{"prompt":"use the key to reveal the hidden compartment\n\n###\n\n","completion":" unlock"}
+{"prompt":"shut the vault with the key\n\n###\n\n","completion":" lock"}
+{"prompt":"bite into the licorice\n\n###\n\n","completion":" eat"}
+{"prompt":"exit the game\n\n###\n\n","completion":" quit"}
+{"prompt":"quench your thirst with a drink of water\n\n###\n\n","completion":" drink"}
+{"prompt":"lock the chest of marvels\n\n###\n\n","completion":" lock"}
+{"prompt":"undo the lock\n\n###\n\n","completion":" unlock"}
+{"prompt":"munch it down\n\n###\n\n","completion":" eat"}
+{"prompt":"have a taste of the liquid\n\n###\n\n","completion":" drink"}
+{"prompt":"set down the shield\n\n###\n\n","completion":" drop"}
+{"prompt":"walk southwards\n\n###\n\n","completion":" move"}
+{"prompt":"engage the hydra with your fire spell\n\n###\n\n","completion":" attack"}
+{"prompt":"shut the gate with the key\n\n###\n\n","completion":" lock"}
+{"prompt":"free the trapped door\n\n###\n\n","completion":" unlock"}
+{"prompt":"let go of the feather\n\n###\n\n","completion":" drop"}
+{"prompt":"analyze the map layout\n\n###\n\n","completion":" map"}
+{"prompt":"examine the map contents\n\n###\n\n","completion":" map"}
+{"prompt":"secure the entrance with the padlock\n\n###\n\n","completion":" lock"}
+{"prompt":"inspect map\n\n###\n\n","completion":" map"}
+{"prompt":"halt the session\n\n###\n\n","completion":" quit"}
+{"prompt":"peruse my collection\n\n###\n\n","completion":" inventory"}
+{"prompt":"open the door with the combination\n\n###\n\n","completion":" unlock"}
+{"prompt":"take a closer look at the map\n\n###\n\n","completion":" map"}
+{"prompt":"close the door with the key\n\n###\n\n","completion":" lock"}
+{"prompt":"bite it\n\n###\n\n","completion":" eat"}
+{"prompt":"place down the staff\n\n###\n\n","completion":" drop"}
+{"prompt":"use the ancient key\n\n###\n\n","completion":" unlock"}
+{"prompt":"study the map details\n\n###\n\n","completion":" map"}
+{"prompt":"release the gem\n\n###\n\n","completion":" drop"}
+{"prompt":"turn the key to open\n\n###\n\n","completion":" unlock"}
+{"prompt":"indulge in the lasagna\n\n###\n\n","completion":" eat"}
+{"prompt":"battle the chimera\n\n###\n\n","completion":" attack"}
+{"prompt":"hydrate with a mouthful of the beverage\n\n###\n\n","completion":" drink"}
+{"prompt":"grab the diamond\n\n###\n\n","completion":" pickup"}
+{"prompt":"engage the lich with your banishment spell\n\n###\n\n","completion":" attack"}
+{"prompt":"vanquish the serpent deity\n\n###\n\n","completion":" attack"}
+{"prompt":"fasten the door with the padlock\n\n###\n\n","completion":" lock"}
+{"prompt":"strike the enemy with thunder\n\n###\n\n","completion":" attack"}
+{"prompt":"taste the ramen\n\n###\n\n","completion":" eat"}
+{"prompt":"secure the door with the padlock\n\n###\n\n","completion":" lock"}
+{"prompt":"gain entry with the passphrase\n\n###\n\n","completion":" unlock"}
+{"prompt":"sip from the vessel\n\n###\n\n","completion":" drink"}
+{"prompt":"undo the latch mechanism\n\n###\n\n","completion":" unlock"}
+{"prompt":"secure the chamber of secrets\n\n###\n\n","completion":" lock"}
+{"prompt":"glance at the map information\n\n###\n\n","completion":" map"}
+{"prompt":"turn the hidden lock\n\n###\n\n","completion":" unlock"}
+{"prompt":"journey south\n\n###\n\n","completion":" move"}
+{"prompt":"strike the monstrous creature\n\n###\n\n","completion":" attack"}
+{"prompt":"release grip on the silver chalice\n\n###\n\n","completion":" drop"}
+{"prompt":"engage the lava elemental\n\n###\n\n","completion":" attack"}
+{"prompt":"seal the magical gate\n\n###\n\n","completion":" lock"}
+{"prompt":"walk northwards\n\n###\n\n","completion":" move"}
+{"prompt":"nibble on the licorice\n\n###\n\n","completion":" eat"}
+{"prompt":"confront the skeletal warrior\n\n###\n\n","completion":" attack"}
+{"prompt":"shut down\n\n###\n\n","completion":" quit"}
+{"prompt":"sprint to the south\n\n###\n\n","completion":" move"}
+{"prompt":"quench your thirst with the drink\n\n###\n\n","completion":" drink"}
+{"prompt":"savor the meal\n\n###\n\n","completion":" eat"}
+{"prompt":"consume the beverage to refresh yourself\n\n###\n\n","completion":" drink"}
+{"prompt":"drop the shield\n\n###\n\n","completion":" drop"}
+{"prompt":"nibble on the jawbreaker\n\n###\n\n","completion":" eat"}
+{"prompt":"discard the necklace\n\n###\n\n","completion":" drop"}
+{"prompt":"put down the shield\n\n###\n\n","completion":" drop"}
+{"prompt":"view what's in my bag\n\n###\n\n","completion":" inventory"}
+{"prompt":"enjoy a sip from the flask\n\n###\n\n","completion":" drink"}
+{"prompt":"slide the card to gain access\n\n###\n\n","completion":" unlock"}
+{"prompt":"seal the room\n\n###\n\n","completion":" lock"}
+{"prompt":"navigate the map information\n\n###\n\n","completion":" map"}
+{"prompt":"apply pressure to the hidden switch\n\n###\n\n","completion":" unlock"}
+{"prompt":"view my gear list\n\n###\n\n","completion":" inventory"}
+{"prompt":"travel east\n\n###\n\n","completion":" move"}
+{"prompt":"sprint towards the north\n\n###\n\n","completion":" move"}
+{"prompt":"inspect my stored gear\n\n###\n\n","completion":" inventory"}
+{"prompt":"stroll towards the west\n\n###\n\n","completion":" move"}
+{"prompt":"analyze my gear list\n\n###\n\n","completion":" inventory"}
+{"prompt":"hike north\n\n###\n\n","completion":" move"}
+{"prompt":"fasten the cabinet with the encryption\n\n###\n\n","completion":" lock"}
+{"prompt":"analyze my possessions\n\n###\n\n","completion":" inventory"}
+{"prompt":"analyze the map\n\n###\n\n","completion":" map"}
+{"prompt":"inspect my collection of items\n\n###\n\n","completion":" inventory"}
+{"prompt":"undo the secured mechanism\n\n###\n\n","completion":" unlock"}
+{"prompt":"set down the charm\n\n###\n\n","completion":" drop"}
+{"prompt":"attack the wizard with my sword\n\n###\n\n","completion":" attack"}
+{"prompt":"secure the door with the combination\n\n###\n\n","completion":" lock"}
+{"prompt":"close the entrance with the password\n\n###\n\n","completion":" lock"}
+{"prompt":"unlock the ancient mechanism\n\n###\n\n","completion":" unlock"}
+{"prompt":"snatch the potion\n\n###\n\n","completion":" pickup"}
+{"prompt":"strike the lich with your enchanted blade\n\n###\n\n","completion":" attack"}
+{"prompt":"fight off the specter with holy water\n\n###\n\n","completion":" attack"}
+{"prompt":"hydrate with a swig\n\n###\n\n","completion":" drink"}
+{"prompt":"lock the barn with the code\n\n###\n\n","completion":" lock"}
+{"prompt":"swiftly move north\n\n###\n\n","completion":" move"}
+{"prompt":"combat the cursed revenant\n\n###\n\n","completion":" attack"}
+{"prompt":"enjoy a mouthful of the liquid\n\n###\n\n","completion":" drink"}
+{"prompt":"grasp the book\n\n###\n\n","completion":" pickup"}
+{"prompt":"view map again\n\n###\n\n","completion":" map"}
+{"prompt":"put an end to the session\n\n###\n\n","completion":" quit"}
+{"prompt":"examine my stored gear\n\n###\n\n","completion":" inventory"}
+{"prompt":"open with the hidden seal\n\n###\n\n","completion":" unlock"}
+{"prompt":"consume the pie\n\n###\n\n","completion":" eat"}
+{"prompt":"challenge the necromancer\n\n###\n\n","completion":" attack"}
+{"prompt":"inspect the map information\n\n###\n\n","completion":" map"}
+{"prompt":"use the key to reveal the secret compartment\n\n###\n\n","completion":" unlock"}
+{"prompt":"snatch the sword\n\n###\n\n","completion":" pickup"}
+{"prompt":"collect the feather\n\n###\n\n","completion":" pickup"}
+{"prompt":"check out the map again\n\n###\n\n","completion":" map"}
+{"prompt":"unfasten the sealed barrier\n\n###\n\n","completion":" unlock"}
+{"prompt":"observe my stored items\n\n###\n\n","completion":" inventory"}
+{"prompt":"go west\n\n###\n\n","completion":" move"}
+{"prompt":"savor the taste of the drink\n\n###\n\n","completion":" drink"}
+{"prompt":"enjoy a gulp from the vessel\n\n###\n\n","completion":" drink"}
+{"prompt":"padlock\n\n###\n\n","completion":" lock"}
+{"prompt":"set down the mask\n\n###\n\n","completion":" drop"}
+{"prompt":"lock the drawer with the key\n\n###\n\n","completion":" lock"}
+{"prompt":"terminate gameplay\n\n###\n\n","completion":" quit"}
+{"prompt":"snag the goblet\n\n###\n\n","completion":" pickup"}
+{"prompt":"sample the dish\n\n###\n\n","completion":" eat"}
+{"prompt":"sip the refreshment\n\n###\n\n","completion":" drink"}
+{"prompt":"inventory check\n\n###\n\n","completion":" inventory"}
+{"prompt":"lock the chest of wonders\n\n###\n\n","completion":" lock"}
+{"prompt":"secure the container with the code\n\n###\n\n","completion":" lock"}
+{"prompt":"try the nougat\n\n###\n\n","completion":" eat"}
+{"prompt":"confront the wyvern with your poison potion\n\n###\n\n","completion":" attack"}
+{"prompt":"map overview\n\n###\n\n","completion":" map"}
+{"prompt":"proceed to the west\n\n###\n\n","completion":" move"}
+{"prompt":"enjoy a sip from the glass\n\n###\n\n","completion":" drink"}
+{"prompt":"display the map\n\n###\n\n","completion":" map"}
+{"prompt":"shut the door with the combination\n\n###\n\n","completion":" lock"}
+{"prompt":"see what's in my possession\n\n###\n\n","completion":" inventory"}
+{"prompt":"seal the vault with the key\n\n###\n\n","completion":" lock"}
+{"prompt":"amble east\n\n###\n\n","completion":" move"}
+{"prompt":"unlock the sacred relic\n\n###\n\n","completion":" unlock"}
+{"prompt":"unlock the hidden treasure\n\n###\n\n","completion":" unlock"}
+{"prompt":"turn the mechanism to open\n\n###\n\n","completion":" unlock"}
+{"prompt":"try the waffles\n\n###\n\n","completion":" eat"}
+{"prompt":"unlock the forbidden passage\n\n###\n\n","completion":" unlock"}
+{"prompt":"refer to map again\n\n###\n\n","completion":" map"}
+{"prompt":"twist the handle to open the sealed passage\n\n###\n\n","completion":" unlock"}
+{"prompt":"amble eastward\n\n###\n\n","completion":" move"}
+{"prompt":"quench your thirst with the liquid\n\n###\n\n","completion":" drink"}
+{"prompt":"show my possessions\n\n###\n\n","completion":" inventory"}
+{"prompt":"set down the bow\n\n###\n\n","completion":" drop"}
+{"prompt":"attack the werewolf with bow\n\n###\n\n","completion":" attack"}
+{"prompt":"attack the troll with club\n\n###\n\n","completion":" attack"}
+{"prompt":"stop the session\n\n###\n\n","completion":" quit"}
+{"prompt":"grab potion\n\n###\n\n","completion":" pickup"}
+{"prompt":"unlatch the hidden entrance\n\n###\n\n","completion":" unlock"}
+{"prompt":"sip from the mug\n\n###\n\n","completion":" drink"}
+{"prompt":"saunter towards the west\n\n###\n\n","completion":" move"}
+{"prompt":"confront the bandit with a rock\n\n###\n\n","completion":" attack"}
+{"prompt":"use the secret key\n\n###\n\n","completion":" unlock"}
+{"prompt":"bolt the shed with the padlock\n\n###\n\n","completion":" lock"}
+{"prompt":"feast on the cake\n\n###\n\n","completion":" eat"}
+{"prompt":"wrap up gameplay\n\n###\n\n","completion":" quit"}
+{"prompt":"seal the vault\n\n###\n\n","completion":" lock"}
+{"prompt":"seal the cabinet with the lock\n\n###\n\n","completion":" lock"}
+{"prompt":"take a sip from the container\n\n###\n\n","completion":" drink"}
+{"prompt":"strike the goblin with your mace\n\n###\n\n","completion":" attack"}
+{"prompt":"discard the bow\n\n###\n\n","completion":" drop"}
+{"prompt":"charge the goblin with your sword\n\n###\n\n","completion":" attack"}
+{"prompt":"engage the guardian\n\n###\n\n","completion":" attack"}
+{"prompt":"set down the staff\n\n###\n\n","completion":" drop"}
+{"prompt":"fight the lich with your staff\n\n###\n\n","completion":" attack"}
+{"prompt":"lock the tower\n\n###\n\n","completion":" lock"}
+{"prompt":"quench your thirst with a sip\n\n###\n\n","completion":" drink"}
+{"prompt":"fight the harpy\n\n###\n\n","completion":" attack"}
+{"prompt":"pick up the potion\n\n###\n\n","completion":" pickup"}
+{"prompt":"attack the werewolf with your silver dagger\n\n###\n\n","completion":" attack"}
+{"prompt":"close and secure the door\n\n###\n\n","completion":" lock"}
+{"prompt":"march north\n\n###\n\n","completion":" move"}
+{"prompt":"engage the demon with your holy symbol\n\n###\n\n","completion":" attack"}
+{"prompt":"wander south\n\n###\n\n","completion":" move"}
+{"prompt":"gobble down the cake\n\n###\n\n","completion":" eat"}
+{"prompt":"unlatch the ancient door\n\n###\n\n","completion":" unlock"}
+{"prompt":"secure the entrance\n\n###\n\n","completion":" lock"}
+{"prompt":"lock the gate\n\n###\n\n","completion":" lock"}
+{"prompt":"try the pasta\n\n###\n\n","completion":" eat"}
+{"prompt":"release grip on the necklace\n\n###\n\n","completion":" drop"}
+{"prompt":"close the game\n\n###\n\n","completion":" quit"}
+{"prompt":"combat the serpent with your bow and arrow\n\n###\n\n","completion":" attack"}
+{"prompt":"combat the intruder\n\n###\n\n","completion":" attack"}
+{"prompt":"see what i have\n\n###\n\n","completion":" inventory"}
+{"prompt":"consume the elixir\n\n###\n\n","completion":" drink"}
+{"prompt":"drink the liquid contents\n\n###\n\n","completion":" drink"}
+{"prompt":"indulge in the dessert\n\n###\n\n","completion":" eat"}
+{"prompt":"proceed to the east\n\n###\n\n","completion":" move"}
+{"prompt":"open with the sacred key\n\n###\n\n","completion":" unlock"}
+{"prompt":"have a beer\n\n###\n\n","completion":" drink"}
+{"prompt":"fight the specter lord\n\n###\n\n","completion":" attack"}
+{"prompt":"take a look at the map layout\n\n###\n\n","completion":" map"}
+{"prompt":"close the cabinet with the key\n\n###\n\n","completion":" lock"}
+{"prompt":"sip from the flask\n\n###\n\n","completion":" drink"}
+{"prompt":"grab the compass\n\n###\n\n","completion":" pickup"}
+{"prompt":"fight off the shadow with your silver dagger\n\n###\n\n","completion":" attack"}
+{"prompt":"consume the stir-fry\n\n###\n\n","completion":" eat"}
+{"prompt":"stride east\n\n###\n\n","completion":" move"}
+{"prompt":"unseal the sacred passage\n\n###\n\n","completion":" unlock"}
+{"prompt":"run to the west\n\n###\n\n","completion":" move"}
+{"prompt":"browse my stored items\n\n###\n\n","completion":" inventory"}
+{"prompt":"sip the soda\n\n###\n\n","completion":" drink"}
+{"prompt":"vanquish the shadow dragon\n\n###\n\n","completion":" attack"}
+{"prompt":"fasten the vault with the key\n\n###\n\n","completion":" lock"}
+{"prompt":"attack the dragon with your fire spell\n\n###\n\n","completion":" attack"}
+{"prompt":"pick up the coin\n\n###\n\n","completion":" pickup"}
+{"prompt":"unlock the chamber with the mystical gem\n\n###\n\n","completion":" unlock"}
+{"prompt":"nibble on the quiche\n\n###\n\n","completion":" eat"}
+{"prompt":"chow down on the burger\n\n###\n\n","completion":" eat"}
+{"prompt":"strike down the time aberration\n\n###\n\n","completion":" attack"}
+{"prompt":"hydrate with a gulp\n\n###\n\n","completion":" drink"}
+{"prompt":"consume the liquid to refresh yourself\n\n###\n\n","completion":" drink"}
+{"prompt":"take the crystal\n\n###\n\n","completion":" pickup"}
+{"prompt":"release the staff\n\n###\n\n","completion":" drop"}
+{"prompt":"engage in combat\n\n###\n\n","completion":" attack"}
+{"prompt":"obtain the scroll\n\n###\n\n","completion":" pickup"}
+{"prompt":"secure the room with the encryption\n\n###\n\n","completion":" lock"}
+{"prompt":"face the hydra\n\n###\n\n","completion":" attack"}
+{"prompt":"hurry north\n\n###\n\n","completion":" move"}
+{"prompt":"go north\n\n###\n\n","completion":" move"}
+{"prompt":"close out the session\n\n###\n\n","completion":" quit"}
+{"prompt":"move south\n\n###\n\n","completion":" move"}
+{"prompt":"acquire the parchment\n\n###\n\n","completion":" pickup"}
+{"prompt":"hydrate\n\n###\n\n","completion":" drink"}
+{"prompt":"snag the key\n\n###\n\n","completion":" pickup"}
+{"prompt":"explore the map details\n\n###\n\n","completion":" map"}
+{"prompt":"go east\n\n###\n\n","completion":" move"}
+{"prompt":"take a gulp from the container\n\n###\n\n","completion":" drink"}
+{"prompt":"tread east\n\n###\n\n","completion":" move"}
+{"prompt":"jog south\n\n###\n\n","completion":" move"}
+{"prompt":"fight the specter with your staff\n\n###\n\n","completion":" attack"}
+{"prompt":"challenge the beast\n\n###\n\n","completion":" attack"}
+{"prompt":"shut the safe with the combination\n\n###\n\n","completion":" lock"}
+{"prompt":"strike the rogue with your whip\n\n###\n\n","completion":" attack"}
+{"prompt":"go south once more\n\n###\n\n","completion":" move"}
+{"prompt":"discard the book\n\n###\n\n","completion":" drop"}
+{"prompt":"stride south\n\n###\n\n","completion":" move"}
+{"prompt":"walk towards west\n\n###\n\n","completion":" move"}
+{"prompt":"view the map\n\n###\n\n","completion":" map"}
+{"prompt":"combat the wight with your sacred relic\n\n###\n\n","completion":" attack"}
+{"prompt":"complete the game\n\n###\n\n","completion":" quit"}
+{"prompt":"confront the giant with your boulder\n\n###\n\n","completion":" attack"}
+{"prompt":"release grip on the amulet\n\n###\n\n","completion":" drop"}
+{"prompt":"shut the cabinet with the combination\n\n###\n\n","completion":" lock"}
+{"prompt":"discover what's in my bag\n\n###\n\n","completion":" inventory"}
+{"prompt":"shut the box with the lock\n\n###\n\n","completion":" lock"}
+{"prompt":"grab the potion\n\n###\n\n","completion":" pickup"}
+{"prompt":"set down the feather\n\n###\n\n","completion":" drop"}
+{"prompt":"close\n\n###\n\n","completion":" quit"}
+{"prompt":"close the room with the encryption\n\n###\n\n","completion":" lock"}
+{"prompt":"sprint west\n\n###\n\n","completion":" move"}
+{"prompt":"vanquish the elemental\n\n###\n\n","completion":" attack"}
+{"prompt":"examine my stored items\n\n###\n\n","completion":" inventory"}
+{"prompt":"display map\n\n###\n\n","completion":" map"}
+{"prompt":"lock the gate with the padlock\n\n###\n\n","completion":" lock"}
+{"prompt":"battle the dragon with your enchanted lance\n\n###\n\n","completion":" attack"}
+{"prompt":"consume the liquid refreshment\n\n###\n\n","completion":" drink"}
+{"prompt":"check map again\n\n###\n\n","completion":" map"}
+{"prompt":"consume the refreshment\n\n###\n\n","completion":" drink"}
+{"prompt":"combat the venomous serpent\n\n###\n\n","completion":" attack"}
+{"prompt":"engage the mechanism with the special tool\n\n###\n\n","completion":" unlock"}
+{"prompt":"release hold of the jeweled dagger\n\n###\n\n","completion":" drop"}
+{"prompt":"conquer the marauder\n\n###\n\n","completion":" attack"}
+{"prompt":"move towards the north\n\n###\n\n","completion":" move"}
+{"prompt":"savor the liquid\n\n###\n\n","completion":" drink"}
+{"prompt":"unlatch the hidden gate\n\n###\n\n","completion":" unlock"}
+{"prompt":"attack the witch doctor\n\n###\n\n","completion":" attack"}
+{"prompt":"place down the key\n\n###\n\n","completion":" drop"}
+{"prompt":"hydrate with a drink\n\n###\n\n","completion":" drink"}
+{"prompt":"drop the crystal pendant\n\n###\n\n","completion":" drop"}
+{"prompt":"stroll to the west\n\n###\n\n","completion":" move"}
+{"prompt":"snack on the nachos\n\n###\n\n","completion":" eat"}
+{"prompt":"gain access with the magical token\n\n###\n\n","completion":" unlock"}
+{"prompt":"challenge the shadow assassin\n\n###\n\n","completion":" attack"}
+{"prompt":"chow now\n\n###\n\n","completion":" eat"}
+{"prompt":"solve the riddle to gain entry\n\n###\n\n","completion":" unlock"}
+{"prompt":"taste the curry\n\n###\n\n","completion":" eat"}
+{"prompt":"combat the reality shifter\n\n###\n\n","completion":" attack"}
+{"prompt":"unseal the secret passage\n\n###\n\n","completion":" unlock"}
+{"prompt":"lock down the fortress\n\n###\n\n","completion":" lock"}
+{"prompt":"collect the gemstone\n\n###\n\n","completion":" pickup"}
+{"prompt":"get the key\n\n###\n\n","completion":" pickup"}
+{"prompt":"lock the gate with the encryption\n\n###\n\n","completion":" lock"}
+{"prompt":"acquire the keycard\n\n###\n\n","completion":" pickup"}
+{"prompt":"release with the time-locked key\n\n###\n\n","completion":" unlock"}
+{"prompt":"attack the sorceress\n\n###\n\n","completion":" attack"}
+{"prompt":"release the mechanism\n\n###\n\n","completion":" unlock"}
+{"prompt":"lock the suitcase\n\n###\n\n","completion":" lock"}
+{"prompt":"walk to the east\n\n###\n\n","completion":" move"}
+{"prompt":"discard the shield\n\n###\n\n","completion":" drop"}
+{"prompt":"place down the shield\n\n###\n\n","completion":" drop"}
+{"prompt":"proceed to east\n\n###\n\n","completion":" move"}
+{"prompt":"turn the lock to open\n\n###\n\n","completion":" unlock"}
+{"prompt":"enjoy the sip\n\n###\n\n","completion":" drink"}
+{"prompt":"dash to the east\n\n###\n\n","completion":" move"}
+{"prompt":"discard the feathered quill\n\n###\n\n","completion":" drop"}
+{"prompt":"go eastward\n\n###\n\n","completion":" move"}
+{"prompt":"move westwards\n\n###\n\n","completion":" move"}
+{"prompt":"battle the arcane mage\n\n###\n\n","completion":" attack"}
+{"prompt":"enjoy the snack\n\n###\n\n","completion":" eat"}
+{"prompt":"walk west\n\n###\n\n","completion":" move"}
+{"prompt":"check the map\n\n###\n\n","completion":" map"}
+{"prompt":"saunter south\n\n###\n\n","completion":" move"}
+{"prompt":"free the passage with the key\n\n###\n\n","completion":" unlock"}
+{"prompt":"place down the wand\n\n###\n\n","completion":" drop"}
+{"prompt":"bite into the donut\n\n###\n\n","completion":" eat"}
+{"prompt":"move up north\n\n###\n\n","completion":" move"}
+{"prompt":"enjoy the liquid\n\n###\n\n","completion":" drink"}
+{"prompt":"travel eastwards\n\n###\n\n","completion":" move"}
+{"prompt":"hydrate yourself\n\n###\n\n","completion":" drink"}
+{"prompt":"halt the game\n\n###\n\n","completion":" quit"}
+{"prompt":"fight off the necromancer with your rune\n\n###\n\n","completion":" attack"}
+{"prompt":"engage the ethereal wraith\n\n###\n\n","completion":" attack"}
+{"prompt":"take the amulet\n\n###\n\n","completion":" pickup"}
+{"prompt":"lock the laboratory door\n\n###\n\n","completion":" lock"}
+{"prompt":"dash towards the north\n\n###\n\n","completion":" move"}
+{"prompt":"glance at the map layout\n\n###\n\n","completion":" map"}
+{"prompt":"travel to the west\n\n###\n\n","completion":" move"}
+{"prompt":"strike down the ice elemental\n\n###\n\n","completion":" attack"}
+{"prompt":"dash east\n\n###\n\n","completion":" move"}
+{"prompt":"head towards the west\n\n###\n\n","completion":" move"}
+{"prompt":"bite into the pizza\n\n###\n\n","completion":" eat"}
+{"prompt":"stroll westwards\n\n###\n\n","completion":" move"}
+{"prompt":"consume the meal\n\n###\n\n","completion":" eat"}
+{"prompt":"inspect the map again\n\n###\n\n","completion":" map"}
+{"prompt":"put down the spear\n\n###\n\n","completion":" drop"}
+{"prompt":"set down the phoenix feather\n\n###\n\n","completion":" drop"}
+{"prompt":"attack the dragon with spear\n\n###\n\n","completion":" attack"}
+{"prompt":"put down the dagger\n\n###\n\n","completion":" drop"}
+{"prompt":"let go of the dagger\n\n###\n\n","completion":" drop"}
+{"prompt":"grab the map\n\n###\n\n","completion":" pickup"}
+{"prompt":"jog east\n\n###\n\n","completion":" move"}
+{"prompt":"run towards west\n\n###\n\n","completion":" move"}
+{"prompt":"sprint east\n\n###\n\n","completion":" move"}
+{"prompt":"refer to the map layout\n\n###\n\n","completion":" map"}
+{"prompt":"map once more\n\n###\n\n","completion":" map"}
+{"prompt":"engage the entropy devourer\n\n###\n\n","completion":" attack"}
+{"prompt":"release grip on the charm\n\n###\n\n","completion":" drop"}
+{"prompt":"battle the spider queen\n\n###\n\n","completion":" attack"}
+{"prompt":"munch on the fruit\n\n###\n\n","completion":" eat"}
+{"prompt":"strike down the monster\n\n###\n\n","completion":" attack"}
+{"prompt":"release the barrier\n\n###\n\n","completion":" unlock"}
+{"prompt":"take a sip of the potion\n\n###\n\n","completion":" drink"}
+{"prompt":"check out the map\n\n###\n\n","completion":" map"}
+{"prompt":"release hold of the key\n\n###\n\n","completion":" drop"}
+{"prompt":"enjoy a drink\n\n###\n\n","completion":" drink"}
+{"prompt":"assault the troll with your fireball\n\n###\n\n","completion":" attack"}
+{"prompt":"challenge the thunder giant\n\n###\n\n","completion":" attack"}
+{"prompt":"quench your thirst with a gulp of water\n\n###\n\n","completion":" drink"}
+{"prompt":"release with the mystical key\n\n###\n\n","completion":" unlock"}
+{"prompt":"put down shield\n\n###\n\n","completion":" drop"}
+{"prompt":"open with the hidden key\n\n###\n\n","completion":" unlock"}
+{"prompt":"use key to open the door\n\n###\n\n","completion":" unlock"}
+{"prompt":"chew the gum\n\n###\n\n","completion":" eat"}
+{"prompt":"see map again\n\n###\n\n","completion":" map"}
+{"prompt":"discard the shielded gloves\n\n###\n\n","completion":" drop"}
+{"prompt":"nibble now\n\n###\n\n","completion":" eat"}
+{"prompt":"use the ancient key to open the chest\n\n###\n\n","completion":" unlock"}
+{"prompt":"release grip on the staff\n\n###\n\n","completion":" drop"}
+{"prompt":"engage the chaos entity\n\n###\n\n","completion":" attack"}
+{"prompt":"assault the minion with a crossbow\n\n###\n\n","completion":" attack"}
+{"prompt":"enjoy the cuisine\n\n###\n\n","completion":" eat"}
+{"prompt":"drink the elixir\n\n###\n\n","completion":" drink"}
+{"prompt":"shut the entrance with the lock\n\n###\n\n","completion":" lock"}
+{"prompt":"move to the east\n\n###\n\n","completion":" move"}
+{"prompt":"combat the space-time anomaly\n\n###\n\n","completion":" attack"}
+{"prompt":"leisurely walk towards the east\n\n###\n\n","completion":" move"}
+{"prompt":"view my collection\n\n###\n\n","completion":" inventory"}
+{"prompt":"strike at the chaos lord\n\n###\n\n","completion":" attack"}
+{"prompt":"consume the treat\n\n###\n\n","completion":" eat"}
+{"prompt":"grab the keycard\n\n###\n\n","completion":" pickup"}
+{"prompt":"inspect the map layout\n\n###\n\n","completion":" map"}
+{"prompt":"eat up\n\n###\n\n","completion":" eat"}
+{"prompt":"strike the vampire with your wooden stake\n\n###\n\n","completion":" attack"}
+{"prompt":"fetch the keycard\n\n###\n\n","completion":" pickup"}
+{"prompt":"check my bag\n\n###\n\n","completion":" inventory"}
+{"prompt":"walk westwards\n\n###\n\n","completion":" move"}
+{"prompt":"investigate my gear list\n\n###\n\n","completion":" inventory"}
+{"prompt":"consume the liquid\n\n###\n\n","completion":" drink"}
+{"prompt":"drink the liquid from the cup\n\n###\n\n","completion":" drink"}
+{"prompt":"vanquish the starborn entity\n\n###\n\n","completion":" attack"}
+{"prompt":"engage the fire drake\n\n###\n\n","completion":" attack"}
+{"prompt":"move towards the west\n\n###\n\n","completion":" move"}
+{"prompt":"head north again\n\n###\n\n","completion":" move"}
+{"prompt":"get the amulet\n\n###\n\n","completion":" pickup"}
+{"prompt":"savor the juice\n\n###\n\n","completion":" drink"}
+{"prompt":"confront the brigand with a net\n\n###\n\n","completion":" attack"}
+{"prompt":"bar the laboratory\n\n###\n\n","completion":" lock"}
+{"prompt":"strike down the warlord\n\n###\n\n","completion":" attack"}
+{"prompt":"enjoy the candy\n\n###\n\n","completion":" eat"}
+{"prompt":"unlatch the mystical door\n\n###\n\n","completion":" unlock"}
+{"prompt":"grasp the orb\n\n###\n\n","completion":" pickup"}
+{"prompt":"open with the enchanted key\n\n###\n\n","completion":" unlock"}
+{"prompt":"devour the snack\n\n###\n\n","completion":" eat"}
+{"prompt":"engage the serpent with your sword\n\n###\n\n","completion":" attack"}
+{"prompt":"check map\n\n###\n\n","completion":" map"}
+{"prompt":"navigate the map\n\n###\n\n","completion":" map"}
+{"prompt":"stride towards the north\n\n###\n\n","completion":" move"}
+{"prompt":"obtain the goblet\n\n###\n\n","completion":" pickup"}
+{"prompt":"place down the enchanted necklace\n\n###\n\n","completion":" drop"}
+{"prompt":"munch on the chips\n\n###\n\n","completion":" eat"}
+{"prompt":"end the entertainment\n\n###\n\n","completion":" quit"}
+{"prompt":"secure the chamber with the encryption\n\n###\n\n","completion":" lock"}
+{"prompt":"fasten the compartment\n\n###\n\n","completion":" lock"}
+{"prompt":"drop the trinket\n\n###\n\n","completion":" drop"}
+{"prompt":"enjoy the refreshment\n\n###\n\n","completion":" drink"}
+{"prompt":"pace to the north\n\n###\n\n","completion":" move"}
+{"prompt":"quench your thirst\n\n###\n\n","completion":" drink"}
+{"prompt":"set down the crystal\n\n###\n\n","completion":" drop"}
+{"prompt":"challenge the cosmic entity\n\n###\n\n","completion":" attack"}
+{"prompt":"attack golem with magic\n\n###\n\n","completion":" attack"}
+{"prompt":"wrap up the game\n\n###\n\n","completion":" quit"}
+{"prompt":"analyze the map details\n\n###\n\n","completion":" map"}
+{"prompt":"examine the map\n\n###\n\n","completion":" map"}
+{"prompt":"apply the key to unlock the barrier\n\n###\n\n","completion":" unlock"}
+{"prompt":"sprint westwards\n\n###\n\n","completion":" move"}
+{"prompt":"lock the lab's entrance\n\n###\n\n","completion":" lock"}
+{"prompt":"discard the worn-out scroll\n\n###\n\n","completion":" drop"}
+{"prompt":"enter the correct sequence\n\n###\n\n","completion":" unlock"}
+{"prompt":"battle the harpy with a javelin\n\n###\n\n","completion":" attack"}
+{"prompt":"lock the compartment with the combination\n\n###\n\n","completion":" lock"}
+{"prompt":"finish the play session\n\n###\n\n","completion":" quit"}
+{"prompt":"review my gear list\n\n###\n\n","completion":" inventory"}
+{"prompt":"go to the east once again\n\n###\n\n","completion":" move"}
+{"prompt":"unlatch the sealed entrance\n\n###\n\n","completion":" unlock"}
+{"prompt":"enjoy the pancakes\n\n###\n\n","completion":" eat"}
+{"prompt":"pick up potion\n\n###\n\n","completion":" pickup"}
+{"prompt":"shut the room with the code\n\n###\n\n","completion":" lock"}
+{"prompt":"consume the energy drink\n\n###\n\n","completion":" drink"}
+{"prompt":"place down the relic\n\n###\n\n","completion":" drop"}
+{"prompt":"explore map\n\n###\n\n","completion":" map"}
+{"prompt":"release grip on the golden key\n\n###\n\n","completion":" drop"}
+{"prompt":"lock the fortress\n\n###\n\n","completion":" lock"}
+{"prompt":"close the vault with the encryption\n\n###\n\n","completion":" lock"}
+{"prompt":"unbolt the door\n\n###\n\n","completion":" unlock"}
+{"prompt":"secure the cabinet with the key\n\n###\n\n","completion":" lock"}
+{"prompt":"discard the crystal\n\n###\n\n","completion":" drop"}
+{"prompt":"confront the wyrm with your water spell\n\n###\n\n","completion":" attack"}
+{"prompt":"turn the knob with the key to access\n\n###\n\n","completion":" unlock"}
+{"prompt":"stroll eastward\n\n###\n\n","completion":" move"}
+{"prompt":"feast now\n\n###\n\n","completion":" eat"}
+{"prompt":"seal the barn with the code\n\n###\n\n","completion":" lock"}
+{"prompt":"sip the tea\n\n###\n\n","completion":" drink"}
+{"prompt":"take stock of my gear\n\n###\n\n","completion":" inventory"}
+{"prompt":"engage the rival\n\n###\n\n","completion":" attack"}
+{"prompt":"drop the artifact\n\n###\n\n","completion":" drop"}
+{"prompt":"view my stored items\n\n###\n\n","completion":" inventory"}
+{"prompt":"open with the ancient key\n\n###\n\n","completion":" unlock"}
+{"prompt":"engage the foe\n\n###\n\n","completion":" attack"}
+{"prompt":"look at map again\n\n###\n\n","completion":" map"}
+{"prompt":"dash to the south\n\n###\n\n","completion":" move"}
+{"prompt":"unseal the hidden entrance\n\n###\n\n","completion":" unlock"}
+{"prompt":"seal the cabinet with the padlock\n\n###\n\n","completion":" lock"}
+{"prompt":"eat the sandwich\n\n###\n\n","completion":" eat"}
+{"prompt":"unfasten the mystical entrance\n\n###\n\n","completion":" unlock"}
+{"prompt":"turn the knob to unlock\n\n###\n\n","completion":" unlock"}
+{"prompt":"hike eastward\n\n###\n\n","completion":" move"}
+{"prompt":"input the correct sequence to open\n\n###\n\n","completion":" unlock"}
+{"prompt":"attack the necromancer with a stick\n\n###\n\n","completion":" attack"}
+{"prompt":"head to the east\n\n###\n\n","completion":" move"}
+{"prompt":"bite into the muffin\n\n###\n\n","completion":" eat"}
+{"prompt":"assault the basilisk with your spear\n\n###\n\n","completion":" attack"}
+{"prompt":"look map\n\n###\n\n","completion":" map"}
+{"prompt":"fight the void walker\n\n###\n\n","completion":" attack"}
+{"prompt":"enjoy the lollipop\n\n###\n\n","completion":" eat"}
+{"prompt":"examine the map closely\n\n###\n\n","completion":" map"}
+{"prompt":"sip from the goblet\n\n###\n\n","completion":" drink"}
+{"prompt":"run southwards\n\n###\n\n","completion":" move"}
+{"prompt":"fasten the suitcase\n\n###\n\n","completion":" lock"}
+{"prompt":"slide the card to unlock the door\n\n###\n\n","completion":" unlock"}
+{"prompt":"lock the gatehouse\n\n###\n\n","completion":" lock"}
+{"prompt":"secure the gate\n\n###\n\n","completion":" lock"}
+{"prompt":"head to the west\n\n###\n\n","completion":" move"}
+{"prompt":"show map again\n\n###\n\n","completion":" map"}
+{"prompt":"unlatch the enchanted gate\n\n###\n\n","completion":" unlock"}
+{"prompt":"fight the molten elemental\n\n###\n\n","completion":" attack"}
+{"prompt":"review the map details\n\n###\n\n","completion":" map"}
+{"prompt":"proceed towards the north\n\n###\n\n","completion":" move"}
+{"prompt":"savor the refreshment\n\n###\n\n","completion":" drink"}
+{"prompt":"stride eastward\n\n###\n\n","completion":" move"}
+{"prompt":"let go of sword\n\n###\n\n","completion":" drop"}
+{"prompt":"unlock\n\n###\n\n","completion":" unlock"}
+{"prompt":"attack wolf with arrows\n\n###\n\n","completion":" attack"}
+{"prompt":"snack on the pretzels\n\n###\n\n","completion":" eat"}
+{"prompt":"drop shield\n\n###\n\n","completion":" drop"}
+{"prompt":"lock the container with the key\n\n###\n\n","completion":" lock"}
+{"prompt":"reveal my gear\n\n###\n\n","completion":" inventory"}
+{"prompt":"walk north\n\n###\n\n","completion":" move"}
+{"prompt":"tread west\n\n###\n\n","completion":" move"}
+{"prompt":"navigate the map layout\n\n###\n\n","completion":" map"}
+{"prompt":"sip from the bottle\n\n###\n\n","completion":" drink"}
+{"prompt":"travel towards the north\n\n###\n\n","completion":" move"}
+{"prompt":"attack the banshee\n\n###\n\n","completion":" attack"}
+{"prompt":"review the map\n\n###\n\n","completion":" map"}
+{"prompt":"secure the room with the combination\n\n###\n\n","completion":" lock"}
+{"prompt":"taste the ice cream\n\n###\n\n","completion":" eat"}
+{"prompt":"fasten the chest with the combination\n\n###\n\n","completion":" lock"}
+{"prompt":"attack the ghost with the light\n\n###\n\n","completion":" attack"}
+{"prompt":"close the vault with the key\n\n###\n\n","completion":" lock"}
+{"prompt":"cease the game\n\n###\n\n","completion":" quit"}
+{"prompt":"release with the enchanted key\n\n###\n\n","completion":" unlock"}
+{"prompt":"explore my equipment\n\n###\n\n","completion":" inventory"}
+{"prompt":"take the relic\n\n###\n\n","completion":" pickup"}
+{"prompt":"release grip on the dagger\n\n###\n\n","completion":" drop"}
+{"prompt":"release grip on the relic\n\n###\n\n","completion":" drop"}
+{"prompt":"hurry south\n\n###\n\n","completion":" move"}
+{"prompt":"hydrate with a sip of water\n\n###\n\n","completion":" drink"}
+{"prompt":"inspect the map for information\n\n###\n\n","completion":" map"}
+{"prompt":"hydrate with a glass of water\n\n###\n\n","completion":" drink"}
+{"prompt":"acquire the gem\n\n###\n\n","completion":" pickup"}
+{"prompt":"open with the forbidden key\n\n###\n\n","completion":" unlock"}
+{"prompt":"conquer the rogue knight\n\n###\n\n","completion":" attack"}
+{"prompt":"enter the mystical code\n\n###\n\n","completion":" unlock"}
+{"prompt":"combat the shadow with your holy symbol\n\n###\n\n","completion":" attack"}
+{"prompt":"terminate\n\n###\n\n","completion":" quit"}
+{"prompt":"savor the flavor of the liquid\n\n###\n\n","completion":" drink"}
+{"prompt":"seal the gatehouse\n\n###\n\n","completion":" lock"}
+{"prompt":"assault the orc with your net\n\n###\n\n","completion":" attack"}
+{"prompt":"release hold of the feather\n\n###\n\n","completion":" drop"}
+{"prompt":"run towards the north\n\n###\n\n","completion":" move"}
+{"prompt":"combat the plague-ridden horde\n\n###\n\n","completion":" attack"}
+{"prompt":"engage the serpent with your venomous blade\n\n###\n\n","completion":" attack"}
+{"prompt":"journey north\n\n###\n\n","completion":" move"}
+{"prompt":"quit\n\n###\n\n","completion":" quit"}
+{"prompt":"release the hidden door\n\n###\n\n","completion":" unlock"}
+{"prompt":"lock the entrance with the combination\n\n###\n\n","completion":" lock"}
+{"prompt":"taste the butterscotch\n\n###\n\n","completion":" eat"}
+{"prompt":"drop the mask\n\n###\n\n","completion":" drop"}
+{"prompt":"bolt the enchanted door\n\n###\n\n","completion":" lock"}
+{"prompt":"sip from the cup\n\n###\n\n","completion":" drink"}
+{"prompt":"savor the liquid in the glass\n\n###\n\n","completion":" drink"}
+{"prompt":"observe the map\n\n###\n\n","completion":" map"}
+{"prompt":"enjoy a gulp\n\n###\n\n","completion":" drink"}
+{"prompt":"gobble it up\n\n###\n\n","completion":" eat"}
+{"prompt":"open with the mystical key\n\n###\n\n","completion":" unlock"}
+{"prompt":"chow down on the pizza\n\n###\n\n","completion":" eat"}
+{"prompt":"combat the sorcerer\n\n###\n\n","completion":" attack"}
+{"prompt":"check my item list\n\n###\n\n","completion":" inventory"}
+{"prompt":"unlock the time-travel portal\n\n###\n\n","completion":" unlock"}
+{"prompt":"shut the room with the combination\n\n###\n\n","completion":" lock"}
+{"prompt":"shut the container with the key\n\n###\n\n","completion":" lock"}
+{"prompt":"feast on the delicacy\n\n###\n\n","completion":" eat"}
+{"prompt":"conclude the game\n\n###\n\n","completion":" quit"}
+{"prompt":"retrieve the compass\n\n###\n\n","completion":" pickup"}
+{"prompt":"refer to the map details\n\n###\n\n","completion":" map"}
+{"prompt":"enter the mystical password\n\n###\n\n","completion":" unlock"}
+{"prompt":"fight the dark sorceress\n\n###\n\n","completion":" attack"}
+{"prompt":"seal the gate with the padlock\n\n###\n\n","completion":" lock"}
+{"prompt":"seal the cabinet with the combination\n\n###\n\n","completion":" lock"}
+{"prompt":"battle the troll\n\n###\n\n","completion":" attack"}
+{"prompt":"take the gem\n\n###\n\n","completion":" pickup"}
+{"prompt":"move north\n\n###\n\n","completion":" move"}
+{"prompt":"go to the bar\n\n###\n\n","completion":" move"}
+{"prompt":"travel to the tavern\n\n###\n\n","completion":" move"}
+{"prompt":"move to the fountain\n\n###\n\n","completion":" move"}
+{"prompt":"travel to the lake\n\n###\n\n","completion":" move"}
+{"prompt":"walk towards the tavern\n\n###\n\n","completion":" move"}
+{"prompt":"run towards the reservoir\n\n###\n\n","completion":" move"}
+{"prompt":"strike the wight with your flail\n\n###\n\n","completion":" attack"}
+{"prompt":"take a look at my stored gear\n\n###\n\n","completion":" inventory"}
+{"prompt":"challenge the centaur\n\n###\n\n","completion":" attack"}
+{"prompt":"lock the laboratory\n\n###\n\n","completion":" lock"}
+{"prompt":"conquer the ogre\n\n###\n\n","completion":" attack"}
+{"prompt":"explore my stored gear\n\n###\n\n","completion":" inventory"}
+{"prompt":"release grip on the ancient amulet\n\n###\n\n","completion":" drop"}
+{"prompt":"consume the fluid\n\n###\n\n","completion":" drink"}
+{"prompt":"observe my stored possessions\n\n###\n\n","completion":" inventory"}
+{"prompt":"go to the south\n\n###\n\n","completion":" move"}
+{"prompt":"close the gate with the padlock\n\n###\n\n","completion":" lock"}
+{"prompt":"check out map again\n\n###\n\n","completion":" map"}
+{"prompt":"strike the wyrm with your lance\n\n###\n\n","completion":" attack"}
+{"prompt":"end the session\n\n###\n\n","completion":" quit"}
+{"prompt":"walk east another time\n\n###\n\n","completion":" move"}
+{"prompt":"show the map\n\n###\n\n","completion":" map"}
+{"prompt":"secure the box with the encryption\n\n###\n\n","completion":" lock"}
+{"prompt":"attack the giant\n\n###\n\n","completion":" attack"}
+{"prompt":"stroll southwards\n\n###\n\n","completion":" move"}
+{"prompt":"take a sip from the vessel\n\n###\n\n","completion":" drink"}
+{"prompt":"stride southward\n\n###\n\n","completion":" move"}
+{"prompt":"unlatch the forbidden vault\n\n###\n\n","completion":" unlock"}
+{"prompt":"release hold of the necklace\n\n###\n\n","completion":" drop"}
+{"prompt":"proceed to the south again\n\n###\n\n","completion":" move"}
+{"prompt":"study the map\n\n###\n\n","completion":" map"}
+{"prompt":"terminate the gameplay\n\n###\n\n","completion":" quit"}
+{"prompt":"savor the taste of the beverage\n\n###\n\n","completion":" drink"}
+{"prompt":"stop game\n\n###\n\n","completion":" quit"}
+{"prompt":"strike down the infernal demon\n\n###\n\n","completion":" attack"}
+{"prompt":"consume the jelly beans\n\n###\n\n","completion":" eat"}
+{"prompt":"strike the specter with your enchanted mace\n\n###\n\n","completion":" attack"}
+{"prompt":"jog to the south\n\n###\n\n","completion":" move"}
+{"prompt":"inspect the map\n\n###\n\n","completion":" map"}
+{"prompt":"let go of the key\n\n###\n\n","completion":" drop"}
+{"prompt":"dash west\n\n###\n\n","completion":" move"}
+{"prompt":"discard the torch\n\n###\n\n","completion":" drop"}
+{"prompt":"nibble on the candy\n\n###\n\n","completion":" eat"}
+{"prompt":"attack the robot with the emp\n\n###\n\n","completion":" attack"}
+{"prompt":"lock the safe with the code\n\n###\n\n","completion":" lock"}
+{"prompt":"confront the shadow with your dagger\n\n###\n\n","completion":" attack"}
+{"prompt":"check the map layout\n\n###\n\n","completion":" map"}
+{"prompt":"secure the vault with the padlock\n\n###\n\n","completion":" lock"}
+{"prompt":"unlock the portal to another world\n\n###\n\n","completion":" unlock"}
+{"prompt":"drop the scroll\n\n###\n\n","completion":" drop"}
+{"prompt":"navigate the map contents\n\n###\n\n","completion":" map"}
+{"prompt":"savor the dim sum\n\n###\n\n","completion":" eat"}
+{"prompt":"lock the door with the padlock\n\n###\n\n","completion":" lock"}
+{"prompt":"head southward\n\n###\n\n","completion":" move"}
+{"prompt":"enjoy a swig\n\n###\n\n","completion":" drink"}
+{"prompt":"seal the door with the padlock\n\n###\n\n","completion":" lock"}
+{"prompt":"consume now\n\n###\n\n","completion":" eat"}
+{"prompt":"vanquish the void sorcerer\n\n###\n\n","completion":" attack"}
+{"prompt":"head south\n\n###\n\n","completion":" move"}
+{"prompt":"see the map again\n\n###\n\n","completion":" map"}
+{"prompt":"examine my items\n\n###\n\n","completion":" inventory"}
+{"prompt":"lock the shed with the padlock\n\n###\n\n","completion":" lock"}
+{"prompt":"savor the truffle\n\n###\n\n","completion":" eat"}
+{"prompt":"unbolt the sealed door\n\n###\n\n","completion":" unlock"}
+{"prompt":"attack the witch with water\n\n###\n\n","completion":" attack"}
+{"prompt":"face the elemental guardian\n\n###\n\n","completion":" attack"}
+{"prompt":"go towards east\n\n###\n\n","completion":" move"}
+{"prompt":"head northwards\n\n###\n\n","completion":" move"}
+{"prompt":"open with the time-locked key\n\n###\n\n","completion":" unlock"}
+{"prompt":"drink the coffee\n\n###\n\n","completion":" drink"}
+{"prompt":"go to the west once again\n\n###\n\n","completion":" move"}
+{"prompt":"unbolt the sealed gate\n\n###\n\n","completion":" unlock"}
+{"prompt":"display my items\n\n###\n\n","completion":" inventory"}
+{"prompt":"drink some water\n\n###\n\n","completion":" drink"}
+{"prompt":"consume the drink to satisfy your thirst\n\n###\n\n","completion":" drink"}
+{"prompt":"swallow now\n\n###\n\n","completion":" eat"}
+{"prompt":"shut down the game\n\n###\n\n","completion":" quit"}
+{"prompt":"take the potion bottle\n\n###\n\n","completion":" pickup"}
+{"prompt":"grasp the flower\n\n###\n\n","completion":" pickup"}
+{"prompt":"savor the flavors\n\n###\n\n","completion":" eat"}
+{"prompt":"attack the vampire\n\n###\n\n","completion":" attack"}
+{"prompt":"attack the demon\n\n###\n\n","completion":" attack"}
+{"prompt":"confront the thief with a bat\n\n###\n\n","completion":" attack"}
+{"prompt":"attack bear with spear\n\n###\n\n","completion":" attack"}
+{"prompt":"attack vampire with garlic\n\n###\n\n","completion":" attack"}
+{"prompt":"attack the mummy with fire\n\n###\n\n","completion":" attack"}
+{"prompt":"combat the troll with your warhammer\n\n###\n\n","completion":" attack"}
+{"prompt":"fight off the orc with your crossbow\n\n###\n\n","completion":" attack"}
+{"prompt":"combat the wyvern with your magical staff\n\n###\n\n","completion":" attack"}
+{"prompt":"assault the elemental with your frost spell\n\n###\n\n","completion":" attack"}
+{"prompt":"attack the wraith with your silver sword\n\n###\n\n","completion":" attack"}
+{"prompt":"confront the bandit\n\n###\n\n","completion":" attack"}
+{"prompt":"battle the serpent\n\n###\n\n","completion":" attack"}
+{"prompt":"fight the warlock\n\n###\n\n","completion":" attack"}
+{"prompt":"assail the goblin horde\n\n###\n\n","completion":" attack"}
+{"prompt":"combat the wraith\n\n###\n\n","completion":" attack"}
+{"prompt":"confront the dragon\n\n###\n\n","completion":" attack"}
+{"prompt":"vanquish the minotaur\n\n###\n\n","completion":" attack"}
+{"prompt":"engage in a duel\n\n###\n\n","completion":" attack"}
+{"prompt":"conquer the ancient wyrm\n\n###\n\n","completion":" attack"}
+{"prompt":"battle the earth golem\n\n###\n\n","completion":" attack"}
+{"prompt":"fight the cursed specter\n\n###\n\n","completion":" attack"}
+{"prompt":"vanquish the thunder golem\n\n###\n\n","completion":" attack"}
+{"prompt":"battle the corrupted knight\n\n###\n\n","completion":" attack"}
+{"prompt":"fight the celestial guardian\n\n###\n\n","completion":" attack"}
+{"prompt":"challenge the ancient wyvern\n\n###\n\n","completion":" attack"}
+{"prompt":"strike at the shadowy figure\n\n###\n\n","completion":" attack"}
+{"prompt":"combat the crystal golem\n\n###\n\n","completion":" attack"}
+{"prompt":"battle the cosmic horror\n\n###\n\n","completion":" attack"}
+{"prompt":"drink the juice\n\n###\n\n","completion":" drink"}
+{"prompt":"drink fresh juice\n\n###\n\n","completion":" drink"}
+{"prompt":"have some water\n\n###\n\n","completion":" drink"}
+{"prompt":"quench your thirst with a beverage\n\n###\n\n","completion":" drink"}
+{"prompt":"savor the taste of the wine\n\n###\n\n","completion":" drink"}
+{"prompt":"consume the liquid from the glass\n\n###\n\n","completion":" drink"}
+{"prompt":"drink a beverage to rehydrate\n\n###\n\n","completion":" drink"}
+{"prompt":"consume the drink to refresh yourself\n\n###\n\n","completion":" drink"}
+{"prompt":"savor the flavor of the beverage\n\n###\n\n","completion":" drink"}
+{"prompt":"take a sip from the cup\n\n###\n\n","completion":" drink"}
+{"prompt":"drink from the glass\n\n###\n\n","completion":" drink"}
+{"prompt":"have a sip\n\n###\n\n","completion":" drink"}
+{"prompt":"sip the liquid\n\n###\n\n","completion":" drink"}
+{"prompt":"sip the beverage\n\n###\n\n","completion":" drink"}
+{"prompt":"quench your thirst with the sip\n\n###\n\n","completion":" drink"}
+{"prompt":"sip from the container\n\n###\n\n","completion":" drink"}
+{"prompt":"hydrate with a refreshment\n\n###\n\n","completion":" drink"}
+{"prompt":"hydrate with a mouthful\n\n###\n\n","completion":" drink"}
+{"prompt":"take a sip from the flask\n\n###\n\n","completion":" drink"}
+{"prompt":"sip from the glass container\n\n###\n\n","completion":" drink"}
+{"prompt":"take a gulp from the vessel\n\n###\n\n","completion":" drink"}
+{"prompt":"savor the flavor of the drink\n\n###\n\n","completion":" drink"}
+{"prompt":"enjoy a sip from the goblet\n\n###\n\n","completion":" drink"}
+{"prompt":"consume the liquid contents to refresh yourself\n\n###\n\n","completion":" drink"}
+{"prompt":"discard the potion\n\n###\n\n","completion":" drop"}
+{"prompt":"place aside the hammer\n\n###\n\n","completion":" drop"}
+{"prompt":"lay down the helm\n\n###\n\n","completion":" drop"}
+{"prompt":"discard the crystal vial\n\n###\n\n","completion":" drop"}
+{"prompt":"discard the feathered arrow\n\n###\n\n","completion":" drop"}
+{"prompt":"release hold of the dragon scale\n\n###\n\n","completion":" drop"}
+{"prompt":"discard the rusted shield\n\n###\n\n","completion":" drop"}
+{"prompt":"place down the silken scarf\n\n###\n\n","completion":" drop"}
+{"prompt":"release hold of the cursed skull\n\n###\n\n","completion":" drop"}
+{"prompt":"release grip on the mask\n\n###\n\n","completion":" drop"}
+{"prompt":"discard the ancient artifact\n\n###\n\n","completion":" drop"}
+{"prompt":"let go of the necklace\n\n###\n\n","completion":" drop"}
+{"prompt":"drop the amulet\n\n###\n\n","completion":" drop"}
+{"prompt":"release grip on the potion\n\n###\n\n","completion":" drop"}
+{"prompt":"discard the amulet\n\n###\n\n","completion":" drop"}
+{"prompt":"let go of the mask\n\n###\n\n","completion":" drop"}
+{"prompt":"set down the book\n\n###\n\n","completion":" drop"}
+{"prompt":"set down the gem\n\n###\n\n","completion":" drop"}
+{"prompt":"drop the gem\n\n###\n\n","completion":" drop"}
+{"prompt":"drop the quill\n\n###\n\n","completion":" drop"}
+{"prompt":"set down the spear\n\n###\n\n","completion":" drop"}
+{"prompt":"eat now\n\n###\n\n","completion":" eat"}
+{"prompt":"nibble it\n\n###\n\n","completion":" eat"}
+{"prompt":"chow down\n\n###\n\n","completion":" eat"}
+{"prompt":"enjoy that\n\n###\n\n","completion":" eat"}
+{"prompt":"gobble up the popcorn\n\n###\n\n","completion":" eat"}
+{"prompt":"devour the steak\n\n###\n\n","completion":" eat"}
+{"prompt":"taste the soup\n\n###\n\n","completion":" eat"}
+{"prompt":"chow down on the fries\n\n###\n\n","completion":" eat"}
+{"prompt":"nibble on the crackers\n\n###\n\n","completion":" eat"}
+{"prompt":"munch on the tacos\n\n###\n\n","completion":" eat"}
+{"prompt":"devour the hot dog\n\n###\n\n","completion":" eat"}
+{"prompt":"sample the pho\n\n###\n\n","completion":" eat"}
+{"prompt":"consume the bagel\n\n###\n\n","completion":" eat"}
+{"prompt":"taste the croissant\n\n###\n\n","completion":" eat"}
+{"prompt":"munch on the donut\n\n###\n\n","completion":" eat"}
+{"prompt":"bite into the brownie\n\n###\n\n","completion":" eat"}
+{"prompt":"try the ice cream\n\n###\n\n","completion":" eat"}
+{"prompt":"chow down on the taffy\n\n###\n\n","completion":" eat"}
+{"prompt":"snack on the cotton candy\n\n###\n\n","completion":" eat"}
+{"prompt":"see what's in my bag\n\n###\n\n","completion":" inventory"}
+{"prompt":"check my stored items\n\n###\n\n","completion":" inventory"}
+{"prompt":"review my inventory\n\n###\n\n","completion":" inventory"}
+{"prompt":"inspect my collection\n\n###\n\n","completion":" inventory"}
+{"prompt":"browse my equipment\n\n###\n\n","completion":" inventory"}
+{"prompt":"analyze my gear\n\n###\n\n","completion":" inventory"}
+{"prompt":"take inventory\n\n###\n\n","completion":" inventory"}
+{"prompt":"examine my equipment\n\n###\n\n","completion":" inventory"}
+{"prompt":"view my stored possessions\n\n###\n\n","completion":" inventory"}
+{"prompt":"analyze my stored gear\n\n###\n\n","completion":" inventory"}
+{"prompt":"inspect my items list\n\n###\n\n","completion":" inventory"}
+{"prompt":"investigate my collection\n\n###\n\n","completion":" inventory"}
+{"prompt":"browse through my gear\n\n###\n\n","completion":" inventory"}
+{"prompt":"explore my items list\n\n###\n\n","completion":" inventory"}
+{"prompt":"peruse my equipment\n\n###\n\n","completion":" inventory"}
+{"prompt":"browse through my stored gear\n\n###\n\n","completion":" inventory"}
+{"prompt":"explore my gear list\n\n###\n\n","completion":" inventory"}
+{"prompt":"examine my stored possessions\n\n###\n\n","completion":" inventory"}
+{"prompt":"lock the mystical door\n\n###\n\n","completion":" lock"}
+{"prompt":"bolt\n\n###\n\n","completion":" lock"}
+{"prompt":"lock the door with the password\n\n###\n\n","completion":" lock"}
+{"prompt":"lock the computer with the encryption\n\n###\n\n","completion":" lock"}
+{"prompt":"seal the crypt\n\n###\n\n","completion":" lock"}
+{"prompt":"seal the tower\n\n###\n\n","completion":" lock"}
+{"prompt":"fasten the mystical chest\n\n###\n\n","completion":" lock"}
+{"prompt":"shut the room with the key\n\n###\n\n","completion":" lock"}
+{"prompt":"seal the container\n\n###\n\n","completion":" lock"}
+{"prompt":"fasten the computer with the encryption\n\n###\n\n","completion":" lock"}
+{"prompt":"lock the room with the code\n\n###\n\n","completion":" lock"}
+{"prompt":"close the barn with the lock\n\n###\n\n","completion":" lock"}
+{"prompt":"seal the room with the encryption\n\n###\n\n","completion":" lock"}
+{"prompt":"close the chest with the combination\n\n###\n\n","completion":" lock"}
+{"prompt":"secure the vault with the lock\n\n###\n\n","completion":" lock"}
+{"prompt":"secure the gate with the lock\n\n###\n\n","completion":" lock"}
+{"prompt":"fasten the door with the encryption\n\n###\n\n","completion":" lock"}
+{"prompt":"seal the room with the lock\n\n###\n\n","completion":" lock"}
+{"prompt":"close the container with the key\n\n###\n\n","completion":" lock"}
+{"prompt":"fasten the room with the lock\n\n###\n\n","completion":" lock"}
+{"prompt":"seal the door with the key\n\n###\n\n","completion":" lock"}
+{"prompt":"fasten the barn with the code\n\n###\n\n","completion":" lock"}
+{"prompt":"lock the vault with the key\n\n###\n\n","completion":" lock"}
+{"prompt":"close the gate with the combination\n\n###\n\n","completion":" lock"}
+{"prompt":"secure the barn with the lock\n\n###\n\n","completion":" lock"}
+{"prompt":"fasten the gate with the encryption\n\n###\n\n","completion":" lock"}
+{"prompt":"close the barn with the key\n\n###\n\n","completion":" lock"}
+{"prompt":"lock the barn with the padlock\n\n###\n\n","completion":" lock"}
+{"prompt":"seal the room with the key\n\n###\n\n","completion":" lock"}
+{"prompt":"shut the vault with the lock\n\n###\n\n","completion":" lock"}
+{"prompt":"scan the map\n\n###\n\n","completion":" map"}
+{"prompt":"look at map\n\n###\n\n","completion":" map"}
+{"prompt":"view the map again\n\n###\n\n","completion":" map"}
+{"prompt":"show the map again\n\n###\n\n","completion":" map"}
+{"prompt":"expose map\n\n###\n\n","completion":" map"}
+{"prompt":"navigate map\n\n###\n\n","completion":" map"}
+{"prompt":"refer to the map again\n\n###\n\n","completion":" map"}
+{"prompt":"see the map\n\n###\n\n","completion":" map"}
+{"prompt":"see map\n\n###\n\n","completion":" map"}
+{"prompt":"examine map\n\n###\n\n","completion":" map"}
+{"prompt":"glance at map\n\n###\n\n","completion":" map"}
+{"prompt":"scan the map for information\n\n###\n\n","completion":" map"}
+{"prompt":"explore the map contents\n\n###\n\n","completion":" map"}
+{"prompt":"navigate the map details\n\n###\n\n","completion":" map"}
+{"prompt":"study the map information\n\n###\n\n","completion":" map"}
+{"prompt":"run east\n\n###\n\n","completion":" move"}
+{"prompt":"run towards east\n\n###\n\n","completion":" move"}
+{"prompt":"travel to the south\n\n###\n\n","completion":" move"}
+{"prompt":"move towards the south\n\n###\n\n","completion":" move"}
+{"prompt":"move towards south\n\n###\n\n","completion":" move"}
+{"prompt":"go towards the south\n\n###\n\n","completion":" move"}
+{"prompt":"go towards south\n\n###\n\n","completion":" move"}
+{"prompt":"run towards the south\n\n###\n\n","completion":" move"}
+{"prompt":"move forward\n\n###\n\n","completion":" move"}
+{"prompt":"gallop towards the south\n\n###\n\n","completion":" move"}
+{"prompt":"wander towards the south\n\n###\n\n","completion":" move"}
+{"prompt":"proceed to the south\n\n###\n\n","completion":" move"}
+{"prompt":"run to the south\n\n###\n\n","completion":" move"}
+{"prompt":"pace eastward\n\n###\n\n","completion":" move"}
+{"prompt":"saunter to the south\n\n###\n\n","completion":" move"}
+{"prompt":"gallop west\n\n###\n\n","completion":" move"}
+{"prompt":"go southward\n\n###\n\n","completion":" move"}
+{"prompt":"go eastwards\n\n###\n\n","completion":" move"}
+{"prompt":"run west\n\n###\n\n","completion":" move"}
+{"prompt":"travel south\n\n###\n\n","completion":" move"}
+{"prompt":"move towards the east\n\n###\n\n","completion":" move"}
+{"prompt":"walk to the south\n\n###\n\n","completion":" move"}
+{"prompt":"move northwards\n\n###\n\n","completion":" move"}
+{"prompt":"march northwards\n\n###\n\n","completion":" move"}
+{"prompt":"stroll to the east\n\n###\n\n","completion":" move"}
+{"prompt":"hike towards the west\n\n###\n\n","completion":" move"}
+{"prompt":"stride to the north\n\n###\n\n","completion":" move"}
+{"prompt":"amble to the south\n\n###\n\n","completion":" move"}
+{"prompt":"hike east\n\n###\n\n","completion":" move"}
+{"prompt":"jog northward\n\n###\n\n","completion":" move"}
+{"prompt":"hike to the south\n\n###\n\n","completion":" move"}
+{"prompt":"head east\n\n###\n\n","completion":" move"}
+{"prompt":"walk towards the north\n\n###\n\n","completion":" move"}
+{"prompt":"sprint south\n\n###\n\n","completion":" move"}
+{"prompt":"jog eastward\n\n###\n\n","completion":" move"}
+{"prompt":"dash to the west\n\n###\n\n","completion":" move"}
+{"prompt":"take the potion\n\n###\n\n","completion":" pickup"}
+{"prompt":"obtain the book\n\n###\n\n","completion":" pickup"}
+{"prompt":"take the mask\n\n###\n\n","completion":" pickup"}
+{"prompt":"snatch the crystal\n\n###\n\n","completion":" pickup"}
+{"prompt":"pick up the parchment\n\n###\n\n","completion":" pickup"}
+{"prompt":"acquire the potion\n\n###\n\n","completion":" pickup"}
+{"prompt":"grab the gemstone\n\n###\n\n","completion":" pickup"}
+{"prompt":"retrieve the coin\n\n###\n\n","completion":" pickup"}
+{"prompt":"collect the relic\n\n###\n\n","completion":" pickup"}
+{"prompt":"retrieve the crystal\n\n###\n\n","completion":" pickup"}
+{"prompt":"grab the goblet\n\n###\n\n","completion":" pickup"}
+{"prompt":"obtain the feather\n\n###\n\n","completion":" pickup"}
+{"prompt":"get the scroll\n\n###\n\n","completion":" pickup"}
+{"prompt":"snatch the map\n\n###\n\n","completion":" pickup"}
+{"prompt":"retrieve the sword\n\n###\n\n","completion":" pickup"}
+{"prompt":"grab the mask\n\n###\n\n","completion":" pickup"}
+{"prompt":"grab the wand\n\n###\n\n","completion":" pickup"}
+{"prompt":"acquire the diamond\n\n###\n\n","completion":" pickup"}
+{"prompt":"grab the parchment\n\n###\n\n","completion":" pickup"}
+{"prompt":"close the application\n\n###\n\n","completion":" quit"}
+{"prompt":"terminate the program\n\n###\n\n","completion":" quit"}
+{"prompt":"finish\n\n###\n\n","completion":" quit"}
+{"prompt":"end session\n\n###\n\n","completion":" quit"}
+{"prompt":"cease the entertainment\n\n###\n\n","completion":" quit"}
+{"prompt":"close down the game\n\n###\n\n","completion":" quit"}
+{"prompt":"unlock the ancient lock\n\n###\n\n","completion":" unlock"}
+{"prompt":"unlock the secret bookshelf\n\n###\n\n","completion":" unlock"}
+{"prompt":"unlatch the enchanted door\n\n###\n\n","completion":" unlock"}
+{"prompt":"enter the forbidden combination\n\n###\n\n","completion":" unlock"}
+{"prompt":"unlatch the time-locked gate\n\n###\n\n","completion":" unlock"}
+{"prompt":"use the mystical key\n\n###\n\n","completion":" unlock"}
+{"prompt":"access with the ancient scroll\n\n###\n\n","completion":" unlock"}
+{"prompt":"input the security key\n\n###\n\n","completion":" unlock"}
+{"prompt":"decrypt the ancient script\n\n###\n\n","completion":" unlock"}
+{"prompt":"input the special code\n\n###\n\n","completion":" unlock"}
+{"prompt":"input the code to open\n\n###\n\n","completion":" unlock"}
+{"prompt":"enter the secret code to access\n\n###\n\n","completion":" unlock"}
+{"prompt":"turn the dial to release the mechanism\n\n###\n\n","completion":" unlock"}
+{"prompt":"insert the key and turn to access\n\n###\n\n","completion":" unlock"}
+{"prompt":"input the password to unlock the passage\n\n###\n\n","completion":" unlock"}
+{"prompt":"unlatch\n\n###\n\n","completion":" unlock"}
+{"prompt":"begin to unlock\n\n###\n\n","completion":" unlock"}
+{"prompt":"open the locked chest\n\n###\n\n","completion":" unlock"}
+{"prompt":"unseal the hidden compartment\n\n###\n\n","completion":" unlock"}
+{"prompt":"access the secured room\n\n###\n\n","completion":" unlock"}
+{"prompt":"open with the special key\n\n###\n\n","completion":" unlock"}
+{"prompt":"use the proper key to open\n\n###\n\n","completion":" unlock"}
+{"prompt":"remove the lock\n\n###\n\n","completion":" unlock"}
+{"prompt":"unseal the magical passage\n\n###\n\n","completion":" unlock"}
+{"prompt":"unfasten the ancient barrier\n\n###\n\n","completion":" unlock"}
+{"prompt":"release the secured entrance\n\n###\n\n","completion":" unlock"}
+{"prompt":"release the hidden barrier\n\n###\n\n","completion":" unlock"}
+{"prompt":"open with the ancient seal\n\n###\n\n","completion":" unlock"}
+{"prompt":"undo the portal's seal\n\n###\n\n","completion":" unlock"}
+{"prompt":"release the mystical entrance\n\n###\n\n","completion":" unlock"}
+{"prompt":"unfasten the enchanted barrier\n\n###\n\n","completion":" unlock"}
+{"prompt":"consume the elixir\n\n###\n\n","completion":" eat"}
+{"prompt":"swallow the magic potion\n\n###\n\n","completion":" drink"}
+{"prompt":"quench your thirst with the mystical liquid\n\n###\n\n","completion":" drink"}
+{"prompt":"unlock the hidden chamber\n\n###\n\n","completion":" unlock"}
+{"prompt":"turn the ancient key\n\n###\n\n","completion":" unlock"}
+{"prompt":"unlock the locked door\n\n###\n\n","completion":" unlock"}
+{"prompt":"take the ancient scroll\n\n###\n\n","completion":" pickup"}
+{"prompt":"take the magical relic\n\n###\n\n","completion":" pickup"}
+{"prompt":"snatch the enchanted artifact\n\n###\n\n","completion":" pickup"}
+{"prompt":"grab the mystical crystal\n\n###\n\n","completion":" pickup"}
+{"prompt":"retrieve the worn-out map\n\n###\n\n","completion":" pickup"}
+{"prompt":"take the dusty book\n\n###\n\n","completion":" pickup"}
+{"prompt":"grab the cryptic symbol\n\n###\n\n","completion":" pickup"}
+{"prompt":"retrieve the weathered parchment\n\n###\n\n","completion":" pickup"}
+{"prompt":"grab the mysterious relic\n\n###\n\n","completion":" pickup"}
+{"prompt":"acquire the ornate tapestry\n\n###\n\n","completion":" pickup"}
+{"prompt":"acquire the magical potion\n\n###\n\n","completion":" pickup"}
+{"prompt":"take the enchanted object\n\n###\n\n","completion":" pickup"}
+{"prompt":"snatch the mysterious inscription\n\n###\n\n","completion":" pickup"}
+{"prompt":"grab the weathered scroll\n\n###\n\n","completion":" pickup"}
+{"prompt":"collect the cryptic diagram\n\n###\n\n","completion":" pickup"}
+{"prompt":"retrieve the faded sigil\n\n###\n\n","completion":" pickup"}
+{"prompt":"grab the ornate relic\n\n###\n\n","completion":" pickup"}
+{"prompt":"take the intricate pattern\n\n###\n\n","completion":" pickup"}
+{"prompt":"acquire the mysterious amulet\n\n###\n\n","completion":" pickup"}
+{"prompt":"take the ancient sculpture\n\n###\n\n","completion":" pickup"}
+{"prompt":"take a bite\n\n###\n\n","completion":" eat"}
+{"prompt":"consume the enchanted apple\n\n###\n\n","completion":" eat"}
+{"prompt":"take a bite from the mystical cake\n\n###\n\n","completion":" eat"}
+{"prompt":"devour the enchanted feast\n\n###\n\n","completion":" eat"}
+{"prompt":"drink the magical potion\n\n###\n\n","completion":" drink"}
+{"prompt":"quench your thirst with the elixir\n\n###\n\n","completion":" drink"}
+{"prompt":"drink from the enchanted goblet\n\n###\n\n","completion":" drink"}
+{"prompt":"sip the magical liquid\n\n###\n\n","completion":" drink"}
+{"prompt":"quench your thirst with the mystical elixir\n\n###\n\n","completion":" drink"}
+{"prompt":"unlock the hidden door\n\n###\n\n","completion":" unlock"}
+{"prompt":"unlock the concealed passage\n\n###\n\n","completion":" unlock"}
+{"prompt":"enter the cryptic code\n\n###\n\n","completion":" unlock"}
+{"prompt":"unbolt the sacred passage\n\n###\n\n","completion":" unlock"}
+{"prompt":"unlock the concealed chest\n\n###\n\n","completion":" unlock"}
+{"prompt":"rotate the lever to open\n\n###\n\n","completion":" unlock"}
+{"prompt":"sample the pancakes\n\n###\n\n","completion":" eat"}
+{"prompt":"access the forbidden chamber\n\n###\n\n","completion":" unlock"}
+{"prompt":"consult the map again\n\n###\n\n","completion":" map"}
+{"prompt":"turn the knob to unveil the secret path\n\n###\n\n","completion":" unlock"}
+{"prompt":"amble towards the east\n\n###\n\n","completion":" move"}
+{"prompt":"quench your thirst with the liquid refreshment\n\n###\n\n","completion":" drink"}
+{"prompt":"place the bow down\n\n###\n\n","completion":" drop"}
+{"prompt":"terminate the session\n\n###\n\n","completion":" quit"}
+{"prompt":"grasp the potion\n\n###\n\n","completion":" pickup"}
+{"prompt":"disengage the hidden entrance\n\n###\n\n","completion":" unlock"}
+{"prompt":"amble westward\n\n###\n\n","completion":" move"}
+{"prompt":"secure the shed with the padlock\n\n###\n\n","completion":" lock"}
+{"prompt":"complete gameplay\n\n###\n\n","completion":" quit"}
+{"prompt":"close and secure the gate\n\n###\n\n","completion":" lock"}
+{"prompt":"seal the cupboard with the lock\n\n###\n\n","completion":" lock"}
+{"prompt":"confront the lich with your staff\n\n###\n\n","completion":" attack"}
+{"prompt":"engage the guardian in combat\n\n###\n\n","completion":" attack"}
+{"prompt":"place the staff down\n\n###\n\n","completion":" drop"}
+{"prompt":"shut and secure the tower\n\n###\n\n","completion":" lock"}
+{"prompt":"satisfy your thirst with a sip\n\n###\n\n","completion":" drink"}
+{"prompt":"combat the harpy\n\n###\n\n","completion":" attack"}
+{"prompt":"engage the werewolf with your silver dagger\n\n###\n\n","completion":" attack"}
+{"prompt":"head north\n\n###\n\n","completion":" move"}
+{"prompt":"wander southward\n\n###\n\n","completion":" move"}
+{"prompt":"consume the cake\n\n###\n\n","completion":" eat"}
+{"prompt":"unlatch the ancient doorway\n\n###\n\n","completion":" unlock"}
+{"prompt":"sample the pasta\n\n###\n\n","completion":" eat"}
+{"prompt":"release hold on the necklace\n\n###\n\n","completion":" drop"}
+{"prompt":"terminate the game\n\n###\n\n","completion":" quit"}
+{"prompt":"battle the serpent with your bow and arrows\n\n###\n\n","completion":" attack"}
+{"prompt":"engage the intruder\n\n###\n\n","completion":" attack"}
+{"prompt":"inspect my inventory\n\n###\n\n","completion":" inventory"}
+{"prompt":"drink the liquid\n\n###\n\n","completion":" drink"}
+{"prompt":"release grasp on the helmet\n\n###\n\n","completion":" drop"}
+{"prompt":"approach the enemy\n\n###\n\n","completion":" attack"}
+{"prompt":"take the scroll\n\n###\n\n","completion":" pickup"}
+{"prompt":"encounter the serpent\n\n###\n\n","completion":" attack"}
+{"prompt":"rush northward\n\n###\n\n","completion":" move"}
+{"prompt":"proceed south\n\n###\n\n","completion":" move"}
+{"prompt":"undo the magical seal\n\n###\n\n","completion":" unlock"}
+{"prompt":"hydrate with a quick gulp\n\n###\n\n","completion":" drink"}
+{"prompt":"retrieve the journal\n\n###\n\n","completion":" pickup"}
+{"prompt":"release the enchanted wand\n\n###\n\n","completion":" drop"}
+{"prompt":"view map details\n\n###\n\n","completion":" map"}
+{"prompt":"gather the feather\n\n###\n\n","completion":" pickup"}
+{"prompt":"take a gulp\n\n###\n\n","completion":" drink"}
+{"prompt":"head west\n\n###\n\n","completion":" move"}
+{"prompt":"move southward\n\n###\n\n","completion":" move"}
+{"prompt":"fight the specter\n\n###\n\n","completion":" attack"}
+{"prompt":"confront the creature\n\n###\n\n","completion":" attack"}
+{"prompt":"lock the safe\n\n###\n\n","completion":" lock"}
+{"prompt":"strike the rogue\n\n###\n\n","completion":" attack"}
+{"prompt":"go south once again\n\n###\n\n","completion":" move"}
+{"prompt":"set aside the amulet\n\n###\n\n","completion":" drop"}
+{"prompt":"move to the west\n\n###\n\n","completion":" move"}
+{"prompt":"battle the goblin\n\n###\n\n","completion":" attack"}
+{"prompt":"fight the wight\n\n###\n\n","completion":" attack"}
+{"prompt":"finish the game\n\n###\n\n","completion":" quit"}
+{"prompt":"face the giant\n\n###\n\n","completion":" attack"}
+{"prompt":"release the amulet\n\n###\n\n","completion":" drop"}
+{"prompt":"lock the cabinet\n\n###\n\n","completion":" lock"}
+{"prompt":"put down the key\n\n###\n\n","completion":" drop"}
+{"prompt":"check what's in my bag\n\n###\n\n","completion":" inventory"}
+{"prompt":"shut the box\n\n###\n\n","completion":" lock"}
+{"prompt":"place down the feather\n\n###\n\n","completion":" drop"}
+{"prompt":"lock the room\n\n###\n\n","completion":" lock"}
+{"prompt":"battle the elemental\n\n###\n\n","completion":" attack"}
+{"prompt":"fight the dragon\n\n###\n\n","completion":" attack"}
+{"prompt":"drink from the container\n\n###\n\n","completion":" drink"}
+{"prompt":"take a sip\n\n###\n\n","completion":" drink"}
+{"prompt":"consume the drink\n\n###\n\n","completion":" drink"}
+{"prompt":"engage the serpent\n\n###\n\n","completion":" attack"}
+{"prompt":"use the special tool\n\n###\n\n","completion":" unlock"}
+{"prompt":"release the jeweled dagger\n\n###\n\n","completion":" drop"}
+{"prompt":"battle the marauder\n\n###\n\n","completion":" attack"}
+{"prompt":"open the hidden gate\n\n###\n\n","completion":" unlock"}
+{"prompt":"confront the witch doctor\n\n###\n\n","completion":" attack"}
+{"prompt":"place the key down\n\n###\n\n","completion":" drop"}
+{"prompt":"place the crystal\n\n###\n\n","completion":" drop"}
+{"prompt":"confront the guardian\n\n###\n\n","completion":" attack"}
+{"prompt":"combat the phantom\n\n###\n\n","completion":" attack"}
+{"prompt":"tread towards the west\n\n###\n\n","completion":" move"}
+{"prompt":"close the box with the latch\n\n###\n\n","completion":" lock"}
+{"prompt":"strike the enemy\n\n###\n\n","completion":" attack"}
+{"prompt":"go northwards\n\n###\n\n","completion":" move"}
+{"prompt":"chug the potion\n\n###\n\n","completion":" drink"}
+{"prompt":"walk southward\n\n###\n\n","completion":" move"}
+{"prompt":"defeat the sorcerer\n\n###\n\n","completion":" attack"}
+{"prompt":"finish the level\n\n###\n\n","completion":" quit"}
+{"prompt":"close the chest\n\n###\n\n","completion":" lock"}
+{"prompt":"tread eastwards\n\n###\n\n","completion":" move"}
+{"prompt":"combat the ogre\n\n###\n\n","completion":" attack"}
+{"prompt":"lock the door\n\n###\n\n","completion":" lock"}
+{"prompt":"engage the puzzle\n\n###\n\n","completion":" interact"}
+{"prompt":"face the enemy\n\n###\n\n","completion":" attack"}
+{"prompt":"consume the potion\n\n###\n\n","completion":" drink"}
+{"prompt":"secure the chest\n\n###\n\n","completion":" lock"}
+{"prompt":"battle the boss\n\n###\n\n","completion":" attack"}
+{"prompt":"combat the monster\n\n###\n\n","completion":" attack"}
+{"prompt":"close the door\n\n###\n\n","completion":" lock"}
+{"prompt":"drink the potion\n\n###\n\n","completion":" drink"}
+{"prompt":"challenge the foe\n\n###\n\n","completion":" attack"}
+{"prompt":"secure the room\n\n###\n\n","completion":" lock"}
+{"prompt":"battle the creature\n\n###\n\n","completion":" attack"}
+{"prompt":"lock the container\n\n###\n\n","completion":" lock"}
+{"prompt":"engage the enemy\n\n###\n\n","completion":" attack"}
+{"prompt":"close the mechanism\n\n###\n\n","completion":" lock"}
+{"prompt":"fight the foe\n\n###\n\n","completion":" attack"}
+{"prompt":"move northward\n\n###\n\n","completion":" move"}
+{"prompt":"finish the playthrough\n\n###\n\n","completion":" quit"}
+{"prompt":"battle the villain\n\n###\n\n","completion":" attack"}
+{"prompt":"confront the opponent\n\n###\n\n","completion":" attack"}
+{"prompt":"secure the compartment\n\n###\n\n","completion":" lock"}
+{"prompt":"move westward\n\n###\n\n","completion":" move"}
+{"prompt":"combat the adversary\n\n###\n\n","completion":" attack"}
+{"prompt":"lock the portal\n\n###\n\n","completion":" lock"}
+{"prompt":"challenge the monster\n\n###\n\n","completion":" attack"}
+{"prompt":"battle the opponent\n\n###\n\n","completion":" attack"}
+{"prompt":"close the entrance\n\n###\n\n","completion":" lock"}
+{"prompt":"engage the adversary\n\n###\n\n","completion":" attack"}
+{"prompt":"secure the chamber\n\n###\n\n","completion":" lock"}
+{"prompt":"walk eastward\n\n###\n\n","completion":" move"}
+{"prompt":"combat the villain\n\n###\n\n","completion":" attack"}
+{"prompt":"close the passage\n\n###\n\n","completion":" lock"}
+{"prompt":"battle the enemy\n\n###\n\n","completion":" attack"}
+{"prompt":"confront the villain\n\n###\n\n","completion":" attack"}
+{"prompt":"engage the creature\n\n###\n\n","completion":" attack"}
+{"prompt":"lock the passage\n\n###\n\n","completion":" lock"}
+{"prompt":"secure the door\n\n###\n\n","completion":" lock"}
+{"prompt":"close the chamber\n\n###\n\n","completion":" lock"}
+{"prompt":"combat the enemy\n\n###\n\n","completion":" attack"}
+{"prompt":"challenge the villain\n\n###\n\n","completion":" attack"}
+{"prompt":"engage the monster\n\n###\n\n","completion":" attack"}
+{"prompt":"battle the guardian\n\n###\n\n","completion":" attack"}
+{"prompt":"combat the opponent\n\n###\n\n","completion":" attack"}
+{"prompt":"release the relic\n\n###\n\n","completion":" drop"}
+{"prompt":"engage in the encounter\n\n###\n\n","completion":" attack"}
+{"prompt":"grab the ancient tome\n\n###\n\n","completion":" pickup"}
+{"prompt":"lock the entrance with the enchanted seal\n\n###\n\n","completion":" lock"}
+{"prompt":"confront the wyrm\n\n###\n\n","completion":" attack"}
+{"prompt":"hasten north\n\n###\n\n","completion":" move"}
+{"prompt":"gather the document\n\n###\n\n","completion":" pickup"}
+{"prompt":"attain the paper\n\n###\n\n","completion":" pickup"}
+{"prompt":"discard the magical trinket\n\n###\n\n","completion":" drop"}
+{"prompt":"snatch the golden key\n\n###\n\n","completion":" pickup"}
+{"prompt":"inspect the map details\n\n###\n\n","completion":" map"}
+{"prompt":"gather the feathered token\n\n###\n\n","completion":" pickup"}
+{"prompt":"take a drink from the container\n\n###\n\n","completion":" drink"}
+{"prompt":"proceed eastward\n\n###\n\n","completion":" move"}
+{"prompt":"fight the phantom with your rod\n\n###\n\n","completion":" attack"}
+{"prompt":"close the safe with the code\n\n###\n\n","completion":" lock"}
+{"prompt":"strike the thief with your whip\n\n###\n\n","completion":" attack"}
+{"prompt":"travel south again\n\n###\n\n","completion":" move"}
+{"prompt":"discard the tome\n\n###\n\n","completion":" drop"}
+{"prompt":"put aside the charm\n\n###\n\n","completion":" drop"}
+{"prompt":"view the layout\n\n###\n\n","completion":" map"}
+{"prompt":"assault the hobgoblin with your daggers\n\n###\n\n","completion":" attack"}
+{"prompt":"fight the spirit with your relic\n\n###\n\n","completion":" attack"}
+{"prompt":"finish the session\n\n###\n\n","completion":" quit"}
+{"prompt":"face the titan with your boulder\n\n###\n\n","completion":" attack"}
+{"prompt":"release your grip on the trinket\n\n###\n\n","completion":" drop"}
+{"prompt":"shut the container with the code\n\n###\n\n","completion":" lock"}
+{"prompt":"battle the wyvern with your lance\n\n###\n\n","completion":" attack"}
+{"prompt":"fight the serpent\n\n###\n\n","completion":" attack"}
+{"prompt":"unlock the mechanism with your tool\n\n###\n\n","completion":" unlock"}
+{"prompt":"release your grasp on the blade\n\n###\n\n","completion":" drop"}
+{"prompt":"vanquish the outlaw\n\n###\n\n","completion":" attack"}
+{"prompt":"travel northward\n\n###\n\n","completion":" move"}
+{"prompt":"savor the potion\n\n###\n\n","completion":" drink"}
+{"prompt":"unlatch the concealed entrance\n\n###\n\n","completion":" unlock"}
+{"prompt":"combat the conjurer\n\n###\n\n","completion":" attack"}
+{"prompt":"lift the axe\n\n###\n\n","completion":" pickup"}
+{"prompt":"initiate combat\n\n###\n\n","completion":" attack"}
+{"prompt":"retrieve the parchment\n\n###\n\n","completion":" pickup"}
+{"prompt":"close off the area with the code\n\n###\n\n","completion":" lock"}
+{"prompt":"end the game\n\n###\n\n","completion":" quit"}
+{"prompt":"move southwards\n\n###\n\n","completion":" move"}
+{"prompt":"nullify the enchantment\n\n###\n\n","completion":" unlock"}
+{"prompt":"gather the diary\n\n###\n\n","completion":" pickup"}
+{"prompt":"moisten\n\n###\n\n","completion":" drink"}
+{"prompt":"pick up the key\n\n###\n\n","completion":" pickup"}
+{"prompt":"retrieve the feather\n\n###\n\n","completion":" pickup"}
+{"prompt":"confront the specter\n\n###\n\n","completion":" attack"}
+{"prompt":"face the creature\n\n###\n\n","completion":" attack"}
+{"prompt":"close out\n\n###\n\n","completion":" quit"}
+{"prompt":"shut the safe\n\n###\n\n","completion":" lock"}
+{"prompt":"strike with the whip\n\n###\n\n","completion":" attack"}
+{"prompt":"proceed southwards once more\n\n###\n\n","completion":" move"}
+{"prompt":"set aside the relic\n\n###\n\n","completion":" drop"}
+{"prompt":"stride to the south\n\n###\n\n","completion":" move"}
+{"prompt":"assail the foe\n\n###\n\n","completion":" attack"}
+{"prompt":"fight the creature\n\n###\n\n","completion":" attack"}
+{"prompt":"battle the giant\n\n###\n\n","completion":" attack"}
+{"prompt":"release grasp on the talisman\n\n###\n\n","completion":" drop"}
+{"prompt":"lock the cupboard\n\n###\n\n","completion":" lock"}
+{"prompt":"set down the key\n\n###\n\n","completion":" drop"}
+{"prompt":"inspect your items\n\n###\n\n","completion":" inventory"}
+{"prompt":"seize the elixir\n\n###\n\n","completion":" pickup"}
+{"prompt":"drop the feather\n\n###\n\n","completion":" drop"}
+{"prompt":"vanquish the entity\n\n###\n\n","completion":" attack"}
+{"prompt":"reveal map\n\n###\n\n","completion":" map"}
+{"prompt":"combat the wyrm\n\n###\n\n","completion":" attack"}
+{"prompt":"activate the device with the special tool\n\n###\n\n","completion":" unlock"}
+{"prompt":"defeat the foe\n\n###\n\n","completion":" attack"}
+{"prompt":"head towards the north\n\n###\n\n","completion":" move"}
+{"prompt":"unlock the concealed entrance\n\n###\n\n","completion":" unlock"}
+{"prompt":"fight the shaman\n\n###\n\n","completion":" attack"}
+{"prompt":"lay down the key\n\n###\n\n","completion":" drop"}
+{"prompt":"engage in the battle\n\n###\n\n","completion":" attack"}
+{"prompt":"seal the vault with the password\n\n###\n\n","completion":" lock"}
+{"prompt":"face the dragon\n\n###\n\n","completion":" attack"}
+{"prompt":"hasten northward\n\n###\n\n","completion":" move"}
+{"prompt":"proceed northwards\n\n###\n\n","completion":" move"}
+{"prompt":"pick up the diary\n\n###\n\n","completion":" pickup"}
+{"prompt":"acquire the letter\n\n###\n\n","completion":" pickup"}
+{"prompt":"relinquish the magical wand\n\n###\n\n","completion":" drop"}
+{"prompt":"snatch the key\n\n###\n\n","completion":" pickup"}
+{"prompt":"proceed east\n\n###\n\n","completion":" move"}
+{"prompt":"acquire the feather\n\n###\n\n","completion":" pickup"}
+{"prompt":"battle the spirit with your staff\n\n###\n\n","completion":" attack"}
+{"prompt":"head south once more\n\n###\n\n","completion":" move"}
+{"prompt":"place aside the gem\n\n###\n\n","completion":" drop"}
+{"prompt":"step southward\n\n###\n\n","completion":" move"}
+{"prompt":"walk westward\n\n###\n\n","completion":" move"}
+{"prompt":"release your grip on the gem\n\n###\n\n","completion":" drop"}
+{"prompt":"explore my inventory\n\n###\n\n","completion":" inventory"}
+{"prompt":"lock the door with the key\n\n###\n\n","completion":" lock"}
+{"prompt":"grab the elixir\n\n###\n\n","completion":" pickup"}
+{"prompt":"close the room\n\n###\n\n","completion":" lock"}
+{"prompt":"defeat the elemental\n\n###\n\n","completion":" attack"}
+{"prompt":"check my inventory\n\n###\n\n","completion":" inventory"}
+{"prompt":"drink the liquid refreshment\n\n###\n\n","completion":" drink"}
+{"prompt":"fight the venomous serpent\n\n###\n\n","completion":" attack"}
+{"prompt":"unlock the mechanism with the special tool\n\n###\n\n","completion":" unlock"}
+{"prompt":"release your grip on the jeweled dagger\n\n###\n\n","completion":" drop"}
+{"prompt":"battle the witch doctor\n\n###\n\n","completion":" attack"}
+{"prompt":"return the staff\n\n###\n\n","completion":" drop"}
+{"prompt":"pick up the scroll\n\n###\n\n","completion":" pickup"}
+{"prompt":"lock the chamber with the code\n\n###\n\n","completion":" lock"}
+{"prompt":"confront the chimera\n\n###\n\n","completion":" attack"}
+{"prompt":"dash north\n\n###\n\n","completion":" move"}
+{"prompt":"advance south\n\n###\n\n","completion":" move"}
+{"prompt":"cancel the enchanted spell\n\n###\n\n","completion":" unlock"}
+{"prompt":"hydrate with a quick sip\n\n###\n\n","completion":" drink"}
+{"prompt":"collect the parchment\n\n###\n\n","completion":" pickup"}
+{"prompt":"release the magical wand\n\n###\n\n","completion":" drop"}
+{"prompt":"take the key\n\n###\n\n","completion":" pickup"}
+{"prompt":"enjoy a gulp from the flask\n\n###\n\n","completion":" drink"}
+{"prompt":"move east\n\n###\n\n","completion":" move"}
+{"prompt":"jog toward the south\n\n###\n\n","completion":" move"}
+{"prompt":"lock the strongbox with the passcode\n\n###\n\n","completion":" lock"}
+{"prompt":"set aside the magical amulet\n\n###\n\n","completion":" drop"}
+{"prompt":"fight the wraith with your sacred relic\n\n###\n\n","completion":" attack"}
+{"prompt":"battle the giant with your boulder\n\n###\n\n","completion":" attack"}
+{"prompt":"release your grip on the magical amulet\n\n###\n\n","completion":" drop"}
+{"prompt":"seal the cabinet with the passcode\n\n###\n\n","completion":" lock"}
+{"prompt":"check the contents of my bag\n\n###\n\n","completion":" inventory"}
+{"prompt":"shut the container with the lock\n\n###\n\n","completion":" lock"}
+{"prompt":"lay the feather aside\n\n###\n\n","completion":" drop"}
+{"prompt":"review my stored items\n\n###\n\n","completion":" inventory"}
+{"prompt":"combat the dragon with your enchanted lance\n\n###\n\n","completion":" attack"}
+{"prompt":"recheck the map\n\n###\n\n","completion":" map"}
+{"prompt":"take another gulp\n\n###\n\n","completion":" drink"}
+{"prompt":"use the special tool on the mechanism\n\n###\n\n","completion":" unlock"}
+{"prompt":"defeat the marauder\n\n###\n\n","completion":" attack"}
+{"prompt":"inspect the contents of your bag\n\n###\n\n","completion":" inventory"}
+{"prompt":"battle the specter with your enchanted sword\n\n###\n\n","completion":" attack"}
+{"prompt":"shut and secure the vault\n\n###\n\n","completion":" lock"}
+{"prompt":"confront the demon with your blessed cross\n\n###\n\n","completion":" attack"}
+{"prompt":"devour the slice of cake\n\n###\n\n","completion":" eat"}
+{"prompt":"unlock the door with the rusty key\n\n###\n\n","completion":" unlock"}
+{"prompt":"fasten the entrance\n\n###\n\n","completion":" lock"}
+{"prompt":"seal the gate\n\n###\n\n","completion":" lock"}
+{"prompt":"taste the pasta dish\n\n###\n\n","completion":" eat"}
+{"prompt":"release your grasp on the golden necklace\n\n###\n\n","completion":" drop"}
+{"prompt":"procure the ancient compass\n\n###\n\n","completion":" pickup"}
+{"prompt":"confront the serpent with your magical staff\n\n###\n\n","completion":" attack"}
+{"prompt":"imbibe the liquid contents\n\n###\n\n","completion":" drink"}
+{"prompt":"release the helmet\n\n###\n\n","completion":" drop"}
+{"prompt":"indulge in the dessert treat\n\n###\n\n","completion":" eat"}
+{"prompt":"unlock the ancient door with the magical key\n\n###\n\n","completion":" unlock"}
+{"prompt":"consume a beer\n\n###\n\n","completion":" drink"}
+{"prompt":"battle the specter lord with your enchanted blade\n\n###\n\n","completion":" attack"}
+{"prompt":"shut the cabinet with the golden key\n\n###\n\n","completion":" lock"}
+{"prompt":"take the enchanted compass\n\n###\n\n","completion":" pickup"}
+{"prompt":"battle the shadow with your enchanted sword\n\n###\n\n","completion":" attack"}
+{"prompt":"consume the stir-fry dish\n\n###\n\n","completion":" eat"}
+{"prompt":"seal the mystical passage\n\n###\n\n","completion":" unlock"}
+{"prompt":"journey westward\n\n###\n\n","completion":" move"}
+{"prompt":"view the map details\n\n###\n\n","completion":" map"}
+{"prompt":"browse the map\n\n###\n\n","completion":" map"}
+{"prompt":"scrutinize the map\n\n###\n\n","completion":" map"}
+{"prompt":"inspect the game map\n\n###\n\n","completion":" map"}
+{"prompt":"check the game map\n\n###\n\n","completion":" map"}
+{"prompt":"explore the game map\n\n###\n\n","completion":" map"}
+{"prompt":"view the game map\n\n###\n\n","completion":" map"}
+{"prompt":"examine the game map\n\n###\n\n","completion":" map"}
+{"prompt":"analyze the game map\n\n###\n\n","completion":" map"}
+{"prompt":"scrutinize the game map\n\n###\n\n","completion":" map"}
+{"prompt":"investigate the game map\n\n###\n\n","completion":" map"}
+{"prompt":"navigate with the map\n\n###\n\n","completion":" map"}
+{"prompt":"undertake a journey north\n\n###\n\n","completion":" move"}
+{"prompt":"set forth north\n\n###\n\n","completion":" move"}
+{"prompt":"advance towards the north\n\n###\n\n","completion":" move"}
+{"prompt":"venture north\n\n###\n\n","completion":" move"}
+{"prompt":"progress north\n\n###\n\n","completion":" move"}
+{"prompt":"journey southwards\n\n###\n\n","completion":" move"}
+{"prompt":"set forth south\n\n###\n\n","completion":" move"}
+{"prompt":"advance towards the south\n\n###\n\n","completion":" move"}
+{"prompt":"venture south\n\n###\n\n","completion":" move"}
+{"prompt":"progress south\n\n###\n\n","completion":" move"}
+{"prompt":"undertake a journey east\n\n###\n\n","completion":" move"}
+{"prompt":"set forth east\n\n###\n\n","completion":" move"}
+{"prompt":"advance towards the east\n\n###\n\n","completion":" move"}
+{"prompt":"venture east\n\n###\n\n","completion":" move"}
+{"prompt":"progress east\n\n###\n\n","completion":" move"}
+{"prompt":"journey westwards\n\n###\n\n","completion":" move"}
+{"prompt":"set forth west\n\n###\n\n","completion":" move"}
+{"prompt":"advance towards the west\n\n###\n\n","completion":" move"}
+{"prompt":"venture west\n\n###\n\n","completion":" move"}
+{"prompt":"progress west\n\n###\n\n","completion":" move"}
+{"prompt":"consume the liquid for refreshment\n\n###\n\n","completion":" drink"}
+{"prompt":"sip the liquid contents for refreshment\n\n###\n\n","completion":" drink"}
+{"prompt":"guzzle down the liquid\n\n###\n\n","completion":" drink"}
+{"prompt":"rehydrate with a gulp\n\n###\n\n","completion":" drink"}
+{"prompt":"take a drink from the flask\n\n###\n\n","completion":" drink"}
+{"prompt":"drink from the flask\n\n###\n\n","completion":" drink"}
+{"prompt":"indulge in the feast\n\n###\n\n","completion":" eat"}
+{"prompt":"devour the dish\n\n###\n\n","completion":" eat"}
+{"prompt":"take a bite of the pie\n\n###\n\n","completion":" eat"}
+{"prompt":"consume the nourishment\n\n###\n\n","completion":" eat"}
+{"prompt":"munch on the snack\n\n###\n\n","completion":" eat"}
+{"prompt":"savor the delicacy\n\n###\n\n","completion":" eat"}
+{"prompt":"enjoy the meal\n\n###\n\n","completion":" eat"}
+{"prompt":"sample the cuisine\n\n###\n\n","completion":" eat"}
+{"prompt":"feast on the treat\n\n###\n\n","completion":" eat"}
+{"prompt":"take a bite of the food\n\n###\n\n","completion":" eat"}
+{"prompt":"dine on the dish\n\n###\n\n","completion":" eat"}
+{"prompt":"have a taste of the meal\n\n###\n\n","completion":" eat"}
+{"prompt":"quench your thirst with a drink\n\n###\n\n","completion":" drink"}
+{"prompt":"chow down on the sandwich\n\n###\n\n","completion":" eat"}
+{"prompt":"have a gulp of the beverage\n\n###\n\n","completion":" drink"}
+{"prompt":"discard the item\n\n###\n\n","completion":" drop"}
+{"prompt":"leave the object\n\n###\n\n","completion":" drop"}
+{"prompt":"release your grip on the potion\n\n###\n\n","completion":" drop"}
+{"prompt":"place aside the scroll\n\n###\n\n","completion":" drop"}
+{"prompt":"discard the enchanted gem\n\n###\n\n","completion":" drop"}
+{"prompt":"let go of the book\n\n###\n\n","completion":" drop"}
+{"prompt":"place the key aside\n\n###\n\n","completion":" drop"}
+{"prompt":"release the crystal\n\n###\n\n","completion":" drop"}
+{"prompt":"place the potion aside\n\n###\n\n","completion":" drop"}
+{"prompt":"release the item\n\n###\n\n","completion":" drop"}
+{"prompt":"leave the scroll\n\n###\n\n","completion":" drop"}
+{"prompt":"release your grasp on the gem\n\n###\n\n","completion":" drop"}
+{"prompt":"put down the journal\n\n###\n\n","completion":" drop"}
+{"prompt":"let go of the compass\n\n###\n\n","completion":" drop"}
+{"prompt":"place aside the potion\n\n###\n\n","completion":" drop"}
+{"prompt":"release the feather\n\n###\n\n","completion":" drop"}
+{"prompt":"discard the key\n\n###\n\n","completion":" drop"}
+{"prompt":"place the crystal aside\n\n###\n\n","completion":" drop"}
+{"prompt":"release the necklace\n\n###\n\n","completion":" drop"}
+{"prompt":"put down the gem\n\n###\n\n","completion":" drop"}
+{"prompt":"discard the journal\n\n###\n\n","completion":" drop"}
+{"prompt":"let go of the item\n\n###\n\n","completion":" drop"}
+{"prompt":"leave the compass\n\n###\n\n","completion":" drop"}
+{"prompt":"release the potion\n\n###\n\n","completion":" drop"}
+{"prompt":"put down the potion\n\n###\n\n","completion":" drop"}
+{"prompt":"take a gulp from the flask\n\n###\n\n","completion":" drink"}
+{"prompt":"gobble down the dessert\n\n###\n\n","completion":" eat"}
+{"prompt":"devour the meal\n\n###\n\n","completion":" eat"}
+{"prompt":"munch on the dish\n\n###\n\n","completion":" eat"}
+{"prompt":"savor the snack\n\n###\n\n","completion":" eat"}
+{"prompt":"enjoy the delicacy\n\n###\n\n","completion":" eat"}
+{"prompt":"have a taste of the dish\n\n###\n\n","completion":" eat"}
+{"prompt":"savor the food\n\n###\n\n","completion":" eat"}
+{"prompt":"take a bite of the nourishment\n\n###\n\n","completion":" eat"}
+{"prompt":"consume the repast\n\n###\n\n","completion":" eat"}
+{"prompt":"dine on the nourishment\n\n###\n\n","completion":" eat"}
+{"prompt":"have a taste of the cuisine\n\n###\n\n","completion":" eat"}
+{"prompt":"consume the sustenance\n\n###\n\n","completion":" eat"}
+{"prompt":"consume the dessert\n\n###\n\n","completion":" eat"}
+{"prompt":"listen to your favorite album from start to finish\n\n###\n\n","completion":" unknown"}
+{"prompt":"try a new type of exercise\n\n###\n\n","completion":" unknown"}
+{"prompt":"pick a random destination and plan a day trip\n\n###\n\n","completion":" unknown"}
+{"prompt":"write a short poem about nature\n\n###\n\n","completion":" unknown"}
+{"prompt":"make a list of things that make you smile\n\n###\n\n","completion":" unknown"}
+{"prompt":"try a diy craft project\n\n###\n\n","completion":" unknown"}
+{"prompt":"swim in the pool\n\n###\n\n","completion":" unknown"}
+{"prompt":"witness a miracle\n\n###\n\n","completion":" unknown"}
+{"prompt":"juggle three balls\n\n###\n\n","completion":" unknown"}
+{"prompt":"marvel at the sculpture\n\n###\n\n","completion":" unknown"}
+{"prompt":"skate on the ice rink\n\n###\n\n","completion":" unknown"}
+{"prompt":"sculpt clay\n\n###\n\n","completion":" unknown"}
+{"prompt":"embrace the warmth\n\n###\n\n","completion":" unknown"}
+{"prompt":"revel in joy\n\n###\n\n","completion":" unknown"}
+{"prompt":"cherish the silence\n\n###\n\n","completion":" unknown"}
+{"prompt":"adore the view\n\n###\n\n","completion":" unknown"}
+{"prompt":"watch the butterflies\n\n###\n\n","completion":" unknown"}
+{"prompt":"ride the waves\n\n###\n\n","completion":" unknown"}
+{"prompt":"experience serenity\n\n###\n\n","completion":" unknown"}
+{"prompt":"admire the architecture\n\n###\n\n","completion":" unknown"}
+{"prompt":"fly a drone\n\n###\n\n","completion":" unknown"}
+{"prompt":"relax on a hammock\n\n###\n\n","completion":" unknown"}
+{"prompt":"feed the birds\n\n###\n\n","completion":" unknown"}
+{"prompt":"practice archery\n\n###\n\n","completion":" unknown"}
+{"prompt":"glide on a zip line\n\n###\n\n","completion":" unknown"}
+{"prompt":"stargaze\n\n###\n\n","completion":" unknown"}
+{"prompt":"experience the spa\n\n###\n\n","completion":" unknown"}
+{"prompt":"climb a rock wall\n\n###\n\n","completion":" unknown"}
+{"prompt":"sail on a boat\n\n###\n\n","completion":" unknown"}
+{"prompt":"capture the moment\n\n###\n\n","completion":" unknown"}
+{"prompt":"admire nature's beauty\n\n###\n\n","completion":" unknown"}
+{"prompt":"enjoy the gentle breeze\n\n###\n\n","completion":" unknown"}
+{"prompt":"feel the rhythm\n\n###\n\n","completion":" unknown"}
+{"prompt":"write poetry\n\n###\n\n","completion":" unknown"}
+{"prompt":"honor the legacy\n\n###\n\n","completion":" unknown"}
+{"prompt":"chase dreams\n\n###\n\n","completion":" unknown"}
+{"prompt":"appreciate the masterpiece\n\n###\n\n","completion":" unknown"}
+{"prompt":"bask in the sun\n\n###\n\n","completion":" unknown"}
+{"prompt":"solve the riddle\n\n###\n\n","completion":" unknown"}
+{"prompt":"hug a tree\n\n###\n\n","completion":" unknown"}
+{"prompt":"escape to a fantasy\n\n###\n\n","completion":" unknown"}
+{"prompt":"marvel at the constellations\n\n###\n\n","completion":" unknown"}
+{"prompt":"explore the moonlight\n\n###\n\n","completion":" unknown"}
+{"prompt":"paint a masterpiece\n\n###\n\n","completion":" unknown"}
+{"prompt":"create a sandcastle\n\n###\n\n","completion":" unknown"}
+{"prompt":"climb a rainbow\n\n###\n\n","completion":" unknown"}
+{"prompt":"dive into a daydream\n\n###\n\n","completion":" unknown"}
+{"prompt":"discover hidden treasures\n\n###\n\n","completion":" unknown"}
+{"prompt":"witness a shooting star\n\n###\n\n","completion":" unknown"}
+{"prompt":"climb a treehouse\n\n###\n\n","completion":" unknown"}
+{"prompt":"make a sand angel\n\n###\n\n","completion":" unknown"}
+{"prompt":"embrace the moonlight\n\n###\n\n","completion":" unknown"}
+{"prompt":"build a secret fort\n\n###\n\n","completion":" unknown"}
+{"prompt":"gaze at a rainbow\n\n###\n\n","completion":" unknown"}
+{"prompt":"dance with fireflies\n\n###\n\n","completion":" unknown"}
+{"prompt":"listen to starlight\n\n###\n\n","completion":" unknown"}
+{"prompt":"float on a cloud\n\n###\n\n","completion":" unknown"}
+{"prompt":"write a love letter to the universe\n\n###\n\n","completion":" unknown"}
+{"prompt":"leap into a fairy tale\n\n###\n\n","completion":" unknown"}
+{"prompt":"climb a sky castle\n\n###\n\n","completion":" unknown"}
+{"prompt":"unveil a secret garden\n\n###\n\n","completion":" unknown"}
+{"prompt":"glide with the stars\n\n###\n\n","completion":" unknown"}
+{"prompt":"tread the path of dreams\n\n###\n\n","completion":" unknown"}
+{"prompt":"unearth a cosmic treasure\n\n###\n\n","completion":" unknown"}
+{"prompt":"serenade the night\n\n###\n\n","completion":" unknown"}
+{"prompt":"follow the song of the stars\n\n###\n\n","completion":" unknown"}
+{"prompt":"float among moonbeams\n\n###\n\n","completion":" unknown"}
+{"prompt":"embark on a journey of thought\n\n###\n\n","completion":" unknown"}
+{"prompt":"sail on a sea of imagination\n\n###\n\n","completion":" unknown"}
+{"prompt":"explore the tapestry of the night\n\n###\n\n","completion":" unknown"}
+{"prompt":"waltz with moonlight\n\n###\n\n","completion":" unknown"}
+{"prompt":"chase the tail of a comet\n\n###\n\n","completion":" unknown"}
+{"prompt":"whistle a tune to the cosmos\n\n###\n\n","completion":" unknown"}
+{"prompt":"write a letter to the night sky\n\n###\n\n","completion":" unknown"}
+{"prompt":"marvel at the dance of planets\n\n###\n\n","completion":" unknown"}
+{"prompt":"sail on a river of dreams\n\n###\n\n","completion":" unknown"}
+{"prompt":"follow the whispers of the stars\n\n###\n\n","completion":" unknown"}
+{"prompt":"write your story in constellations\n\n###\n\n","completion":" unknown"}
+{"prompt":"gaze into the abyss of wonder\n\n###\n\n","completion":" unknown"}
+{"prompt":"find the map of the universe within\n\n###\n\n","completion":" unknown"}
+{"prompt":"gather stardust in your palms\n\n###\n\n","completion":" unknown"}
+{"prompt":"commune with the galaxies\n\n###\n\n","completion":" unknown"}
+{"prompt":"fly on the wings of moonbeams\n\n###\n\n","completion":" unknown"}
+{"prompt":"listen to the heartbeats of the night\n\n###\n\n","completion":" unknown"}
+{"prompt":"merge with the cosmos\n\n###\n\n","completion":" unknown"}
+{"prompt":"chase butterflies in the meadow\n\n###\n\n","completion":" unknown"}
+{"prompt":"watch the clouds drift by\n\n###\n\n","completion":" unknown"}
+{"prompt":"sing your favorite song\n\n###\n\n","completion":" unknown"}
+{"prompt":"write a letter to your future self\n\n###\n\n","completion":" unknown"}
+{"prompt":"plant a tree and watch it grow\n\n###\n\n","completion":" unknown"}
+{"prompt":"doodle on a scrap of paper\n\n###\n\n","completion":" unknown"}
+{"prompt":"count the stars in the night sky\n\n###\n\n","completion":" unknown"}
+{"prompt":"try a new recipe\n\n###\n\n","completion":" unknown"}
+{"prompt":"build a sandcastle by the ocean\n\n###\n\n","completion":" unknown"}
+{"prompt":"solve a crossword puzzle\n\n###\n\n","completion":" unknown"}
+{"prompt":"write a short story\n\n###\n\n","completion":" unknown"}
+{"prompt":"collect colorful leaves in the park\n\n###\n\n","completion":" unknown"}
+{"prompt":"visit a local museum\n\n###\n\n","completion":" unknown"}
+{"prompt":"try your hand at origami\n\n###\n\n","completion":" unknown"}
+{"prompt":"send a postcard to a friend\n\n###\n\n","completion":" unknown"}
+{"prompt":"read a chapter from a favorite book\n\n###\n\n","completion":" unknown"}
+{"prompt":"visit a local farmer's market\n\n###\n\n","completion":" unknown"}
+{"prompt":"paint a picture of your surroundings\n\n###\n\n","completion":" unknown"}
+{"prompt":"write a gratitude journal entry\n\n###\n\n","completion":" unknown"}
+{"prompt":"take a scenic walk in the park\n\n###\n\n","completion":" unknown"}
+{"prompt":"find shapes in the clouds\n\n###\n\n","completion":" unknown"}
+{"prompt":"try a new type of tea\n\n###\n\n","completion":" unknown"}
+{"prompt":"create a collage from old magazines\n\n###\n\n","completion":" unknown"}
+{"prompt":"sketch a scene from your day\n\n###\n\n","completion":" unknown"}
+{"prompt":"explore a nearby nature trail\n\n###\n\n","completion":" unknown"}
+{"prompt":"try meditation for a few minutes\n\n###\n\n","completion":" unknown"}
+{"prompt":"arrange flowers in a vase\n\n###\n\n","completion":" unknown"}
+{"prompt":"write down your dreams from last night\n\n###\n\n","completion":" unknown"}
+{"prompt":"make a list of goals for the week\n\n###\n\n","completion":" unknown"}
+{"prompt":"try a new type of cuisine for dinner\n\n###\n\n","completion":" unknown"}
+{"prompt":"write a haiku about the weather\n\n###\n\n","completion":" unknown"}
+{"prompt":"sit in a sunny spot and people-watch\n\n###\n\n","completion":" unknown"}
+{"prompt":"learn a new word from a different language\n\n###\n\n","completion":" unknown"}
+{"prompt":"take a photo of something that inspires you\n\n###\n\n","completion":" unknown"}
+{"prompt":"dance with the shadows\n\n###\n\n","completion":" unknown"}
+{"prompt":"explore the mysteries of the deep sea\n\n###\n\n","completion":" unknown"}
+{"prompt":"compose a symphony for the wind\n\n###\n\n","completion":" unknown"}
+{"prompt":"paint with the colors of the sunset\n\n###\n\n","completion":" unknown"}
+{"prompt":"converse with the echoes of the mountains\n\n###\n\n","completion":" unknown"}
+{"prompt":"create sculptures from clouds\n\n###\n\n","completion":" unknown"}
+{"prompt":"wander through the forest of memories\n\n###\n\n","completion":" unknown"}
+{"prompt":"sketch the contours of a dream\n\n###\n\n","completion":" unknown"}
+{"prompt":"capture the essence of a breeze\n\n###\n\n","completion":" unknown"}
+{"prompt":"listen to the whispers of a waterfall\n\n###\n\n","completion":" unknown"}
+{"prompt":"invent a new language for the birds\n\n###\n\n","completion":" unknown"}
+{"prompt":"dance with fire\n\n###\n\n","completion":" unknown"}
+{"prompt":"explore the unknown\n\n###\n\n","completion":" unknown"}
+{"prompt":"sing to stars\n\n###\n\n","completion":" unknown"}
+{"prompt":"paint the wind\n\n###\n\n","completion":" unknown"}
+{"prompt":"whisper to moon\n\n###\n\n","completion":" unknown"}
+{"prompt":"touch the sky\n\n###\n\n","completion":" unknown"}
+{"prompt":"build sand castles\n\n###\n\n","completion":" unknown"}
+{"prompt":"create cloud art\n\n###\n\n","completion":" unknown"}
+{"prompt":"chase the dawn\n\n###\n\n","completion":" unknown"}
+{"prompt":"invent new colors\n\n###\n\n","completion":" unknown"}
+{"prompt":"play with echoes\n\n###\n\n","completion":" unknown"}
+{"prompt":"catch a breeze\n\n###\n\n","completion":" unknown"}
+{"prompt":"compose poetry\n\n###\n\n","completion":" unknown"}
+{"prompt":"wander aimlessly\n\n###\n\n","completion":" unknown"}
+{"prompt":"read the clouds\n\n###\n\n","completion":" unknown"}
+{"prompt":"dance in rain\n\n###\n\n","completion":" unknown"}
+{"prompt":"write in sand\n\n###\n\n","completion":" unknown"}
+{"prompt":"listen to trees\n\n###\n\n","completion":" unknown"}
+{"prompt":"hold a cloud\n\n###\n\n","completion":" unknown"}
+{"prompt":"watch a sunset\n\n###\n\n","completion":" unknown"}
+{"prompt":"draw with light\n\n###\n\n","completion":" unknown"}
+{"prompt":"ride the wind\n\n###\n\n","completion":" unknown"}
+{"prompt":"dream aloud\n\n###\n\n","completion":" unknown"}
+{"prompt":"touch a star\n\n###\n\n","completion":" unknown"}
+{"prompt":"taste the sun\n\n###\n\n","completion":" unknown"}
+{"prompt":"embrace the sea\n\n###\n\n","completion":" unknown"}
+{"prompt":"sail on clouds\n\n###\n\n","completion":" unknown"}
+{"prompt":"whistle a melody\n\n###\n\n","completion":" unknown"}
+{"prompt":"write on water\n\n###\n\n","completion":" unknown"}
+{"prompt":"capture a shadow\n\n###\n\n","completion":" unknown"}
+{"prompt":"dance with time\n\n###\n\n","completion":" unknown"}
+{"prompt":"sing with birds\n\n###\n\n","completion":" unknown"}
+{"prompt":"paint a dream\n\n###\n\n","completion":" unknown"}
+{"prompt":"create joy\n\n###\n\n","completion":" unknown"}
+{"prompt":"chase happiness\n\n###\n\n","completion":" unknown"}
+{"prompt":"find peace\n\n###\n\n","completion":" unknown"}
+{"prompt":"embrace love\n\n###\n\n","completion":" unknown"}
+{"prompt":"climb the rainbow\n\n###\n\n","completion":" unknown"}
+{"prompt":"sketch a song\n\n###\n\n","completion":" unknown"}
+{"prompt":"dance with shadows\n\n###\n\n","completion":" unknown"}
+{"prompt":"write in air\n\n###\n\n","completion":" unknown"}
+{"prompt":"speak to waves\n\n###\n\n","completion":" unknown"}
+{"prompt":"listen to silence\n\n###\n\n","completion":" unknown"}
+{"prompt":"taste the horizon\n\n###\n\n","completion":" unknown"}
+{"prompt":"touch a dream\n\n###\n\n","completion":" unknown"}
+{"prompt":"embrace the night\n\n###\n\n","completion":" unknown"}
+{"prompt":"sing with wind\n\n###\n\n","completion":" unknown"}
+{"prompt":"paint with joy\n\n###\n\n","completion":" unknown"}
+{"prompt":"create magic\n\n###\n\n","completion":" unknown"}
+{"prompt":"explore wonder\n\n###\n\n","completion":" unknown"}
+{"prompt":"watch the universe\n\n###\n\n","completion":" unknown"}
+{"prompt":"dance in moonlight\n\n###\n\n","completion":" unknown"}
+{"prompt":"capture a smile\n\n###\n\n","completion":" unknown"}
+{"prompt":"read the wind\n\n###\n\n","completion":" unknown"}
+{"prompt":"whisper to stars\n\n###\n\n","completion":" unknown"}
+{"prompt":"follow your heart\n\n###\n\n","completion":" unknown"}
+{"prompt":"build dreams\n\n###\n\n","completion":" unknown"}
+{"prompt":"sail through clouds\n\n###\n\n","completion":" unknown"}
+{"prompt":"write with light\n\n###\n\n","completion":" unknown"}
+{"prompt":"sing a rainbow\n\n###\n\n","completion":" unknown"}
+{"prompt":"dance with waves\n\n###\n\n","completion":" unknown"}
+{"prompt":"paint a melody\n\n###\n\n","completion":" unknown"}
+{"prompt":"touch the unknown\n\n###\n\n","completion":" unknown"}
+{"prompt":"listen to dreams\n\n###\n\n","completion":" unknown"}
+{"prompt":"taste a cloud\n\n###\n\n","completion":" unknown"}
+{"prompt":"embrace the sun\n\n###\n\n","completion":" unknown"}
+{"prompt":"chase the light\n\n###\n\n","completion":" unknown"}
+{"prompt":"sing your song\n\n###\n\n","completion":" unknown"}
+{"prompt":"paint your dreams\n\n###\n\n","completion":" unknown"}
+{"prompt":"create your joy\n\n###\n\n","completion":" unknown"}
+{"prompt":"dance your dance\n\n###\n\n","completion":" unknown"}
+{"prompt":"write your story\n\n###\n\n","completion":" unknown"}
+{"prompt":"live your life\n\n###\n\n","completion":" unknown"}

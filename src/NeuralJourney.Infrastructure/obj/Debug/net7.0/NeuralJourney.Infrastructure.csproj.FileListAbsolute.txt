@@ -1,0 +1,15 @@
+D:\Projects\NeuralJourney\NeuralJourney.Infrastructure\obj\Debug\net7.0\NeuralJourney.Infrastructure.csproj.AssemblyReference.cache
+D:\Projects\NeuralJourney\NeuralJourney.Infrastructure\obj\Debug\net7.0\NeuralJourney.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\NeuralJourney\NeuralJourney.Infrastructure\obj\Debug\net7.0\NeuralJourney.Infrastructure.AssemblyInfoInputs.cache
+D:\Projects\NeuralJourney\NeuralJourney.Infrastructure\obj\Debug\net7.0\NeuralJourney.Infrastructure.AssemblyInfo.cs
+D:\Projects\NeuralJourney\NeuralJourney.Infrastructure\obj\Debug\net7.0\NeuralJourney.Infrastructure.csproj.CoreCompileInputs.cache
+D:\Projects\NeuralJourney\NeuralJourney.Infrastructure\bin\Debug\net7.0\NeuralJourney.Infrastructure.deps.json
+D:\Projects\NeuralJourney\NeuralJourney.Infrastructure\bin\Debug\net7.0\NeuralJourney.Infrastructure.dll
+D:\Projects\NeuralJourney\NeuralJourney.Infrastructure\bin\Debug\net7.0\NeuralJourney.Infrastructure.pdb
+D:\Projects\NeuralJourney\NeuralJourney.Infrastructure\bin\Debug\net7.0\NeuralJourney.Core.dll
+D:\Projects\NeuralJourney\NeuralJourney.Infrastructure\bin\Debug\net7.0\NeuralJourney.Core.pdb
+D:\Projects\NeuralJourney\NeuralJourney.Infrastructure\obj\Debug\net7.0\NeuralJourney.Infrastructure.csproj.CopyComplete
+D:\Projects\NeuralJourney\NeuralJourney.Infrastructure\obj\Debug\net7.0\NeuralJourney.Infrastructure.dll
+D:\Projects\NeuralJourney\NeuralJourney.Infrastructure\obj\Debug\net7.0\refint\NeuralJourney.Infrastructure.dll
+D:\Projects\NeuralJourney\NeuralJourney.Infrastructure\obj\Debug\net7.0\NeuralJourney.Infrastructure.pdb
+D:\Projects\NeuralJourney\NeuralJourney.Infrastructure\obj\Debug\net7.0\ref\NeuralJourney.Infrastructure.dll

@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33209.295
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeuralJourney.Server", "NeuralJourney.Server\NeuralJourney.Server.csproj", "{C6091758-A24E-432E-A281-03D9BEF04616}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeuralJourney.Server", "src\NeuralJourney.Server\NeuralJourney.Server.csproj", "{C6091758-A24E-432E-A281-03D9BEF04616}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeuralJourney.Core", "NeuralJourney.Core\NeuralJourney.Core.csproj", "{5A5ECBF5-2851-4F60-B0DC-2F3160759CA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeuralJourney.Core", "src\NeuralJourney.Core\NeuralJourney.Core.csproj", "{5A5ECBF5-2851-4F60-B0DC-2F3160759CA3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeuralJourney.Client", "NeuralJourney.Client\NeuralJourney.Client.csproj", "{6E688CFA-A1FC-4622-8C48-9C7DA26001FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeuralJourney.Client", "src\NeuralJourney.Client\NeuralJourney.Client.csproj", "{6E688CFA-A1FC-4622-8C48-9C7DA26001FB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeuralJourney.Infrastructure", "NeuralJourney.Infrastructure\NeuralJourney.Infrastructure.csproj", "{5C6E6EE3-3EB3-43E3-BCA3-DA1C3363D2E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeuralJourney.Infrastructure", "src\NeuralJourney.Infrastructure\NeuralJourney.Infrastructure.csproj", "{5C6E6EE3-3EB3-43E3-BCA3-DA1C3363D2E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
