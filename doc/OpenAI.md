@@ -40,21 +40,21 @@ The model is trained on a dataset of player commands and their corresponding gam
 
 ##### Training Data Format
 
-\`\`\`json
+```json
 {
   "prompt": "enter the password to reveal the hidden door\n\n###END###\n\n",
   "completion": " unlock"
 }
-\`\`\`
+```
 
 #### API Interaction
 
 ##### Code Snippet
 
-\`\`\`csharp
+```csharp
 var request = new CompletionRequest(prompt: $"{inputText}\n\n###END###\n\n", max_tokens: 1, model: _options.CommandClassificationModel);
 var completionResult = await _openApi.Completions.CreateCompletionAsync(request);
-\`\`\`
+```
 
 ### Parameter and Text Generation with OpenAI
 
@@ -64,22 +64,22 @@ The model is trained on a dataset that includes both the command and the context
 
 ##### Training Data Format
 
-\`\`\`json
+```json
 {
   "prompt": "map|study the map\n\n###END###\n\n",
   "completion": " map|you studied the map##END##"
 }
-\`\`\`
+```
 
 #### API Interaction
 
 ##### Code Snippet
 
-\`\`\`csharp
+```csharp
 var promptText = $"{context.CommandKey.Identifier}|{previousInput}{context.InputText}\n\n###\n\n";
 var completionResult = await _openApi.Completions.CreateCompletionAsync(promptText);
 context.CompletionText = completionResult?.Completions.FirstOrDefault()?.Text.TrimStart();
-\`\`\`
+```
 
 ## Configuration and Customization
 
