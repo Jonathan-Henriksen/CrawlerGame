@@ -1,4 +1,4 @@
-# Logging in NeuralJourney with Serilog and Seq
+# Logging with Serilog and Seq
 
 ## Overview
 Structured logging is an indispensable tool in modern software development, particularly in complex, interactive applications like NeuralJourney. Unlike traditional logging, which often only captures text messages, structured logging captures key-value pairs that provide a rich context for each event. In NeuralJourney, we leverage the power of Serilog and Seq to implement structured logging. This approach significantly enhances our debugging, monitoring, and analytics capabilities, making it easier to understand the game's behavior and troubleshoot issues.
